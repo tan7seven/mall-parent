@@ -1,6 +1,6 @@
 package com.mall.malladmin.service.Impl;
 
-import com.mall.malladmin.dto.UserDto;
+import com.mall.malladmin.vo.UserVo;
 import com.mall.malladmin.entity.UserEntity;
 import com.mall.malladmin.repository.UserRepository;
 import com.mall.malladmin.service.UserService;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntity> getList(UserDto dto) {
+    public List<UserEntity> getList(UserVo dto) {
         List<UserEntity>entitys = userRepository.findAll((Specification<UserEntity>) (root, query, criteriaBuilder)->{
             List<Predicate> list = new ArrayList<>();
             if(StringUtils.isNotBlank(dto.getRole())){

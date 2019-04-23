@@ -6,15 +6,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BeanUserService implements UserDetailsService {
+@Component
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         System.out.println("进入BeanUserService"+s);
-        BeanUser user = new BeanUser();
+        UserDetailsImpl user = new UserDetailsImpl();
         user.setPassword("admin");
         user.setUsername("admin");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -1,6 +1,6 @@
 package com.mall.malladmin.service;
 
-import com.mall.malladmin.dto.UserDto;
+import com.mall.malladmin.vo.UserVo;
 import com.mall.malladmin.entity.UserEntity;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public interface UserService {
      * @param dto
      * @return
      */
-    List<UserEntity> getList(UserDto dto);
+    List<UserEntity> getList(UserVo dto);
 
     /**
      *  根据用户ID查找

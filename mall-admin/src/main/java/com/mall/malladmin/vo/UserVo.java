@@ -1,10 +1,10 @@
-package com.mall.malladmin.dto;
+package com.mall.malladmin.vo;
 
 import lombok.Data;
 
 import java.util.Date;
 @Data
-public class UserDto {
+public class UserVo {
     /**
      * 是否可用：可用
      */

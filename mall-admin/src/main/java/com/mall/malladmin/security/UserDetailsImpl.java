@@ -3,14 +3,13 @@ package com.mall.malladmin.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-public class BeanUser implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private String password;
     private String username;
-    private Collection<? extends GrantedAuthority> grantedAuthoritys = new ArrayList<>();
+    private Collection<? extends GrantedAuthority> grantedAuthoritys;
 
     public void setGrantedAuthoritys(Collection<? extends GrantedAuthority> grantedAuthoritys) {
         this.grantedAuthoritys = grantedAuthoritys;
