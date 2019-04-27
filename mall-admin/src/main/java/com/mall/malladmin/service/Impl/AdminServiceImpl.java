@@ -1,9 +1,10 @@
 package com.mall.malladmin.service.Impl;
 
-import com.mall.malladmin.vo.UserVo;
-import com.mall.malladmin.entity.UserEntity;
-import com.mall.malladmin.repository.UserRepository;
-import com.mall.malladmin.service.UserService;
+import com.mall.malladmin.mapper.AdminMapper;
+import com.mall.malladmin.vo.AdminVo;
+import com.mall.malladmin.entity.AdminEntity;
+import com.mall.malladmin.repository.AdminRepository;
+import com.mall.malladmin.service.AdminService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,21 +17,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Service(value = "userService")
-public class UserServiceImpl implements UserService {
+public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    private UserRepository userRepository;
+    private AdminRepository adminRepository;
+
+    @Autowired
+    private AdminMapper adminMapper;
 
     @Override
-    public UserEntity add(UserEntity entity) {
+    public AdminEntity add(AdminEntity entity) {
         entity.setAddDate(new Date());
-        entity.setIsUsable(UserEntity.IS_USABLE);
-        return userRepository.save(entity);
+        entity.setIsUsable(AdminEntity.IS_USABLE);
+        return adminRepository.save(entity);
     }
 
     @Override
-    public List<UserEntity> getList(UserVo dto) {
-        List<UserEntity>entitys = userRepository.findAll((Specification<UserEntity>) (root, query, criteriaBuilder)->{
+    public List<AdminEntity> getList(AdminVo dto) {
+        List<AdminEntity>entitys = adminRepository.findAll((Specification<AdminEntity>) (root, query, criteriaBuilder)->{
             List<Predicate> list = new ArrayList<>();
             if(StringUtils.isNotBlank(dto.getRole())){
                 list.add(criteriaBuilder.like(root.get("role").as(String.class), "%"+dto.getRole()+"%"));
@@ -43,7 +47,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserEntity> findById(String userId) {
-        return userRepository.findById(userId);
+    public Optional<AdminEntity> findById(String userId) {
+        return adminRepository.findById(userId);
+    }
+
+    @Override
+    public AdminVo findByLoginId(String loginId) {
+        return adminMapper.findByLoginId(loginId);
     }
 }

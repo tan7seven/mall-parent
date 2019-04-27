@@ -1,9 +1,11 @@
 package com.mall.malladmin;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages="com.mall.malladmin")
+@MapperScan(value="com.mall.malladmin.mapper")
 public class MallAdminApplication {
 
 	public static void main(String[] args) {
