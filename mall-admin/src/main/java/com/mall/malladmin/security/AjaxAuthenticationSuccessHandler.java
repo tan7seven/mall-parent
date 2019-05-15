@@ -1,9 +1,8 @@
 package com.mall.malladmin.security;
 
 import com.alibaba.fastjson.JSON;
-import com.mall.malladmin.enumUtil.ResultEnum;
 import com.mall.malladmin.jwt.JwtTokenUtil;
-import com.mall.malladmin.vo.ResultVO;
+import com.mall.malladmin.vo.ResultVo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -22,9 +21,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
         String jwtToken = JwtTokenUtil.generateToken(new HashMap<>());
-
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.result(ResultEnum.USER_LOGIN_SUCCESS,jwtToken,true)));
+        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVo.success("登录成功！",userDetails ,jwtToken)));
     }
 }

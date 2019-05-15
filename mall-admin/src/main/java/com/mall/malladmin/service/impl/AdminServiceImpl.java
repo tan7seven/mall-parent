@@ -1,4 +1,4 @@
-package com.mall.malladmin.service.Impl;
+package com.mall.malladmin.service.impl;
 
 import com.mall.malladmin.mapper.AdminMapper;
 import com.mall.malladmin.vo.AdminVo;

@@ -1,4 +1,4 @@
-package com.mall.malladmin.entity;
+package com.mall.malladmin.entity.product;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_product")
-public class Product {
+public class ProductEntity {
 
     /**
      * 状态：0-上架

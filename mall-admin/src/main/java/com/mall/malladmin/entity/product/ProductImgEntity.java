@@ -1,4 +1,4 @@
-package com.mall.malladmin.entity;
+package com.mall.malladmin.entity.product;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_product_img")
-public class ProductImg {
+public class ProductImgEntity {
     /**
      *商品图片编号
      */

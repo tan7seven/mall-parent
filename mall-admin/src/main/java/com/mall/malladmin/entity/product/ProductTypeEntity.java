@@ -1,4 +1,4 @@
-package com.mall.malladmin.entity;
+package com.mall.malladmin.entity.product;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "mall_product_type")
-public class ProductType {
+public class ProductTypeEntity {
 
     /**
      * 状态：0-正常
@@ -36,13 +36,18 @@ public class ProductType {
     /**
      * 父类目编号
      */
-    @Column(name = "father_id")
-    private Integer fatherId;
+    @Column(name = "parent_id")
+    private Integer parentId;
     /**
      * 	排序
      */
     @Column()
-    private Integer order;
+    private Integer sort;
+    /**
+     * 是否显示在导航栏
+     */
+    @Column(name = "is_navigation_bar", length = 1)
+    private Integer isNavigationBar;
     /**
      * 状态
      * 0:正常

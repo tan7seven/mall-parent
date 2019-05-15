@@ -1,4 +1,4 @@
-package com.mall.malladmin.entity;
+package com.mall.malladmin.entity.product;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "mall_product_property_name")
-public class ProductPropertyName {
+public class ProductPropertyNameEntity {
     /**
      * 编号
      */
