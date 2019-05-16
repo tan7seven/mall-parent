@@ -6,10 +6,13 @@ import com.mall.malladmin.service.product.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service(value = "productDetailService")
 public class ProductDetailServiceImpl implements ProductDetailService {
 
     @Autowired
@@ -44,6 +47,18 @@ public class ProductDetailServiceImpl implements ProductDetailService {
                 .withIgnorePaths("id");  //忽略属性：是否关注。因为是基本类型，需要忽略掉
         Example<ProductDetailEntity> example = Example.of(entity);
         List<ProductDetailEntity> result = productDetailRepository.findAll(example);
+        return result;
+    }
+
+    @Override
+    public Page<ProductDetailEntity> findPage(ProductDetailEntity entity,Pageable page) {
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.startsWith())//模糊查询匹配开头，即{username}%
+                .withMatcher("address" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
+                .withIgnorePaths("password")//忽略字段，即不管password是什么值都不加入查询条件
+                .withIgnorePaths("id");  //忽略属性：是否关注。因为是基本类型，需要忽略掉
+        Example<ProductDetailEntity> example = Example.of(entity);
+        Page<ProductDetailEntity> result = productDetailRepository.findAll(example, page);
         return result;
     }
 }

@@ -2,7 +2,7 @@ package com.mall.malladmin.security;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.malladmin.enumUtil.ResultEnum;
-import com.mall.malladmin.vo.ResultVO;
+import com.mall.malladmin.vo.ResultVo;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,6 @@ public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.result(ResultEnum.USER_NEED_AUTHORITIES,null, false)));
+        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVo.result(ResultEnum.USER_NEED_AUTHORITIES,null, false)));
     }
 }

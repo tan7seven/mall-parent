@@ -1,6 +1,8 @@
 package com.mall.malladmin.service.product;
 
 import com.mall.malladmin.entity.product.ProductDetailEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,4 +41,11 @@ public interface ProductDetailService {
      * @return
      */
     List<ProductDetailEntity> findList(ProductDetailEntity entity);
+
+    /**
+     * 查询
+     * @param entity
+     * @return
+     */
+    Page<ProductDetailEntity> findPage(ProductDetailEntity entity,Pageable page);
 }

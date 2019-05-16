@@ -15,9 +15,11 @@ public class ProductDetailEntity {
      * 编号
      */
     @Id
-    @Column(name = "detail_id")
+    @Column(name = "detail_id",length = 32)
     @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(generator = "jpa-uuid")
     private Integer detailId;
+
     /**
      * 商品编号
      */
@@ -27,5 +29,5 @@ public class ProductDetailEntity {
      * 详情信息
      */
     @Column(length = 2550)
-    private String describe;
+    private String detail;
 }

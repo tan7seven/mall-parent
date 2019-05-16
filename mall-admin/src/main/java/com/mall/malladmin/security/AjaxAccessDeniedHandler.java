@@ -2,7 +2,7 @@ package com.mall.malladmin.security;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.malladmin.enumUtil.ResultEnum;
-import com.mall.malladmin.vo.ResultVO;
+import com.mall.malladmin.vo.ResultVo;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -19,6 +19,6 @@ import java.io.IOException;
 public class AjaxAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.result(ResultEnum.USER_NO_ACCESS,null, false)));
+        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVo.result(ResultEnum.USER_NO_ACCESS,null, false)));
     }
 }

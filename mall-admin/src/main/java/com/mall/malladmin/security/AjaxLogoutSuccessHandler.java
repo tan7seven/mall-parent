@@ -2,7 +2,7 @@ package com.mall.malladmin.security;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.malladmin.enumUtil.ResultEnum;
-import com.mall.malladmin.vo.ResultVO;
+import com.mall.malladmin.vo.ResultVo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import java.io.IOException;
 public class AjaxLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.result(ResultEnum.USER_LOGOUT_SUCCESS,null, true)));
+        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVo.result(ResultEnum.USER_LOGOUT_SUCCESS,null, true)));
     }
 
 }
