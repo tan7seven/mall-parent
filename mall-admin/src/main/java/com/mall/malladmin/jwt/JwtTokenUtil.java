@@ -94,7 +94,7 @@ public class JwtTokenUtil {
         UserDetailsImpl user = new UserDetailsImpl();
         user.setUsername("123456");
         String jwtToken = JwtTokenUtil.generateToken(user);
-        String result = parseToken(jwtToken);
+        String result = parseToken("eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjM0NTYiLCJjcmVhdGVkIjoxNTU4Njc5MTkyNDg5LCJleHAiOjE1NTkyODM5OTJ9.TW4Yir476fYNAtgUgjEcqvTJ-fW07vPfuGs7uOp3PewvGlAUUlXs05J3rlFcBcpSkL1LJALgbw0mKOEOpHvMSeCwyBp93HiAeH5_I-dRCwmYemRMTGJJi6D7iVa0H1AQEKDIlCxsI5TlXKG8JZ5jYjJi5OjzgPnxQFh7uceSHbs");
         Claims result1 = getTokenBody(jwtToken);
         System.out.println(jwtToken);
         System.out.println(result);

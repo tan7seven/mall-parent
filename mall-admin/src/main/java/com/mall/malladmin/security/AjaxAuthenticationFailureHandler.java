@@ -20,6 +20,8 @@ public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHa
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setContentType("application/json");
         httpServletResponse.getWriter().write(JSON.toJSONString(ResultVo.result(ResultEnum.USER_LOGIN_FAILED,null, false)));
     }
 

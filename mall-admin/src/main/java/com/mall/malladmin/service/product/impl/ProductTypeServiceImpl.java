@@ -5,6 +5,7 @@ import com.mall.malladmin.repository.product.ProductTypeRepository;
 import com.mall.malladmin.service.product.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Override
     public ProductTypeEntity add(ProductTypeEntity entity) {
+        if(null == entity.getSort()){
+            entity.setSort(999);
+        }
         return productTypeRepository.save(entity);
     }
 
@@ -45,7 +49,11 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Override
     public Page<ProductTypeEntity> findPage(ProductTypeEntity entity, Pageable page) {
-        Example<ProductTypeEntity> example = Example.of(entity);
+        ExampleMatcher matcher = ExampleMatcher.matching()
+//                .withMatcher("typeName", ExampleMatcher.GenericPropertyMatchers.startsWith())//模糊查询匹配开头，即{username}%
+                .withMatcher("typeName" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
+                .withIgnorePaths("sort");  //忽略属性：是否关注。因为是基本类型，需要忽略掉
+        Example<ProductTypeEntity> example = Example.of(entity, matcher);
         Page<ProductTypeEntity> result = productTypeRepository.findAll(example, page);
         return result;
     }

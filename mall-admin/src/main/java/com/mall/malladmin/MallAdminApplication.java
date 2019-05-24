@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MallAdminApplication {
 
 	public static void main(String[] args) {
-
         System.out.println("SpringBoot      ==>开始启动");
 	    SpringApplication.run(MallAdminApplication.class, args);
         System.out.println("SpringBoot      ==>启动成功");

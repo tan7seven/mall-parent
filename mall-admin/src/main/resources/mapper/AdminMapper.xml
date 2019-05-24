@@ -7,9 +7,9 @@
         update_date
     </sql>
 
-    <select id="findByLoginId" resultType="com.mall.malladmin.vo.AdminVo">
+    <select id="findByLoginId" resultType="com.mall.malladmin.vo.AdminVo" parameterType="String">
         SELECT
         <include refid="Base_Column_List" />
-        FROM mall_user m WHERE m.login_id = #{loginId}
+        FROM mall_admin m WHERE m.login_id = #{loginId}
     </select>
 </mapper>

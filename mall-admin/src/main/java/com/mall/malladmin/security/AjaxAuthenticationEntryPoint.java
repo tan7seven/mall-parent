@@ -20,6 +20,8 @@ public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setContentType("application/json");
         httpServletResponse.getWriter().write(JSON.toJSONString(ResultVo.result(ResultEnum.USER_NEED_AUTHORITIES,null, false)));
     }
 }

@@ -1,10 +1,10 @@
 package com.mall.malladmin.service.impl;
 
-import com.mall.malladmin.mapper.AdminMapper;
-import com.mall.malladmin.vo.AdminVo;
 import com.mall.malladmin.entity.AdminEntity;
+import com.mall.malladmin.mapper.AdminMapper;
 import com.mall.malladmin.repository.AdminRepository;
 import com.mall.malladmin.service.AdminService;
+import com.mall.malladmin.vo.AdminVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -42,7 +42,6 @@ public class AdminServiceImpl implements AdminService {
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
         });
-        System.out.println("sss");
         return entitys;
     }
 

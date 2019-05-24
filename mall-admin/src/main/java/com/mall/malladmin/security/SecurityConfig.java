@@ -24,6 +24,8 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 @EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@Order(-1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -51,13 +53,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http .authorizeRequests()
                 .antMatchers("/js/**","/image/**","/css/**").permitAll()
+//                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/**").access("hasRole('USER')")
+                .antMatchers("/admin/login.do", "/admin/register.do").permitAll()// 对登录注册要允许匿名访问
                 .antMatchers(HttpMethod.OPTIONS).permitAll()//跨域请求会先进行一次options请求
-                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/**").access("hasRole('USER')")
                 .anyRequest().authenticated()// 除上面外的所有请求全部需要鉴权认证
                 //自定义登录界面
-                .and().formLogin().loginPage("/login.do").successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler).permitAll()
+                .and().formLogin().loginPage("/admin/login.do").successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler).permitAll()
+                .usernameParameter("username").passwordParameter("password")
                 .and().logout().logoutSuccessHandler(logoutSuccessHandler)
                 .and().csrf().disable()
                 .sessionManagement()// 基于token，所以不需要session
@@ -88,10 +92,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
         config.setAllowCredentials(true);
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.addAllowedOrigin("*"); // 1允许任何域名使用
+        config.addAllowedHeader("*"); // 2允许任何头
+        config.addAllowedMethod("*"); // 3允许任何方法（post、get等）
+        config.setMaxAge(1800L);// 4.解决跨域请求两次，预检请求的有效期，单位为秒
+        config.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);

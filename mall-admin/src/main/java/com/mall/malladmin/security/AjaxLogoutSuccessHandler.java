@@ -19,6 +19,8 @@ import java.io.IOException;
 public class AjaxLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setContentType("application/json");
         httpServletResponse.getWriter().write(JSON.toJSONString(ResultVo.result(ResultEnum.USER_LOGOUT_SUCCESS,null, true)));
     }
 

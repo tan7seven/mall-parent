@@ -1,8 +1,8 @@
 package com.mall.malladmin.vo.product;
 
+import com.mall.malladmin.vo.CommonVo;
 import lombok.Data;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 
@@ -10,12 +10,11 @@ import java.io.Serializable;
  * 商品类目表
  */
 @Data
-public class ProductTypeVo implements Serializable {
+public class ProductTypeVo extends CommonVo implements Serializable {
 
     /**
      * 编号
      */
-    @Id
     private Integer typeId;
     /**
      * 分类名称
