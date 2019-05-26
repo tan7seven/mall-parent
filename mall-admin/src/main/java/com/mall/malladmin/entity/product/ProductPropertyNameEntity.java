@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "mall_product_property_name")
 public class ProductPropertyNameEntity {
+    public static final String IS_SALE = "0";
+    public static final String NOT_SALE = "1";
     /**
      * 编号
      */

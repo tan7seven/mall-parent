@@ -2,11 +2,11 @@ package com.mall.malladmin.vo;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.mall.malladmin.util.ResultPage;
 import org.springframework.validation.BindingResult;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CommonResultVo implements Serializable{
@@ -48,17 +48,10 @@ public class CommonResultVo implements Serializable{
     /**
      * 返回分页成功数据
      */
-    public CommonResultVo pageSuccess(List data) {
-        PageInfo pageInfo = new PageInfo(data);
-        Map<String, Object> result = new HashMap<>();
-        result.put("pageSize", pageInfo.getPageSize());
-        result.put("totalPage", pageInfo.getPages());
-        result.put("total", pageInfo.getTotal());
-        result.put("pageNum", pageInfo.getPageNum());
-        result.put("list", pageInfo.getList());
+    public CommonResultVo pageSuccess(ResultPage data) {
         this.code = SUCCESS;
         this.message = "操作成功";
-        this.data = result;
+        this.data = data;
         return this;
     }
 

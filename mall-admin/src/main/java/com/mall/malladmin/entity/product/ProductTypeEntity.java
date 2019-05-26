@@ -39,6 +39,11 @@ public class ProductTypeEntity {
     @Column(name = "parent_id")
     private Integer parentId;
     /**
+     * 等级
+     */
+    @Column
+    private Integer level;
+    /**
      * 	排序
      */
     @Column()
@@ -47,7 +52,7 @@ public class ProductTypeEntity {
      * 是否显示在导航栏
      */
     @Column(name = "is_navigation_bar", length = 1)
-    private Integer isNavigationBar;
+    private String isNavigationBar;
     /**
      * 状态
      * 0:正常

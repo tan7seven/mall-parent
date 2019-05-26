@@ -31,11 +31,19 @@ public class ProductTypeVo extends CommonVo implements Serializable {
     /**
      * 是否显示在导航栏
      */
-    private Integer isNavigationBar;
+    private String isNavigationBar;
     /**
      * 状态
      * 0:正常
      * 1：禁用
      */
     private String status;
+    /**
+     * 等级
+     */
+    private Integer level;
+    /**
+     * 类目属性名
+     */
+    private String[] propertyNameChecked;
 }

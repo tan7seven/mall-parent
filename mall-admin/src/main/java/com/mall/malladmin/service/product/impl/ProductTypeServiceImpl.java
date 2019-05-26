@@ -22,6 +22,12 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         if(null == entity.getSort()){
             entity.setSort(999);
         }
+        if(0 == entity.getParentId()){
+            entity.setLevel(0);
+        }else{
+            ProductTypeEntity parent = productTypeRepository.findById(entity.getParentId()).get();
+            entity.setLevel(parent.getLevel()+1);
+        }
         return productTypeRepository.save(entity);
     }
 
