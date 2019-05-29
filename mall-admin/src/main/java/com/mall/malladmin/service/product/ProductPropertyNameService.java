@@ -36,12 +36,24 @@ public interface ProductPropertyNameService {
     void deleteById(Integer id);
 
     /**
+     * 根据typeId删除
+     * @param typeId
+     */
+    void deleteByTypeId(Integer typeId);
+
+    /**
      * 查询
      * @param entity
      * @return
      */
     List<ProductPropertyNameEntity> findList(ProductPropertyNameEntity entity);
 
+    /**
+     * 根据typeId获取
+     * @param typeId
+     * @return
+     */
+    List<ProductPropertyNameEntity> findByTypeId(Integer typeId);
     /**
      * 查询
      * @param entity

@@ -53,8 +53,8 @@ public class ProductEntity {
     /**
      * 商品最低价
      */
-    @Column()
-    private BigDecimal price;
+    @Column(name = "price_min")
+    private BigDecimal priceMin;
     /**
      * 点击量
      */
@@ -72,6 +72,6 @@ public class ProductEntity {
      * 新增时间
      */
     @Column(name = "add_time")
-    private Date addTime = new Date();
+    private Date addTime;
 
 }

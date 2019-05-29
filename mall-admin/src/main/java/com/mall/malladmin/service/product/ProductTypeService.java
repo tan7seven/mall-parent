@@ -1,8 +1,11 @@
 package com.mall.malladmin.service.product;
 
 import com.mall.malladmin.entity.product.ProductTypeEntity;
+import com.mall.malladmin.vo.common.CommonCascaderVo;
+import com.mall.malladmin.vo.product.ProductTypeVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +20,20 @@ public interface ProductTypeService {
      * @return
      */
     ProductTypeEntity add(ProductTypeEntity entity);
+
+    /**
+     * 修改
+     * @param vo
+     * @return
+     */
+    ProductTypeEntity update(ProductTypeVo vo);
+    /**
+     *
+     * @param vo
+     * @return
+     */
+    @Transactional
+    ProductTypeEntity create(ProductTypeVo vo);
     /**
      *  根据ID查找
      * @param id
@@ -48,4 +65,10 @@ public interface ProductTypeService {
      * @return
      */
     Page<ProductTypeEntity> findPage(ProductTypeEntity entity, Pageable page);
+
+    /**
+     * 获取树结构
+     * @return
+     */
+    List<CommonCascaderVo> getCascader();
 }

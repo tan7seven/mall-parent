@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 public class GenericController {
 
     public UserDetailsImpl getUserDetails() {
-        log.info("基础控制器:getUserDetails:");
         if (SecurityContextHolder.getContext() == null) {
             return null;
         }

@@ -1,13 +1,10 @@
-package com.mall.malladmin.vo;
+package com.mall.malladmin.vo.common;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.util.ResultPage;
 import org.springframework.validation.BindingResult;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CommonResultVo implements Serializable{
     //操作成功

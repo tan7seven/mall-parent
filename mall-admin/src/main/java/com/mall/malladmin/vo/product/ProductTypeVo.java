@@ -1,6 +1,6 @@
 package com.mall.malladmin.vo.product;
 
-import com.mall.malladmin.vo.CommonVo;
+import com.mall.malladmin.vo.common.CommonVo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -43,7 +43,11 @@ public class ProductTypeVo extends CommonVo implements Serializable {
      */
     private Integer level;
     /**
-     * 类目属性名
+     * 类目销售属性名
      */
-    private String[] propertyNameChecked;
+    private String[] propertyNameCheckedIsSale;
+    /**
+     * 类目显示参数名
+     */
+    private String[] propertyNameCheckedNotSale;
 }

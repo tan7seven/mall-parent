@@ -5,7 +5,8 @@ import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
 import com.mall.malladmin.util.ResultPage;
-import com.mall.malladmin.vo.CommonResultVo;
+import com.mall.malladmin.vo.common.CommonCascaderVo;
+import com.mall.malladmin.vo.common.CommonResultVo;
 import com.mall.malladmin.vo.product.ProductTypeVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 商品类目
@@ -41,7 +43,12 @@ public class ProductTypeController {
         if(null == entity){
             return new CommonResultVo().validateFailed("ID异常：获取不到对应的类目信息！");
         }
-        return new CommonResultVo().success(entity);
+        List<ProductPropertyNameEntity> propertyNames = productPropertyNameService.findByTypeId(id);
+        ProductTypeVo vo = new ProductTypeVo();
+        BeanUtils.copyProperties(entity, vo);
+        vo.setPropertyNameCheckedIsSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).map(ProductPropertyNameEntity ::getName).toArray(String[]::new));
+        vo.setPropertyNameCheckedNotSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).map(ProductPropertyNameEntity ::getName).toArray(String[]::new));
+        return new CommonResultVo().success(vo);
     }
     /**
      * 创建
@@ -50,21 +57,9 @@ public class ProductTypeController {
      */
     @PostMapping("/create.do")
     protected CommonResultVo create(ProductTypeVo vo){
-        ProductTypeEntity entity = new ProductTypeEntity();
-        BeanUtils.copyProperties(vo,entity);
-        ProductTypeEntity result = productTypeService.add(entity);
+        ProductTypeEntity result = productTypeService.create(vo);
         if(result==null){
             return new CommonResultVo().failed();
-        }
-        if(vo.getPropertyNameChecked().length > 0){
-            String[] propertyNames = vo.getPropertyNameChecked();
-            for (int i = 0 ; i <propertyNames.length ; i++){
-                ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
-                propertyName.setName(propertyNames[i]);
-                propertyName.setTypeId(result.getTypeId());
-                propertyName.setIsSale(ProductPropertyNameEntity.IS_SALE);
-                productPropertyNameService.add(propertyName);
-            }
         }
         return new CommonResultVo().success();
     }
@@ -98,13 +93,8 @@ public class ProductTypeController {
      */
     @PostMapping(value = "/updateProductType.do/{typeId}")
     protected CommonResultVo updateProductType(@PathVariable Integer typeId, ProductTypeVo vo){
-        ProductTypeEntity entity = productTypeService.findById(vo.getTypeId()).get();
-        if(null == entity){
-            return new CommonResultVo().validateFailed("typeId异常：获取不到相关类目！");
-        }
-        BeanUtils.copyProperties(vo,entity);
-        productTypeService.add(entity);
-        log.info("接收type:{},接收vo:{}",typeId, vo);
+        productPropertyNameService.deleteByTypeId(typeId);
+        productTypeService.update(vo);
         return new CommonResultVo().success();
     }
     /**
@@ -151,5 +141,15 @@ public class ProductTypeController {
         }
         productTypeService.deleteById(typeId);
         return new CommonResultVo().success();
+    }
+
+    /**
+     * 查询所有一级和子级分类
+     * @return
+     */
+    @GetMapping(value = "/getProductTypeCascader.do")
+    protected CommonResultVo getProductTypeCascader(){
+        List<CommonCascaderVo> result = productTypeService.getCascader();
+        return new CommonResultVo().success(result);
     }
 }

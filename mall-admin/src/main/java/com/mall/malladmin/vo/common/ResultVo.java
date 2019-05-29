@@ -1,4 +1,4 @@
-package com.mall.malladmin.vo;
+package com.mall.malladmin.vo.common;
 
 
 import com.mall.malladmin.enumUtil.ResultEnum;

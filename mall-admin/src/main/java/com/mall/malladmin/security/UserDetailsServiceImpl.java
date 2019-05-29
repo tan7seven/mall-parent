@@ -24,7 +24,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetailsImpl user = new UserDetailsImpl();
-        System.out.println("登录的用户名"+username);
         AdminVo vo  = adminService.findByLoginId(username);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         // 加密(SpringSecurity默认有加密)

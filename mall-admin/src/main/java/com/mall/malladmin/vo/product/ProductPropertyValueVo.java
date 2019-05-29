@@ -1,5 +1,6 @@
 package com.mall.malladmin.vo.product;
 
+import com.mall.malladmin.vo.common.CommonVo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.io.Serializable;
  * 商品属性名
  */
 @Data
-public class ProductPropertyValueVo implements Serializable {
+public class ProductPropertyValueVo extends CommonVo implements Serializable {
     /**
      * 编号
      */

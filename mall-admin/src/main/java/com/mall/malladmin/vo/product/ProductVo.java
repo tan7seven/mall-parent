@@ -1,5 +1,6 @@
 package com.mall.malladmin.vo.product;
 
+import com.mall.malladmin.vo.common.CommonVo;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,7 @@ import java.util.Date;
  * 商品信息
  */
 @Data
-public class ProductVo implements Serializable {
+public class ProductVo extends CommonVo implements Serializable {
     /**
      *商品编号
      */
@@ -33,7 +34,7 @@ public class ProductVo implements Serializable {
     /**
      * 商品最低价
      */
-    private BigDecimal price;
+    private BigDecimal priceMin;
     /**
      * 点击量
      */
@@ -48,6 +49,6 @@ public class ProductVo implements Serializable {
     /**
      * 新增时间
      */
-    private Date addTime = new Date();
+    private Date addTime;
 
 }

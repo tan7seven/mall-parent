@@ -1,5 +1,6 @@
 package com.mall.malladmin.vo.product;
 
+import com.mall.malladmin.vo.common.CommonVo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.Date;
  * 商品图片表
  */
 @Data
-public class ProductImgVo implements Serializable {
+public class ProductImgVo extends CommonVo implements Serializable {
     /**
      *商品图片编号
      */

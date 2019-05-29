@@ -38,10 +38,20 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     }
 
     @Override
+    public void deleteByTypeId(Integer typeId) {
+        productPropertyNameRepository.deleteByTypeId(typeId);
+    }
+
+    @Override
     public List<ProductPropertyNameEntity> findList(ProductPropertyNameEntity entity) {
         Example<ProductPropertyNameEntity> example = Example.of(entity);
         List<ProductPropertyNameEntity> result = productPropertyNameRepository.findAll(example);
         return result;
+    }
+
+    @Override
+    public List<ProductPropertyNameEntity> findByTypeId(Integer typeId) {
+        return productPropertyNameRepository.findByTypeId(typeId);
     }
 
     @Override

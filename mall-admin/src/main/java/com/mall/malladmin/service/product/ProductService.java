@@ -23,7 +23,6 @@ public interface ProductService {
      * @return
      */
     Optional<ProductEntity> findById(Integer id);
-
     /**
      * 删除
      * @param entity
@@ -34,14 +33,12 @@ public interface ProductService {
      * @param id
      */
     void deleteById(Integer id);
-
     /**
      * 查询
      * @param entity
      * @return
      */
     List<ProductEntity> findList(ProductEntity entity);
-
     /**
      * 查询
      * @param entity

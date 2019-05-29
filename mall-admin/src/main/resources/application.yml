@@ -23,7 +23,7 @@ spring:
       charset: utf-8
       enabled: true
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: com.mall.malladmin.entity.*
 logging:
   file: log
