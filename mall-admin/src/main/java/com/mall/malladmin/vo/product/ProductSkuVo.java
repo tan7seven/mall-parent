@@ -21,17 +21,37 @@ public class ProductSkuVo extends CommonVo implements Serializable {
      */
     private Integer productId;
     /**
+     * 商品名称
+     */
+    private String productName;
+    /**
      * 属性值
      */
     private String properties;
+    /**
+     * 商品类目ID
+     */
+    private Integer typeId;
+    /**
+     * 商品类目
+     */
+    private String typeName;
     /**
      * 	商品价格
      */
     private BigDecimal price;
     /**
+     * 	商品最低价格
+     */
+    private BigDecimal priceMin;
+    /**
      * 	商品成本
      */
     private BigDecimal cost;
+    /**
+     * SKU历史销售总数
+     */
+    private Integer sellSum;
     /**
      * 	商品库存
      */
@@ -39,9 +59,15 @@ public class ProductSkuVo extends CommonVo implements Serializable {
     /**
      * 新增时间
      */
-    private Date addTime = new Date();
+    private Date addTime;
     /**
      * 更新时间
      */
-    private Date updateTime = new Date();
+    private Date updateTime;
+    /**
+     * SKU属性值
+     */
+    private String propertyA;
+    private String propertyB;
+    private String propertyC;
 }

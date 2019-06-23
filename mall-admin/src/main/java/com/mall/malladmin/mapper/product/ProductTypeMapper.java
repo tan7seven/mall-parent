@@ -13,4 +13,6 @@ public interface ProductTypeMapper {
      * @return
      */
     List<CommonCascaderVo> getCascader();
+
+
 }

@@ -1,8 +1,12 @@
 package com.mall.malladmin.service.product.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.entity.product.ProductSkuEntity;
+import com.mall.malladmin.mapper.product.ProductSkuMapper;
 import com.mall.malladmin.repository.product.ProductSkuRepository;
 import com.mall.malladmin.service.product.ProductSkuService;
+import com.mall.malladmin.vo.product.ProductSkuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -15,6 +19,9 @@ import java.util.Optional;
 public class ProductSkuServiceImpl implements ProductSkuService {
     @Autowired
     private ProductSkuRepository productSkuRepository;
+
+    @Autowired
+    private ProductSkuMapper productSkuMapper;
 
     @Override
     public ProductSkuEntity add(ProductSkuEntity entity) {
@@ -48,5 +55,13 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         Example<ProductSkuEntity> example = Example.of(entity);
         Page<ProductSkuEntity> result = productSkuRepository.findAll(example, page);
         return result;
+    }
+
+    @Override
+    public PageInfo<ProductSkuVo> findPage(ProductSkuVo vo) {
+        PageHelper.startPage(vo.getPageNum(), vo.getPageSize());
+        List<ProductSkuVo> skuVoList = productSkuMapper.getList(vo);
+        PageInfo<ProductSkuVo> page = new PageInfo<>(skuVoList);
+        return page;
     }
 }

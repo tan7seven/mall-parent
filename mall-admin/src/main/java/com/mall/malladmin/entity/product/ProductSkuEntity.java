@@ -40,6 +40,9 @@ public class ProductSkuEntity {
      */
     @Column()
     private BigDecimal cost;
+
+    @Column(length = 1, name = "sell_sum")
+    private Integer sellSum;
     /**
      * 	商品库存
      */

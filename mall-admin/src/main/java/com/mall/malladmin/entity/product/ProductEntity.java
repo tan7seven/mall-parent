@@ -61,6 +61,16 @@ public class ProductEntity {
     @Column()
     private Integer hits;
     /**
+     * 排序
+     */
+    @Column()
+    private Integer sort;
+    /**
+     * 计量单位
+     */
+    @Column
+    private String unit;
+    /**
      * 商品状态
      * 0：上架
      * 1：下架

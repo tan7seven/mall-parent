@@ -12,7 +12,7 @@ public class CommonResultVo implements Serializable{
     //操作失败
     public static final int FAILED = 500;
     //参数校验失败
-    public static final int VALIDATE_FAILED = 404;
+    public static final int VALIDATE_FAILED = 402;
     //未认证
     public static final int UNAUTHORIZED = 401;
     //未授权

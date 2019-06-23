@@ -17,7 +17,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 商品类目
@@ -44,11 +47,27 @@ public class ProductTypeController {
             return new CommonResultVo().validateFailed("ID异常：获取不到对应的类目信息！");
         }
         List<ProductPropertyNameEntity> propertyNames = productPropertyNameService.findByTypeId(id);
-        ProductTypeVo vo = new ProductTypeVo();
-        BeanUtils.copyProperties(entity, vo);
-        vo.setPropertyNameCheckedIsSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).map(ProductPropertyNameEntity ::getName).toArray(String[]::new));
-        vo.setPropertyNameCheckedNotSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).map(ProductPropertyNameEntity ::getName).toArray(String[]::new));
-        return new CommonResultVo().success(vo);
+        ProductTypeVo result = new ProductTypeVo();
+        BeanUtils.copyProperties(entity, result);
+        result.setPropertyNameCheckedIsSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).map(ProductPropertyNameEntity ::getName).toArray(String[]::new));
+        result.setPropertyNameCheckedNotSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).map(ProductPropertyNameEntity ::getName).toArray(String[]::new));
+        return new CommonResultVo().success(result);
+    }
+
+    /**
+     * 根据类目ID获取商品属性
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/getProductTypeProperty.do/{id}")
+    protected CommonResultVo getProductTypeProperty(@PathVariable Integer id){
+        List<ProductPropertyNameEntity> propertyNameEntities = productPropertyNameService.findByTypeId(id);
+        List<ProductPropertyNameEntity> isSale = propertyNameEntities.stream().filter(a->a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).collect(Collectors.toList());
+        List<ProductPropertyNameEntity> notSale = propertyNameEntities.stream().filter(a->a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).collect(Collectors.toList());
+        Map<String, Object> result = new HashMap<>();
+        result.put("productPropertyIsSale",isSale);
+        result.put("productPropertyNotSale",notSale);
+        return new CommonResultVo().success(result);
     }
     /**
      * 创建
@@ -72,7 +91,6 @@ public class ProductTypeController {
      */
     @GetMapping("/getPage.do/{id}")
     protected CommonResultVo getPage(@PathVariable Long id,ProductTypeVo vo){
-        log.info("接收id:{},接收vo:{}",id, vo);
         Sort sort = new Sort(Sort.Direction.ASC, "sort", "typeId");
         Pageable page = PageRequest.of(vo.getPageNum()-1, vo.getPageSize(), sort);
         ProductTypeEntity entity = new ProductTypeEntity();

@@ -16,13 +16,15 @@ public class ProductVo extends CommonVo implements Serializable {
     /**
      *商品编号
      */
-    @NotBlank(message = "商品编号不能为空！")
     private Integer productId;
     /**
      * 分类编号
      */
-    @NotBlank(message = "分类编号不能为空！")
     private Integer typeId;
+    /**
+     * 分类名称
+     */
+    private String typeName;
     /**
      * 商品名称
      */
@@ -40,6 +42,10 @@ public class ProductVo extends CommonVo implements Serializable {
      */
     private Integer hits;
     /**
+     * 计量单位
+     */
+    private String unit;
+    /**
      * 商品状态
      * 0：上架
      * 1：下架
@@ -50,5 +56,27 @@ public class ProductVo extends CommonVo implements Serializable {
      * 新增时间
      */
     private Date addTime;
+    /**
+     * 描述
+     */
+    private String detail;
+    /**
+     * 类目ID
+     */
+    @NotBlank(message = "分类编号不能为空！")
+    private Integer productTypeId;
+    /**
+     * 类目销售属性
+     */
+    private String[] productPropertyIsSaleChecked;
+    /**
+     * 类目非销售属性
+     */
+    private String[] productPropertyNotSaleChecked;
+    /**
+     * 排序
+     */
+    private Integer sort;
+
 
 }

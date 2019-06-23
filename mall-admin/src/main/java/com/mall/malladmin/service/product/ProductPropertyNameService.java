@@ -1,6 +1,7 @@
 package com.mall.malladmin.service.product;
 
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
+import com.mall.malladmin.vo.common.CommonResultVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,7 +17,7 @@ public interface ProductPropertyNameService {
      * @param entity
      * @return
      */
-    ProductPropertyNameEntity add(ProductPropertyNameEntity entity);
+    CommonResultVo add(ProductPropertyNameEntity entity);
     /**
      *  根据ID查找
      * @param id

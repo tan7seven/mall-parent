@@ -16,7 +16,18 @@ public interface ProductPropertyNameRepository extends JpaRepository<ProductProp
      * @return
      */
     List<ProductPropertyNameEntity> findByTypeId(Integer typeId);
-
+    /**
+     * 根据typeId和isSale获取
+     * @param typeId
+     * @return
+     */
+    List<ProductPropertyNameEntity> findByTypeIdAndIsSale(Integer typeId, String isSale);
+    /**
+     * 根据typeId和name获取
+     * @param typeId
+     * @return
+     */
+    List<ProductPropertyNameEntity> findByTypeIdAndName(Integer typeId, String Name);
     /**
      * 根据typeId删除
      * @param deleteByTypeId

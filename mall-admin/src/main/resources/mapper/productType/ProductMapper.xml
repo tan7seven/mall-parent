@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.malladmin.mapper.product.ProductMapper">
+
+    <resultMap id="ProductMap" type="com.mall.malladmin.vo.product.ProductVo">
+        <result column="productId" property="productId"/>
+        <result column="typeId" property="typeId"/>
+        <result column="productName" property="productName"/>
+        <result column="imgUrl" property="imgUrl"/>
+        <result column="priceMin" property="priceMin"/>
+        <result column="unit" property="unit"/>
+        <result column="status" property="status"/>
+        <result column="addTime" property="addTime"/>
+        <result column="detail" property="detail"/>
+        <result column="typeName" property="typeName"/>
+    </resultMap>
+
+    <select id="getList" resultMap="ProductMap">
+        SELECT
+            a.product_Id productId,
+            a.type_Id typeId,
+            a.product_Name productName,
+            a.price_Min priceMin,
+            a.unit unit,
+            a.img_Url imgUrl,
+            a.status status,
+            a.add_Time addTime,
+            b.type_Name typeName
+        FROM mall_product a
+        INNER JOIN mall_product_type b ON b.type_id = a.type_id
+        where 1 = 1
+        <if test="vo.productName!=null and vo.productName!=''">
+            AND a.product_name like '%${vo.productName}%'
+        </if>
+    </select>
+
+</mapper>
+        <!--
+            <id>：主键字段
+            <result>：普通字段
+            type：整体封装出的类型
+            column：字段名（表里定义好的）
+            property：关联属性（查询出来的结果封装成Country里的哪个属性）
+            ofType：指定属性类型（关联属性是什么类型）
+            <collection>：集合封装
+             association:用于配置1对1的映射
+                                属性property：company对象在user对象中的属性名
+                                属性javaType：company属性的java对象 类型
+                                属性column：user表中的外键引用company表
+            collection ：配置1对多关系映射
+                    property：在user里面的List<Account>的属性名
+                    ofType:当前account表的java类型
+                    column:外键
+                -->

@@ -28,4 +28,20 @@ public class ProductPropertyNameVo extends CommonVo implements Serializable {
      * 	1：是
      */
     private String isSale;
+    /**
+     * 	是否显示
+     * 	0：是
+     * 	1：否
+     */
+    private String isShow;
+    /**
+     * 	是否可用
+     * 	0：是
+     * 	1：否
+     */
+    private String isUsable;
+    /**
+     * 商品分类一级编号
+     */
+    private Integer parentId;
 }

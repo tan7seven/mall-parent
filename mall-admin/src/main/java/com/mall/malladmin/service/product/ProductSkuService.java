@@ -1,6 +1,8 @@
 package com.mall.malladmin.service.product;
 
+import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.entity.product.ProductSkuEntity;
+import com.mall.malladmin.vo.product.ProductSkuVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -43,9 +45,16 @@ public interface ProductSkuService {
     List<ProductSkuEntity> findList(ProductSkuEntity entity);
 
     /**
-     * 查询
+     * SpringJPA分页查询
      * @param entity
      * @return
      */
     Page<ProductSkuEntity> findPage(ProductSkuEntity entity, Pageable page);
+
+    /**
+     * mybatis-pagehelper分页查询
+     * @param vo
+     * @return
+     */
+    PageInfo<ProductSkuVo> findPage(ProductSkuVo vo);
 }

@@ -1,6 +1,5 @@
 package com.mall.malladmin.service.product.impl;
 
-import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.mapper.product.ProductTypeMapper;
 import com.mall.malladmin.repository.product.ProductTypeRepository;
@@ -42,7 +41,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Override
     public ProductTypeEntity update(ProductTypeVo vo) {
         ProductTypeEntity entity = productTypeRepository.findById(vo.getTypeId()).get();
-        if(null != vo.getPropertyNameCheckedIsSale() && vo.getPropertyNameCheckedIsSale().length > 0){
+        /*if(null != vo.getPropertyNameCheckedIsSale() && vo.getPropertyNameCheckedIsSale().length > 0){
             String[] propertyNames = vo.getPropertyNameCheckedIsSale();
             for (int i = 0 ; i <propertyNames.length ; i++){
                 ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
@@ -61,7 +60,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 propertyName.setIsSale(ProductPropertyNameEntity.NOT_SALE);
                 productPropertyNameService.add(propertyName);
             }
-        }
+        }*/
         BeanUtils.copyProperties(vo,entity);
         return productTypeRepository.save(entity);
     }
@@ -70,15 +69,15 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public ProductTypeEntity create(ProductTypeVo vo) {
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(vo, entity);
-        ProductTypeEntity result = productTypeRepository.save(entity);
         if(0 == entity.getParentId()){
             entity.setLevel(0);
         }else{
             ProductTypeEntity parent = productTypeRepository.findById(entity.getParentId()).get();
             entity.setLevel(parent.getLevel()+1);
         }
-        //添加销售属性
-        if(vo.getPropertyNameCheckedIsSale().length > 0){
+        ProductTypeEntity result = productTypeRepository.save(entity);
+        /*//添加销售属性
+        if(null != vo.getPropertyNameCheckedIsSale() && vo.getPropertyNameCheckedIsSale().length > 0){
             String[] propertyNames = vo.getPropertyNameCheckedIsSale();
             for (int i = 0 ; i <propertyNames.length ; i++){
                 ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
@@ -89,7 +88,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
             }
         }
         //添加非销售属性
-        if(vo.getPropertyNameCheckedNotSale().length > 0){
+        if(null != vo.getPropertyNameCheckedNotSale() && vo.getPropertyNameCheckedNotSale().length > 0){
             String[] propertyNames = vo.getPropertyNameCheckedNotSale();
             for (int i = 0 ; i <propertyNames.length ; i++){
                 ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
@@ -98,7 +97,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 propertyName.setIsSale(ProductPropertyNameEntity.NOT_SALE);
                 productPropertyNameService.add(propertyName);
             }
-        }
+        }*/
         return result;
     }
 
@@ -114,6 +113,12 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Override
     public void deleteById(Integer id) {
+        productPropertyNameService.deleteByTypeId(id);
+        List<ProductTypeEntity> entities = productTypeRepository.findAllByParentId(id);
+        for (ProductTypeEntity entity: entities) {
+            productPropertyNameService.deleteByTypeId(entity.getTypeId());
+        }
+        productTypeRepository.deleteByParentId(id);
         productTypeRepository.deleteById(id);
     }
 

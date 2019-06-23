@@ -1,8 +1,11 @@
 package com.mall.malladmin.service.product;
 
 import com.mall.malladmin.entity.product.ProductEntity;
+import com.mall.malladmin.vo.common.CommonResultVo;
+import com.mall.malladmin.vo.product.ProductVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,4 +48,14 @@ public interface ProductService {
      * @return
      */
     Page<ProductEntity> findPage(ProductEntity entity, Pageable page);
+
+    /**
+     * 创建商品信息
+     * @param vo
+     * @return
+     */
+    @Transactional
+    CommonResultVo create(ProductVo vo);
+
+    List<ProductVo> findByName(String name);
 }

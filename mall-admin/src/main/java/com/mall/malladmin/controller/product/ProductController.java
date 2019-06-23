@@ -12,17 +12,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 商品信息
  */
 @Slf4j
 @RestController
-@RequestMapping(value = "/product")
+@RequestMapping(value = "/productController")
 public class ProductController {
 
     @Resource(name = "productService")
@@ -34,7 +36,6 @@ public class ProductController {
      */
     @GetMapping(value = "/getPage.do")
     protected CommonResultVo getPage(ProductVo vo){
-        log.info("接收vo:{}", vo);
         Sort sort = new Sort(Sort.Direction.ASC, "addTime", "productId");
         Pageable page = PageRequest.of(vo.getPageNum()-1, vo.getPageSize(), sort);
         ProductEntity entity = new ProductEntity();
@@ -57,4 +58,22 @@ public class ProductController {
         return new CommonResultVo().success(resultPage);
     }
 
+    /**
+     * 新建商品信息
+     * @param vo
+     * @return
+     */
+    @PostMapping(value = "/create.do")
+    protected CommonResultVo create(ProductVo vo){
+        return productService.create(vo);
+    }
+    /**
+     * 根据商品名称获取商品列表
+     * @return
+     */
+    @PostMapping(value = "/findProductByName.do")
+    protected CommonResultVo findProductByName(String name){
+        List<ProductVo> result = productService.findByName(name);
+        return new CommonResultVo().success(result);
+    }
 }

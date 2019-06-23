@@ -31,10 +31,25 @@ public class ProductPropertyNameEntity {
     @Column(length = 64)
     private String name;
     /**
-     * 	商是否销售属性
+     * 	是否销售属性
      * 	0：否
      * 	1：是
      */
     @Column(name = "is_sale", length = 1)
     private String isSale;
+    /**
+     * 	是否显示
+     * 	0：是
+     * 	1：否
+     */
+    @Column(name = "is_show", length = 1)
+    private String isShow;
+    /**
+     * 	是否可用
+     * 	0：是
+     * 	1：否
+     */
+    @Column(name = "is_usable", length = 1)
+    private String isUsable;
+
 }
