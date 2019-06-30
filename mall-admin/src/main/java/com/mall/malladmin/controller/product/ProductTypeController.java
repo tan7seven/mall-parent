@@ -75,7 +75,7 @@ public class ProductTypeController {
      * @return
      */
     @PostMapping("/create.do")
-    protected CommonResultVo create(ProductTypeVo vo){
+    protected CommonResultVo create(@RequestBody ProductTypeVo vo){
         ProductTypeEntity result = productTypeService.create(vo);
         if(result==null){
             return new CommonResultVo().failed();
@@ -110,7 +110,7 @@ public class ProductTypeController {
      * @return
      */
     @PostMapping(value = "/updateProductType.do/{typeId}")
-    protected CommonResultVo updateProductType(@PathVariable Integer typeId, ProductTypeVo vo){
+    protected CommonResultVo updateProductType(@PathVariable Integer typeId, @RequestBody ProductTypeVo vo){
         productPropertyNameService.deleteByTypeId(typeId);
         productTypeService.update(vo);
         return new CommonResultVo().success();
@@ -121,7 +121,7 @@ public class ProductTypeController {
      * @return
      */
     @PostMapping(value = "/update/isNavigationBar.do")
-    protected CommonResultVo updateBar(ProductTypeVo vo){
+    protected CommonResultVo updateBar(@RequestBody ProductTypeVo vo){
         ProductTypeEntity entity = productTypeService.findById(vo.getTypeId()).get();
         if(null == entity){
             return new CommonResultVo().validateFailed("typeId异常：获取不到相关类目！");
@@ -137,7 +137,7 @@ public class ProductTypeController {
      * @return
      */
     @PostMapping(value = "/update/status.do")
-    protected CommonResultVo updateStatus(ProductTypeVo vo){
+    protected CommonResultVo updateStatus(@RequestBody ProductTypeVo vo){
         ProductTypeEntity entity = productTypeService.findById(vo.getTypeId()).get();
         if(null == entity){
             return new CommonResultVo().validateFailed("typeId异常：获取不到相关类目！");

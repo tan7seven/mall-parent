@@ -3,6 +3,7 @@ package com.mall.malladmin.entity.product;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "mall_product_type")
-public class ProductTypeEntity {
+public class ProductTypeEntity  implements Serializable {
 
     /**
      * 状态：0-正常

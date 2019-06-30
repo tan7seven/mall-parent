@@ -3,6 +3,7 @@ package com.mall.malladmin.entity.product;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 商品属性名
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "mall_product_property_value")
-public class ProductPropertyValueEntity {
+public class ProductPropertyValueEntity  implements Serializable {
 
     public static final String IS_SALE = "0";
     public static final String NOT_SALE = "1";

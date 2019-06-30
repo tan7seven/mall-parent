@@ -2,12 +2,12 @@ package com.mall.malladmin.service.product;
 
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.entity.product.ProductSkuEntity;
+import com.mall.malladmin.vo.common.CommonResultVo;
 import com.mall.malladmin.vo.product.ProductSkuVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 商品SKU
@@ -15,16 +15,20 @@ import java.util.Optional;
 public interface ProductSkuService {
     /**
      * 新增
-     * @param entity
      * @return
      */
-    ProductSkuEntity add(ProductSkuEntity entity);
+    CommonResultVo add(ProductSkuVo vo);
+    /**
+     * 更新
+     * @return
+     */
+    CommonResultVo update(Integer id, ProductSkuVo vo);
     /**
      *  根据ID查找
      * @param id
      * @return
      */
-    Optional<ProductSkuEntity> findById(Integer id);
+    ProductSkuVo findById(Integer id);
 
     /**
      * 删除

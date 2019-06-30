@@ -19,7 +19,19 @@ public class ProductPropertyValueVo extends CommonVo implements Serializable {
      */
     private Integer propertyNameId;
     /**
+     * 属性名
+     */
+    private String propertyName;
+    /**
      * 属性值
      */
     private String value;
+    /**
+     * 是否销售属性
+     */
+    private String isSale;
+    /**
+     * 商品编号
+     */
+    private Integer productId;
 }

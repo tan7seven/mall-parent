@@ -72,7 +72,7 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/create.do")
-    protected CommonResultVo create(ProductPropertyNameVo vo){
+    protected CommonResultVo create(@RequestBody ProductPropertyNameVo vo){
         ProductPropertyNameEntity entity = new ProductPropertyNameEntity();
         BeanUtils.copyProperties(vo,entity);
         return  productPropertyNameService.add(entity);
@@ -82,7 +82,7 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/update.do/{id}")
-    protected CommonResultVo update(@PathVariable Integer id, ProductPropertyNameVo vo){
+    protected CommonResultVo update(@PathVariable Integer id, @RequestBody ProductPropertyNameVo vo){
         if(null == id){
             return new CommonResultVo().validateFailed("主键为空！");
         }
@@ -107,7 +107,7 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/updateIsSale.do")
-    protected CommonResultVo updateIsSale(ProductPropertyNameVo vo){
+    protected CommonResultVo updateIsSale(@RequestBody ProductPropertyNameVo vo){
         if(null == vo.getPropertyNameId()){
             return new CommonResultVo().validateFailed("主键为空！");
         }
@@ -120,7 +120,7 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/updateIsShow.do")
-    protected CommonResultVo updateIsShow(ProductPropertyNameVo vo){
+    protected CommonResultVo updateIsShow(@RequestBody ProductPropertyNameVo vo){
         if(null == vo.getPropertyNameId()){
             return new CommonResultVo().validateFailed("主键为空！");
         }
@@ -134,7 +134,7 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/updateIsUsable.do")
-    protected CommonResultVo updateIsUsable(ProductPropertyNameVo vo){
+    protected CommonResultVo updateIsUsable(@RequestBody ProductPropertyNameVo vo){
         if(null == vo.getPropertyNameId()){
             return new CommonResultVo().validateFailed("主键为空！");
         }

@@ -1,13 +1,11 @@
 package com.mall.malladmin.service.product.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
-import com.mall.malladmin.entity.product.ProductEntity;
-import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
-import com.mall.malladmin.entity.product.ProductPropertyValueEntity;
+import com.mall.malladmin.entity.product.*;
 import com.mall.malladmin.mapper.product.ProductMapper;
-import com.mall.malladmin.repository.product.ProductPropertyNameRepository;
-import com.mall.malladmin.repository.product.ProductPropertyValueRepository;
-import com.mall.malladmin.repository.product.ProductRepository;
+import com.mall.malladmin.mapper.product.ProductPropertyMapper;
+import com.mall.malladmin.repository.product.*;
 import com.mall.malladmin.service.product.ProductService;
 import com.mall.malladmin.vo.common.CommonResultVo;
 import com.mall.malladmin.vo.product.ProductVo;
@@ -22,20 +20,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service(value = "productService")
 public class ProductServiceImpl implements ProductService {
     @Autowired
+    private ProductDetailRepository productDetailRepository;
+    @Autowired
     private ProductRepository productRepository;
-
+    @Autowired
+    private ProductTypeRepository productTypeRepository;
     @Autowired
     private ProductPropertyNameRepository productPropertyNameRepository;
-
     @Autowired
     private ProductPropertyValueRepository productPropertyValueRepository;
-
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private ProductPropertyMapper productPropertyMapper;
 
     @Override
     public ProductEntity add(ProductEntity entity) {
@@ -44,8 +46,40 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductEntity> findById(Integer id) {
-        return productRepository.findById(id);
+    public ProductVo findById(Integer id) {
+        ProductEntity entity = productRepository.findById(id).get();
+        ProductVo vo = new ProductVo();
+        BeanUtils.copyProperties(entity, vo);
+        List<ProductPropertyValueEntity> propertyValues= productPropertyValueRepository.findByProductId(id);
+        List<Integer> properties = propertyValues.stream()
+                .filter(productPropertyValueEntity -> ProductPropertyValueEntity.IS_SALE.equals(productPropertyValueEntity.getIsSale()))
+                .map(productPropertyValueEntity->productPropertyValueEntity.getPropertyNameId())
+                .distinct().collect(Collectors.toList());
+        if(null != properties && !properties.isEmpty() && properties.size()>=1 ){
+            vo.setPropertyValueAOptions(productPropertyMapper.findByPropertyNameIdAndProductId(properties.get(0), entity.getProductId()));
+        }
+        if(null != properties && !properties.isEmpty() && properties.size()>=2 ){
+            vo.setPropertyValueBOptions(productPropertyMapper.findByPropertyNameIdAndProductId(properties.get(1), entity.getProductId()));
+        }
+        if(null != properties && !properties.isEmpty() && properties.size()>=3 ){
+            vo.setPropertyValueCOptions(productPropertyMapper.findByPropertyNameIdAndProductId(properties.get(2), entity.getProductId()));
+        }
+
+        System.out.println(JSONObject.toJSONString(vo));
+        ProductEntity result = productRepository.findById(id).get();
+        ProductTypeEntity typeEntity = productTypeRepository.findById(result.getTypeId()).get();
+        BeanUtils.copyProperties(result, vo);
+        vo.setTypeName(typeEntity.getTypeName());
+        return vo;
+    }
+
+    @Override
+    public CommonResultVo deleteList(Integer[] ids) {
+        for (Integer id : ids) {
+            productRepository.deleteById(id);
+
+        }
+        return null;
     }
 
     @Override
@@ -85,6 +119,11 @@ public class ProductServiceImpl implements ProductService {
         entity.setTypeId(vo.getProductTypeId());
         entity.setHits(0);
         ProductEntity resultProduct = productRepository.save(entity);
+        //添加商品明细
+        ProductDetailEntity productDetailEntity = new ProductDetailEntity();
+        productDetailEntity.setDetail(vo.getDetail());
+        productDetailEntity.setProductId(resultProduct.getProductId());
+        productDetailRepository.save(productDetailEntity);
         //添加销售属性值
         String[] propertyIsSales = vo.getProductPropertyIsSaleChecked();
         for (String propertyIsSale: propertyIsSales) {

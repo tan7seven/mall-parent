@@ -3,6 +3,7 @@ package com.mall.malladmin.entity.product;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  *  商品属性名属性值关联表
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "mall_product_detail")
-public class ProductDetailEntity {
+public class ProductDetailEntity implements Serializable{
     /**
      * 编号
      */

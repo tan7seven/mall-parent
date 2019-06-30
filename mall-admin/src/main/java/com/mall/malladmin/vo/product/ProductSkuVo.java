@@ -2,10 +2,12 @@ package com.mall.malladmin.vo.product;
 
 import com.mall.malladmin.vo.common.CommonVo;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 商品库存表
@@ -59,15 +61,29 @@ public class ProductSkuVo extends CommonVo implements Serializable {
     /**
      * 新增时间
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date addTime;
     /**
      * 更新时间
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updateTime;
     /**
      * SKU属性值
      */
-    private String propertyA;
-    private String propertyB;
-    private String propertyC;
+    private String propertyValueA;
+    private String propertyValueB;
+    private String propertyValueC;
+    /**
+     * 销售属性值A
+     */
+    private List<ProductPropertyValueVo> propertyValueAOptions;
+    /**
+     * 销售属性值B
+     */
+    private List<ProductPropertyValueVo> propertyValueBOptions;
+    /**
+     * 销售属性值C
+     */
+    private List<ProductPropertyValueVo> propertyValueCOptions;
 }

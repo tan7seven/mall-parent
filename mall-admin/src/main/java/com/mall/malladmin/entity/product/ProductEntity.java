@@ -3,6 +3,7 @@ package com.mall.malladmin.entity.product;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_product")
-public class ProductEntity {
+public class ProductEntity  implements Serializable {
 
     /**
      * 状态：0-上架

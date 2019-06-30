@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 商品信息
@@ -77,6 +78,17 @@ public class ProductVo extends CommonVo implements Serializable {
      * 排序
      */
     private Integer sort;
-
+    /**
+     * 销售属性值A
+     */
+    private List<ProductPropertyValueVo> propertyValueAOptions;
+    /**
+     * 销售属性值B
+     */
+    private List<ProductPropertyValueVo> propertyValueBOptions;
+    /**
+     * 销售属性值C
+     */
+    private List<ProductPropertyValueVo> propertyValueCOptions;
 
 }

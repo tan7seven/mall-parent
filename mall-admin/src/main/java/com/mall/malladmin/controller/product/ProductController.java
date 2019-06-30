@@ -1,20 +1,19 @@
 package com.mall.malladmin.controller.product;
 
 import com.mall.malladmin.entity.product.ProductEntity;
+import com.mall.malladmin.service.product.ProductPropertyValueService;
 import com.mall.malladmin.service.product.ProductService;
 import com.mall.malladmin.util.ResultPage;
 import com.mall.malladmin.vo.common.CommonResultVo;
 import com.mall.malladmin.vo.product.ProductVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,6 +28,9 @@ public class ProductController {
 
     @Resource(name = "productService")
     private ProductService productService;
+
+    @Autowired
+    private ProductPropertyValueService productPropertyValueService;
     /**
      * 获取商品分页信息
      * @param vo
@@ -64,7 +66,7 @@ public class ProductController {
      * @return
      */
     @PostMapping(value = "/create.do")
-    protected CommonResultVo create(ProductVo vo){
+    protected CommonResultVo create(@RequestBody ProductVo vo){
         return productService.create(vo);
     }
     /**
@@ -76,4 +78,30 @@ public class ProductController {
         List<ProductVo> result = productService.findByName(name);
         return new CommonResultVo().success(result);
     }
+    /**
+     * 根据ID获取商品信息
+     * @return
+     */
+    @GetMapping(value = "/getProduct.do/{id}")
+    protected CommonResultVo getProduct(@PathVariable Integer id){
+        if(null == id){
+            return new CommonResultVo().validateFailed("id为空！");
+        }
+        ProductVo result = productService.findById(id);
+        return new CommonResultVo().success(result);
+    }
+
+    /**
+     * 删除
+     * @param ids
+     * @return
+     */
+    @PostMapping(value = "delete.do")
+    protected CommonResultVo delete(Integer... ids){
+
+        log.info("{}", ids);
+        return new CommonResultVo().success();
+
+    }
+
 }

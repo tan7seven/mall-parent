@@ -27,6 +27,11 @@ public class ProductPropertyValueServiceImpl implements ProductPropertyValueServ
     }
 
     @Override
+    public List<ProductPropertyValueEntity> findByProductId(Integer productId) {
+        return productPropertyValueRepository.findByProductId(productId);
+    }
+
+    @Override
     public void delete(ProductPropertyValueEntity entity) {
         productPropertyValueRepository.delete(entity);
     }

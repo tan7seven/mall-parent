@@ -3,6 +3,7 @@ package com.mall.malladmin.entity.product;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_product_img")
-public class ProductImgEntity {
+public class ProductImgEntity  implements Serializable {
     /**
      *商品图片编号
      */

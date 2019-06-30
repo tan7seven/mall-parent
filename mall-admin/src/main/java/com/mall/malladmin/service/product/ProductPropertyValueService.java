@@ -25,6 +25,12 @@ public interface ProductPropertyValueService {
     Optional<ProductPropertyValueEntity> findById(Integer id);
 
     /**
+     * 根据商品ID获取属性值信息
+     * @param productId
+     * @return
+     */
+    List<ProductPropertyValueEntity> findByProductId(Integer productId);
+    /**
      * 删除
      * @param entity
      */

@@ -27,14 +27,20 @@
             b.product_name productName,
             c1.type_name typeName,
             c1.type_Id typeId,
-            b.product_Id product_Id
+            b.product_Id productId
         FROM
             mall_product_sku a
         INNER JOIN mall_product b ON a.product_id = b.product_id
         INNER JOIN mall_product_type c1 ON c1.type_id = b.type_id
         where 1 = 1
+        <if test="vo.productName!=null and vo.productName!=''">
+            AND b.product_name like '%${vo.productName}%'
+        </if>
+        <if test="vo.productId!=null and vo.productId!=''">
+            AND b.product_id = #{vo.productId}
+        </if>
         <if test="vo.typeName!=null and vo.typeName!=''">
-            AND b.product_name like '%${vo.typeName}%'
+            AND c1.type_name like '%${vo.typeName}%'
         </if>
     </select>
 

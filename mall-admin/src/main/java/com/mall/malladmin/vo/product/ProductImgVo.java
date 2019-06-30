@@ -11,6 +11,7 @@ import java.util.Date;
  */
 @Data
 public class ProductImgVo extends CommonVo implements Serializable {
+
     /**
      *商品图片编号
      */

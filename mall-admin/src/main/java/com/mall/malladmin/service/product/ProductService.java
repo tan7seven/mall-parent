@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 商品信息
@@ -25,7 +24,12 @@ public interface ProductService {
      * @param id
      * @return
      */
-    Optional<ProductEntity> findById(Integer id);
+    ProductVo findById(Integer id);
+    /**
+     * 批量删除
+     */
+    @Transactional
+    CommonResultVo deleteList(Integer[] ids);
     /**
      * 删除
      * @param entity
