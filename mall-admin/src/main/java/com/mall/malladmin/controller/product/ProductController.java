@@ -69,6 +69,18 @@ public class ProductController {
     protected CommonResultVo create(@RequestBody ProductVo vo){
         return productService.create(vo);
     }
+
+    /**
+     * 更新
+     * @return
+     */
+    @PostMapping(value = "/update.do/{id}")
+    protected CommonResultVo update(@PathVariable Integer id , @RequestBody ProductVo vo){
+        if(null == vo.getProductId()){
+            return new CommonResultVo().validateFailed("商品编号为空！");
+        }
+        return productService.update(id, vo);
+    }
     /**
      * 根据商品名称获取商品列表
      * @return
@@ -98,10 +110,8 @@ public class ProductController {
      */
     @PostMapping(value = "delete.do")
     protected CommonResultVo delete(Integer... ids){
-
-        log.info("{}", ids);
-        return new CommonResultVo().success();
-
+        CommonResultVo result = productService.deleteList(ids);
+        return result;
     }
 
 }

@@ -30,6 +30,10 @@
         </if>
     </select>
 
+    <delete id="deleteByProductId">
+        DELETE  FROM mall_product_property_value  WHERE product_id = #{productId}
+    </delete>
+
 </mapper>
         <!--
             <id>：主键字段

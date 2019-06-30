@@ -3,7 +3,6 @@ package com.mall.malladmin.vo.product;
 import com.mall.malladmin.vo.common.CommonVo;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -64,8 +63,11 @@ public class ProductVo extends CommonVo implements Serializable {
     /**
      * 类目ID
      */
-    @NotBlank(message = "分类编号不能为空！")
     private Integer productTypeId;
+    /**
+     * 类目父类ID
+     */
+    private Integer productTypeParentId;
     /**
      * 类目销售属性
      */
@@ -90,5 +92,9 @@ public class ProductVo extends CommonVo implements Serializable {
      * 销售属性值C
      */
     private List<ProductPropertyValueVo> propertyValueCOptions;
+    /**
+     * 是否销售属性
+     */
+    private String isSale;
 
 }

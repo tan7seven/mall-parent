@@ -34,6 +34,29 @@
         </if>
     </select>
 
+    <select id="findPropertyIsSale" resultType="com.mall.malladmin.dto.ProductPropertyDto">
+      SELECT concat(a.name,':',b.value) as isSalePropertyString, concat(a.property_name_id,':',b.property_value_id) as isSalePropertyId
+        FROM mall_product_property_name a
+      INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
+      WHERE  1= 1
+        <if test="vo.isSale!=null and vo.isSale!=''">
+            AND b.is_sale = #{vo.isSale}
+        </if>
+        <if test="vo.productId!=null and vo.productId!=''">
+            AND b.product_id = #{vo.productId}
+        </if>
+    </select>
+    <select id="findPropertyNotSale" resultType="java.lang.String">
+        SELECT concat(b.value) as result FROM mall_product_property_name a
+        INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
+        WHERE  1= 1
+        <if test="vo.isSale!=null and vo.isSale!=''">
+            AND b.is_sale = #{vo.isSale}
+        </if>
+        <if test="vo.productId!=null and vo.productId!=''">
+            AND b.product_id = #{vo.productId}
+        </if>
+    </select>
 </mapper>
         <!--
             <id>：主键字段

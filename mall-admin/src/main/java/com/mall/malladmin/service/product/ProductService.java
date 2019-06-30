@@ -60,6 +60,18 @@ public interface ProductService {
      */
     @Transactional
     CommonResultVo create(ProductVo vo);
+    /**
+     * 更新商品信息
+     * @param vo
+     * @return
+     */
+    @Transactional
+    CommonResultVo update(Integer id, ProductVo vo);
 
+    /**
+     * 根据商品名称查询
+     * @param name
+     * @return
+     */
     List<ProductVo> findByName(String name);
 }

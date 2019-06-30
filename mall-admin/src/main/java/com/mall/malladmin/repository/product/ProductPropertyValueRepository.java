@@ -7,6 +7,21 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface ProductPropertyValueRepository extends JpaRepository<ProductPropertyValueEntity, Integer>, JpaSpecificationExecutor<ProductPropertyValueEntity> {
+
+    /**
+     * 根据商品编号和是否销售属性删除
+     * @param productId
+     * @param isSale
+     */
+    void deleteByProductIdAndIsSale(Integer productId, String isSale);
+
+    /**
+     * 删除属性值
+     * @param isSale
+     * @param value
+     * @param productID
+     */
+    void deleteByIsSaleAndValueAndProductId(String isSale, String value, Integer productID);
     /**
      * 根据商品ID获取属性值
      * @param id

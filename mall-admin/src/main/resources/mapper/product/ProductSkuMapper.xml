@@ -44,6 +44,10 @@
         </if>
     </select>
 
+
+    <delete id="deleteByIsSaleProperty">
+      DELETE  FROM mall_product_sku WHERE properties LIKE '%${property}%'
+    </delete>
 </mapper>
         <!--
             <id>：主键字段

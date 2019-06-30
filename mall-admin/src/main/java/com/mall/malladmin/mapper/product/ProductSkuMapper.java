@@ -15,5 +15,11 @@ public interface ProductSkuMapper {
      */
     List<ProductSkuVo> getList(@Param("vo") ProductSkuVo vo);
 
+    /**
+     * 根据销售属性值删除
+     * @param property
+     */
+    void deleteByIsSaleProperty(@Param(value = "property") String property);
+
 
 }

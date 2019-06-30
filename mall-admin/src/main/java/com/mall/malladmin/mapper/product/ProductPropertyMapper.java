@@ -15,5 +15,8 @@ public interface ProductPropertyMapper {
      */
     List<ProductPropertyValueVo> findByPropertyNameIdAndProductId(@Param(value = "propertyNameId")Integer propertyNameId, @Param(value = "productId") Integer productId);
 
-
+    /**
+     * 根据商品ID删除
+     */
+    void deleteByProductId(@Param("productId") Integer productId);
 }
