@@ -1,18 +1,12 @@
 package com.mall.malladmin.controller.product;
 
-import com.mall.malladmin.entity.product.ProductEntity;
+import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.service.product.ProductPropertyValueService;
 import com.mall.malladmin.service.product.ProductService;
-import com.mall.malladmin.util.ResultPage;
 import com.mall.malladmin.vo.common.CommonResultVo;
 import com.mall.malladmin.vo.product.ProductVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -38,26 +32,8 @@ public class ProductController {
      */
     @GetMapping(value = "/getPage.do")
     protected CommonResultVo getPage(ProductVo vo){
-        Sort sort = new Sort(Sort.Direction.ASC, "addTime", "productId");
-        Pageable page = PageRequest.of(vo.getPageNum()-1, vo.getPageSize(), sort);
-        ProductEntity entity = new ProductEntity();
-        if(StringUtils.isNotBlank(vo.getProductName())){
-            entity.setProductName(vo.getProductName());
-        }
-        if(null != vo.getProductId()){
-            entity.setProductId(vo.getProductId());
-        }
-        if(StringUtils.isNotBlank(vo.getStatus())){
-            entity.setStatus(vo.getStatus());
-        }
-        if(null != vo.getTypeId()){
-            entity.setTypeId(vo.getTypeId());
-        }
-        Page<ProductEntity> result = productService.findPage(entity, page);
-        ResultPage resultPage = new ResultPage();
-        resultPage.setList(result.getContent());
-        resultPage.setTotal(result.getTotalElements());
-        return new CommonResultVo().success(resultPage);
+        PageInfo<ProductVo> result = productService.findPage(vo);
+        return new CommonResultVo().success(result);
     }
 
     /**

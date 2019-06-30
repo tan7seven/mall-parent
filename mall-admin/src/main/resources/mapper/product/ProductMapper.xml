@@ -5,6 +5,7 @@
     <resultMap id="ProductMap" type="com.mall.malladmin.vo.product.ProductVo">
         <result column="productId" property="productId"/>
         <result column="typeId" property="typeId"/>
+        <result column="hits" property="hits"/>
         <result column="productName" property="productName"/>
         <result column="imgUrl" property="imgUrl"/>
         <result column="priceMin" property="priceMin"/>
@@ -24,6 +25,7 @@
             a.unit unit,
             a.img_Url imgUrl,
             a.status status,
+            a.hits,
             a.add_Time addTime,
             b.type_Name typeName
         FROM mall_product a
@@ -31,6 +33,12 @@
         where 1 = 1
         <if test="vo.productName!=null and vo.productName!=''">
             AND a.product_name like '%${vo.productName}%'
+        </if>
+        <if test="vo.typeId!=null and vo.typeId!=''">
+            AND b.type_Id = #{vo.typeId}
+        </if>
+        <if test="vo.status!=null and vo.status!=''">
+            AND a.status = #{vo.status}
         </if>
     </select>
 

@@ -23,11 +23,6 @@ public class ProductEntity  implements Serializable {
      * 状态：1-下架
      */
     public static final String SOLD_OUT = "1";
-    /**
-     * 状态：2-已删除
-     */
-    public static final String DELETED = "2";
-
 
     /**
      *商品编号
@@ -75,7 +70,6 @@ public class ProductEntity  implements Serializable {
      * 商品状态
      * 0：上架
      * 1：下架
-     * 2：已删除
      */
     @Column(length = 1)
     private String status;

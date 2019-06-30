@@ -1,5 +1,6 @@
 package com.mall.malladmin.service.product;
 
+import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.entity.product.ProductEntity;
 import com.mall.malladmin.vo.common.CommonResultVo;
 import com.mall.malladmin.vo.product.ProductVo;
@@ -52,6 +53,12 @@ public interface ProductService {
      * @return
      */
     Page<ProductEntity> findPage(ProductEntity entity, Pageable page);
+
+    /**
+     * mybatis分页查询
+     * @returnvo
+     */
+    PageInfo<ProductVo> findPage(ProductVo vo);
 
     /**
      * 创建商品信息

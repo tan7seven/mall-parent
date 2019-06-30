@@ -1,6 +1,7 @@
 package com.mall.malladmin.service.product.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.dto.ProductPropertyDto;
 import com.mall.malladmin.entity.product.*;
 import com.mall.malladmin.mapper.product.ProductMapper;
@@ -140,6 +141,14 @@ public class ProductServiceImpl implements ProductService {
         Example<ProductEntity> example = Example.of(entity, matcher);
         Page<ProductEntity> result = productRepository.findAll(example, page);
         return result;
+    }
+
+    @Override
+    public PageInfo<ProductVo> findPage(ProductVo vo) {
+        PageHelper.startPage(vo.getPageNum(), vo.getPageSize());
+        List<ProductVo> productVoList = productMapper.getList(vo);
+        PageInfo<ProductVo> page = new PageInfo<>(productVoList);
+        return page;
     }
 
     @Override
