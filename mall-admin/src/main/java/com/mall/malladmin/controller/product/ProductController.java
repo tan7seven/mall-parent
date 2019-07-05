@@ -84,10 +84,21 @@ public class ProductController {
      * @param ids
      * @return
      */
-    @PostMapping(value = "delete.do")
+    @PostMapping(value = "/delete.do")
     protected CommonResultVo delete(Integer... ids){
         CommonResultVo result = productService.deleteList(ids);
         return result;
     }
 
+    /**
+     * 修改是否上下架状态
+     * @param isPutaway
+     * @param ids
+     * @return
+     */
+    @PostMapping(value = "/updateIsPutaway.do")
+    protected CommonResultVo updateIsPutaway(String isPutaway, Integer...ids){
+        CommonResultVo result = productService.updateIsPutAway(isPutaway, ids);
+        return result;
+    }
 }

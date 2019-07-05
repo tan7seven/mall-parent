@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity add(ProductEntity entity) {
-        entity.setAddTime(new Date());
+        entity.setCreateTime(new Date());
         return productRepository.save(entity);
     }
 
@@ -156,8 +156,8 @@ public class ProductServiceImpl implements ProductService {
         //添加商品信息
         ProductEntity entity = new ProductEntity();
         BeanUtils.copyProperties(vo, entity);
-        entity.setStatus(ProductEntity.PUT_AWAY);
-        entity.setAddTime(new Date());
+        entity.setIsPutaway(ProductEntity.PUT_AWAY);
+        entity.setCreateTime(new Date());
         entity.setTypeId(vo.getProductTypeId());
         entity.setHits(0);
         ProductEntity resultProduct = productRepository.save(entity);
@@ -275,6 +275,16 @@ public class ProductServiceImpl implements ProductService {
             propertyValueEntity.setPropertyNameId(propertyNotSales2.get(i).getPropertyNameId());
             propertyValueEntity.setIsSale(ProductPropertyValueEntity.NOT_SALE);
             productPropertyValueRepository.save(propertyValueEntity);
+        }
+        return new CommonResultVo().success();
+    }
+
+    @Override
+    public CommonResultVo updateIsPutAway(String isPutaway, Integer[] ids) {
+        for (Integer id : ids) {
+            ProductEntity entity = productRepository.findById(id).get();
+            entity.setIsPutaway(isPutaway);
+            productRepository.save(entity);
         }
         return new CommonResultVo().success();
     }

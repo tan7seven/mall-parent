@@ -38,6 +38,6 @@ public class ProductImgEntity  implements Serializable {
     /**
      * 新增时间
      */
-    @Column(name = "add_time")
-    private Date addTime = new Date();
+    @Column(name = "create_time")
+    private Date createTime;
 }

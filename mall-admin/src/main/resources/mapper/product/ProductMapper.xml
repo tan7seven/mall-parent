@@ -10,7 +10,7 @@
         <result column="imgUrl" property="imgUrl"/>
         <result column="priceMin" property="priceMin"/>
         <result column="unit" property="unit"/>
-        <result column="status" property="status"/>
+        <result column="isPutaway" property="isPutaway"/>
         <result column="addTime" property="addTime"/>
         <result column="detail" property="detail"/>
         <result column="typeName" property="typeName"/>
@@ -24,7 +24,7 @@
             a.price_Min priceMin,
             a.unit unit,
             a.img_Url imgUrl,
-            a.status status,
+            a.is_Putaway isPutaway,
             a.hits,
             a.add_Time addTime,
             b.type_Name typeName
@@ -37,8 +37,8 @@
         <if test="vo.typeId!=null and vo.typeId!=''">
             AND b.type_Id = #{vo.typeId}
         </if>
-        <if test="vo.status!=null and vo.status!=''">
-            AND a.status = #{vo.status}
+        <if test="vo.isPutaway!=null and vo.isPutaway!=''">
+            AND a.is_Putaway = #{vo.isPutaway}
         </if>
     </select>
 

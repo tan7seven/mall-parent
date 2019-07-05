@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminEntity add(AdminEntity entity) {
-        entity.setAddDate(new Date());
+        entity.setCreateTime(new Date());
         entity.setIsUsable(AdminEntity.IS_USABLE);
         return adminRepository.save(entity);
     }

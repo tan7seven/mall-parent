@@ -30,5 +30,5 @@ public class ProductImgVo extends CommonVo implements Serializable {
     /**
      * 新增时间
      */
-    private Date addTime = new Date();
+    private Date createTime;
 }

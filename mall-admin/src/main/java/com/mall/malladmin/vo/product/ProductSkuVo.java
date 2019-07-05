@@ -62,12 +62,12 @@ public class ProductSkuVo extends CommonVo implements Serializable {
      * 新增时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date addTime;
+    private Date createTime;
     /**
      * 更新时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date updateTime;
+    private Date modifyTime;
     /**
      * SKU属性值
      */

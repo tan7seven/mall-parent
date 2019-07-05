@@ -74,12 +74,12 @@ public class AdminEntity implements Serializable {
     /**
      * 新增时间
      */
-    @Column(name = "add_date")
-    private Date addDate;
+    @Column(name = "create_Time")
+    private Date createTime;
     /**
      * 更新时间
      */
-    @Column(name = "update_date")
-    private Date updateDate;
+    @Column(name = "modify_Time")
+    private Date modifyTime;
 
 }

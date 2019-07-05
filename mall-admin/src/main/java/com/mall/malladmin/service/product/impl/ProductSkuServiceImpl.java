@@ -52,8 +52,8 @@ public class ProductSkuServiceImpl implements ProductSkuService {
             return new CommonResultVo().validateFailed("销售价格不能小于商品最低价！");
         }
         ProductSkuEntity entity = new ProductSkuEntity();
-        entity.setAddTime(new Date());
-        entity.setUpdateTime(new Date());
+        entity.setCreateTime(new Date());
+        entity.setModifyTime(new Date());
         entity.setCost(vo.getCost()==null?new BigDecimal(0):vo.getCost());
         entity.setPrice(vo.getPrice()==null?new BigDecimal(0):vo.getPrice());
         entity.setProductId(vo.getProductId());
@@ -79,8 +79,8 @@ public class ProductSkuServiceImpl implements ProductSkuService {
 
     @Override
     public CommonResultVo update(Integer id, ProductSkuVo vo) {
-        vo.setAddTime(new Date());
-        vo.setUpdateTime(new Date());
+        vo.setCreateTime(new Date());
+        vo.setModifyTime(new Date());
         vo.setCost(vo.getCost()==null?new BigDecimal(0):vo.getCost());
         vo.setPrice(vo.getPrice()==null?new BigDecimal(0):vo.getPrice());
         vo.setStock(vo.getStock()==null?0:vo.getStock());

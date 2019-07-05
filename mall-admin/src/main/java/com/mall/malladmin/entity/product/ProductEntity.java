@@ -71,12 +71,12 @@ public class ProductEntity  implements Serializable {
      * 0：上架
      * 1：下架
      */
-    @Column(length = 1)
-    private String status;
+    @Column(length = 1, name = "is_putaway")
+    private String isPutaway;
     /**
      * 新增时间
      */
-    @Column(name = "add_time")
-    private Date addTime;
+    @Column(name = "create_time")
+    private Date createTime;
 
 }

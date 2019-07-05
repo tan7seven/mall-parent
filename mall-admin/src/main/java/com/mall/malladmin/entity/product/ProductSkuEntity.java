@@ -52,11 +52,11 @@ public class ProductSkuEntity  implements Serializable {
     /**
      * 新增时间
      */
-    @Column(name = "add_time")
-    private Date addTime = new Date();
+    @Column(name = "create_time")
+    private Date createTime = new Date();
     /**
      * 更新时间
      */
-    @Column(name = "update_time")
-    private Date updateTime = new Date();
+    @Column(name = "modify_time")
+    private Date modifyTime = new Date();
 }

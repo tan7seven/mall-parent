@@ -74,7 +74,12 @@ public interface ProductService {
      */
     @Transactional
     CommonResultVo update(Integer id, ProductVo vo);
-
+    /**
+     * 更新上下架状态
+     * @return
+     */
+    @Transactional
+    CommonResultVo updateIsPutAway(String isPutaway, Integer[] ids);
     /**
      * 根据商品名称查询
      * @param name

@@ -49,9 +49,8 @@ public class ProductVo extends CommonVo implements Serializable {
      * 商品状态
      * 0：上架
      * 1：下架
-     * 2：已删除
      */
-    private String status;
+    private String isPutaway;
     /**
      * 新增时间
      */

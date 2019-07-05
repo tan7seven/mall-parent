@@ -55,9 +55,9 @@ public class AdminVo implements Serializable {
     /**
      * 新增时间
      */
-    private Date addDate;
+    private Date createTime;
     /**
      * 更新时间
      */
-    private Date updateDate;
+    private Date modifyTime;
 }
