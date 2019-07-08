@@ -3,8 +3,8 @@
 <mapper namespace="com.mall.malladmin.mapper.AdminMapper">
 
     <sql id="Base_Column_List">
-        user_id, login_id, password, nickname, phone, head_portrait, role, is_usable, add_date,
-        update_date
+        user_id, login_id, password, nickname, phone, head_portrait, role, is_usable, create_time,
+        modify_time
     </sql>
 
     <select id="findByLoginId" resultType="com.mall.malladmin.vo.AdminVo" parameterType="String">

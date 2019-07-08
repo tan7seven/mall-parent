@@ -26,7 +26,7 @@
             a.img_Url imgUrl,
             a.is_Putaway isPutaway,
             a.hits,
-            a.add_Time addTime,
+            a.create_time createTime,
             b.type_Name typeName
         FROM mall_product a
         INNER JOIN mall_product_type b ON b.type_id = a.type_id

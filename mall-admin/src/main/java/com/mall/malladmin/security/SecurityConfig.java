@@ -96,7 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedOrigin("*"); // 1允许任何域名使用
         config.addAllowedHeader("*"); // 2允许任何头
         config.addAllowedMethod("*"); // 3允许任何方法（post、get等）
-        config.setMaxAge(1800L);// 4.解决跨域请求两次，预检请求的有效期，单位为秒
+        config.setMaxAge(3600L);// 4.解决跨域请求两次，预检请求的有效期，单位为秒
         config.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
