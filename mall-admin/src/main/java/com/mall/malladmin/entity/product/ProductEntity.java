@@ -44,8 +44,8 @@ public class ProductEntity  implements Serializable {
     /**
      * 商品主图
      */
-    @Column(name = "img_url")
-    private String imgUrl;
+    @Column(name = "pic_url", length = 765)
+    private String picUrl;
     /**
      * 商品最低价
      */

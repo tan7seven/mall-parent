@@ -10,6 +10,6 @@
     <select id="findByLoginId" resultType="com.mall.malladmin.vo.AdminVo" parameterType="String">
         SELECT
         <include refid="Base_Column_List" />
-        FROM mall_admin m WHERE m.login_id = #{loginId}
+        FROM system_admin m WHERE m.login_id = #{loginId}
     </select>
 </mapper>

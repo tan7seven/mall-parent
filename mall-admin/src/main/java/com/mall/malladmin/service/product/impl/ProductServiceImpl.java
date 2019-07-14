@@ -15,12 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service(value = "productService")
 public class ProductServiceImpl implements ProductService {
+    @Value("${pic.path}")
+    private String picPath;
     @Autowired
     private ProductSkuRepository productSkuRepository;
     @Autowired
@@ -97,6 +101,9 @@ public class ProductServiceImpl implements ProductService {
         if (null != detailEntityList && !detailEntityList.isEmpty()) {
             vo.setDetail(detailEntityList.get(0).getDetail());
         }
+        //商品图片
+        String picUrl = vo.getPicUrl();
+        vo.setPicUrlArray(picUrl.split(","));
         log.info("商品信息：{}", vo);
         return vo;
     }
@@ -159,7 +166,12 @@ public class ProductServiceImpl implements ProductService {
         entity.setIsPutaway(ProductEntity.PUT_AWAY);
         entity.setCreateTime(new Date());
         entity.setTypeId(vo.getProductTypeId());
+
         entity.setHits(0);
+        if(null != vo.getPicUrlArray() && vo.getPicUrlArray().length > 0){
+            String picUrl = Arrays.stream(vo.getPicUrlArray()).collect(Collectors.joining(","));
+            entity.setPicUrl(picUrl);
+        }
         ProductEntity resultProduct = productRepository.save(entity);
         //添加商品明细
         ProductDetailEntity productDetailEntity = new ProductDetailEntity();
@@ -208,7 +220,18 @@ public class ProductServiceImpl implements ProductService {
     public CommonResultVo update(Integer productId, ProductVo vo) {
         //修改商品信息
         ProductEntity entity = productRepository.findById(productId).get();
+        //删除图片
+        String picUrl = Arrays.stream(vo.getPicUrlArray()).collect(Collectors.joining(","));
+        if(StringUtils.isNotBlank(entity.getPicUrl())){
+            String[] picUrlArrayOld = entity.getPicUrl().split(",");
+            for (String picUrlOld : picUrlArrayOld) {
+                if(picUrl.indexOf(picUrlOld)== -1){
+                    this.deletePic(picUrlOld);
+                }
+            }
+        }
         BeanUtils.copyProperties(vo, entity);
+        entity.setPicUrl(picUrl);
         ProductEntity resultProduct = productRepository.save(entity);
         //修改商品明细
         productDetailRepository.deleteByProductId(productId);
@@ -276,6 +299,7 @@ public class ProductServiceImpl implements ProductService {
             propertyValueEntity.setIsSale(ProductPropertyValueEntity.NOT_SALE);
             productPropertyValueRepository.save(propertyValueEntity);
         }
+
         return new CommonResultVo().success();
     }
 
@@ -297,5 +321,20 @@ public class ProductServiceImpl implements ProductService {
         }
         PageHelper.startPage(vo.getPageNum(), vo.getPageSize());
         return productMapper.getList(vo);
+    }
+    private Object deletePic(String picUrl){
+        int lastIndexOf = picUrl.lastIndexOf("/");
+        String sb = picUrl.substring(lastIndexOf + 1, picUrl.length());
+        sb = picPath + sb;
+        File file = new File(sb);
+        if (file.exists()) {
+            if (file.delete()) {
+                return new CommonResultVo().success();
+            } else {
+                return new CommonResultVo().failed();
+            }
+        } else {
+            return new CommonResultVo().failed();
+        }
     }
 }

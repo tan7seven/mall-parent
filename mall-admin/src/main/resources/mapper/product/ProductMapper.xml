@@ -7,7 +7,7 @@
         <result column="typeId" property="typeId"/>
         <result column="hits" property="hits"/>
         <result column="productName" property="productName"/>
-        <result column="imgUrl" property="imgUrl"/>
+        <result column="picUrl" property="picUrl"/>
         <result column="priceMin" property="priceMin"/>
         <result column="unit" property="unit"/>
         <result column="isPutaway" property="isPutaway"/>
@@ -23,7 +23,7 @@
             a.product_Name productName,
             a.price_Min priceMin,
             a.unit unit,
-            a.img_Url imgUrl,
+            a.pic_Url picUrl,
             a.is_Putaway isPutaway,
             a.hits,
             a.create_time createTime,

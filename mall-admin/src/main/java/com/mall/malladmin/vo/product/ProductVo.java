@@ -32,7 +32,11 @@ public class ProductVo extends CommonVo implements Serializable {
     /**
      * 商品主图
      */
-    private String imgUrl;
+    private String picUrl;
+    /**
+     * 商品图片集合
+     */
+    private String[] picUrlArray;
     /**
      * 商品最低价
      */
