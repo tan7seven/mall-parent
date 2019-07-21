@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.malladmin.mapper.product.ProductSkuMapper">
 
-    <resultMap id="ProductSkuMap" type="com.mall.malladmin.vo.product.ProductSkuVo">
+    <resultMap id="ProductSkuMap" type="com.mall.malladmin.dto.product.ProductSkuDto">
         <result column="skuId" property="skuId"/>
         <result column="productId" property="productId"/>
         <result column="productName" property="productName"/>
@@ -12,6 +12,7 @@
         <result column="cost" property="cost"/>
         <result column="sellSum" property="sellSum"/>
         <result column="stock" property="stock"/>
+        <result column="picUrl" property="picUrl"/>
         <result column="priceMin" property="priceMin"/>
     </resultMap>
 
@@ -23,6 +24,7 @@
             a.properties,
             a.sell_sum sellSum,
             a.stock,
+            a.pic_url picUrl,
             b.price_min priceMin,
             b.product_name productName,
             c1.type_name typeName,
@@ -33,14 +35,14 @@
         INNER JOIN mall_product b ON a.product_id = b.product_id
         INNER JOIN mall_product_type c1 ON c1.type_id = b.type_id
         where 1 = 1
-        <if test="vo.productName!=null and vo.productName!=''">
-            AND b.product_name like '%${vo.productName}%'
+        <if test="dto.productName!=null and dto.productName!=''">
+            AND b.product_name like '%${dto.productName}%'
         </if>
-        <if test="vo.productId!=null and vo.productId!=''">
-            AND b.product_id = #{vo.productId}
+        <if test="dto.productId!=null and dto.productId!=''">
+            AND b.product_id = #{dto.productId}
         </if>
-        <if test="vo.typeName!=null and vo.typeName!=''">
-            AND c1.type_name like '%${vo.typeName}%'
+        <if test="dto.typeName!=null and dto.typeName!=''">
+            AND c1.type_name like '%${dto.typeName}%'
         </if>
     </select>
 

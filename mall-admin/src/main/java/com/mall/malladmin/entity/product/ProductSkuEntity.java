@@ -37,6 +37,11 @@ public class ProductSkuEntity  implements Serializable {
     @Column()
     private BigDecimal price;
     /**
+     * 	图片地址
+     */
+    @Column(name = "pic_url")
+    private String picUrl;
+    /**
      * 	商品成本
      */
     @Column()

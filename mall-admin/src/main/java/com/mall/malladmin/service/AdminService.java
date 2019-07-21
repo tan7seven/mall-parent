@@ -1,7 +1,7 @@
 package com.mall.malladmin.service;
 
-import com.mall.malladmin.vo.AdminVo;
-import com.mall.malladmin.entity.AdminEntity;
+import com.mall.malladmin.dto.system.AdminDto;
+import com.mall.malladmin.entity.system.AdminEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public interface AdminService {
      * @param dto
      * @return
      */
-    List<AdminEntity> getList(AdminVo dto);
+    List<AdminEntity> getList(AdminDto dto);
 
     /**
      *  根据用户ID查找
@@ -33,8 +33,8 @@ public interface AdminService {
 
     /**
      * 根据登录账号获取用户信息
-     * @param loginId
+     * @param loginCode
      * @return
      */
-    AdminVo findByLoginId(String loginId);
+    AdminDto findByLoginId(String loginCode);
 }

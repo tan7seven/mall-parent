@@ -2,8 +2,8 @@ package com.mall.malladmin.service.product;
 
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.entity.product.ProductEntity;
-import com.mall.malladmin.vo.common.CommonResultVo;
-import com.mall.malladmin.vo.product.ProductVo;
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +25,12 @@ public interface ProductService {
      * @param id
      * @return
      */
-    ProductVo findById(Integer id);
+    ProductDto findById(Integer id);
     /**
      * 批量删除
      */
     @Transactional
-    CommonResultVo deleteList(Integer[] ids);
+    CommonResultDto deleteList(Integer[] ids);
     /**
      * 删除
      * @param entity
@@ -56,34 +56,34 @@ public interface ProductService {
 
     /**
      * mybatis分页查询
-     * @returnvo
+     * @returndto
      */
-    PageInfo<ProductVo> findPage(ProductVo vo);
+    PageInfo<ProductDto> findPage(ProductDto dto);
 
     /**
      * 创建商品信息
-     * @param vo
+     * @param dto
      * @return
      */
     @Transactional
-    CommonResultVo create(ProductVo vo);
+    CommonResultDto create(ProductDto dto);
     /**
      * 更新商品信息
-     * @param vo
+     * @param dto
      * @return
      */
     @Transactional
-    CommonResultVo update(Integer id, ProductVo vo);
+    CommonResultDto update(Integer id, ProductDto dto);
     /**
      * 更新上下架状态
      * @return
      */
     @Transactional
-    CommonResultVo updateIsPutAway(String isPutaway, Integer[] ids);
+    CommonResultDto updateIsPutAway(String isPutaway, Integer[] ids);
     /**
      * 根据商品名称查询
      * @param name
      * @return
      */
-    List<ProductVo> findByName(String name);
+    List<ProductDto> findByName(String name);
 }

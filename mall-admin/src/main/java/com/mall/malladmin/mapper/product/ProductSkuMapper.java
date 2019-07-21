@@ -1,6 +1,6 @@
 package com.mall.malladmin.mapper.product;
 
-import com.mall.malladmin.vo.product.ProductSkuVo;
+import com.mall.malladmin.dto.product.ProductSkuDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface ProductSkuMapper {
      * 查询库存信息
      * @return
      */
-    List<ProductSkuVo> getList(@Param("vo") ProductSkuVo vo);
+    List<ProductSkuDto> getList(@Param("dto") ProductSkuDto dto);
 
     /**
      * 根据销售属性值删除

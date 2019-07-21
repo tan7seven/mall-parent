@@ -2,7 +2,7 @@ package com.mall.malladmin.security;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.malladmin.jwt.JwtTokenUtil;
-import com.mall.malladmin.vo.common.ResultVo;
+import com.mall.malladmin.dto.common.ResultDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -26,6 +26,6 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
         log.info("传给前段的token：{}", jwtToken);
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVo.success("登录成功！",userDetails ,jwtToken)));
+        httpServletResponse.getWriter().write(JSON.toJSONString(ResultDto.success("登录成功！",userDetails ,jwtToken)));
     }
 }

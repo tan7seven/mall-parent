@@ -2,8 +2,8 @@ package com.mall.malladmin.service.product;
 
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.entity.product.ProductSkuEntity;
-import com.mall.malladmin.vo.common.CommonResultVo;
-import com.mall.malladmin.vo.product.ProductSkuVo;
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductSkuDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,18 +17,18 @@ public interface ProductSkuService {
      * 新增
      * @return
      */
-    CommonResultVo add(ProductSkuVo vo);
+    CommonResultDto add(ProductSkuDto dto);
     /**
      * 更新
      * @return
      */
-    CommonResultVo update(Integer id, ProductSkuVo vo);
+    CommonResultDto update(Integer id, ProductSkuDto dto);
     /**
      *  根据ID查找
      * @param id
      * @return
      */
-    ProductSkuVo findById(Integer id);
+    ProductSkuDto findById(Integer id);
 
     /**
      * 删除
@@ -57,8 +57,8 @@ public interface ProductSkuService {
 
     /**
      * mybatis-pagehelper分页查询
-     * @param vo
+     * @param dto
      * @return
      */
-    PageInfo<ProductSkuVo> findPage(ProductSkuVo vo);
+    PageInfo<ProductSkuDto> findPage(ProductSkuDto dto);
 }

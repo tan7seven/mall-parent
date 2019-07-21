@@ -14,7 +14,7 @@ public enum ResultEnum {
     USER_LOGIN_FAILED(203,"用户账号或密码错误"),
     USER_LOGIN_SUCCESS(204,"用户登录成功"),
     USER_NO_ACCESS(205,"用户无权访问"),
-    USER_LOGOUT_SUCCESS(206,"用户登出成功"),
+    USER_LOGOUT_SUCCESS(401,"用户登出成功"),
     TOKEN_IS_BLACKLIST(207,"此token为黑名单"),
     LOGIN_IS_OVERDUE(208,"登录已失效"),
     ;

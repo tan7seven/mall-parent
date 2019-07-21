@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.malladmin.mapper.product.ProductMapper">
 
-    <resultMap id="ProductMap" type="com.mall.malladmin.vo.product.ProductVo">
+    <resultMap id="ProductMap" type="com.mall.malladmin.dto.product.ProductDto">
         <result column="productId" property="productId"/>
         <result column="typeId" property="typeId"/>
         <result column="hits" property="hits"/>
@@ -31,38 +31,38 @@
         FROM mall_product a
         INNER JOIN mall_product_type b ON b.type_id = a.type_id
         where 1 = 1
-        <if test="vo.productName!=null and vo.productName!=''">
-            AND a.product_name like '%${vo.productName}%'
+        <if test="dto.productName!=null and dto.productName!=''">
+            AND a.product_name like '%${dto.productName}%'
         </if>
-        <if test="vo.typeId!=null and vo.typeId!=''">
-            AND b.type_Id = #{vo.typeId}
+        <if test="dto.typeId!=null and dto.typeId!=''">
+            AND b.type_Id = #{dto.typeId}
         </if>
-        <if test="vo.isPutaway!=null and vo.isPutaway!=''">
-            AND a.is_Putaway = #{vo.isPutaway}
+        <if test="dto.isPutaway!=null and dto.isPutaway!=''">
+            AND a.is_Putaway = #{dto.isPutaway}
         </if>
     </select>
 
-    <select id="findPropertyIsSale" resultType="com.mall.malladmin.dto.ProductPropertyDto">
+    <select id="findPropertyIsSale" resultType="com.mall.malladmin.dto.product.ProductPropertyDto">
       SELECT concat(a.name,':',b.value) as isSalePropertyString, concat(a.property_name_id,':',b.property_value_id) as isSalePropertyId
         FROM mall_product_property_name a
       INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
       WHERE  1= 1
-        <if test="vo.isSale!=null and vo.isSale!=''">
-            AND b.is_sale = #{vo.isSale}
+        <if test="dto.isSale!=null and dto.isSale!=''">
+            AND b.is_sale = #{dto.isSale}
         </if>
-        <if test="vo.productId!=null and vo.productId!=''">
-            AND b.product_id = #{vo.productId}
+        <if test="dto.productId!=null and dto.productId!=''">
+            AND b.product_id = #{dto.productId}
         </if>
     </select>
     <select id="findPropertyNotSale" resultType="java.lang.String">
         SELECT concat(b.value) as result FROM mall_product_property_name a
         INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
         WHERE  1= 1
-        <if test="vo.isSale!=null and vo.isSale!=''">
-            AND b.is_sale = #{vo.isSale}
+        <if test="dto.isSale!=null and dto.isSale!=''">
+            AND b.is_sale = #{dto.isSale}
         </if>
-        <if test="vo.productId!=null and vo.productId!=''">
-            AND b.product_id = #{vo.productId}
+        <if test="dto.productId!=null and dto.productId!=''">
+            AND b.product_id = #{dto.productId}
         </if>
     </select>
 </mapper>

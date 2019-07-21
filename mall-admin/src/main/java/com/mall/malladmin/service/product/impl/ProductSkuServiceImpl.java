@@ -7,8 +7,8 @@ import com.mall.malladmin.mapper.product.ProductPropertyMapper;
 import com.mall.malladmin.mapper.product.ProductSkuMapper;
 import com.mall.malladmin.repository.product.*;
 import com.mall.malladmin.service.product.ProductSkuService;
-import com.mall.malladmin.vo.common.CommonResultVo;
-import com.mall.malladmin.vo.product.ProductSkuVo;
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductSkuDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,70 +46,71 @@ public class ProductSkuServiceImpl implements ProductSkuService {
     private ProductPropertyMapper productPropertyMapper;
 
     @Override
-    public CommonResultVo add(ProductSkuVo vo) {
-        ProductEntity product = productRepository.findById(vo.getProductId()).get();
-        if(product.getPriceMin().compareTo(vo.getPrice())== 1){
-            return new CommonResultVo().validateFailed("销售价格不能小于商品最低价！");
+    public CommonResultDto add(ProductSkuDto dto) {
+        ProductEntity product = productRepository.findById(dto.getProductId()).get();
+        if(product.getPriceMin().compareTo(dto.getPrice())== 1){
+            return new CommonResultDto().validateFailed("销售价格不能小于商品最低价！");
         }
         ProductSkuEntity entity = new ProductSkuEntity();
         entity.setCreateTime(new Date());
         entity.setModifyTime(new Date());
-        entity.setCost(vo.getCost()==null?new BigDecimal(0):vo.getCost());
-        entity.setPrice(vo.getPrice()==null?new BigDecimal(0):vo.getPrice());
-        entity.setProductId(vo.getProductId());
+        entity.setCost(dto.getCost()==null?new BigDecimal(0):dto.getCost());
+        entity.setPrice(dto.getPrice()==null?new BigDecimal(0):dto.getPrice());
+        entity.setProductId(dto.getProductId());
         entity.setSellSum(0);
-        entity.setStock(vo.getStock()==null?0:vo.getStock());
+        entity.setStock(dto.getStock()==null?0:dto.getStock());
+        entity.setPicUrl(dto.getPicUrl());
         StringBuffer properties = new StringBuffer();
-        if(StringUtils.isNotBlank(vo.getPropertyValueA())){
+        if(StringUtils.isNotBlank(dto.getPropertyValueA())){
             properties.append("&");
-            properties.append(vo.getPropertyValueA());
+            properties.append(dto.getPropertyValueA());
         }
-        if(StringUtils.isNotBlank(vo.getPropertyValueB())){
+        if(StringUtils.isNotBlank(dto.getPropertyValueB())){
             properties.append("&");
-            properties.append(vo.getPropertyValueB());
+            properties.append(dto.getPropertyValueB());
         }
-        if(StringUtils.isNotBlank(vo.getPropertyValueC())){
+        if(StringUtils.isNotBlank(dto.getPropertyValueC())){
             properties.append("&");
-            properties.append(vo.getPropertyValueC());
+            properties.append(dto.getPropertyValueC());
         }
         entity.setProperties(properties.toString());
         productSkuRepository.save(entity);
-        return new CommonResultVo().success();
+        return new CommonResultDto().success();
     }
 
     @Override
-    public CommonResultVo update(Integer id, ProductSkuVo vo) {
-        vo.setCreateTime(new Date());
-        vo.setModifyTime(new Date());
-        vo.setCost(vo.getCost()==null?new BigDecimal(0):vo.getCost());
-        vo.setPrice(vo.getPrice()==null?new BigDecimal(0):vo.getPrice());
-        vo.setStock(vo.getStock()==null?0:vo.getStock());
-        vo.setSellSum(vo.getSellSum()==null?0:vo.getSellSum());
-        vo.setSkuId(id);
+    public CommonResultDto update(Integer id, ProductSkuDto dto) {
+        dto.setCreateTime(new Date());
+        dto.setModifyTime(new Date());
+        dto.setCost(dto.getCost()==null?new BigDecimal(0):dto.getCost());
+        dto.setPrice(dto.getPrice()==null?new BigDecimal(0):dto.getPrice());
+        dto.setStock(dto.getStock()==null?0:dto.getStock());
+        dto.setSellSum(dto.getSellSum()==null?0:dto.getSellSum());
+        dto.setSkuId(id);
         ProductSkuEntity skuEntity = productSkuRepository.findById(id).get();
-        BeanUtils.copyProperties(vo, skuEntity);
+        BeanUtils.copyProperties(dto, skuEntity);
         StringBuffer properties = new StringBuffer();
-        if(StringUtils.isNotBlank(vo.getPropertyValueA())){
+        if(StringUtils.isNotBlank(dto.getPropertyValueA())){
             properties.append("&");
-            properties.append(vo.getPropertyValueA());
+            properties.append(dto.getPropertyValueA());
         }
-        if(StringUtils.isNotBlank(vo.getPropertyValueB())){
+        if(StringUtils.isNotBlank(dto.getPropertyValueB())){
             properties.append("&");
-            properties.append(vo.getPropertyValueB());
+            properties.append(dto.getPropertyValueB());
         }
-        if(StringUtils.isNotBlank(vo.getPropertyValueC())){
+        if(StringUtils.isNotBlank(dto.getPropertyValueC())){
             properties.append("&");
-            properties.append(vo.getPropertyValueC());
+            properties.append(dto.getPropertyValueC());
         }
         skuEntity.setProperties(properties.toString());
         productSkuRepository.save(skuEntity);
-        return new CommonResultVo().success();
+        return new CommonResultDto().success();
     }
 
     @Override
-    public ProductSkuVo findById(Integer id) {
+    public ProductSkuDto findById(Integer id) {
         ProductSkuEntity entity = productSkuRepository.findById(id).get();
-        ProductSkuVo result = new ProductSkuVo();
+        ProductSkuDto result = new ProductSkuDto();
         BeanUtils.copyProperties(entity, result);
         //设置商品属性值
         String[] properties = entity.getProperties().split("&");
@@ -171,45 +172,49 @@ public class ProductSkuServiceImpl implements ProductSkuService {
     }
 
     @Override
-    public PageInfo<ProductSkuVo> findPage(ProductSkuVo vo) {
-        PageHelper.startPage(vo.getPageNum(), vo.getPageSize());
-        List<ProductSkuVo> skuVoList = productSkuMapper.getList(vo);
+    public PageInfo<ProductSkuDto> findPage(ProductSkuDto dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        List<ProductSkuDto> skuVoList = productSkuMapper.getList(dto);
         //将property值转换成对应value值
-        for (ProductSkuVo skuVo:
-                skuVoList) {
-            StringBuffer propertySb = new StringBuffer();
-            List<ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeId(skuVo.getTypeId());
-            List<ProductPropertyValueEntity> valueList = productPropertyValueRepository.findByProductId(skuVo.getProductId());
-            if(StringUtils.isNotBlank(skuVo.getProperties())){
-                String skuProperties = skuVo.getProperties();
-                String[] properties = skuProperties.split("&");
-                for (String property:
-                        properties) {
-                    if(StringUtils.isBlank(property)){
-                        continue;
-                    }
-                    String[] propertyValues = property.split(":");
-                    //获取propertyName值
-                    for (ProductPropertyNameEntity nameEntity:
-                    nameList) {
-                        if(propertyValues[0].equals(String.valueOf(nameEntity.getPropertyNameId()))){
-                            propertySb.append(nameEntity.getName());
-                            propertySb.append("：");
-                        }
-                    }
-                    //获取propertyValue值
-                    for (ProductPropertyValueEntity valueEntity:
-                            valueList) {
-                        if(propertyValues[1].equals(String.valueOf(valueEntity.getPropertyValueId()))){
-                            propertySb.append(valueEntity.getValue());
-                            propertySb.append("、");
-                        }
+        for (ProductSkuDto skuDto: skuVoList){
+            this.makePropertyKeyToValue(skuDto);
+        }
+        PageInfo<ProductSkuDto> page = new PageInfo<>(skuVoList);
+        return page;
+    }
+
+    /**
+     * 将property值转换成对应value值
+     * @param dto
+     */
+    private void makePropertyKeyToValue(ProductSkuDto dto){
+        StringBuffer propertySb = new StringBuffer();
+        List<ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeId(dto.getTypeId());
+        List<ProductPropertyValueEntity> valueList = productPropertyValueRepository.findByProductId(dto.getProductId());
+        if(StringUtils.isNotBlank(dto.getProperties())){
+            String skuProperties = dto.getProperties();
+            String[] properties = skuProperties.split("&");
+            for (String property: properties) {
+                if(StringUtils.isBlank(property)){
+                    continue;
+                }
+                String[] propertyValues = property.split(":");
+                //获取propertyName值
+                for (ProductPropertyNameEntity nameEntity: nameList) {
+                    if(propertyValues[0].equals(String.valueOf(nameEntity.getPropertyNameId()))){
+                        propertySb.append(nameEntity.getName());
+                        propertySb.append("：");
                     }
                 }
-                skuVo.setProperties(propertySb.toString());
+                //获取propertyValue值
+                for (ProductPropertyValueEntity valueEntity: valueList) {
+                    if(propertyValues[1].equals(String.valueOf(valueEntity.getPropertyValueId()))){
+                        propertySb.append(valueEntity.getValue());
+                        propertySb.append("、");
+                    }
+                }
             }
+            dto.setProperties(propertySb.toString());
         }
-        PageInfo<ProductSkuVo> page = new PageInfo<>(skuVoList);
-        return page;
     }
 }

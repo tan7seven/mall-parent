@@ -1,10 +1,10 @@
 package com.mall.malladmin.service.impl;
 
-import com.mall.malladmin.entity.AdminEntity;
+import com.mall.malladmin.entity.system.AdminEntity;
 import com.mall.malladmin.mapper.AdminMapper;
-import com.mall.malladmin.repository.AdminRepository;
+import com.mall.malladmin.repository.system.AdminRepository;
 import com.mall.malladmin.service.AdminService;
-import com.mall.malladmin.vo.AdminVo;
+import com.mall.malladmin.dto.system.AdminDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AdminEntity> getList(AdminVo dto) {
+    public List<AdminEntity> getList(AdminDto dto) {
         List<AdminEntity>entitys = adminRepository.findAll((Specification<AdminEntity>) (root, query, criteriaBuilder)->{
             List<Predicate> list = new ArrayList<>();
             if(StringUtils.isNotBlank(dto.getRole())){
@@ -51,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminVo findByLoginId(String loginId) {
-        return adminMapper.findByLoginId(loginId);
+    public AdminDto findByLoginId(String loginCode) {
+        return adminMapper.findByLoginId(loginCode);
     }
 }

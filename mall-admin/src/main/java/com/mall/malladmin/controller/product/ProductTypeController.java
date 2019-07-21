@@ -5,9 +5,9 @@ import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
 import com.mall.malladmin.util.ResultPage;
-import com.mall.malladmin.vo.common.CommonCascaderVo;
-import com.mall.malladmin.vo.common.CommonResultVo;
-import com.mall.malladmin.vo.product.ProductTypeVo;
+import com.mall.malladmin.dto.common.CommonCascaderDto;
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductTypeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -38,20 +38,20 @@ public class ProductTypeController {
 
 
     @GetMapping(value = "/getById.do/{id}")
-    protected CommonResultVo getById(@PathVariable Integer id){
+    protected CommonResultDto getById(@PathVariable Integer id){
         if(null == id){
-            return new CommonResultVo().validateFailed("ID为空！");
+            return new CommonResultDto().validateFailed("ID为空！");
         }
         ProductTypeEntity entity = productTypeService.findById(id).get();
         if(null == entity){
-            return new CommonResultVo().validateFailed("ID异常：获取不到对应的类目信息！");
+            return new CommonResultDto().validateFailed("ID异常：获取不到对应的类目信息！");
         }
         List<ProductPropertyNameEntity> propertyNames = productPropertyNameService.findByTypeId(id);
-        ProductTypeVo result = new ProductTypeVo();
+        ProductTypeDto result = new ProductTypeDto();
         BeanUtils.copyProperties(entity, result);
         result.setPropertyNameCheckedIsSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).map(ProductPropertyNameEntity ::getName).toArray(String[]::new));
         result.setPropertyNameCheckedNotSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).map(ProductPropertyNameEntity ::getName).toArray(String[]::new));
-        return new CommonResultVo().success(result);
+        return new CommonResultDto().success(result);
     }
 
     /**
@@ -60,91 +60,91 @@ public class ProductTypeController {
      * @return
      */
     @GetMapping(value = "/getProductTypeProperty.do/{id}")
-    protected CommonResultVo getProductTypeProperty(@PathVariable Integer id){
+    protected CommonResultDto getProductTypeProperty(@PathVariable Integer id){
         List<ProductPropertyNameEntity> propertyNameEntities = productPropertyNameService.findByTypeId(id);
         List<ProductPropertyNameEntity> isSale = propertyNameEntities.stream().filter(a->a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).collect(Collectors.toList());
         List<ProductPropertyNameEntity> notSale = propertyNameEntities.stream().filter(a->a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).collect(Collectors.toList());
         Map<String, Object> result = new HashMap<>();
         result.put("productPropertyIsSale",isSale);
         result.put("productPropertyNotSale",notSale);
-        return new CommonResultVo().success(result);
+        return new CommonResultDto().success(result);
     }
     /**
      * 创建
-     * @param vo
+     * @param dto
      * @return
      */
     @PostMapping("/create.do")
-    protected CommonResultVo create(@RequestBody ProductTypeVo vo){
-        ProductTypeEntity result = productTypeService.create(vo);
+    protected CommonResultDto create(@RequestBody ProductTypeDto dto){
+        ProductTypeEntity result = productTypeService.create(dto);
         if(result==null){
-            return new CommonResultVo().failed();
+            return new CommonResultDto().failed();
         }
-        return new CommonResultVo().success();
+        return new CommonResultDto().success();
     }
 
     /**
      * 获取类目信息
      * @param id
-     * @param vo
+     * @param dto
      * @return
      */
     @GetMapping("/getPage.do/{id}")
-    protected CommonResultVo getPage(@PathVariable Long id,ProductTypeVo vo){
+    protected CommonResultDto getPage(@PathVariable Long id, ProductTypeDto dto){
         Sort sort = new Sort(Sort.Direction.ASC, "sort", "typeId");
-        Pageable page = PageRequest.of(vo.getPageNum()-1, vo.getPageSize(), sort);
+        Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
         ProductTypeEntity entity = new ProductTypeEntity();
-        BeanUtils.copyProperties(vo,entity);
+        BeanUtils.copyProperties(dto,entity);
         entity.setParentId(id.intValue());
         Page<ProductTypeEntity> result = productTypeService.findPage(entity, page);
         ResultPage resultPage = new ResultPage();
         resultPage.setList(result.getContent());
         resultPage.setTotal(result.getTotalElements());
-        return new CommonResultVo().pageSuccess(resultPage);
+        return new CommonResultDto().pageSuccess(resultPage);
     }
 
     /**
      * 修改
      * @param typeId
-     * @param vo
+     * @param dto
      * @return
      */
     @PostMapping(value = "/updateProductType.do/{typeId}")
-    protected CommonResultVo updateProductType(@PathVariable Integer typeId, @RequestBody ProductTypeVo vo){
+    protected CommonResultDto updateProductType(@PathVariable Integer typeId, @RequestBody ProductTypeDto dto){
         productPropertyNameService.deleteByTypeId(typeId);
-        productTypeService.update(vo);
-        return new CommonResultVo().success();
+        productTypeService.update(dto);
+        return new CommonResultDto().success();
     }
     /**
      * 修改是否显示在导航栏
-     * @param vo
+     * @param dto
      * @return
      */
     @PostMapping(value = "/update/isNavigationBar.do")
-    protected CommonResultVo updateBar(@RequestBody ProductTypeVo vo){
-        ProductTypeEntity entity = productTypeService.findById(vo.getTypeId()).get();
+    protected CommonResultDto updateBar(@RequestBody ProductTypeDto dto){
+        ProductTypeEntity entity = productTypeService.findById(dto.getTypeId()).get();
         if(null == entity){
-            return new CommonResultVo().validateFailed("typeId异常：获取不到相关类目！");
+            return new CommonResultDto().validateFailed("typeId异常：获取不到相关类目！");
         }
-        entity.setIsNavigationBar(vo.getIsNavigationBar());
+        entity.setIsNavigationBar(dto.getIsNavigationBar());
         productTypeService.add(entity);
-        return new CommonResultVo().success();
+        return new CommonResultDto().success();
     }
 
     /**
      * 修改状态：正常、禁用
-     * @param vo
+     * @param dto
      * @return
      */
     @PostMapping(value = "/update/status.do")
-    protected CommonResultVo updateStatus(@RequestBody ProductTypeVo vo){
-        ProductTypeEntity entity = productTypeService.findById(vo.getTypeId()).get();
+    protected CommonResultDto updateStatus(@RequestBody ProductTypeDto dto){
+        ProductTypeEntity entity = productTypeService.findById(dto.getTypeId()).get();
         if(null == entity){
-            return new CommonResultVo().validateFailed("typeId异常：获取不到相关类目！");
+            return new CommonResultDto().validateFailed("typeId异常：获取不到相关类目！");
         }
-        entity.setStatus(vo.getStatus());
+        entity.setStatus(dto.getStatus());
         productTypeService.add(entity);
-        return new CommonResultVo().success();
+        return new CommonResultDto().success();
     }
 
     /**
@@ -153,12 +153,12 @@ public class ProductTypeController {
      * @return
      */
     @GetMapping(value = "/delete.do/{typeId}")
-    protected CommonResultVo detele(@PathVariable Integer typeId){
+    protected CommonResultDto detele(@PathVariable Integer typeId){
         if(null == typeId){
-            return new CommonResultVo().validateFailed("typeId为空！");
+            return new CommonResultDto().validateFailed("typeId为空！");
         }
         productTypeService.deleteById(typeId);
-        return new CommonResultVo().success();
+        return new CommonResultDto().success();
     }
 
     /**
@@ -166,8 +166,8 @@ public class ProductTypeController {
      * @return
      */
     @GetMapping(value = "/getProductTypeCascader.do")
-    protected CommonResultVo getProductTypeCascader(){
-        List<CommonCascaderVo> result = productTypeService.getCascader();
-        return new CommonResultVo().success(result);
+    protected CommonResultDto getProductTypeCascader(){
+        List<CommonCascaderDto> result = productTypeService.getCascader();
+        return new CommonResultDto().success(result);
     }
 }

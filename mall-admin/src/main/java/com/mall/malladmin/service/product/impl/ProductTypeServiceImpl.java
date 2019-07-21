@@ -5,8 +5,8 @@ import com.mall.malladmin.mapper.product.ProductTypeMapper;
 import com.mall.malladmin.repository.product.ProductTypeRepository;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
-import com.mall.malladmin.vo.common.CommonCascaderVo;
-import com.mall.malladmin.vo.product.ProductTypeVo;
+import com.mall.malladmin.dto.common.CommonCascaderDto;
+import com.mall.malladmin.dto.product.ProductTypeDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -39,10 +39,10 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
-    public ProductTypeEntity update(ProductTypeVo vo) {
-        ProductTypeEntity entity = productTypeRepository.findById(vo.getTypeId()).get();
-        /*if(null != vo.getPropertyNameCheckedIsSale() && vo.getPropertyNameCheckedIsSale().length > 0){
-            String[] propertyNames = vo.getPropertyNameCheckedIsSale();
+    public ProductTypeEntity update(ProductTypeDto dto) {
+        ProductTypeEntity entity = productTypeRepository.findById(dto.getTypeId()).get();
+        /*if(null != dto.getPropertyNameCheckedIsSale() && dto.getPropertyNameCheckedIsSale().length > 0){
+            String[] propertyNames = dto.getPropertyNameCheckedIsSale();
             for (int i = 0 ; i <propertyNames.length ; i++){
                 ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
                 propertyName.setName(propertyNames[i]);
@@ -51,8 +51,8 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 productPropertyNameService.add(propertyName);
             }
         }
-        if(null != vo.getPropertyNameCheckedNotSale() && vo.getPropertyNameCheckedNotSale().length > 0){
-            String[] propertyNames = vo.getPropertyNameCheckedNotSale();
+        if(null != dto.getPropertyNameCheckedNotSale() && dto.getPropertyNameCheckedNotSale().length > 0){
+            String[] propertyNames = dto.getPropertyNameCheckedNotSale();
             for (int i = 0 ; i <propertyNames.length ; i++){
                 ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
                 propertyName.setName(propertyNames[i]);
@@ -61,14 +61,14 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 productPropertyNameService.add(propertyName);
             }
         }*/
-        BeanUtils.copyProperties(vo,entity);
+        BeanUtils.copyProperties(dto,entity);
         return productTypeRepository.save(entity);
     }
 
     @Override
-    public ProductTypeEntity create(ProductTypeVo vo) {
+    public ProductTypeEntity create(ProductTypeDto dto) {
         ProductTypeEntity entity = new ProductTypeEntity();
-        BeanUtils.copyProperties(vo, entity);
+        BeanUtils.copyProperties(dto, entity);
         if(0 == entity.getParentId()){
             entity.setLevel(0);
         }else{
@@ -77,8 +77,8 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         }
         ProductTypeEntity result = productTypeRepository.save(entity);
         /*//添加销售属性
-        if(null != vo.getPropertyNameCheckedIsSale() && vo.getPropertyNameCheckedIsSale().length > 0){
-            String[] propertyNames = vo.getPropertyNameCheckedIsSale();
+        if(null != dto.getPropertyNameCheckedIsSale() && dto.getPropertyNameCheckedIsSale().length > 0){
+            String[] propertyNames = dto.getPropertyNameCheckedIsSale();
             for (int i = 0 ; i <propertyNames.length ; i++){
                 ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
                 propertyName.setName(propertyNames[i]);
@@ -88,8 +88,8 @@ public class ProductTypeServiceImpl implements ProductTypeService {
             }
         }
         //添加非销售属性
-        if(null != vo.getPropertyNameCheckedNotSale() && vo.getPropertyNameCheckedNotSale().length > 0){
-            String[] propertyNames = vo.getPropertyNameCheckedNotSale();
+        if(null != dto.getPropertyNameCheckedNotSale() && dto.getPropertyNameCheckedNotSale().length > 0){
+            String[] propertyNames = dto.getPropertyNameCheckedNotSale();
             for (int i = 0 ; i <propertyNames.length ; i++){
                 ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
                 propertyName.setName(propertyNames[i]);
@@ -141,7 +141,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
-    public List<CommonCascaderVo> getCascader() {
+    public List<CommonCascaderDto> getCascader() {
         return productTypeMapper.getCascader();
     }
 }

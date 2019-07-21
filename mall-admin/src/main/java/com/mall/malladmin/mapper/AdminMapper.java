@@ -1,6 +1,6 @@
 package com.mall.malladmin.mapper;
 
-import com.mall.malladmin.vo.AdminVo;
+import com.mall.malladmin.dto.system.AdminDto;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Param;
 public interface AdminMapper {
     /**
      * 根据登录账号获取用户信息
-     * @param loginId
+     * @param loginCode
      * @return
      */
-    AdminVo findByLoginId(@Param("loginId") String loginId);
+    AdminDto findByLoginId(@Param("loginCode") String loginCode);
 }

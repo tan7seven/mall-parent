@@ -2,9 +2,10 @@ package com.mall.malladmin.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mall.malladmin.controller.common.GenericController;
+import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.security.UserDetailsImpl;
 import com.mall.malladmin.service.AdminService;
-import com.mall.malladmin.vo.AdminVo;
+import com.mall.malladmin.dto.system.AdminDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,17 @@ public class AdminController extends GenericController {
 
     @ResponseBody
     @RequestMapping(value = "/getAdminInfo.do")
-    protected AdminVo admin(){
+    protected Object getAdminInfo(){
         UserDetailsImpl userDetail = super.getUserDetails();
-        AdminVo vo = adminService.findByLoginId(userDetail.getUsername());
-        log.info("根据用户ID获取到的用户信息={}", JSONObject.toJSONString(vo));
-        return vo;
+        AdminDto dto = adminService.findByLoginId(userDetail.getUsername());
+        log.info("根据用户ID获取到的用户信息={}", JSONObject.toJSONString(dto));
+        return new CommonResultDto().success(dto);
     }
 
+    protected AdminDto logout(){
+        UserDetailsImpl userDetail = super.getUserDetails();
+        AdminDto dto = adminService.findByLoginId(userDetail.getUsername());
+        log.info("根据用户ID获取到的用户信息={}", JSONObject.toJSONString(dto));
+        return dto;
+    }
 }

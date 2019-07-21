@@ -1,6 +1,6 @@
 package com.mall.malladmin.mapper.product;
 
-import com.mall.malladmin.vo.common.CommonCascaderVo;
+import com.mall.malladmin.dto.common.CommonCascaderDto;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface ProductTypeMapper {
      * 获取商品类目的联级信息
      * @return
      */
-    List<CommonCascaderVo> getCascader();
+    List<CommonCascaderDto> getCascader();
 
 
 }

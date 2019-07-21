@@ -1,7 +1,7 @@
 package com.mall.malladmin.mapper.product;
 
-import com.mall.malladmin.dto.ProductPropertyDto;
-import com.mall.malladmin.vo.product.ProductVo;
+import com.mall.malladmin.dto.product.ProductDto;
+import com.mall.malladmin.dto.product.ProductPropertyDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,19 +14,19 @@ public interface ProductMapper {
      * 查询
      * @return
      */
-    List<ProductVo> getList(@Param("vo") ProductVo vo);
+    List<ProductDto> getList(@Param("dto") ProductDto dto);
 
     /**
      * 查询商品销售属性值
-     * @param vo
+     * @param dto
      * @return
      */
-    List<ProductPropertyDto> findPropertyIsSale(@Param("vo") ProductVo vo);
+    List<ProductPropertyDto> findPropertyIsSale(@Param("dto") ProductDto dto);
     /**
      * 查询商品非销售属性值
-     * @param vo
+     * @param dto
      * @return
      */
-    List<String> findPropertyNotSale(@Param("vo") ProductVo vo);
+    List<String> findPropertyNotSale(@Param("dto") ProductDto dto);
 
 }

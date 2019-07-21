@@ -40,6 +40,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: com.mall.malladmin.entity.*
+#  驼峰转换
+  configuration:
+    map-underscore-to-camel-case: true
 logging:
   file: log
   path: /root/mall/mall_log

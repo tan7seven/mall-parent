@@ -75,8 +75,8 @@ public class OrdersItemsEntity {
     /**
      * 积分优惠分解金额
      */
-    @Column(name = "integral_price")
-    private BigDecimal integralPrice;
+    @Column(name = "score_price")
+    private BigDecimal scorePrice;
     /**
      * 商品实际销售金额
      */
@@ -86,7 +86,7 @@ public class OrdersItemsEntity {
      * 可以获得的积分
      */
     @Column()
-    private Integer integration;
+    private Integer score;
     /**
      * 可以获得的成长值
      */

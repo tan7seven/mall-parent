@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //自定义登录界面
                 .and().formLogin().loginProcessingUrl("/admin/login.do").successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler).permitAll()
                 .usernameParameter("username").passwordParameter("password")
-                .and().logout().logoutSuccessHandler(logoutSuccessHandler)
+                .and().logout().logoutUrl("/admin/logout.do").logoutSuccessHandler(logoutSuccessHandler)
                 .and().csrf().disable()
                 .sessionManagement()// 基于token，所以不需要session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

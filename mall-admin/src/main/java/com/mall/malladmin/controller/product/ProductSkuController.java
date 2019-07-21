@@ -3,8 +3,8 @@ package com.mall.malladmin.controller.product;
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.controller.common.GenericController;
 import com.mall.malladmin.service.product.ProductSkuService;
-import com.mall.malladmin.vo.common.CommonResultVo;
-import com.mall.malladmin.vo.product.ProductSkuVo;
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductSkuDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,45 +23,45 @@ public class ProductSkuController extends GenericController {
 
     /**
      * 分页查询
-     * @param vo
+     * @param dto
      * @return
      */
     @GetMapping(value = "/getPage.do")
-    protected CommonResultVo getPage(ProductSkuVo vo){
-        PageInfo<ProductSkuVo> result = productSkuService.findPage(vo);
-        return new CommonResultVo().success(result);
+    protected CommonResultDto getPage(ProductSkuDto dto){
+        PageInfo<ProductSkuDto> result = productSkuService.findPage(dto);
+        return new CommonResultDto().success(result);
     }
 
     /**
      * 新增
-     * @param vo
+     * @param dto
      * @return
      */
     @PostMapping(value = "/create.do")
-    protected CommonResultVo create (@RequestBody ProductSkuVo vo){
-        log.info("{}",vo);
-        if(null == vo.getProductId()){
-            return new CommonResultVo().validateFailed("商品编号为空！");
+    protected CommonResultDto create (@RequestBody ProductSkuDto dto){
+        log.info("{}",dto);
+        if(null == dto.getProductId()){
+            return new CommonResultDto().validateFailed("商品编号为空！");
         }
-        if(null == vo.getTypeId()){
-            return new CommonResultVo().validateFailed("商品类目为空！");
+        if(null == dto.getTypeId()){
+            return new CommonResultDto().validateFailed("商品类目为空！");
         }
-        return productSkuService.add(vo);
+        return productSkuService.add(dto);
     }
 
     /**
      * 更新
      * @param id
-     * @param vo
+     * @param dto
      * @return
      */
     @PostMapping(value = "/update.do/{id}")
-    protected CommonResultVo update(@PathVariable Integer id, @RequestBody ProductSkuVo vo){
-        log.info("{}",vo);
-        if(null == vo.getProductId()){
-            return new CommonResultVo().validateFailed("商品编号为空！");
+    protected CommonResultDto update(@PathVariable Integer id, @RequestBody ProductSkuDto dto){
+        log.info("{}",dto);
+        if(null == dto.getProductId()){
+            return new CommonResultDto().validateFailed("商品编号为空！");
         }
-        return productSkuService.update(id, vo);
+        return productSkuService.update(id, dto);
     }
     /**
      * 根据主键查询
@@ -69,12 +69,12 @@ public class ProductSkuController extends GenericController {
      * @return
      */
     @GetMapping(value = "/findById.do/{id}")
-    protected CommonResultVo findById(@PathVariable Integer id){
+    protected CommonResultDto findById(@PathVariable Integer id){
         if(null == id){
-            return new CommonResultVo().validateFailed("SKU编码为空！");
+            return new CommonResultDto().validateFailed("SKU编码为空！");
         }
-        ProductSkuVo result = productSkuService.findById(id);
-        return new CommonResultVo().success(result);
+        ProductSkuDto result = productSkuService.findById(id);
+        return new CommonResultDto().success(result);
     }
 
     /**
@@ -83,8 +83,8 @@ public class ProductSkuController extends GenericController {
      * @return
      */
     @GetMapping(value = "/delete.do/{id}")
-    protected CommonResultVo delete(@PathVariable Integer id){
+    protected CommonResultDto delete(@PathVariable Integer id){
         productSkuService.deleteById(id);
-        return new CommonResultVo().success();
+        return new CommonResultDto().success();
     }
 }

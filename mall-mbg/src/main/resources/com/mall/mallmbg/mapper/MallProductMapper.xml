@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mallmbg.mapper.MallProductMapper">
+  <resultMap id="BaseResultMap" type="com.mall.mallmbg.model.MallProduct">
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="pic_list_url" jdbcType="VARCHAR" property="picListUrl" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="price_min" jdbcType="DECIMAL" property="priceMin" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="hits" jdbcType="INTEGER" property="hits" />
+    <result column="is_putaway" jdbcType="CHAR" property="isPutaway" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    product_id, type_id, product_name, pic_list_url, pic_url, price_min, sort, unit, 
+    hits, is_putaway, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.mall.mallmbg.model.MallProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mall_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mall.mallmbg.model.MallProductExample">
+    delete from mall_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mall.mallmbg.model.MallProduct">
+    insert into mall_product (product_id, type_id, product_name, 
+      pic_list_url, pic_url, price_min, 
+      sort, unit, hits, is_putaway, 
+      create_time)
+    values (#{productId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, 
+      #{picListUrl,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, #{priceMin,jdbcType=DECIMAL}, 
+      #{sort,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, #{isPutaway,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.mallmbg.model.MallProduct">
+    insert into mall_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="picListUrl != null">
+        pic_list_url,
+      </if>
+      <if test="picUrl != null">
+        pic_url,
+      </if>
+      <if test="priceMin != null">
+        price_min,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="hits != null">
+        hits,
+      </if>
+      <if test="isPutaway != null">
+        is_putaway,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="picListUrl != null">
+        #{picListUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMin != null">
+        #{priceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="hits != null">
+        #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="isPutaway != null">
+        #{isPutaway,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mall.mallmbg.model.MallProductExample" resultType="java.lang.Integer">
+    select count(*) from mall_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mall_product
+    <set>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeId != null">
+        type_id = #{record.typeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picListUrl != null">
+        pic_list_url = #{record.picListUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picUrl != null">
+        pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceMin != null">
+        price_min = #{record.priceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hits != null">
+        hits = #{record.hits,jdbcType=INTEGER},
+      </if>
+      <if test="record.isPutaway != null">
+        is_putaway = #{record.isPutaway,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mall_product
+    set product_id = #{record.productId,jdbcType=INTEGER},
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      pic_list_url = #{record.picListUrl,jdbcType=VARCHAR},
+      pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      price_min = #{record.priceMin,jdbcType=DECIMAL},
+      sort = #{record.sort,jdbcType=INTEGER},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      hits = #{record.hits,jdbcType=INTEGER},
+      is_putaway = #{record.isPutaway,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.mallmbg.model.MallProduct">
+    update mall_product
+    <set>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="picListUrl != null">
+        pic_list_url = #{picListUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMin != null">
+        price_min = #{priceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="hits != null">
+        hits = #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="isPutaway != null">
+        is_putaway = #{isPutaway,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.mallmbg.model.MallProduct">
+    update mall_product
+    set type_id = #{typeId,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      pic_list_url = #{picListUrl,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      price_min = #{priceMin,jdbcType=DECIMAL},
+      sort = #{sort,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      hits = #{hits,jdbcType=INTEGER},
+      is_putaway = #{isPutaway,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>

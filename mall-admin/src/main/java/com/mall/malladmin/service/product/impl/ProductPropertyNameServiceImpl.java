@@ -3,7 +3,7 @@ package com.mall.malladmin.service.product.impl;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.repository.product.ProductPropertyNameRepository;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
-import com.mall.malladmin.vo.common.CommonResultVo;
+import com.mall.malladmin.dto.common.CommonResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -19,22 +19,22 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     private ProductPropertyNameRepository productPropertyNameRepository;
 
     @Override
-    public CommonResultVo add(ProductPropertyNameEntity entity) {
+    public CommonResultDto add(ProductPropertyNameEntity entity) {
         if(ProductPropertyNameEntity.IS_SALE.equals(entity.getIsSale())){
             List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSale(entity.getTypeId(), ProductPropertyNameEntity.IS_SALE);
             if(null != propertyNameList && propertyNameList.size() >=3){
-                return new CommonResultVo().validateFailed("同个分类最多只能有三个小时属性！");
+                return new CommonResultDto().validateFailed("同个分类最多只能有三个小时属性！");
             }
         }
         List<ProductPropertyNameEntity>  typeIdAndNameList = productPropertyNameRepository.findByTypeIdAndName(entity.getTypeId(), entity.getName());
         if(null != typeIdAndNameList && typeIdAndNameList.size() > 0 ){
-            return new CommonResultVo().validateFailed("同个分类下不能属性名不能相同！");
+            return new CommonResultDto().validateFailed("同个分类下不能属性名不能相同！");
         }
         ProductPropertyNameEntity result = productPropertyNameRepository.save(entity);
         if(result == null){
-            return new CommonResultVo().failed();
+            return new CommonResultDto().failed();
         }
-        return new CommonResultVo().success();
+        return new CommonResultDto().success();
     }
 
     @Override

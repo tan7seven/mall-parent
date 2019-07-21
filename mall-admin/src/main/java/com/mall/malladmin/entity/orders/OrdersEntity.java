@@ -55,8 +55,8 @@ public class OrdersEntity {
     /**
      *	积分抵扣金额
      */
-    @Column(name = "integration_Price")
-    private BigDecimal integrationPrice;
+    @Column(name = "score_Price")
+    private BigDecimal scorePrice;
     /**
      * 优惠券抵扣金额
      */
@@ -67,6 +67,16 @@ public class OrdersEntity {
      */
     @Column(name = "discount_Price")
     private BigDecimal discountPrice;
+    /**
+     * 积分
+     */
+    @Column(name = "score")
+    private Integer score;
+    /**
+     * 成长值
+     */
+    @Column(name = "growth")
+    private Integer growth;
     /**
      * 支付方式：0->未支付；1->支付宝；2->微信
      */
@@ -150,8 +160,8 @@ public class OrdersEntity {
     /**
      * 下单时使用的积分
      */
-    @Column(name = "use_Integration")
-    private Integer useIntegration;
+    @Column(name = "use_Score")
+    private Integer useScore;
     /**
      * 创建时间
      */
