@@ -110,6 +110,34 @@ public class MallOrdersReturnApply implements Serializable {
      */
     private Date receiveTime;
 
+    /**
+     * 处理人
+     *
+     * @mbggenerated
+     */
+    private String handlePerson;
+
+    /**
+     * 处理备注
+     *
+     * @mbggenerated
+     */
+    private String handleRemark;
+
+    /**
+     * 收货人
+     *
+     * @mbggenerated
+     */
+    private Date receivePerson;
+
+    /**
+     * 收货备注
+     *
+     * @mbggenerated
+     */
+    private Date receiveRemark;
+
     private static final long serialVersionUID = 1L;
 
     public String getApplyId() {
@@ -232,6 +260,38 @@ public class MallOrdersReturnApply implements Serializable {
         this.receiveTime = receiveTime;
     }
 
+    public String getHandlePerson() {
+        return handlePerson;
+    }
+
+    public void setHandlePerson(String handlePerson) {
+        this.handlePerson = handlePerson;
+    }
+
+    public String getHandleRemark() {
+        return handleRemark;
+    }
+
+    public void setHandleRemark(String handleRemark) {
+        this.handleRemark = handleRemark;
+    }
+
+    public Date getReceivePerson() {
+        return receivePerson;
+    }
+
+    public void setReceivePerson(Date receivePerson) {
+        this.receivePerson = receivePerson;
+    }
+
+    public Date getReceiveRemark() {
+        return receiveRemark;
+    }
+
+    public void setReceiveRemark(Date receiveRemark) {
+        this.receiveRemark = receiveRemark;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -253,6 +313,10 @@ public class MallOrdersReturnApply implements Serializable {
         sb.append(", handleTime=").append(handleTime);
         sb.append(", deliveryTime=").append(deliveryTime);
         sb.append(", receiveTime=").append(receiveTime);
+        sb.append(", handlePerson=").append(handlePerson);
+        sb.append(", handleRemark=").append(handleRemark);
+        sb.append(", receivePerson=").append(receivePerson);
+        sb.append(", receiveRemark=").append(receiveRemark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -315,72 +315,72 @@ public class SystemAdminExample {
             return (Criteria) this;
         }
 
-        public Criteria andNicknameIsNull() {
+        public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameIsNotNull() {
+        public Criteria andNameIsNotNull() {
             addCriterion("name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameEqualTo(String value) {
+        public Criteria andNameEqualTo(String value) {
             addCriterion("name =", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameNotEqualTo(String value) {
+        public Criteria andNameNotEqualTo(String value) {
             addCriterion("name <>", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameGreaterThan(String value) {
+        public Criteria andNameGreaterThan(String value) {
             addCriterion("name >", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameGreaterThanOrEqualTo(String value) {
+        public Criteria andNameGreaterThanOrEqualTo(String value) {
             addCriterion("name >=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameLessThan(String value) {
+        public Criteria andNameLessThan(String value) {
             addCriterion("name <", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameLessThanOrEqualTo(String value) {
+        public Criteria andNameLessThanOrEqualTo(String value) {
             addCriterion("name <=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameLike(String value) {
+        public Criteria andNameLike(String value) {
             addCriterion("name like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameNotLike(String value) {
+        public Criteria andNameNotLike(String value) {
             addCriterion("name not like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameIn(List<String> values) {
+        public Criteria andNameIn(List<String> values) {
             addCriterion("name in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameNotIn(List<String> values) {
+        public Criteria andNameNotIn(List<String> values) {
             addCriterion("name not in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameBetween(String value1, String value2) {
+        public Criteria andNameBetween(String value1, String value2) {
             addCriterion("name between", value1, value2, "name");
             return (Criteria) this;
         }
 
-        public Criteria andNicknameNotBetween(String value1, String value2) {
+        public Criteria andNameNotBetween(String value1, String value2) {
             addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
@@ -782,6 +782,76 @@ public class SystemAdminExample {
 
         public Criteria andModifyTimeNotBetween(Date value1, Date value2) {
             addCriterion("modify_time not between", value1, value2, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameIsNull() {
+            addCriterion("nickname is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameIsNotNull() {
+            addCriterion("nickname is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameEqualTo(String value) {
+            addCriterion("nickname =", value, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameNotEqualTo(String value) {
+            addCriterion("nickname <>", value, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameGreaterThan(String value) {
+            addCriterion("nickname >", value, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameGreaterThanOrEqualTo(String value) {
+            addCriterion("nickname >=", value, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameLessThan(String value) {
+            addCriterion("nickname <", value, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameLessThanOrEqualTo(String value) {
+            addCriterion("nickname <=", value, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameLike(String value) {
+            addCriterion("nickname like", value, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameNotLike(String value) {
+            addCriterion("nickname not like", value, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameIn(List<String> values) {
+            addCriterion("nickname in", values, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameNotIn(List<String> values) {
+            addCriterion("nickname not in", values, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameBetween(String value1, String value2) {
+            addCriterion("nickname between", value1, value2, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNicknameNotBetween(String value1, String value2) {
+            addCriterion("nickname not between", value1, value2, "nickname");
             return (Criteria) this;
         }
     }

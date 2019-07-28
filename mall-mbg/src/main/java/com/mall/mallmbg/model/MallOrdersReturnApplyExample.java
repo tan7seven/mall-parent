@@ -1095,6 +1095,266 @@ public class MallOrdersReturnApplyExample {
             addCriterion("receive_time not between", value1, value2, "receiveTime");
             return (Criteria) this;
         }
+
+        public Criteria andHandlePersonIsNull() {
+            addCriterion("handle_person is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonIsNotNull() {
+            addCriterion("handle_person is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonEqualTo(String value) {
+            addCriterion("handle_person =", value, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonNotEqualTo(String value) {
+            addCriterion("handle_person <>", value, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonGreaterThan(String value) {
+            addCriterion("handle_person >", value, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonGreaterThanOrEqualTo(String value) {
+            addCriterion("handle_person >=", value, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonLessThan(String value) {
+            addCriterion("handle_person <", value, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonLessThanOrEqualTo(String value) {
+            addCriterion("handle_person <=", value, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonLike(String value) {
+            addCriterion("handle_person like", value, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonNotLike(String value) {
+            addCriterion("handle_person not like", value, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonIn(List<String> values) {
+            addCriterion("handle_person in", values, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonNotIn(List<String> values) {
+            addCriterion("handle_person not in", values, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonBetween(String value1, String value2) {
+            addCriterion("handle_person between", value1, value2, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandlePersonNotBetween(String value1, String value2) {
+            addCriterion("handle_person not between", value1, value2, "handlePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkIsNull() {
+            addCriterion("handle_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkIsNotNull() {
+            addCriterion("handle_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkEqualTo(String value) {
+            addCriterion("handle_remark =", value, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkNotEqualTo(String value) {
+            addCriterion("handle_remark <>", value, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkGreaterThan(String value) {
+            addCriterion("handle_remark >", value, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("handle_remark >=", value, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkLessThan(String value) {
+            addCriterion("handle_remark <", value, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkLessThanOrEqualTo(String value) {
+            addCriterion("handle_remark <=", value, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkLike(String value) {
+            addCriterion("handle_remark like", value, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkNotLike(String value) {
+            addCriterion("handle_remark not like", value, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkIn(List<String> values) {
+            addCriterion("handle_remark in", values, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkNotIn(List<String> values) {
+            addCriterion("handle_remark not in", values, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkBetween(String value1, String value2) {
+            addCriterion("handle_remark between", value1, value2, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleRemarkNotBetween(String value1, String value2) {
+            addCriterion("handle_remark not between", value1, value2, "handleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonIsNull() {
+            addCriterion("receive_person is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonIsNotNull() {
+            addCriterion("receive_person is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonEqualTo(Date value) {
+            addCriterion("receive_person =", value, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonNotEqualTo(Date value) {
+            addCriterion("receive_person <>", value, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonGreaterThan(Date value) {
+            addCriterion("receive_person >", value, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonGreaterThanOrEqualTo(Date value) {
+            addCriterion("receive_person >=", value, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonLessThan(Date value) {
+            addCriterion("receive_person <", value, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonLessThanOrEqualTo(Date value) {
+            addCriterion("receive_person <=", value, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonIn(List<Date> values) {
+            addCriterion("receive_person in", values, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonNotIn(List<Date> values) {
+            addCriterion("receive_person not in", values, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonBetween(Date value1, Date value2) {
+            addCriterion("receive_person between", value1, value2, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonNotBetween(Date value1, Date value2) {
+            addCriterion("receive_person not between", value1, value2, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkIsNull() {
+            addCriterion("receive_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkIsNotNull() {
+            addCriterion("receive_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkEqualTo(Date value) {
+            addCriterion("receive_remark =", value, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkNotEqualTo(Date value) {
+            addCriterion("receive_remark <>", value, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkGreaterThan(Date value) {
+            addCriterion("receive_remark >", value, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkGreaterThanOrEqualTo(Date value) {
+            addCriterion("receive_remark >=", value, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkLessThan(Date value) {
+            addCriterion("receive_remark <", value, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkLessThanOrEqualTo(Date value) {
+            addCriterion("receive_remark <=", value, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkIn(List<Date> values) {
+            addCriterion("receive_remark in", values, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkNotIn(List<Date> values) {
+            addCriterion("receive_remark not in", values, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkBetween(Date value1, Date value2) {
+            addCriterion("receive_remark between", value1, value2, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkNotBetween(Date value1, Date value2) {
+            addCriterion("receive_remark not between", value1, value2, "receiveRemark");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

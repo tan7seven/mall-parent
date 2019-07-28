@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.malladmin.mapper.orders.OrdersReturnApplyMapper">
+    <resultMap id="BaseResultMap" type="com.mall.malladmin.dto.orders.OrdersReturnApplyDto">
+        <id column="apply_id" jdbcType="VARCHAR" property="applyId" />
+        <result column="apply_code" jdbcType="VARCHAR" property="applyCode" />
+        <result column="orders_id" jdbcType="VARCHAR" property="ordersId" />
+        <result column="orders_items_id" jdbcType="VARCHAR" property="ordersItemsId" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="return_price" jdbcType="DECIMAL" property="returnPrice" />
+        <result column="company_address_id" jdbcType="VARCHAR" property="companyAddressId" />
+        <result column="return_reason" jdbcType="VARCHAR" property="returnReason" />
+        <result column="return_pic" jdbcType="VARCHAR" property="returnPic" />
+        <result column="return_status" jdbcType="CHAR" property="returnStatus" />
+        <result column="return_amount" jdbcType="INTEGER" property="returnAmount" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime" />
+        <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+        <result column="receive_time" jdbcType="TIMESTAMP" property="receiveTime" />
+        <result column="login_code" jdbcType="VARCHAR" property="loginCode" />
+        <result column="pic_Url" jdbcType="VARCHAR" property="picUrl" />
+        <result column="product_Name" jdbcType="VARCHAR" property="productName" />
+        <result column="product_Property" jdbcType="VARCHAR" property="productProperty" />
+        <result column="product_Price" jdbcType="DECIMAL" property="productPrice" />
+        <result column="type_id" jdbcType="INTEGER" property="typeId" />
+        <result column="product_id" jdbcType="INTEGER" property="productId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        a.apply_id, a.apply_code, a.orders_id, a.orders_items_id, a.user_id, a.return_price, a.company_address_id,
+        return_reason, a.return_pic, a.return_status, a.return_amount, a.create_time, a.handle_time,
+        delivery_time, a.receive_time
+    </sql>
+
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> ,b.login_code FROM mall_orders_return_apply a
+        INNER JOIN system_admin b ON a.user_id = b.user_id
+        WHERE 1=1
+        <if test="dto.applyCode!=null and dto.applyCode!=''">
+            AND a.apply_Code like '%${dto.applyCode}%'
+        </if>
+        <if test="dto.returnStatus!=null and dto.returnStatus!=''">
+            AND a.return_Status =#{dto.returnStatus}
+        </if>
+        <if test="dto.handleTime!=null and dto.handleTime!=''">
+            AND a.handle_Time LIKE concat(#{dto.handleTime},"%")
+        </if>
+        <if test="dto.createTime!=null and dto.createTime!=''">
+            AND a.create_Time LIKE concat(#{dto.createTime},"%")
+        </if>
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> ,b.login_code, c.pic_Url, c.product_Name, c.product_Price, c.product_Property, c.product_id, d.type_id
+        FROM mall_orders_return_apply a
+        INNER JOIN system_admin b ON a.user_id = b.user_id
+        INNER JOIN mall_orders_items c ON  c.items_id = a.orders_items_id
+        INNER JOIN mall_product d ON  d.product_id = c.product_id
+        WHERE 1=1
+        AND a.apply_id = #{id}
+    </select>
+</mapper>

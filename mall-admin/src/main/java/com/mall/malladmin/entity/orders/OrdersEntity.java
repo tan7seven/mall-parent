@@ -15,6 +15,17 @@ import java.util.Date;
 @Table(name = "mall_orders")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class OrdersEntity {
+    //订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->已完成评价；6->无效订单
+    public static final String ORDERS_STATUS_OBLIGATION = "0";
+    public static final String ORDERS_STATUS_TO_SEND = "1";
+    public static final String ORDERS_STATUS_SEND = "2";
+    public static final String ORDERS_STATUS_RECEIVE = "3";
+    public static final String ORDERS_STATUS_CLOSED = "4";
+    public static final String ORDERS_STATUS_FINISHED = "5";
+    public static final String ORDERS_STATUS_INVALID = "6";
+    //删除状态：0->未删除；1->已删除
+    public static final String NOT_DELETE = "0";
+    public static final String IS_DELETE = "1";
     /**
      * 订单ID
      */
@@ -22,11 +33,6 @@ public class OrdersEntity {
     @GeneratedValue(generator = "jpa-uuid")
     @Column(length = 32,name = "orders_id")
     private String ordersId;
-    /**
-     * 订单编号
-     */
-    @Column(length = 64,name = "orders_code")
-    private String ordersCode;
     /**
      * 用户ID
      */
@@ -88,7 +94,7 @@ public class OrdersEntity {
     @Column(length = 1,name = "source_Type")
     private String sourceType;
     /**
-     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
+     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭；5->完成评价；6->无效订单
      */
     @Column(length = 1,name = "orders_Status")
     private String ordersStatus;

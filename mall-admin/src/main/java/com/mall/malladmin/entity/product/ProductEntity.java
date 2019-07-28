@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 商品信息
+ * 商品信息(代码冲突测试本地修改)
  */
 @Data
 @Entity

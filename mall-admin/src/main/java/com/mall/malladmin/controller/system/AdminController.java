@@ -1,10 +1,10 @@
-package com.mall.malladmin.controller;
+package com.mall.malladmin.controller.system;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mall.malladmin.controller.common.GenericController;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.security.UserDetailsImpl;
-import com.mall.malladmin.service.AdminService;
+import com.mall.malladmin.service.system.AdminService;
 import com.mall.malladmin.dto.system.AdminDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

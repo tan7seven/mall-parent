@@ -1,40 +1,32 @@
-package com.mall.malladmin.entity;
+package com.mall.malladmin.entity.user;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 公司收货地址表
+ * 用户收货地址表
  */
 @Data
 @Entity
-@Table(name = "company_address")
+@Table(name = "mall_user_address")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
-public class CompanyAddressEntity {
+public class UserAdressEntity implements Serializable {
     /**
      * 主键
      */
     @Id
     @GeneratedValue(generator = "jpa-uuid")
-    @Column(length = 32,name = "address_id")
-    private String addressId;
+    @Column(length = 32,name = "user_address_id")
+    private String userAddressId;
     /**
-     * 地址名称
+     * 用户编号
      */
-    @Column(length = 128,name = "address_name")
-    private String addressName;
-    /**
-     * 默认发货地址：0->是；1->否
-     */
-    @Column(length = 1,name = "is_send")
-    private String isSend;
-    /**
-     * 默认收货地址 ：0->是；1->否
-     */
-    @Column(length = 1,name = "is_receive")
-    private String isReceive;
+    @Column(length = 15,name = "user_id")
+    private String userId;
     /**
      * 收货人姓名
      */
@@ -65,4 +57,25 @@ public class CompanyAddressEntity {
      */
     @Column(length = 128,name = "detail_address")
     private String detailAddress;
+    /**
+     * 是否可用：0->是；1->否
+     */
+    @Column(length = 1,name = "is_usable")
+    private String isUsable;
+    /**
+     * 默认收货地址 ：0->是；1->否
+     */
+    @Column(length = 1,name = "is_receive")
+    private String isReceive;
+    /**
+     * 新增时间
+     */
+    @Column(name = "create_Time")
+    private Date createTime;
+    /**
+     * 更新时间
+     */
+    @Column(name = "modify_Time")
+    private Date modifyTime;
+
 }

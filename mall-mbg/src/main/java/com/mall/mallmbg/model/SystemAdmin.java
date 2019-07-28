@@ -74,6 +74,8 @@ public class SystemAdmin implements Serializable {
      */
     private Date modifyTime;
 
+    private String nickname;
+
     private static final long serialVersionUID = 1L;
 
     public String getUserId() {
@@ -100,11 +102,11 @@ public class SystemAdmin implements Serializable {
         this.password = password;
     }
 
-    public String getNickname() {
+    public String getName() {
         return name;
     }
 
-    public void setNickname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -156,6 +158,14 @@ public class SystemAdmin implements Serializable {
         this.modifyTime = modifyTime;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -172,6 +182,7 @@ public class SystemAdmin implements Serializable {
         sb.append(", isUsable=").append(isUsable);
         sb.append(", createTime=").append(createTime);
         sb.append(", modifyTime=").append(modifyTime);
+        sb.append(", nickname=").append(nickname);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

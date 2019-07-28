@@ -193,4 +193,196 @@
       value_id = #{valueId,jdbcType=INTEGER}
     where property_id = #{propertyId,jdbcType=INTEGER}
   </update>
+  <resultMap id="BaseResultMap" type="com.mall.mallmbg.model.MallProductProperty">
+    <id column="property_id" jdbcType="INTEGER" property="propertyId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="name_id" jdbcType="INTEGER" property="nameId" />
+    <result column="value_id" jdbcType="INTEGER" property="valueId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    property_id, product_id, name_id, value_id
+  </sql>
+  <select id="selectByExample" parameterType="com.mall.mallmbg.model.MallProductPropertyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_product_property
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_product_property
+    where property_id = #{propertyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mall_product_property
+    where property_id = #{propertyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mall.mallmbg.model.MallProductPropertyExample">
+    delete from mall_product_property
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mall.mallmbg.model.MallProductProperty">
+    insert into mall_product_property (property_id, product_id, name_id, 
+      value_id)
+    values (#{propertyId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{nameId,jdbcType=INTEGER}, 
+      #{valueId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.mallmbg.model.MallProductProperty">
+    insert into mall_product_property
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="propertyId != null">
+        property_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="nameId != null">
+        name_id,
+      </if>
+      <if test="valueId != null">
+        value_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="propertyId != null">
+        #{propertyId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="nameId != null">
+        #{nameId,jdbcType=INTEGER},
+      </if>
+      <if test="valueId != null">
+        #{valueId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mall.mallmbg.model.MallProductPropertyExample" resultType="java.lang.Integer">
+    select count(*) from mall_product_property
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mall_product_property
+    <set>
+      <if test="record.propertyId != null">
+        property_id = #{record.propertyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nameId != null">
+        name_id = #{record.nameId,jdbcType=INTEGER},
+      </if>
+      <if test="record.valueId != null">
+        value_id = #{record.valueId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mall_product_property
+    set property_id = #{record.propertyId,jdbcType=INTEGER},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      name_id = #{record.nameId,jdbcType=INTEGER},
+      value_id = #{record.valueId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.mallmbg.model.MallProductProperty">
+    update mall_product_property
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="nameId != null">
+        name_id = #{nameId,jdbcType=INTEGER},
+      </if>
+      <if test="valueId != null">
+        value_id = #{valueId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where property_id = #{propertyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.mallmbg.model.MallProductProperty">
+    update mall_product_property
+    set product_id = #{productId,jdbcType=INTEGER},
+      name_id = #{nameId,jdbcType=INTEGER},
+      value_id = #{valueId,jdbcType=INTEGER}
+    where property_id = #{propertyId,jdbcType=INTEGER}
+  </update>
 </mapper>

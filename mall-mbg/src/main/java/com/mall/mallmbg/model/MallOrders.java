@@ -13,13 +13,6 @@ public class MallOrders implements Serializable {
     private String ordersId;
 
     /**
-     * 订单编号
-     *
-     * @mbggenerated
-     */
-    private String ordersCode;
-
-    /**
      * 用户id
      *
      * @mbggenerated
@@ -31,7 +24,7 @@ public class MallOrders implements Serializable {
      *
      * @mbggenerated
      */
-    private BigDecimal totalPrice;
+    private BigDecimal totalPrice0;
 
     /**
      * 应付金额（实际支付金额）
@@ -104,7 +97,7 @@ public class MallOrders implements Serializable {
     private String sourceType;
 
     /**
-     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
+     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭；5->完成评价；6->无效订单
      *
      * @mbggenerated
      */
@@ -243,6 +236,8 @@ public class MallOrders implements Serializable {
      */
     private Date modifyTime;
 
+    private BigDecimal totalPrice;
+
     private static final long serialVersionUID = 1L;
 
     public String getOrdersId() {
@@ -253,14 +248,6 @@ public class MallOrders implements Serializable {
         this.ordersId = ordersId;
     }
 
-    public String getOrdersCode() {
-        return ordersCode;
-    }
-
-    public void setOrdersCode(String ordersCode) {
-        this.ordersCode = ordersCode;
-    }
-
     public String getUserId() {
         return userId;
     }
@@ -269,12 +256,12 @@ public class MallOrders implements Serializable {
         this.userId = userId;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public BigDecimal getTotalPrice0() {
+        return totalPrice0;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalPrice0(BigDecimal totalPrice0) {
+        this.totalPrice0 = totalPrice0;
     }
 
     public BigDecimal getPayPrice() {
@@ -517,6 +504,14 @@ public class MallOrders implements Serializable {
         this.modifyTime = modifyTime;
     }
 
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -524,9 +519,8 @@ public class MallOrders implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", ordersId=").append(ordersId);
-        sb.append(", ordersCode=").append(ordersCode);
         sb.append(", userId=").append(userId);
-        sb.append(", totalPrice=").append(totalPrice);
+        sb.append(", totalPrice0=").append(totalPrice0);
         sb.append(", payPrice=").append(payPrice);
         sb.append(", freightPrice=").append(freightPrice);
         sb.append(", promotionPrice=").append(promotionPrice);
@@ -557,6 +551,7 @@ public class MallOrders implements Serializable {
         sb.append(", deliveryTime=").append(deliveryTime);
         sb.append(", receiveTime=").append(receiveTime);
         sb.append(", modifyTime=").append(modifyTime);
+        sb.append(", totalPrice=").append(totalPrice);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

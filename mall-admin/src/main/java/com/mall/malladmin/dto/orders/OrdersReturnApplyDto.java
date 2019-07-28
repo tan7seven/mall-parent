@@ -1,5 +1,6 @@
 package com.mall.malladmin.dto.orders;
 
+import com.mall.malladmin.dto.common.CommonDto;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -9,15 +10,39 @@ import java.util.Date;
  * 订单退货申请表
  */
 @Data
-public class OrdersReturnApplyDto {
+public class OrdersReturnApplyDto extends CommonDto{
     /**
      * 主键
      */
     private String applyId;
     /**
+     * 分类id
+     */
+    private Integer typeId;
+    /**
+     * 商品图片
+     */
+    private String picUrl;
+    /**
+     * 商品编号
+     */
+    private Integer productId;
+    /**
+     * 商品名称
+     */
+    private String productName;
+    /**
      * 退货编码
      */
     private String applyCode;
+    /**
+     * 商品属性
+     */
+    private String productProperty;
+    /**
+     * 商品属性
+     */
+    private String productPropertyLabel;
     /**
      * 订单id
      */
@@ -31,9 +56,17 @@ public class OrdersReturnApplyDto {
      */
     private String userId;
     /**
+     * 登录账号
+     */
+    private String loginCode;
+    /**
      * 退款金额
      */
     private BigDecimal returnPrice;
+    /**
+     * 商品价格
+     */
+    private BigDecimal productPrice;
     /**
      * 公司收货地址id
      */
@@ -63,6 +96,14 @@ public class OrdersReturnApplyDto {
      */
     private Date handleTime;
     /**
+     * 处理备注
+     */
+    private String handleRemark;
+    /**
+     * 处理人
+     */
+    private String handlePerson;
+    /**
      * 发货时间
      */
     private Date deliveryTime;
@@ -70,5 +111,13 @@ public class OrdersReturnApplyDto {
      * 确认收货时间
      */
     private Date receiveTime;
+    /**
+     * 确认收货人
+     */
+    private Date receivePerson;
+    /**
+     * 确认收货备注
+     */
+    private Date receiveRemark;
 
 }

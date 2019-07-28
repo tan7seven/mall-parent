@@ -83,6 +83,16 @@ public class OrdersReturnApplyEntity {
     @Column(name = "handle_time")
     private Date handleTime;
     /**
+     * 处理备注
+     */
+    @Column(name = "handle_remark")
+    private String handleRemark;
+    /**
+     * 处理人
+     */
+    @Column(name = "handle_Person", length = 32)
+    private String handlePerson;
+    /**
      * 发货时间
      */
     @Column(name = "delivery_time")
@@ -92,5 +102,14 @@ public class OrdersReturnApplyEntity {
      */
     @Column(name = "receive_time")
     private Date receiveTime;
-
+    /**
+     * 确认收货人
+     */
+    @Column(name = "receive_person", length = 32)
+    private Date receivePerson;
+    /**
+     * 确认收货备注
+     */
+    @Column(name = "receive_Remark")
+    private Date receiveRemark;
 }

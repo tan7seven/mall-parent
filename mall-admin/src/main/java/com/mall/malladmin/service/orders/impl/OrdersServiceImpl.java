@@ -26,7 +26,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service(value = "ordersService")
-public class OrdersServiceImpl implements OrdersService {
+public class OrdersServiceImpl implements OrdersService
+{
     @Autowired
     private ProductPropertyValueRepository productPropertyValueRepository;
 
@@ -84,6 +85,68 @@ public class OrdersServiceImpl implements OrdersService {
         logEntity.setOrdersStatus(dto.getOrdersStatus());
         logEntity.setRemark("修改收货信息");
         ordersOperationLogService.save(logEntity);
+    }
+
+    @Override
+    public void updateMoneyInfo(OrdersDto dto, UserDetailsImpl userDetails) {
+        OrdersEntity entity = ordersRepository.findById(dto.getOrdersId()).get();
+        entity.setDiscountPrice(dto.getDiscountPrice());
+        entity.setPayPrice(entity.getTotalPrice().add(entity.getFreightPrice())
+                .subtract(entity.getPromotionPrice()).subtract(entity.getScorePrice()).subtract(entity.getCouponPrice())
+                .subtract(dto.getDiscountPrice()));
+        ordersRepository.save(entity);
+        OrdersOperationLogEntity logEntity = new OrdersOperationLogEntity();
+        logEntity.setCreateTime(new Date());
+        logEntity.setOperationPerson(userDetails.getUserId());
+        logEntity.setOrdersId(dto.getOrdersId());
+        logEntity.setOrdersStatus(dto.getOrdersStatus());
+        logEntity.setRemark("修改订单价格："+ dto.getDiscountPrice().toString());
+        ordersOperationLogService.save(logEntity);
+    }
+
+    @Override
+    public void updateRemarkInfo(OrdersDto dto, UserDetailsImpl userDetails) {
+        OrdersEntity entity = ordersRepository.findById(dto.getOrdersId()).get();
+        entity.setOrdersRemark(dto.getOrdersRemark());
+        ordersRepository.save(entity);
+        OrdersOperationLogEntity logEntity = new OrdersOperationLogEntity();
+        logEntity.setCreateTime(new Date());
+        logEntity.setOperationPerson(userDetails.getUserId());
+        logEntity.setOrdersId(dto.getOrdersId());
+        logEntity.setOrdersStatus(dto.getOrdersStatus());
+        logEntity.setRemark("修改订单备注："+ dto.getOrdersRemark());
+        ordersOperationLogService.save(logEntity);
+    }
+
+    @Override
+    public void closeOrders(OrdersDto dto, UserDetailsImpl userDetails) {
+        OrdersEntity entity = ordersRepository.findById(dto.getOrdersId()).get();
+        OrdersOperationLogEntity logEntity = new OrdersOperationLogEntity();
+        logEntity.setCreateTime(new Date());
+        logEntity.setOperationPerson(userDetails.getUserId());
+        logEntity.setOrdersId(dto.getOrdersId());
+        logEntity.setOrdersStatus(entity.getOrdersStatus());
+        logEntity.setRemark("关闭订单、备注信息："+ dto.getOrdersRemark());
+        ordersOperationLogService.save(logEntity);
+        entity.setOrdersStatus(OrdersEntity.ORDERS_STATUS_INVALID);
+        ordersRepository.save(entity);
+
+    }
+
+    @Override
+    public void deleteOrders(String[] ids, UserDetailsImpl userDetails) {
+        for (String id : ids) {
+            OrdersEntity result = ordersRepository.findById(id).get();
+            result.setIsDelete(OrdersEntity.IS_DELETE);
+            ordersRepository.save(result);
+            OrdersOperationLogEntity logEntity = new OrdersOperationLogEntity();
+            logEntity.setCreateTime(new Date());
+            logEntity.setOperationPerson(userDetails.getUserId());
+            logEntity.setOrdersId(result.getOrdersId());
+            logEntity.setOrdersStatus(result.getOrdersStatus());
+            logEntity.setRemark("删除订单信息。");
+            ordersOperationLogService.save(logEntity);
+        }
     }
 
     /**

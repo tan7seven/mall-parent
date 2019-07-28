@@ -1,7 +1,7 @@
 package com.mall.malladmin.security;
 
 import com.mall.malladmin.enumUtil.AdminRoleEnum;
-import com.mall.malladmin.service.AdminService;
+import com.mall.malladmin.service.system.AdminService;
 import com.mall.malladmin.dto.system.AdminDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

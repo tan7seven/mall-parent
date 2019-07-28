@@ -20,6 +20,13 @@ public class MallOrdersItems implements Serializable {
     private String ordersId;
 
     /**
+     * 图片地址
+     *
+     * @mbggenerated
+     */
+    private String picUrl;
+
+    /**
      * 	商品编号
      *
      * @mbggenerated
@@ -134,6 +141,14 @@ public class MallOrdersItems implements Serializable {
 
     public void setOrdersId(String ordersId) {
         this.ordersId = ordersId;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public Integer getProductId() {
@@ -280,6 +295,7 @@ public class MallOrdersItems implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", itemsId=").append(itemsId);
         sb.append(", ordersId=").append(ordersId);
+        sb.append(", picUrl=").append(picUrl);
         sb.append(", productId=").append(productId);
         sb.append(", productSkuId=").append(productSkuId);
         sb.append(", productAmount=").append(productAmount);

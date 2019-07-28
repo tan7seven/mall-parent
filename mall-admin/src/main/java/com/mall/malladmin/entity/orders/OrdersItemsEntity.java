@@ -33,6 +33,11 @@ public class OrdersItemsEntity {
     @Column(name = "product_id")
     private Integer productId;
     /**
+     * 图片地址
+     */
+    @Column(name = "pic_url")
+    private String picUrl;
+    /**
      * 商品SKU编号
      */
     @Column(name = "product_sku_id")

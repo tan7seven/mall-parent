@@ -1,4 +1,4 @@
-package com.mall.malladmin.service;
+package com.mall.malladmin.service.system;
 
 import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;

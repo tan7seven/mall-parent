@@ -3,7 +3,6 @@
 <mapper namespace="com.mall.malladmin.mapper.orders.OrdersMapper">
     <resultMap id="BaseResultMap" type="com.mall.malladmin.dto.orders.OrdersDto">
         <id column="orders_id" jdbcType="VARCHAR" property="ordersId" />
-        <result column="orders_code" jdbcType="VARCHAR" property="ordersCode" />
         <result column="user_id" jdbcType="VARCHAR" property="userId" />
         <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
         <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
@@ -51,7 +50,7 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-        a.orders_id, orders_code, a.user_id, a.total_price, a.pay_price, a.freight_price, a.promotion_price,
+        a.orders_id,  a.user_id, a.total_price, a.pay_price, a.freight_price, a.promotion_price,
         a.score_price, a.coupon_price, a.discount_price, a.pay_type, a.source_type, a.orders_status,
         a.delivery_company, a.delivery_code, a.auto_confirm_day, a.receiver_name, a.receiver_phone,
         a.receiver_post_code, a.receiver_province, a.receiver_city, a.receiver_region, a.receiver_detail_address,
@@ -65,11 +64,12 @@
         FROM mall_orders a
         inner JOIN system_admin b on a.user_id = b.user_id
         WHERE  1 = 1
+        AND  a.is_delete = '0'
         <if test="dto.createTime!=null and dto.createTime!=''">
             AND a.create_time LIKE concat(#{dto.createTime},"%")
         </if>
-        <if test="dto.ordersCode!=null and dto.ordersCode!=''">
-            AND a.orders_Code = #{dto.ordersCode}
+        <if test="dto.ordersId!=null and dto.ordersId!=''">
+            AND a.orders_Id = #{dto.ordersId}
         </if>
         <if test="dto.receiverName!=null and dto.receiverName!=''">
             AND a.receiver_Name = #{dto.receiverName}
@@ -89,13 +89,13 @@
         SELECT
         <include refid="Base_Column_List" />
         , b.product_name productName, b.product_amount productAmount, b.product_price productPrice, b.product_property productProperty, b.promotion_name promotionName,
-        b.promotion_price promotionPrice, b.real_price realPrice ,c.login_code, d.pic_url picUrl, e.type_id typeId, b.product_id productId
+        b.promotion_price promotionPrice, b.real_price realPrice ,c.login_code, b.pic_url picUrl, e.type_id typeId, b.product_id productId
         FROM mall_orders a
         inner JOIN mall_orders_items b on a.orders_id = b.orders_id
         inner JOIN system_admin c  on a.user_id = c.user_id
-        inner JOIN mall_product_sku d  on d.sku_id = b.product_sku_id
         inner JOIN mall_product e  on b.product_id = e.product_id
         WHERE  1 = 1
-        and a.orders_id = #{id}
+        AND  a.is_delete = '0'
+        AND a.orders_id = #{id}
     </select>
 </mapper>

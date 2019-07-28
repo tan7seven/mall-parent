@@ -16,10 +16,7 @@ public class OrdersDto extends CommonDto {
      * 订单ID
      */
     private String ordersId;
-    /**
-     * 订单编号
-     */
-    private String ordersCode;
+
     /**
      * 用户ID
      */
@@ -49,6 +46,10 @@ public class OrdersDto extends CommonDto {
      */
     private BigDecimal couponPrice;
     /**
+     * 管理员后台调整订单使用的折扣金额
+     */
+    private BigDecimal discountPrice;
+    /**
      * 积分
      */
     private Integer score;
@@ -56,11 +57,6 @@ public class OrdersDto extends CommonDto {
      * 成长值
      */
     private Integer growth;
-
-    /**
-     * 管理员后台调整订单使用的折扣金额
-     */
-    private BigDecimal discountPrice;
     /**
      * 支付方式：0->未支付；1->支付宝；2->微信
      */
@@ -70,7 +66,7 @@ public class OrdersDto extends CommonDto {
      */
     private String sourceType;
     /**
-     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
+     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭；5->完成评价；6->无效订单
      */
     private String ordersStatus;
     /**

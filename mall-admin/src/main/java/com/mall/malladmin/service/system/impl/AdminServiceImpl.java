@@ -1,9 +1,9 @@
-package com.mall.malladmin.service.impl;
+package com.mall.malladmin.service.system.impl;
 
 import com.mall.malladmin.entity.system.AdminEntity;
 import com.mall.malladmin.mapper.AdminMapper;
 import com.mall.malladmin.repository.system.AdminRepository;
-import com.mall.malladmin.service.AdminService;
+import com.mall.malladmin.service.system.AdminService;
 import com.mall.malladmin.dto.system.AdminDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
