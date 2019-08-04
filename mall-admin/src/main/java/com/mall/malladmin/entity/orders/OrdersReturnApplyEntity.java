@@ -16,6 +16,13 @@ import java.util.Date;
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class OrdersReturnApplyEntity {
     /**
+     * 退货状态：0->待处理；1->退货中；2->已完成；3->已拒绝
+     */
+    public static final String RETURN_STATUS_WAIT = "0";
+    public static final String RETURN_STATUS_RETURNING = "1";
+    public static final String RETURN_STATUS_FINISHED = "2";
+    public static final String RETURN_STATUS_REFUSE="3";
+    /**
      * 主键
      */
     @Id
@@ -43,10 +50,15 @@ public class OrdersReturnApplyEntity {
     @Column(name = "user_id", length = 32)
     private String userId;
     /**
-     * 退款金额
+     * 申请退款金额
      */
     @Column(name = "return_price")
     private BigDecimal returnPrice;
+    /**
+     * 实际退款金额
+     */
+    @Column(name = "real_return_price")
+    private BigDecimal realReturnPrice;
     /**
      * 公司收货地址id
      */
@@ -106,10 +118,10 @@ public class OrdersReturnApplyEntity {
      * 确认收货人
      */
     @Column(name = "receive_person", length = 32)
-    private Date receivePerson;
+    private String receivePerson;
     /**
      * 确认收货备注
      */
     @Column(name = "receive_Remark")
-    private Date receiveRemark;
+    private String receiveRemark;
 }

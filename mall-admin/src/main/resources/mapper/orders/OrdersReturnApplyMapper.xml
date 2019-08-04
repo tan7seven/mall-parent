@@ -8,6 +8,7 @@
         <result column="orders_items_id" jdbcType="VARCHAR" property="ordersItemsId" />
         <result column="user_id" jdbcType="VARCHAR" property="userId" />
         <result column="return_price" jdbcType="DECIMAL" property="returnPrice" />
+        <result column="real_return_price" jdbcType="DECIMAL" property="realReturnPrice" />
         <result column="company_address_id" jdbcType="VARCHAR" property="companyAddressId" />
         <result column="return_reason" jdbcType="VARCHAR" property="returnReason" />
         <result column="return_pic" jdbcType="VARCHAR" property="returnPic" />
@@ -15,8 +16,14 @@
         <result column="return_amount" jdbcType="INTEGER" property="returnAmount" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime" />
+        <result column="handle_person" jdbcType="VARCHAR" property="handlePerson" />
+        <result column="handle_person_name" jdbcType="VARCHAR" property="handlePersonName" />
+        <result column="handle_remark" jdbcType="VARCHAR" property="handleRemark" />
         <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
         <result column="receive_time" jdbcType="TIMESTAMP" property="receiveTime" />
+        <result column="receive_remark" jdbcType="VARCHAR" property="receiveRemark" />
+        <result column="receive_person" jdbcType="VARCHAR" property="receivePerson" />
+        <result column="receive_person_name" jdbcType="VARCHAR" property="receivePersonName" />
         <result column="login_code" jdbcType="VARCHAR" property="loginCode" />
         <result column="pic_Url" jdbcType="VARCHAR" property="picUrl" />
         <result column="product_Name" jdbcType="VARCHAR" property="productName" />
@@ -27,13 +34,14 @@
     </resultMap>
     <sql id="Base_Column_List">
         a.apply_id, a.apply_code, a.orders_id, a.orders_items_id, a.user_id, a.return_price, a.company_address_id,
-        return_reason, a.return_pic, a.return_status, a.return_amount, a.create_time, a.handle_time,
-        delivery_time, a.receive_time
+        return_reason, a.return_pic, a.return_status, a.return_amount, a.create_time, a.handle_time, a.handle_person, a.handle_remark,
+        delivery_time, a.receive_time, a.receive_remark, a.receive_person, a.real_return_price
     </sql>
 
     <select id="findList" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/> ,b.login_code FROM mall_orders_return_apply a
+        SELECT <include refid="Base_Column_List"/> ,b.login_code  FROM mall_orders_return_apply a
         INNER JOIN system_admin b ON a.user_id = b.user_id
+
         WHERE 1=1
         <if test="dto.applyCode!=null and dto.applyCode!=''">
             AND a.apply_Code like '%${dto.applyCode}%'
@@ -51,10 +59,13 @@
 
     <select id="findById" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/> ,b.login_code, c.pic_Url, c.product_Name, c.product_Price, c.product_Property, c.product_id, d.type_id
+        , e.name handle_Person_Name, f.name receive_person_name
         FROM mall_orders_return_apply a
         INNER JOIN system_admin b ON a.user_id = b.user_id
         INNER JOIN mall_orders_items c ON  c.items_id = a.orders_items_id
         INNER JOIN mall_product d ON  d.product_id = c.product_id
+        INNER JOIN system_admin e ON e.user_id = a.handle_person
+        INNER JOIN system_admin f ON f.user_id = a.receive_person
         WHERE 1=1
         AND a.apply_id = #{id}
     </select>

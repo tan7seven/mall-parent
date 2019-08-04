@@ -60,9 +60,13 @@ public class OrdersReturnApplyDto extends CommonDto{
      */
     private String loginCode;
     /**
-     * 退款金额
+     * 申请退款金额
      */
     private BigDecimal returnPrice;
+    /**
+     * 实际退款金额
+     */
+    private BigDecimal realReturnPrice;
     /**
      * 商品价格
      */
@@ -71,6 +75,7 @@ public class OrdersReturnApplyDto extends CommonDto{
      * 公司收货地址id
      */
     private String companyAddressId;
+    private String addressId;
     /**
      *	退货原因
      */
@@ -103,6 +108,7 @@ public class OrdersReturnApplyDto extends CommonDto{
      * 处理人
      */
     private String handlePerson;
+    private String handlePersonName;
     /**
      * 发货时间
      */
@@ -114,10 +120,11 @@ public class OrdersReturnApplyDto extends CommonDto{
     /**
      * 确认收货人
      */
-    private Date receivePerson;
+    private String receivePerson;
+    private String receivePersonName;
     /**
      * 确认收货备注
      */
-    private Date receiveRemark;
+    private String receiveRemark;
 
 }

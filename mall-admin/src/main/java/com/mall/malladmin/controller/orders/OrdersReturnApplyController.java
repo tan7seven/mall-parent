@@ -43,4 +43,18 @@ public class OrdersReturnApplyController extends GenericController {
         OrdersReturnApplyDto result = ordersReturnApplyService.findById(id);
         return new CommonResultDto().success(result);
     }
+
+    /**
+     * 修改订单退货信息
+     * @return
+     */
+    @PostMapping(value = "updateApplyStatus.do/{id}")
+    protected Object updateApplyStatus(@PathVariable String id, @RequestBody OrdersReturnApplyDto dto){
+        if (StringUtils.isBlank(id)) {
+            return new CommonResultDto().validateFailed("编码为空！");
+        }
+        dto.setApplyId(id);
+        ordersReturnApplyService.updateApplyStatus(dto, this.getUserDetails());
+        return new CommonResultDto().success();
+    }
 }

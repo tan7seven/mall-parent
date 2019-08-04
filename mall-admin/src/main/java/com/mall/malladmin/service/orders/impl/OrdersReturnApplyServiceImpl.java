@@ -4,16 +4,20 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.dto.orders.OrdersReturnApplyDto;
 import com.mall.malladmin.dto.product.ProductSkuDto;
+import com.mall.malladmin.entity.orders.OrdersReturnApplyEntity;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.entity.product.ProductPropertyValueEntity;
 import com.mall.malladmin.mapper.orders.OrdersReturnApplyMapper;
+import com.mall.malladmin.repository.orders.OrdersReturnApplyRepository;
 import com.mall.malladmin.repository.product.ProductPropertyNameRepository;
 import com.mall.malladmin.repository.product.ProductPropertyValueRepository;
+import com.mall.malladmin.security.UserDetailsImpl;
 import com.mall.malladmin.service.orders.OrdersReturnApplyService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service(value = "ordersReturnApplyService")
@@ -27,6 +31,9 @@ public class OrdersReturnApplyServiceImpl implements OrdersReturnApplyService {
 
     @Autowired
     private OrdersReturnApplyMapper ordersReturnApplyMapper;
+
+    @Autowired
+    private OrdersReturnApplyRepository ordersReturnApplyRepository;
 
     @Override
     public OrdersReturnApplyDto findById(String id) {
@@ -45,6 +52,33 @@ public class OrdersReturnApplyServiceImpl implements OrdersReturnApplyService {
         List<OrdersReturnApplyDto> resultList = ordersReturnApplyMapper.findList(dto);
         PageInfo<OrdersReturnApplyDto> page = new PageInfo<>(resultList);
         return page;
+    }
+
+    @Override
+    public void updateApplyStatus(OrdersReturnApplyDto dto, UserDetailsImpl userDetails) {
+        OrdersReturnApplyEntity entity = ordersReturnApplyRepository.findById(dto.getApplyId()).get();
+        //确认退货
+        if (OrdersReturnApplyEntity.RETURN_STATUS_RETURNING.equals(dto.getReturnStatus())) {
+            entity.setHandlePerson(userDetails.getUserId());
+            entity.setHandleTime(new Date());
+            entity.setHandleRemark(dto.getHandleRemark());
+            entity.setRealReturnPrice(dto.getRealReturnPrice());
+            entity.setCompanyAddressId(dto.getAddressId());
+            entity.setReturnStatus(dto.getReturnStatus());
+        //确认收货
+        }else if(OrdersReturnApplyEntity.RETURN_STATUS_FINISHED.equals(dto.getReturnStatus())){
+            entity.setReceivePerson(userDetails.getUserId());
+            entity.setReceiveTime(new Date());
+            entity.setReceiveRemark(dto.getReceiveRemark());
+            entity.setReturnStatus(dto.getReturnStatus());
+        //拒绝
+        }else if(OrdersReturnApplyEntity.RETURN_STATUS_REFUSE.equals(dto.getReturnStatus())){
+            entity.setHandlePerson(userDetails.getUserId());
+            entity.setHandleTime(new Date());
+            entity.setHandleRemark(dto.getHandleRemark());
+            entity.setReturnStatus(dto.getReturnStatus());
+        }
+        ordersReturnApplyRepository.save(entity);
     }
 
     /**
