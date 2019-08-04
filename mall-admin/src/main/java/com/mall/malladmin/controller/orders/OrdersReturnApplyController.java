@@ -57,4 +57,18 @@ public class OrdersReturnApplyController extends GenericController {
         ordersReturnApplyService.updateApplyStatus(dto, this.getUserDetails());
         return new CommonResultDto().success();
     }
+
+    /**
+     * 批量删除退货申请单
+     * @param ids
+     * @return
+     */
+    @PostMapping(value = "deleteApply.do")
+    protected Object deleteApply(String...ids){
+        if(null == ids || StringUtils.isBlank(ids.toString())){
+            return new CommonResultDto().success();
+        }
+        ordersReturnApplyService.deleteApply(ids);
+        return new CommonResultDto().success();
+    }
 }

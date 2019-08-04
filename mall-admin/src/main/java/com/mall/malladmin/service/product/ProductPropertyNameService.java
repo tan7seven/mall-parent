@@ -1,7 +1,8 @@
 package com.mall.malladmin.service.product;
 
-import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductPropertyNameDto;
+import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -61,4 +62,25 @@ public interface ProductPropertyNameService {
      * @return
      */
     Page<ProductPropertyNameEntity> findPage(ProductPropertyNameEntity entity, Pageable page);
+
+    /**
+     * 修改是否销售属性
+     * @param dto
+     * @return
+     */
+    CommonResultDto updateIsSale(ProductPropertyNameDto dto);
+
+    /**
+     * 修改是否显示
+     * @param dto
+     * @return
+     */
+    CommonResultDto updateIsShow(ProductPropertyNameDto dto);
+
+    /**
+     * 修改是否可用
+     * @param dto
+     * @return
+     */
+    CommonResultDto updateIsUsable(ProductPropertyNameDto dto);
 }

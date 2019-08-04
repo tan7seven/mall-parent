@@ -107,40 +107,32 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/updateIsSale.do")
-    protected CommonResultDto updateIsSale(@RequestBody ProductPropertyNameDto dto){
+    protected CommonResultDto updateIsSale( ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){
             return new CommonResultDto().validateFailed("主键为空！");
         }
-        ProductPropertyNameEntity entity = productPropertyNameService.findById(dto.getPropertyNameId()).get();
-        entity.setIsSale(dto.getIsSale());
-        return productPropertyNameService.add(entity);
+        return productPropertyNameService.updateIsSale(dto);
     }
     /**
      * 是否显示
      * @return
      */
     @PostMapping("/updateIsShow.do")
-    protected CommonResultDto updateIsShow(@RequestBody ProductPropertyNameDto dto){
+    protected CommonResultDto updateIsShow( ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){
             return new CommonResultDto().validateFailed("主键为空！");
         }
-        ProductPropertyNameEntity entity = productPropertyNameService.findById(dto.getPropertyNameId()).get();
-        entity.setIsShow(dto.getIsShow());
-        productPropertyNameService.add(entity);
-        return new CommonResultDto().success();
+        return productPropertyNameService.updateIsShow(dto);
     }
     /**
      * 是否可用
      * @return
      */
     @PostMapping("/updateIsUsable.do")
-    protected CommonResultDto updateIsUsable(@RequestBody ProductPropertyNameDto dto){
+    protected CommonResultDto updateIsUsable( ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){
             return new CommonResultDto().validateFailed("主键为空！");
         }
-        ProductPropertyNameEntity entity = productPropertyNameService.findById(dto.getPropertyNameId()).get();
-        entity.setIsUsable(dto.getIsUsable());
-        productPropertyNameService.add(entity);
-        return new CommonResultDto().success();
+        return productPropertyNameService.updateIsUsable(dto);
     }
 }

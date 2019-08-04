@@ -3,7 +3,6 @@
 <mapper namespace="com.mall.malladmin.mapper.orders.OrdersReturnApplyMapper">
     <resultMap id="BaseResultMap" type="com.mall.malladmin.dto.orders.OrdersReturnApplyDto">
         <id column="apply_id" jdbcType="VARCHAR" property="applyId" />
-        <result column="apply_code" jdbcType="VARCHAR" property="applyCode" />
         <result column="orders_id" jdbcType="VARCHAR" property="ordersId" />
         <result column="orders_items_id" jdbcType="VARCHAR" property="ordersItemsId" />
         <result column="user_id" jdbcType="VARCHAR" property="userId" />
@@ -33,7 +32,7 @@
         <result column="product_id" jdbcType="INTEGER" property="productId" />
     </resultMap>
     <sql id="Base_Column_List">
-        a.apply_id, a.apply_code, a.orders_id, a.orders_items_id, a.user_id, a.return_price, a.company_address_id,
+        a.apply_id, a.orders_id, a.orders_items_id, a.user_id, a.return_price, a.company_address_id,
         return_reason, a.return_pic, a.return_status, a.return_amount, a.create_time, a.handle_time, a.handle_person, a.handle_remark,
         delivery_time, a.receive_time, a.receive_remark, a.receive_person, a.real_return_price
     </sql>
@@ -41,19 +40,19 @@
     <select id="findList" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/> ,b.login_code  FROM mall_orders_return_apply a
         INNER JOIN system_admin b ON a.user_id = b.user_id
-
         WHERE 1=1
-        <if test="dto.applyCode!=null and dto.applyCode!=''">
-            AND a.apply_Code like '%${dto.applyCode}%'
+        AND  a.is_delete = '0'
+        <if test="dto.applyId!=null and dto.applyId!=''">
+            AND a.apply_id like '%${dto.applyId}%'
         </if>
         <if test="dto.returnStatus!=null and dto.returnStatus!=''">
             AND a.return_Status =#{dto.returnStatus}
         </if>
-        <if test="dto.handleTime!=null and dto.handleTime!=''">
-            AND a.handle_Time LIKE concat(#{dto.handleTime},"%")
+        <if test="dto.handleTimeQuery!=null">
+            AND a.handle_Time LIKE concat(#{dto.handleTimeQuery},"%")
         </if>
-        <if test="dto.createTime!=null and dto.createTime!=''">
-            AND a.create_Time LIKE concat(#{dto.createTime},"%")
+        <if test="dto.createTimeQuery!=null">
+            AND a.create_Time LIKE concat(#{dto.createTimeQuery},"%")
         </if>
     </select>
 
@@ -64,9 +63,10 @@
         INNER JOIN system_admin b ON a.user_id = b.user_id
         INNER JOIN mall_orders_items c ON  c.items_id = a.orders_items_id
         INNER JOIN mall_product d ON  d.product_id = c.product_id
-        INNER JOIN system_admin e ON e.user_id = a.handle_person
-        INNER JOIN system_admin f ON f.user_id = a.receive_person
+        LEFT JOIN system_admin e ON e.user_id = a.handle_person
+        LEFT JOIN system_admin f ON f.user_id = a.receive_person
         WHERE 1=1
+        AND  a.is_delete = '0'
         AND a.apply_id = #{id}
     </select>
 </mapper>

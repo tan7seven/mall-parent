@@ -15,7 +15,7 @@ import java.util.Date;
 @Table(name = "mall_orders")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class OrdersEntity {
-    //订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->已完成评价；6->无效订单
+    //订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
     public static final String ORDERS_STATUS_OBLIGATION = "0";
     public static final String ORDERS_STATUS_TO_SEND = "1";
     public static final String ORDERS_STATUS_SEND = "2";
@@ -94,7 +94,7 @@ public class OrdersEntity {
     @Column(length = 1,name = "source_Type")
     private String sourceType;
     /**
-     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭；5->完成评价；6->无效订单
+     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
      */
     @Column(length = 1,name = "orders_Status")
     private String ordersStatus;

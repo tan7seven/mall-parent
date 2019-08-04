@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 订单信息
@@ -35,7 +36,7 @@ public class OrdersController extends GenericController{
      */
     @GetMapping(value = "getOrders.do/{id}")
     protected  Object getOrders(@PathVariable String id){
-        if(null == id){
+        if(null == id || "undefined".equals(id)){
             return new CommonResultDto().validateFailed("ID为空！");
         }
         OrdersDto result = ordersService.getOrdersById(id);
@@ -88,6 +89,18 @@ public class OrdersController extends GenericController{
         ordersService.closeOrders(dto, this.getUserDetails());
         return new CommonResultDto().success();
     }
+    /**
+     * 关闭订单 -> 手动关闭的订单为无效订单
+     * @return
+     */
+    @PostMapping(value = "closeOrdersList.do")
+    protected Object closeOrdersList(String[] ids, String remark){
+        if (null ==ids || StringUtils.isBlank(ids.toString())) {
+            return new CommonResultDto().success();
+        }
+        ordersService.closeOrdersList(ids, remark, this.getUserDetails());
+        return new CommonResultDto().success();
+    }
 
     /**
      * 删除订单信息
@@ -100,6 +113,20 @@ public class OrdersController extends GenericController{
             return new CommonResultDto().validateFailed("参数为空！");
         }
         ordersService.deleteOrders(ids, this.getUserDetails());
+        return new CommonResultDto().success();
+    }
+
+    /**
+     * 批量发货
+     * @param dtoList
+     * @return
+     */
+    @PostMapping(value = "deliveryOrders.do")
+    protected Object deliveryOrders(@RequestBody List<OrdersDto> dtoList){
+        if(null == dtoList || dtoList.isEmpty()){
+            return new CommonResultDto().success();
+        }
+        ordersService.deliveryOrders(dtoList, this.getUserDetails());
         return new CommonResultDto().success();
     }
 }

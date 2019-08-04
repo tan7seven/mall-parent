@@ -27,4 +27,10 @@ public interface OrdersReturnApplyService {
      * @param dto
      */
     void updateApplyStatus(OrdersReturnApplyDto dto, UserDetailsImpl userDetails);
+
+    /**
+     * 批量删除退货申请单
+     * @param ids
+     */
+    void deleteApply(String[] ids);
 }

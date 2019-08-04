@@ -3,7 +3,6 @@
 <mapper namespace="com.mall.mallmbg.mapper.MallOrdersReturnApplyMapper">
   <resultMap id="BaseResultMap" type="com.mall.mallmbg.model.MallOrdersReturnApply">
     <id column="apply_id" jdbcType="VARCHAR" property="applyId" />
-    <result column="apply_code" jdbcType="VARCHAR" property="applyCode" />
     <result column="orders_id" jdbcType="VARCHAR" property="ordersId" />
     <result column="orders_items_id" jdbcType="VARCHAR" property="ordersItemsId" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />

@@ -5,6 +5,8 @@ import com.mall.malladmin.dto.orders.OrdersDto;
 import com.mall.malladmin.security.UserDetailsImpl;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 订单信息
  */
@@ -47,7 +49,10 @@ public interface OrdersService {
      * @param userDetails
      */
     void closeOrders(OrdersDto dto, UserDetailsImpl userDetails);
-
+    /**
+     * 关闭订单
+     */
+    void closeOrdersList(String[] ids, String remark, UserDetailsImpl userDetails);
     /**
      * 删除订单
      * @param ids
@@ -55,4 +60,11 @@ public interface OrdersService {
      */
     @Transactional
     void deleteOrders(String[] ids, UserDetailsImpl userDetails);
+
+    /**
+     * 订单发货
+     * @param dtoList
+     */
+    @Transactional
+    void deliveryOrders(List<OrdersDto> dtoList, UserDetailsImpl userDetails);
 }

@@ -129,6 +129,7 @@ public class OrdersDto extends CommonDto {
      * 创建时间
      */
     private Date createTime;
+    private String createTimeQuery;
     /**
      * 支付时间
      */

@@ -32,10 +32,6 @@ public class OrdersReturnApplyDto extends CommonDto{
      */
     private String productName;
     /**
-     * 退货编码
-     */
-    private String applyCode;
-    /**
      * 商品属性
      */
     private String productProperty;
@@ -96,10 +92,12 @@ public class OrdersReturnApplyDto extends CommonDto{
      * 申请时间
      */
     private Date createTime;
+    private String createTimeQuery;
     /**
      * 处理时间
      */
     private Date handleTime;
+    private String handleTimeQuery;
     /**
      * 处理备注
      */
@@ -126,5 +124,11 @@ public class OrdersReturnApplyDto extends CommonDto{
      * 确认收货备注
      */
     private String receiveRemark;
+    /**
+     * 是否删除
+     * 0-》否
+     * 1-》是
+     */
+    private String isDelete;
 
 }

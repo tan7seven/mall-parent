@@ -65,14 +65,14 @@
         inner JOIN system_admin b on a.user_id = b.user_id
         WHERE  1 = 1
         AND  a.is_delete = '0'
-        <if test="dto.createTime!=null and dto.createTime!=''">
-            AND a.create_time LIKE concat(#{dto.createTime},"%")
+        <if test="dto.createTimeQuery!=null">
+            AND a.create_time LIKE concat(#{dto.createTimeQuery},"%")
         </if>
         <if test="dto.ordersId!=null and dto.ordersId!=''">
             AND a.orders_Id = #{dto.ordersId}
         </if>
         <if test="dto.receiverName!=null and dto.receiverName!=''">
-            AND a.receiver_Name = #{dto.receiverName}
+            AND a.receiver_Name like '%${dto.receiverName}%'
         </if>
         <if test="dto.ordersStatus!=null and dto.ordersStatus!=''">
             AND a.orders_status = #{dto.ordersStatus}

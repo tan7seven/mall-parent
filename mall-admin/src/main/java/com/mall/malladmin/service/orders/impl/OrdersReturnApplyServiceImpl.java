@@ -81,6 +81,15 @@ public class OrdersReturnApplyServiceImpl implements OrdersReturnApplyService {
         ordersReturnApplyRepository.save(entity);
     }
 
+    @Override
+    public void deleteApply(String[] ids) {
+        for (String id : ids) {
+            OrdersReturnApplyEntity entity = ordersReturnApplyRepository.findById(id).get();
+            entity.setIsDelete(OrdersReturnApplyEntity.IS_DELETE);
+            ordersReturnApplyRepository.save(entity);
+        }
+    }
+
     /**
      * 将property值转换成对应value值
      * @param dto

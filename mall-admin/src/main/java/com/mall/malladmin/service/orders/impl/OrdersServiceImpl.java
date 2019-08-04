@@ -27,6 +27,7 @@ import java.util.List;
 
 @Service(value = "ordersService")
 public class OrdersServiceImpl implements OrdersService
+
 {
     @Autowired
     private ProductPropertyValueRepository productPropertyValueRepository;
@@ -129,8 +130,26 @@ public class OrdersServiceImpl implements OrdersService
         logEntity.setRemark("关闭订单、备注信息："+ dto.getOrdersRemark());
         ordersOperationLogService.save(logEntity);
         entity.setOrdersStatus(OrdersEntity.ORDERS_STATUS_INVALID);
+        entity.setOrdersRemark(dto.getOrdersRemark());
         ordersRepository.save(entity);
 
+    }
+
+    @Override
+    public void closeOrdersList(String[] ids, String remark, UserDetailsImpl userDetails) {
+        for (String id : ids) {
+            OrdersEntity entity = ordersRepository.findById(id).get();
+            OrdersOperationLogEntity logEntity = new OrdersOperationLogEntity();
+            logEntity.setCreateTime(new Date());
+            logEntity.setOperationPerson(userDetails.getUserId());
+            logEntity.setOrdersId(id);
+            logEntity.setOrdersStatus(entity.getOrdersStatus());
+            logEntity.setRemark("关闭订单、备注信息："+ remark);
+            ordersOperationLogService.save(logEntity);
+            entity.setOrdersStatus(OrdersEntity.ORDERS_STATUS_INVALID);
+            entity.setOrdersRemark(remark);
+            ordersRepository.save(entity);
+        }
     }
 
     @Override
@@ -145,6 +164,28 @@ public class OrdersServiceImpl implements OrdersService
             logEntity.setOrdersId(result.getOrdersId());
             logEntity.setOrdersStatus(result.getOrdersStatus());
             logEntity.setRemark("删除订单信息。");
+            ordersOperationLogService.save(logEntity);
+        }
+    }
+
+    @Override
+    public void deliveryOrders(List<OrdersDto> dtoList, UserDetailsImpl userDetails) {
+        for (OrdersDto dto : dtoList) {
+            if (StringUtils.isBlank(dto.getOrdersId())) {
+                continue;
+            }
+            OrdersEntity entity = ordersRepository.findById(dto.getOrdersId()).get();
+            entity.setDeliveryCode(dto.getDeliveryCode());
+            entity.setDeliveryCompany(dto.getDeliveryCompany());
+            entity.setDeliveryTime(new Date());
+            entity.setOrdersStatus(OrdersEntity.ORDERS_STATUS_SEND);
+            entity = ordersRepository.save(entity);
+            OrdersOperationLogEntity logEntity = new OrdersOperationLogEntity();
+            logEntity.setCreateTime(new Date());
+            logEntity.setOperationPerson(userDetails.getUserId());
+            logEntity.setOrdersId(entity.getOrdersId());
+            logEntity.setOrdersStatus(entity.getOrdersStatus());
+            logEntity.setRemark("订单发货：物流单号-》"+dto.getDeliveryCode()+"；物流公司-》"+dto.getDeliveryCompany());
             ordersOperationLogService.save(logEntity);
         }
     }
