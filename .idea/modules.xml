@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/mall-admin/mall-admin.iml" filepath="$PROJECT_DIR$/mall-admin/mall-admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/mall-mbg/mall-mbg.iml" filepath="$PROJECT_DIR$/mall-mbg/mall-mbg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-model/mall-model.iml" filepath="$PROJECT_DIR$/mall-model/mall-model.iml" />
       <module fileurl="file://$PROJECT_DIR$/mall-parent.iml" filepath="$PROJECT_DIR$/mall-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-wechar/mall-wechar.iml" filepath="$PROJECT_DIR$/mall-wechar/mall-wechar.iml" />
     </modules>
   </component>
 </project>

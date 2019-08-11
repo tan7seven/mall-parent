@@ -1,0 +1,16 @@
+server:
+  port: 8081
+  jpa:
+    show-sql: true
+  resources:
+    static-locations: file:E://IDEA-WorkPlace//mall//pic//
+  profiles:
+    active: dev
+logging:
+  file: log
+  path: /root/mall/mall_log
+  #mybatis打印SQL
+  level:
+    com.mall.malladmin : debug
+pic:
+    path:  E://IDEA-WorkPlace//mall//pic//

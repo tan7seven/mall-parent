@@ -8,13 +8,19 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mall-admin" />
         <module name="mall-mbg" />
-        <module name="mall-parent" />
+        <module name="mall-model" />
+        <module name="mall-wechar" />
+        <module name="mallmodel" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="mall-admin" target="1.8" />
       <module name="mall-mbg" target="1.5" />
+      <module name="mall-model" target="1.8" />
       <module name="mall-parent" target="1.8" />
+      <module name="mall-wechar" target="1.8" />
+      <module name="mall-wechat" target="1.8" />
+      <module name="mallmodel" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

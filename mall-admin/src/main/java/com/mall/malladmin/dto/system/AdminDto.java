@@ -29,9 +29,9 @@ public class AdminDto implements Serializable {
      */
     private String password;
     /**
-     * 昵称
+     * 姓名
      */
-    private String kname;
+    private String name;
     /**
      * 电话号码
      */
