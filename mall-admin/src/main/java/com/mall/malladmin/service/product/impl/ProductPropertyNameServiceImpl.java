@@ -5,6 +5,7 @@ import com.mall.malladmin.dto.product.ProductPropertyNameDto;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.repository.product.ProductPropertyNameRepository;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,13 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     @Override
     public Optional<ProductPropertyNameEntity> findById(Integer id) {
         return productPropertyNameRepository.findById(id);
+    }
+
+    @Override
+    public void update(ProductPropertyNameDto dto) {
+        ProductPropertyNameEntity entity = productPropertyNameRepository.findById(dto.getPropertyNameId()).get();
+        BeanUtils.copyProperties(dto,entity);
+        productPropertyNameRepository.save(entity);
     }
 
     @Override

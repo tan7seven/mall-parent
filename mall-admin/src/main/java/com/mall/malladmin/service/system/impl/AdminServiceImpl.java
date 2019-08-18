@@ -1,12 +1,14 @@
 package com.mall.malladmin.service.system.impl;
 
+import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;
 import com.mall.malladmin.mapper.AdminMapper;
 import com.mall.malladmin.repository.system.AdminRepository;
 import com.mall.malladmin.service.system.AdminService;
-import com.mall.malladmin.dto.system.AdminDto;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,17 @@ public class AdminServiceImpl implements AdminService {
             return criteriaBuilder.and(list.toArray(p));
         });
         return entitys;
+    }
+
+    @Override
+    public Page<AdminEntity> getPage(AdminDto dto) {
+        Sort sort = new Sort(Sort.Direction.ASC, "modifyTime");
+        Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
+        AdminEntity entity = new AdminEntity();
+        BeanUtils.copyProperties(dto, entity);
+        Example<AdminEntity> example = Example.of(entity);
+        Page<AdminEntity> result = adminRepository.findAll(example, page);
+        return result;
     }
 
     @Override

@@ -35,8 +35,6 @@ spring:
     static-locations: file:E://IDEA-WorkPlace//mall//pic//
   mvc:
     static-path-pattern: /image/**
-  profiles:
-    active: dev
 
 
 mybatis:
@@ -54,3 +52,4 @@ logging:
 
 pic:
     path:  E://IDEA-WorkPlace//mall//pic//
+

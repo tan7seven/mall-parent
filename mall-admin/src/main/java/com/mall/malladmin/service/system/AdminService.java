@@ -2,6 +2,7 @@ package com.mall.malladmin.service.system;
 
 import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,12 @@ public interface AdminService {
      * @return
      */
     List<AdminEntity> getList(AdminDto dto);
-
+    /**
+     * 获取用户信息
+     * @param dto
+     * @return
+     */
+    Page<AdminEntity> getPage(AdminDto dto);
     /**
      *  根据用户ID查找
      * @param userId

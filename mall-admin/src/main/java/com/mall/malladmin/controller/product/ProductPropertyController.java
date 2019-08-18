@@ -86,9 +86,8 @@ public class ProductPropertyController {
         if(null == id){
             return new CommonResultDto().validateFailed("主键为空！");
         }
-        ProductPropertyNameEntity entity = productPropertyNameService.findById(id).get();
-        BeanUtils.copyProperties(dto,entity);
-        return productPropertyNameService.add(entity);
+        productPropertyNameService.update(dto);
+        return new CommonResultDto().success();
     }
     /**
      * 删除

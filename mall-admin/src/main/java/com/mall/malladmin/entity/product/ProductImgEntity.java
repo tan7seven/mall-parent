@@ -13,6 +13,9 @@ import java.util.Date;
 @Entity
 @Table(name = "mall_product_img")
 public class ProductImgEntity  implements Serializable {
+
+    public static final String TYPE_CODE_PRODUCT = "RODUCT";
+    public static final String TYPE_CODE_SKU="SKU";
     /**
      *商品图片编号
      */
@@ -40,4 +43,12 @@ public class ProductImgEntity  implements Serializable {
      */
     @Column(name = "create_time")
     private Date createTime;
+    /**
+     * 	外键-商品、SKU信息表
+     */
+    private String foreignId;
+    /**
+     * product->商品，sku->SKU
+     */
+    private String typeCode;
 }

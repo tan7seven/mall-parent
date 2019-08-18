@@ -51,6 +51,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductPropertyMapper productPropertyMapper;
     @Autowired
     private ProductSkuMapper productSkuMapper;
+    @Autowired
+    private ProductImgRepository productImgRepository;
 
     @Override
     public ProductEntity add(ProductEntity entity) {
@@ -102,8 +104,8 @@ public class ProductServiceImpl implements ProductService {
             dto.setDetail(detailEntityList.get(0).getDetail());
         }
         //商品图片
-        String picUrl = dto.getPicUrl();
-        dto.setPicUrlArray(picUrl.split(","));
+        List<ProductImgEntity> imgEntityList = productImgRepository.findByForeignIdAndAndTypeCode(String.valueOf(id), ProductImgEntity.TYPE_CODE_PRODUCT);
+        dto.setPicUrlArray(imgEntityList.stream().map(e-> e.getImgUrl()).toArray(String[] :: new));
         log.info("商品信息：{}", dto);
         return dto;
     }
@@ -169,10 +171,23 @@ public class ProductServiceImpl implements ProductService {
 
         entity.setHits(0);
         if(null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0){
-            String picUrl = Arrays.stream(dto.getPicUrlArray()).collect(Collectors.joining(","));
-            entity.setPicUrl(picUrl);
+            //商品首页图片默认是第一张，其他的则保持到图片信息表里面
+            entity.setPicUrl(dto.getPicUrlArray()[0]);
+
         }
         ProductEntity resultProduct = productRepository.save(entity);
+        if(null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0){
+            //商品首页图片默认是第一张，其他的则保持到图片信息表里面
+            java.lang.String[] picUrls = dto.getPicUrlArray();
+            for (String picUrl : picUrls) {
+                ProductImgEntity imgEntity = new ProductImgEntity();
+                imgEntity.setCreateTime(new Date());
+                imgEntity.setForeignId(String.valueOf(resultProduct.getProductId()));
+                imgEntity.setImgUrl(picUrl);
+                imgEntity.setTypeCode(ProductImgEntity.TYPE_CODE_PRODUCT);
+                productImgRepository.save(imgEntity);
+            }
+        }
         //添加商品明细
         ProductDetailEntity productDetailEntity = new ProductDetailEntity();
         productDetailEntity.setDetail(dto.getDetail());
@@ -220,18 +235,24 @@ public class ProductServiceImpl implements ProductService {
     public CommonResultDto update(Integer productId, ProductDto dto) {
         //修改商品信息
         ProductEntity entity = productRepository.findById(productId).get();
+        BeanUtils.copyProperties(dto, entity);
+        productImgRepository.deleteByForeignIdAndTypeCode(String.valueOf(productId), ProductImgEntity.TYPE_CODE_PRODUCT);
         //删除图片
-        String picUrl = Arrays.stream(dto.getPicUrlArray()).collect(Collectors.joining(","));
-        if(StringUtils.isNotBlank(entity.getPicUrl())){
-            String[] picUrlArrayOld = entity.getPicUrl().split(",");
-            for (String picUrlOld : picUrlArrayOld) {
-                if(picUrl.indexOf(picUrlOld)== -1){
-                    this.deletePic(picUrlOld);
-                }
+        if(null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0){
+            //商品首页图片默认是第一张，其他的则保持到图片信息表里面
+            java.lang.String[] picUrls = dto.getPicUrlArray();
+            entity.setPicUrl(picUrls[0]);
+            for (String picUrl : picUrls) {
+                ProductImgEntity imgEntity = new ProductImgEntity();
+                imgEntity.setCreateTime(new Date());
+                imgEntity.setForeignId(String.valueOf(productId));
+                imgEntity.setImgUrl(picUrl);
+                imgEntity.setTypeCode(ProductImgEntity.TYPE_CODE_PRODUCT);
+                productImgRepository.save(imgEntity);
             }
         }
-        BeanUtils.copyProperties(dto, entity);
-        entity.setPicUrl(picUrl);
+
+
         ProductEntity resultProduct = productRepository.save(entity);
         //修改商品明细
         productDetailRepository.deleteByProductId(productId);
@@ -322,6 +343,12 @@ public class ProductServiceImpl implements ProductService {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         return productMapper.getList(dto);
     }
+
+    /**
+     * 删除图片
+     * @param picUrl
+     * @return
+     */
     private Object deletePic(String picUrl){
         int lastIndexOf = picUrl.lastIndexOf("/");
         String sb = picUrl.substring(lastIndexOf + 1, picUrl.length());

@@ -25,7 +25,11 @@ public interface ProductPropertyNameService {
      * @return
      */
     Optional<ProductPropertyNameEntity> findById(Integer id);
-
+    /**
+     * 更新
+     * @param dto
+     */
+    void update(ProductPropertyNameDto dto);
     /**
      * 删除
      * @param entity

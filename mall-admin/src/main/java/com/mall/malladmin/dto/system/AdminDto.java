@@ -1,11 +1,12 @@
 package com.mall.malladmin.dto.system;
 
+import com.mall.malladmin.dto.common.CommonDto;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 @Data
-public class AdminDto implements Serializable {
+public class AdminDto extends CommonDto implements Serializable{
     /**
      * 是否可用：可用
      */
