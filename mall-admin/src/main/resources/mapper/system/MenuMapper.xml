@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.malladmin.mapper.system.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.mall.malladmin.dto.system.MenuDto">
+        <id column="menu_id" jdbcType="VARCHAR" property="menuId" />
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+        <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
+        <result column="menu_title" jdbcType="VARCHAR" property="menuTitle" />
+        <result column="menu_url" jdbcType="VARCHAR" property="menuUrl" />
+        <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon" />
+        <result column="is_hidden" jdbcType="CHAR" property="isHidden" />
+        <result column="parentTitle" jdbcType="VARCHAR" property="parentTitle" />
+    </resultMap>
+    <resultMap id="TreeResultMap" type="com.mall.malladmin.dto.common.TreeDto">
+        <result column="id" property="id" />
+        <result column="label" property="label" />
+        <collection property="children" ofType="com.mall.malladmin.dto.common.TreeDto">
+            <result column="children_id" property="id"/>
+            <result column="children_label" property="label"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        a.menu_id, a.parent_id, a.menu_code, a.menu_title, a.menu_url, a.menu_icon, a.is_hidden
+     </sql>
+
+    <select id="getList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" /> ,b.menu_title parentTitle
+        FROM system_menu a LEFT JOIN  system_menu b ON  a.parent_id = b.menu_id WHERE a.parent_id = #{dto.parentId}
+    </select>
+
+    <select id="getListById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" /> ,b.menu_title parentTitle
+        FROM system_menu a LEFT JOIN  system_menu b ON  a.parent_id = b.menu_id WHERE a.parent_id = #{menuId}
+    </select>
+
+    <select id="getMenuTree" resultMap="TreeResultMap">
+        SELECT
+        a.menu_id id, a.menu_title label,  b.menu_id children_id, b.menu_title children_label
+        FROM system_menu a LEFT JOIN  system_menu b ON  b.parent_id = a.menu_id WHERE a.parent_id = '0'
+    </select>
+</mapper>

@@ -16,7 +16,7 @@ public class MallProductImg implements Serializable {
      *
      * @mbggenerated
      */
-    private Integer productId;
+    private String foreignId;
 
     /**
      * 图片路径
@@ -46,6 +46,13 @@ public class MallProductImg implements Serializable {
      */
     private Integer size;
 
+    /**
+     * 	图片类型product->商品，sku->SKU
+     *
+     * @mbggenerated
+     */
+    private String typeCode;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getImgId() {
@@ -56,12 +63,12 @@ public class MallProductImg implements Serializable {
         this.imgId = imgId;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public String getForeignId() {
+        return foreignId;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setForeignId(String foreignId) {
+        this.foreignId = foreignId;
     }
 
     public String getImgUrl() {
@@ -96,6 +103,14 @@ public class MallProductImg implements Serializable {
         this.size = size;
     }
 
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -103,11 +118,12 @@ public class MallProductImg implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", imgId=").append(imgId);
-        sb.append(", productId=").append(productId);
+        sb.append(", foreignId=").append(foreignId);
         sb.append(", imgUrl=").append(imgUrl);
         sb.append(", createTime=").append(createTime);
         sb.append(", name=").append(name);
         sb.append(", size=").append(size);
+        sb.append(", typeCode=").append(typeCode);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

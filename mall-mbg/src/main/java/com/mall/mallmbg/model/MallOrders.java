@@ -24,7 +24,7 @@ public class MallOrders implements Serializable {
      *
      * @mbggenerated
      */
-    private BigDecimal totalPrice0;
+    private BigDecimal totalPrice;
 
     /**
      * 应付金额（实际支付金额）
@@ -236,7 +236,7 @@ public class MallOrders implements Serializable {
      */
     private Date modifyTime;
 
-    private BigDecimal totalPrice;
+    private String ordersCode;
 
     private static final long serialVersionUID = 1L;
 
@@ -256,12 +256,12 @@ public class MallOrders implements Serializable {
         this.userId = userId;
     }
 
-    public BigDecimal getTotalPrice0() {
-        return totalPrice0;
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setTotalPrice0(BigDecimal totalPrice0) {
-        this.totalPrice0 = totalPrice0;
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public BigDecimal getPayPrice() {
@@ -504,12 +504,12 @@ public class MallOrders implements Serializable {
         this.modifyTime = modifyTime;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public String getOrdersCode() {
+        return ordersCode;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setOrdersCode(String ordersCode) {
+        this.ordersCode = ordersCode;
     }
 
     @Override
@@ -520,7 +520,7 @@ public class MallOrders implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", ordersId=").append(ordersId);
         sb.append(", userId=").append(userId);
-        sb.append(", totalPrice0=").append(totalPrice0);
+        sb.append(", totalPrice=").append(totalPrice);
         sb.append(", payPrice=").append(payPrice);
         sb.append(", freightPrice=").append(freightPrice);
         sb.append(", promotionPrice=").append(promotionPrice);
@@ -551,7 +551,7 @@ public class MallOrders implements Serializable {
         sb.append(", deliveryTime=").append(deliveryTime);
         sb.append(", receiveTime=").append(receiveTime);
         sb.append(", modifyTime=").append(modifyTime);
-        sb.append(", totalPrice=").append(totalPrice);
+        sb.append(", ordersCode=").append(ordersCode);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -176,76 +176,6 @@ public class MallOrdersReturnApplyExample {
             return (Criteria) this;
         }
 
-        public Criteria andApplyCodeIsNull() {
-            addCriterion("apply_code is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeIsNotNull() {
-            addCriterion("apply_code is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeEqualTo(String value) {
-            addCriterion("apply_code =", value, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeNotEqualTo(String value) {
-            addCriterion("apply_code <>", value, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeGreaterThan(String value) {
-            addCriterion("apply_code >", value, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeGreaterThanOrEqualTo(String value) {
-            addCriterion("apply_code >=", value, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeLessThan(String value) {
-            addCriterion("apply_code <", value, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeLessThanOrEqualTo(String value) {
-            addCriterion("apply_code <=", value, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeLike(String value) {
-            addCriterion("apply_code like", value, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeNotLike(String value) {
-            addCriterion("apply_code not like", value, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeIn(List<String> values) {
-            addCriterion("apply_code in", values, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeNotIn(List<String> values) {
-            addCriterion("apply_code not in", values, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeBetween(String value1, String value2) {
-            addCriterion("apply_code between", value1, value2, "applyCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andApplyCodeNotBetween(String value1, String value2) {
-            addCriterion("apply_code not between", value1, value2, "applyCode");
-            return (Criteria) this;
-        }
-
         public Criteria andOrdersIdIsNull() {
             addCriterion("orders_id is null");
             return (Criteria) this;
@@ -453,6 +383,66 @@ public class MallOrdersReturnApplyExample {
 
         public Criteria andUserIdNotBetween(String value1, String value2) {
             addCriterion("user_id not between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceIsNull() {
+            addCriterion("real_return_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceIsNotNull() {
+            addCriterion("real_return_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceEqualTo(BigDecimal value) {
+            addCriterion("real_return_price =", value, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceNotEqualTo(BigDecimal value) {
+            addCriterion("real_return_price <>", value, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceGreaterThan(BigDecimal value) {
+            addCriterion("real_return_price >", value, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("real_return_price >=", value, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceLessThan(BigDecimal value) {
+            addCriterion("real_return_price <", value, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("real_return_price <=", value, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceIn(List<BigDecimal> values) {
+            addCriterion("real_return_price in", values, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceNotIn(List<BigDecimal> values) {
+            addCriterion("real_return_price not in", values, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("real_return_price between", value1, value2, "realReturnPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealReturnPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("real_return_price not between", value1, value2, "realReturnPrice");
             return (Criteria) this;
         }
 
@@ -1246,52 +1236,62 @@ public class MallOrdersReturnApplyExample {
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonEqualTo(Date value) {
+        public Criteria andReceivePersonEqualTo(String value) {
             addCriterion("receive_person =", value, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonNotEqualTo(Date value) {
+        public Criteria andReceivePersonNotEqualTo(String value) {
             addCriterion("receive_person <>", value, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonGreaterThan(Date value) {
+        public Criteria andReceivePersonGreaterThan(String value) {
             addCriterion("receive_person >", value, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonGreaterThanOrEqualTo(Date value) {
+        public Criteria andReceivePersonGreaterThanOrEqualTo(String value) {
             addCriterion("receive_person >=", value, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonLessThan(Date value) {
+        public Criteria andReceivePersonLessThan(String value) {
             addCriterion("receive_person <", value, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonLessThanOrEqualTo(Date value) {
+        public Criteria andReceivePersonLessThanOrEqualTo(String value) {
             addCriterion("receive_person <=", value, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonIn(List<Date> values) {
+        public Criteria andReceivePersonLike(String value) {
+            addCriterion("receive_person like", value, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonNotLike(String value) {
+            addCriterion("receive_person not like", value, "receivePerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePersonIn(List<String> values) {
             addCriterion("receive_person in", values, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonNotIn(List<Date> values) {
+        public Criteria andReceivePersonNotIn(List<String> values) {
             addCriterion("receive_person not in", values, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonBetween(Date value1, Date value2) {
+        public Criteria andReceivePersonBetween(String value1, String value2) {
             addCriterion("receive_person between", value1, value2, "receivePerson");
             return (Criteria) this;
         }
 
-        public Criteria andReceivePersonNotBetween(Date value1, Date value2) {
+        public Criteria andReceivePersonNotBetween(String value1, String value2) {
             addCriterion("receive_person not between", value1, value2, "receivePerson");
             return (Criteria) this;
         }
@@ -1306,53 +1306,203 @@ public class MallOrdersReturnApplyExample {
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkEqualTo(Date value) {
+        public Criteria andReceiveRemarkEqualTo(String value) {
             addCriterion("receive_remark =", value, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkNotEqualTo(Date value) {
+        public Criteria andReceiveRemarkNotEqualTo(String value) {
             addCriterion("receive_remark <>", value, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkGreaterThan(Date value) {
+        public Criteria andReceiveRemarkGreaterThan(String value) {
             addCriterion("receive_remark >", value, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkGreaterThanOrEqualTo(Date value) {
+        public Criteria andReceiveRemarkGreaterThanOrEqualTo(String value) {
             addCriterion("receive_remark >=", value, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkLessThan(Date value) {
+        public Criteria andReceiveRemarkLessThan(String value) {
             addCriterion("receive_remark <", value, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkLessThanOrEqualTo(Date value) {
+        public Criteria andReceiveRemarkLessThanOrEqualTo(String value) {
             addCriterion("receive_remark <=", value, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkIn(List<Date> values) {
+        public Criteria andReceiveRemarkLike(String value) {
+            addCriterion("receive_remark like", value, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkNotLike(String value) {
+            addCriterion("receive_remark not like", value, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveRemarkIn(List<String> values) {
             addCriterion("receive_remark in", values, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkNotIn(List<Date> values) {
+        public Criteria andReceiveRemarkNotIn(List<String> values) {
             addCriterion("receive_remark not in", values, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkBetween(Date value1, Date value2) {
+        public Criteria andReceiveRemarkBetween(String value1, String value2) {
             addCriterion("receive_remark between", value1, value2, "receiveRemark");
             return (Criteria) this;
         }
 
-        public Criteria andReceiveRemarkNotBetween(Date value1, Date value2) {
+        public Criteria andReceiveRemarkNotBetween(String value1, String value2) {
             addCriterion("receive_remark not between", value1, value2, "receiveRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteIsNull() {
+            addCriterion("is_delete is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteIsNotNull() {
+            addCriterion("is_delete is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteEqualTo(String value) {
+            addCriterion("is_delete =", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotEqualTo(String value) {
+            addCriterion("is_delete <>", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteGreaterThan(String value) {
+            addCriterion("is_delete >", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteGreaterThanOrEqualTo(String value) {
+            addCriterion("is_delete >=", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteLessThan(String value) {
+            addCriterion("is_delete <", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteLessThanOrEqualTo(String value) {
+            addCriterion("is_delete <=", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteLike(String value) {
+            addCriterion("is_delete like", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotLike(String value) {
+            addCriterion("is_delete not like", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteIn(List<String> values) {
+            addCriterion("is_delete in", values, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotIn(List<String> values) {
+            addCriterion("is_delete not in", values, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteBetween(String value1, String value2) {
+            addCriterion("is_delete between", value1, value2, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotBetween(String value1, String value2) {
+            addCriterion("is_delete not between", value1, value2, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeIsNull() {
+            addCriterion("apply_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeIsNotNull() {
+            addCriterion("apply_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeEqualTo(String value) {
+            addCriterion("apply_code =", value, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeNotEqualTo(String value) {
+            addCriterion("apply_code <>", value, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeGreaterThan(String value) {
+            addCriterion("apply_code >", value, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("apply_code >=", value, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeLessThan(String value) {
+            addCriterion("apply_code <", value, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeLessThanOrEqualTo(String value) {
+            addCriterion("apply_code <=", value, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeLike(String value) {
+            addCriterion("apply_code like", value, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeNotLike(String value) {
+            addCriterion("apply_code not like", value, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeIn(List<String> values) {
+            addCriterion("apply_code in", values, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeNotIn(List<String> values) {
+            addCriterion("apply_code not in", values, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeBetween(String value1, String value2) {
+            addCriterion("apply_code between", value1, value2, "applyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyCodeNotBetween(String value1, String value2) {
+            addCriterion("apply_code not between", value1, value2, "applyCode");
             return (Criteria) this;
         }
     }

@@ -106,7 +106,7 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/updateIsSale.do")
-    protected CommonResultDto updateIsSale( ProductPropertyNameDto dto){
+    protected CommonResultDto updateIsSale(@RequestBody ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){
             return new CommonResultDto().validateFailed("主键为空！");
         }
@@ -117,7 +117,7 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/updateIsShow.do")
-    protected CommonResultDto updateIsShow( ProductPropertyNameDto dto){
+    protected CommonResultDto updateIsShow(@RequestBody ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){
             return new CommonResultDto().validateFailed("主键为空！");
         }
@@ -128,7 +128,7 @@ public class ProductPropertyController {
      * @return
      */
     @PostMapping("/updateIsUsable.do")
-    protected CommonResultDto updateIsUsable( ProductPropertyNameDto dto){
+    protected CommonResultDto updateIsUsable(@RequestBody ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){
             return new CommonResultDto().validateFailed("主键为空！");
         }

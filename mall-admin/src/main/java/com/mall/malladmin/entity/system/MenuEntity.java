@@ -14,6 +14,9 @@ import javax.persistence.*;
 @Table(name = "system_menu")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class MenuEntity {
+
+    public static final String IS_HIDDEN = "1";
+    public static final String NOT_HIDDEN = "0";
     /**
      * 菜单主键
      */
@@ -47,13 +50,9 @@ public class MenuEntity {
     @Column(length = 64,name = "menu_icon")
     private String menuIcon;
     /**
-     * 图标路径
+     * 是否隐藏
      */
     @Column(length = 1,name = "is_Hidden")
     private String isHidden;
-    /**
-     * 排序
-     */
-    @Column()
-    private Integer sort;
+
 }

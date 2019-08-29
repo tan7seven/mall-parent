@@ -1,4 +1,4 @@
-package com.mall.malladmin.mapper;
+package com.mall.malladmin.mapper.system;
 
 import com.mall.malladmin.dto.system.AdminDto;
 import org.apache.ibatis.annotations.Param;

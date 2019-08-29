@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Resource(name = "userService")
+    @Resource(name = "adminService")
     private AdminService adminService;
 
     @Override

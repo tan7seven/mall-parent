@@ -18,7 +18,7 @@ public class SystemMenu implements Serializable {
     private String parentId;
 
     /**
-     * 菜单编码
+     * 菜单编码(权限管控)
      *
      * @mbggenerated
      */
@@ -51,8 +51,6 @@ public class SystemMenu implements Serializable {
      * @mbggenerated
      */
     private String isHidden;
-
-    private Integer sort;
 
     private static final long serialVersionUID = 1L;
 
@@ -112,14 +110,6 @@ public class SystemMenu implements Serializable {
         this.isHidden = isHidden;
     }
 
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -133,7 +123,6 @@ public class SystemMenu implements Serializable {
         sb.append(", menuUrl=").append(menuUrl);
         sb.append(", menuIcon=").append(menuIcon);
         sb.append(", isHidden=").append(isHidden);
-        sb.append(", sort=").append(sort);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

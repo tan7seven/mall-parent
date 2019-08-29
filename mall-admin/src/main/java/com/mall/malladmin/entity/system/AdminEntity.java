@@ -23,7 +23,23 @@ public class AdminEntity implements Serializable {
      * 是否可用：禁用
      */
     public static final String NOT_USABLE = "1";
-
+    /**
+     * 普通
+     */
+    public static final String ROLE_USER = "0";
+    /**
+     * 管理员
+     */
+    public static final String ROLE_ADMIN ="1";
+    /**
+     * 已删除
+     */
+    public static final String IS_DELETE = "1";
+    /**
+     * 未删除
+     */
+    public static final String NOT_DELETE="0";
+    public static final String DEFAULT_PASSWORD = "123456";
 
     /**
      * 用户编号
@@ -55,8 +71,8 @@ public class AdminEntity implements Serializable {
     /**
      * 头像
      */
-    @Column(length = 128,name = "head_portrait")
-    private String headPortrait;
+    @Column(name = "pic_Url")
+    private String picUrl;
     /**
      * 角色
      * 0:ROLE_USER
@@ -81,5 +97,10 @@ public class AdminEntity implements Serializable {
      */
     @Column(name = "modify_Time")
     private Date modifyTime;
-
+    /**
+     * 是否被删除
+     * 0-》未删除
+     * 1-》已删除
+     */
+    private String isDelete;
 }

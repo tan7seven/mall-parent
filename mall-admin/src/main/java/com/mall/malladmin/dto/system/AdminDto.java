@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class AdminDto extends CommonDto implements Serializable{
     /**
@@ -40,7 +42,7 @@ public class AdminDto extends CommonDto implements Serializable{
     /**
      * 头像
      */
-    private String headPortrait;
+    private String picUrl;
     /**
      * 角色
      * 0:ROLE_USER
@@ -61,4 +63,14 @@ public class AdminDto extends CommonDto implements Serializable{
      * 更新时间
      */
     private Date modifyTime;
+    /**
+     * 是否被删除
+     * 0-》未删除
+     * 1-》已删除
+     */
+    private String isDelete;
+    /**
+     * 菜单ID列表
+     */
+    private List<String> menuList;
 }

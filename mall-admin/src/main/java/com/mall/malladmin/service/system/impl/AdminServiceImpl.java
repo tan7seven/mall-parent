@@ -2,8 +2,10 @@ package com.mall.malladmin.service.system.impl;
 
 import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;
-import com.mall.malladmin.mapper.AdminMapper;
+import com.mall.malladmin.entity.system.MenuAuthorityEntity;
+import com.mall.malladmin.mapper.system.AdminMapper;
 import com.mall.malladmin.repository.system.AdminRepository;
+import com.mall.malladmin.repository.system.MenuAuthorityRepository;
 import com.mall.malladmin.service.system.AdminService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -17,8 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Service(value = "userService")
+@Service(value = "adminService")
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
@@ -27,11 +30,32 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
+    @Autowired
+    private MenuAuthorityRepository menuAuthorityRepository;
+
     @Override
-    public AdminEntity add(AdminEntity entity) {
+    public AdminEntity add(AdminDto dto) {
+        AdminEntity entity = new AdminEntity();
+        BeanUtils.copyProperties(dto, entity);
         entity.setCreateTime(new Date());
-        entity.setIsUsable(AdminEntity.IS_USABLE);
+        entity.setIsUsable(StringUtils.isNotBlank(entity.getIsUsable())?entity.getIsUsable():AdminEntity.IS_USABLE);
+        entity.setModifyTime(new Date());
+        entity.setRole(AdminEntity.ROLE_USER);
+        entity.setPassword(AdminEntity.DEFAULT_PASSWORD);
+        entity.setIsDelete(AdminEntity.NOT_DELETE);
         return adminRepository.save(entity);
+    }
+
+    @Override
+    public void update(AdminDto dto, String id) {
+        AdminEntity entity = adminRepository.findById(id).get();
+        entity.setLoginCode(dto.getLoginCode());
+        entity.setName(dto.getName());
+        entity.setPhone(dto.getPhone());
+        entity.setPicUrl(dto.getPicUrl());
+        entity.setIsUsable(dto.getIsUsable());
+        entity.setModifyTime(new Date());
+        adminRepository.save(entity);
     }
 
     @Override
@@ -53,6 +77,7 @@ public class AdminServiceImpl implements AdminService {
         Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
+        entity.setIsDelete(AdminEntity.NOT_DELETE);
         Example<AdminEntity> example = Example.of(entity);
         Page<AdminEntity> result = adminRepository.findAll(example, page);
         return result;
@@ -66,5 +91,40 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminDto findByLoginId(String loginCode) {
         return adminMapper.findByLoginId(loginCode);
+    }
+
+    @Override
+    public void deleteAdmin(String[] ids) {
+        for (String id : ids) {
+            AdminEntity entity = adminRepository.findById(id).get();
+            entity.setIsDelete(AdminEntity.IS_DELETE);
+            adminRepository.save(entity);
+        }
+    }
+
+    @Override
+    public void updateIsUsable(AdminDto dto) {
+        AdminEntity entity = adminRepository.findById(dto.getUserId()).get();
+        entity.setIsUsable(StringUtils.isBlank(dto.getIsUsable())?AdminEntity.IS_USABLE:dto.getIsUsable());
+        adminRepository.save(entity);
+    }
+
+    @Override
+    public void menuAuthority(AdminDto dto) {
+        menuAuthorityRepository.deleteByUserId(dto.getUserId());
+        if (dto.getMenuList().isEmpty()) {
+            return;
+        }
+        dto.getMenuList().forEach(s -> {
+            MenuAuthorityEntity authorityEntity = new MenuAuthorityEntity();
+            authorityEntity.setMenuId(s);
+            authorityEntity.setUserId(dto.getUserId());
+            menuAuthorityRepository.save(authorityEntity);
+        });
+    }
+
+    @Override
+    public List<String> getAdminMenuAuthority(String userId) {
+        return menuAuthorityRepository.findByUserId(userId).stream().map(s -> s.getMenuId()).collect(Collectors.toList());
     }
 }

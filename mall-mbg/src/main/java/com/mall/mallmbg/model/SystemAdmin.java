@@ -44,7 +44,7 @@ public class SystemAdmin implements Serializable {
      *
      * @mbggenerated
      */
-    private String headPortrait;
+    private String picUrl;
 
     /**
      * 用户角色
@@ -74,7 +74,12 @@ public class SystemAdmin implements Serializable {
      */
     private Date modifyTime;
 
-    private String nickname;
+    /**
+     * 是否被删除，0-》未删除，1-》已删除
+     *
+     * @mbggenerated
+     */
+    private String isDelete;
 
     private static final long serialVersionUID = 1L;
 
@@ -118,12 +123,12 @@ public class SystemAdmin implements Serializable {
         this.phone = phone;
     }
 
-    public String getHeadPortrait() {
-        return headPortrait;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setHeadPortrait(String headPortrait) {
-        this.headPortrait = headPortrait;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public String getRole() {
@@ -158,12 +163,12 @@ public class SystemAdmin implements Serializable {
         this.modifyTime = modifyTime;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getIsDelete() {
+        return isDelete;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
     }
 
     @Override
@@ -177,12 +182,12 @@ public class SystemAdmin implements Serializable {
         sb.append(", password=").append(password);
         sb.append(", name=").append(name);
         sb.append(", phone=").append(phone);
-        sb.append(", headPortrait=").append(headPortrait);
+        sb.append(", picUrl=").append(picUrl);
         sb.append(", role=").append(role);
         sb.append(", isUsable=").append(isUsable);
         sb.append(", createTime=").append(createTime);
         sb.append(", modifyTime=").append(modifyTime);
-        sb.append(", nickname=").append(nickname);
+        sb.append(", isDelete=").append(isDelete);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

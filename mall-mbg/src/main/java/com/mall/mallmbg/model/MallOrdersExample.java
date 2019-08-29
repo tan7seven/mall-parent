@@ -246,63 +246,63 @@ public class MallOrdersExample {
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0IsNull() {
-            addCriterion("total_price0 is null");
+        public Criteria andTotalPriceIsNull() {
+            addCriterion("total_price is null");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0IsNotNull() {
-            addCriterion("total_price0 is not null");
+        public Criteria andTotalPriceIsNotNull() {
+            addCriterion("total_price is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0EqualTo(BigDecimal value) {
-            addCriterion("total_price0 =", value, "totalPrice0");
+        public Criteria andTotalPriceEqualTo(BigDecimal value) {
+            addCriterion("total_price =", value, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0NotEqualTo(BigDecimal value) {
-            addCriterion("total_price0 <>", value, "totalPrice0");
+        public Criteria andTotalPriceNotEqualTo(BigDecimal value) {
+            addCriterion("total_price <>", value, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0GreaterThan(BigDecimal value) {
-            addCriterion("total_price0 >", value, "totalPrice0");
+        public Criteria andTotalPriceGreaterThan(BigDecimal value) {
+            addCriterion("total_price >", value, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0GreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("total_price0 >=", value, "totalPrice0");
+        public Criteria andTotalPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("total_price >=", value, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0LessThan(BigDecimal value) {
-            addCriterion("total_price0 <", value, "totalPrice0");
+        public Criteria andTotalPriceLessThan(BigDecimal value) {
+            addCriterion("total_price <", value, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0LessThanOrEqualTo(BigDecimal value) {
-            addCriterion("total_price0 <=", value, "totalPrice0");
+        public Criteria andTotalPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("total_price <=", value, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0In(List<BigDecimal> values) {
-            addCriterion("total_price0 in", values, "totalPrice0");
+        public Criteria andTotalPriceIn(List<BigDecimal> values) {
+            addCriterion("total_price in", values, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0NotIn(List<BigDecimal> values) {
-            addCriterion("total_price0 not in", values, "totalPrice0");
+        public Criteria andTotalPriceNotIn(List<BigDecimal> values) {
+            addCriterion("total_price not in", values, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0Between(BigDecimal value1, BigDecimal value2) {
-            addCriterion("total_price0 between", value1, value2, "totalPrice0");
+        public Criteria andTotalPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("total_price between", value1, value2, "totalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPrice0NotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("total_price0 not between", value1, value2, "totalPrice0");
+        public Criteria andTotalPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("total_price not between", value1, value2, "totalPrice");
             return (Criteria) this;
         }
 
@@ -2256,63 +2256,73 @@ public class MallOrdersExample {
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceIsNull() {
-            addCriterion("total_price is null");
+        public Criteria andOrdersCodeIsNull() {
+            addCriterion("orders_code is null");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceIsNotNull() {
-            addCriterion("total_price is not null");
+        public Criteria andOrdersCodeIsNotNull() {
+            addCriterion("orders_code is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceEqualTo(BigDecimal value) {
-            addCriterion("total_price =", value, "totalPrice");
+        public Criteria andOrdersCodeEqualTo(String value) {
+            addCriterion("orders_code =", value, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceNotEqualTo(BigDecimal value) {
-            addCriterion("total_price <>", value, "totalPrice");
+        public Criteria andOrdersCodeNotEqualTo(String value) {
+            addCriterion("orders_code <>", value, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceGreaterThan(BigDecimal value) {
-            addCriterion("total_price >", value, "totalPrice");
+        public Criteria andOrdersCodeGreaterThan(String value) {
+            addCriterion("orders_code >", value, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("total_price >=", value, "totalPrice");
+        public Criteria andOrdersCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("orders_code >=", value, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceLessThan(BigDecimal value) {
-            addCriterion("total_price <", value, "totalPrice");
+        public Criteria andOrdersCodeLessThan(String value) {
+            addCriterion("orders_code <", value, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("total_price <=", value, "totalPrice");
+        public Criteria andOrdersCodeLessThanOrEqualTo(String value) {
+            addCriterion("orders_code <=", value, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceIn(List<BigDecimal> values) {
-            addCriterion("total_price in", values, "totalPrice");
+        public Criteria andOrdersCodeLike(String value) {
+            addCriterion("orders_code like", value, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceNotIn(List<BigDecimal> values) {
-            addCriterion("total_price not in", values, "totalPrice");
+        public Criteria andOrdersCodeNotLike(String value) {
+            addCriterion("orders_code not like", value, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("total_price between", value1, value2, "totalPrice");
+        public Criteria andOrdersCodeIn(List<String> values) {
+            addCriterion("orders_code in", values, "ordersCode");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("total_price not between", value1, value2, "totalPrice");
+        public Criteria andOrdersCodeNotIn(List<String> values) {
+            addCriterion("orders_code not in", values, "ordersCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdersCodeBetween(String value1, String value2) {
+            addCriterion("orders_code between", value1, value2, "ordersCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdersCodeNotBetween(String value1, String value2) {
+            addCriterion("orders_code not between", value1, value2, "ordersCode");
             return (Criteria) this;
         }
     }

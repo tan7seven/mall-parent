@@ -3,6 +3,7 @@ package com.mall.malladmin.service.system;
 import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +14,16 @@ import java.util.Optional;
 public interface AdminService {
     /**
      * 新增
-     * @param entity
+     * @param dto
      * @return
      */
-    AdminEntity add(AdminEntity entity);
-
+    AdminEntity add(AdminDto dto);
+    /**
+     * 修改
+     * @param dto
+     * @return
+     */
+    void update(AdminDto dto, String id);
     /**
      * 获取用户信息
      * @param dto
@@ -43,4 +49,30 @@ public interface AdminService {
      * @return
      */
     AdminDto findByLoginId(String loginCode);
+
+    /**
+     * 删除（逻辑删除）
+     * @param ids
+     */
+    void deleteAdmin(String[] ids);
+
+    /**
+     * 是否可用
+     * @param dto
+     */
+    void updateIsUsable(AdminDto dto);
+
+    /**
+     * 菜单授权
+     * @param dto
+     */
+    @Transactional
+    void menuAuthority(AdminDto dto);
+
+    /**
+     * 根据用户ID获取已授权菜单列表ID
+     * @param userId
+     * @return
+     */
+    List<String> getAdminMenuAuthority(String userId);
 }

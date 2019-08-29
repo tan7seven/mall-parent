@@ -13,13 +13,6 @@ public class MallOrdersReturnApply implements Serializable {
     private String applyId;
 
     /**
-     * 	退货编码
-     *
-     * @mbggenerated
-     */
-    private String applyCode;
-
-    /**
      * 订单id
      *
      * @mbggenerated
@@ -41,7 +34,14 @@ public class MallOrdersReturnApply implements Serializable {
     private String userId;
 
     /**
-     * 退款金额
+     * 实际退款金额
+     *
+     * @mbggenerated
+     */
+    private BigDecimal realReturnPrice;
+
+    /**
+     * 申请退款金额
      *
      * @mbggenerated
      */
@@ -129,14 +129,23 @@ public class MallOrdersReturnApply implements Serializable {
      *
      * @mbggenerated
      */
-    private Date receivePerson;
+    private String receivePerson;
 
     /**
      * 收货备注
      *
      * @mbggenerated
      */
-    private Date receiveRemark;
+    private String receiveRemark;
+
+    /**
+     * 是否删除：0->否；1->是
+     *
+     * @mbggenerated
+     */
+    private String isDelete;
+
+    private String applyCode;
 
     private static final long serialVersionUID = 1L;
 
@@ -146,14 +155,6 @@ public class MallOrdersReturnApply implements Serializable {
 
     public void setApplyId(String applyId) {
         this.applyId = applyId;
-    }
-
-    public String getApplyCode() {
-        return applyCode;
-    }
-
-    public void setApplyCode(String applyCode) {
-        this.applyCode = applyCode;
     }
 
     public String getOrdersId() {
@@ -178,6 +179,14 @@ public class MallOrdersReturnApply implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public BigDecimal getRealReturnPrice() {
+        return realReturnPrice;
+    }
+
+    public void setRealReturnPrice(BigDecimal realReturnPrice) {
+        this.realReturnPrice = realReturnPrice;
     }
 
     public BigDecimal getReturnPrice() {
@@ -276,20 +285,36 @@ public class MallOrdersReturnApply implements Serializable {
         this.handleRemark = handleRemark;
     }
 
-    public Date getReceivePerson() {
+    public String getReceivePerson() {
         return receivePerson;
     }
 
-    public void setReceivePerson(Date receivePerson) {
+    public void setReceivePerson(String receivePerson) {
         this.receivePerson = receivePerson;
     }
 
-    public Date getReceiveRemark() {
+    public String getReceiveRemark() {
         return receiveRemark;
     }
 
-    public void setReceiveRemark(Date receiveRemark) {
+    public void setReceiveRemark(String receiveRemark) {
         this.receiveRemark = receiveRemark;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getApplyCode() {
+        return applyCode;
+    }
+
+    public void setApplyCode(String applyCode) {
+        this.applyCode = applyCode;
     }
 
     @Override
@@ -299,10 +324,10 @@ public class MallOrdersReturnApply implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", applyId=").append(applyId);
-        sb.append(", applyCode=").append(applyCode);
         sb.append(", ordersId=").append(ordersId);
         sb.append(", ordersItemsId=").append(ordersItemsId);
         sb.append(", userId=").append(userId);
+        sb.append(", realReturnPrice=").append(realReturnPrice);
         sb.append(", returnPrice=").append(returnPrice);
         sb.append(", companyAddressId=").append(companyAddressId);
         sb.append(", returnReason=").append(returnReason);
@@ -317,6 +342,8 @@ public class MallOrdersReturnApply implements Serializable {
         sb.append(", handleRemark=").append(handleRemark);
         sb.append(", receivePerson=").append(receivePerson);
         sb.append(", receiveRemark=").append(receiveRemark);
+        sb.append(", isDelete=").append(isDelete);
+        sb.append(", applyCode=").append(applyCode);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

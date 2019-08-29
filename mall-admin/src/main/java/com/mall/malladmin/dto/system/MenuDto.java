@@ -1,15 +1,16 @@
 package com.mall.malladmin.dto.system;
 
+import com.mall.malladmin.dto.common.CommonDto;
 import lombok.Data;
 
-import javax.persistence.Column;
+import java.util.List;
 
 
 /**
  * 系统菜单
  */
 @Data
-public class MenuDto {
+public class MenuDto extends CommonDto{
     /**
      * 菜单主键
      */
@@ -18,6 +19,7 @@ public class MenuDto {
      * 父级菜单主键
      */
     private String parentId;
+    private String parentTitle;
     /**
      * 菜单编码
      */
@@ -39,7 +41,16 @@ public class MenuDto {
      */
     private String isHidden;
     /**
-     * 排序
+     * 子级菜单
      */
-    private Integer sort;
+    private List<MenuDto> children;
+    /**
+     * 是否有子级
+     */
+    private Boolean hasChildren = true;
+
+    /**
+     * 按钮列表
+     */
+    private List<String> buttonList;
 }
