@@ -1,18 +1,19 @@
 package com.mall.malladmin.controller.product;
 
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductPropertyNameDto;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
 import com.mall.malladmin.util.ResultPage;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductPropertyNameDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -71,6 +72,7 @@ public class ProductPropertyController {
      * 新增
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:CREATE') or hasRole('ADMIN')")
     @PostMapping("/create.do")
     protected CommonResultDto create(@RequestBody ProductPropertyNameDto dto){
         ProductPropertyNameEntity entity = new ProductPropertyNameEntity();
@@ -81,6 +83,7 @@ public class ProductPropertyController {
      * 更新
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:UPDATE') or hasRole('ADMIN')")
     @PostMapping("/update.do/{id}")
     protected CommonResultDto update(@PathVariable Integer id, @RequestBody ProductPropertyNameDto dto){
         if(null == id){
@@ -93,6 +96,7 @@ public class ProductPropertyController {
      * 删除
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:DELETE') or hasRole('ADMIN')")
     @GetMapping("/delete.do/{id}")
     protected CommonResultDto delete(@PathVariable Integer id){
         if(null == id){
@@ -105,6 +109,7 @@ public class ProductPropertyController {
      * 是否销售属性
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsSale.do")
     protected CommonResultDto updateIsSale(@RequestBody ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){
@@ -116,6 +121,7 @@ public class ProductPropertyController {
      * 是否显示
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsShow.do")
     protected CommonResultDto updateIsShow(@RequestBody ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){
@@ -127,6 +133,7 @@ public class ProductPropertyController {
      * 是否可用
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsUsable.do")
     protected CommonResultDto updateIsUsable(@RequestBody ProductPropertyNameDto dto){
         if(null == dto.getPropertyNameId()){

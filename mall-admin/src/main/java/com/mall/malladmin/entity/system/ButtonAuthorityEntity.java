@@ -27,5 +27,9 @@ public class ButtonAuthorityEntity {
      */
     @Column(length = 32,name = "button_Id")
     private String buttonId;
-
+    /**
+     * 菜单主键
+     */
+    @Column(length = 32,name = "menu_id")
+    private String menuId;
 }

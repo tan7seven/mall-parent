@@ -73,4 +73,20 @@ public class AdminDto extends CommonDto implements Serializable{
      * 菜单ID列表
      */
     private List<String> menuList;
+    /**
+     * 按钮列表
+     */
+    private List<ButtonDto> buttonList;
+    /**
+     * 菜单ID
+     */
+    private String menuId;
+    /**
+     * 用户拥有的按钮权限编码
+     */
+    private List<String> listButtonCodeAuthority;
+    /**
+     * 用户拥有的菜单权限编码
+     */
+    private List<String> listMenuCodeAuthority;
 }

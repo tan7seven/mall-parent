@@ -2,6 +2,7 @@ package com.mall.malladmin.service.system;
 
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.dto.common.TreeDto;
+import com.mall.malladmin.dto.system.MenuAuthorityDto;
 import com.mall.malladmin.dto.system.MenuDto;
 import com.mall.malladmin.entity.system.MenuEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +44,7 @@ public interface MenuService {
      * 获取菜单树
      * @return
      */
-    List<TreeDto> getMenuTree();
+    List<TreeDto> getMenuTree(MenuAuthorityDto dto);
 
     /**
      * 根据父节点获取菜单列表
@@ -61,6 +62,7 @@ public interface MenuService {
      * 删除（逻辑删除）
      * @param ids
      */
+    @Transactional
     void deleteMenu(String[] ids);
 
     /**
@@ -68,4 +70,10 @@ public interface MenuService {
      * @param dto
      */
     void updateIsHidden(MenuDto dto);
+
+    /**
+     * 获取按钮列表
+     * @return
+     */
+    MenuDto getButtonList(MenuDto dto);
 }

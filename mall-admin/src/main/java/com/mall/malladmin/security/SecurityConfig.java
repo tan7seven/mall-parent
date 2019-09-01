@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,7 +25,7 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 //@Order(-1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -60,9 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS).permitAll()//跨域请求会先进行一次options请求
                 .anyRequest().authenticated()// 除上面外的所有请求全部需要鉴权认证
                 //自定义登录界面
-                .and().formLogin().loginProcessingUrl("/admin/login.do").successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler).permitAll()
+                .and().formLogin().loginProcessingUrl("/adminController/login.do").successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler).permitAll()
                 .usernameParameter("username").passwordParameter("password")
-                .and().logout().logoutUrl("/admin/logout.do").logoutSuccessHandler(logoutSuccessHandler)
+                .and().logout().logoutUrl("/adminController/logout.do").logoutSuccessHandler(logoutSuccessHandler)
                 .and().csrf().disable()
                 .sessionManagement()// 基于token，所以不需要session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

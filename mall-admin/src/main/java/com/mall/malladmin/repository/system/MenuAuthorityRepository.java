@@ -15,6 +15,12 @@ public interface MenuAuthorityRepository extends JpaRepository<MenuAuthorityEnti
     void deleteByUserId(String userId);
 
     /**
+     * 根据菜单ID删除
+     * @param menuId
+     */
+    void deleteByMenuId(String menuId);
+
+    /**
      * 根据用户ID获取
      * @param userId
      * @return

@@ -1,19 +1,20 @@
 package com.mall.malladmin.controller.product;
 
+import com.mall.malladmin.dto.common.CommonCascaderDto;
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductTypeDto;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
 import com.mall.malladmin.util.ResultPage;
-import com.mall.malladmin.dto.common.CommonCascaderDto;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductTypeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -74,6 +75,7 @@ public class ProductTypeController {
      * @param dto
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:CREATE') or hasRole('ADMIN')")
     @PostMapping("/create.do")
     protected CommonResultDto create(@RequestBody ProductTypeDto dto){
         ProductTypeEntity result = productTypeService.create(dto);
@@ -109,6 +111,7 @@ public class ProductTypeController {
      * @param dto
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/updateProductType.do/{typeId}")
     protected CommonResultDto updateProductType(@PathVariable Integer typeId, @RequestBody ProductTypeDto dto){
         productPropertyNameService.deleteByTypeId(typeId);
@@ -120,6 +123,7 @@ public class ProductTypeController {
      * @param dto
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/update/isNavigationBar.do")
     protected CommonResultDto updateBar(@RequestBody ProductTypeDto dto){
         ProductTypeEntity entity = productTypeService.findById(dto.getTypeId()).get();
@@ -136,6 +140,7 @@ public class ProductTypeController {
      * @param dto
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/update/status.do")
     protected CommonResultDto updateStatus(@RequestBody ProductTypeDto dto){
         ProductTypeEntity entity = productTypeService.findById(dto.getTypeId()).get();
@@ -152,6 +157,7 @@ public class ProductTypeController {
      * @param typeId
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:DELETE') or hasRole('ADMIN')")
     @GetMapping(value = "/delete.do/{typeId}")
     protected CommonResultDto detele(@PathVariable Integer typeId){
         if(null == typeId){

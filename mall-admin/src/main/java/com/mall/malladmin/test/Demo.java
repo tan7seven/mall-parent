@@ -22,12 +22,14 @@ public class Demo {
         flatMapTest(list);
         reduceTest();
         collectTest(list);
+        System.out.println(list.indexOf(new Person()));
     }
 
     private static void println(List<Person> list) {
         for(Person p:list) {
             System.out.println(p.getName()+"-"+p.getAge()+"-"+p.getProvince());
         }
+
     }
 
     // filter age > 13 and name = d

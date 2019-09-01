@@ -2,13 +2,14 @@ package com.mall.malladmin.controller.product;
 
 
 import com.github.pagehelper.PageInfo;
-import com.mall.malladmin.service.product.ProductPropertyValueService;
-import com.mall.malladmin.service.product.ProductService;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductDto;
+import com.mall.malladmin.service.product.ProductPropertyValueService;
+import com.mall.malladmin.service.product.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,8 +35,6 @@ public class ProductController {
     @Resource(name = "productService")
     private ProductService productService;
 
-    @Autowired
-    private ProductPropertyValueService productPropertyValueService;
     /**
      * 获取商品分页信息
      * @param dto
@@ -52,6 +51,7 @@ public class ProductController {
      * @param dto
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCT:CREATE') or hasRole('ADMIN')")
     @PostMapping(value = "/create.do")
     protected CommonResultDto create(@RequestBody ProductDto dto){
         return productService.create(dto);
@@ -61,6 +61,7 @@ public class ProductController {
      * 更新
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCT:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/update.do/{id}")
     protected CommonResultDto update(@PathVariable Integer id , @RequestBody ProductDto dto){
         if(null == dto.getProductId()){
@@ -95,6 +96,7 @@ public class ProductController {
      * @param ids
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "/delete.do")
     protected CommonResultDto delete(Integer... ids){
         CommonResultDto result = productService.deleteList(ids);
@@ -107,6 +109,7 @@ public class ProductController {
      * @param ids
      * @return
      */
+    @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/updateIsPutaway.do")
     protected CommonResultDto updateIsPutaway(String isPutaway, Integer...ids){
         CommonResultDto result = productService.updateIsPutAway(isPutaway, ids);

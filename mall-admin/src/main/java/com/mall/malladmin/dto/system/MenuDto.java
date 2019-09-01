@@ -1,6 +1,7 @@
 package com.mall.malladmin.dto.system;
 
 import com.mall.malladmin.dto.common.CommonDto;
+import com.mall.malladmin.entity.system.ButtonEntity;
 import lombok.Data;
 
 import java.util.List;
@@ -11,6 +12,10 @@ import java.util.List;
  */
 @Data
 public class MenuDto extends CommonDto{
+    /**
+     * 用户编号
+     */
+    private String userId;
     /**
      * 菜单主键
      */
@@ -53,4 +58,12 @@ public class MenuDto extends CommonDto{
      * 按钮列表
      */
     private List<String> buttonList;
+    /**
+     * 按钮列表
+     */
+    private List<ButtonEntity> buttonListEntity;
+    /**
+     * 按钮列表-分配权限的
+     */
+    private List<String> buttonListAuthority;
 }

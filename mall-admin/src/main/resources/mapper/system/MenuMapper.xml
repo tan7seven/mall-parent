@@ -38,6 +38,10 @@
     <select id="getMenuTree" resultMap="TreeResultMap">
         SELECT
         a.menu_id id, a.menu_title label,  b.menu_id children_id, b.menu_title children_label
-        FROM system_menu a LEFT JOIN  system_menu b ON  b.parent_id = a.menu_id WHERE a.parent_id = '0'
+        FROM system_menu a LEFT JOIN  system_menu b ON  b.parent_id = a.menu_id
+        <if test="dto.userId != null and dto.userId != '' ">
+            INNER JOIN system_menu_authority c ON  c.menu_id = b.menu_id AND  c.user_id = #{dto.userId}
+        </if>
+        WHERE a.parent_id = '0'
     </select>
 </mapper>

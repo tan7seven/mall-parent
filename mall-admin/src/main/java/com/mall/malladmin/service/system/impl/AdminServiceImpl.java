@@ -2,16 +2,24 @@ package com.mall.malladmin.service.system.impl;
 
 import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;
+import com.mall.malladmin.entity.system.ButtonAuthorityEntity;
 import com.mall.malladmin.entity.system.MenuAuthorityEntity;
+import com.mall.malladmin.entity.system.MenuEntity;
+import com.mall.malladmin.enumUtil.AdminRoleEnum;
 import com.mall.malladmin.mapper.system.AdminMapper;
+import com.mall.malladmin.mapper.system.ButtonMapper;
 import com.mall.malladmin.repository.system.AdminRepository;
+import com.mall.malladmin.repository.system.ButtonAuthorityRepository;
 import com.mall.malladmin.repository.system.MenuAuthorityRepository;
+import com.mall.malladmin.repository.system.MenuRepository;
+import com.mall.malladmin.security.UserDetailsImpl;
 import com.mall.malladmin.service.system.AdminService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Predicate;
@@ -31,7 +39,40 @@ public class AdminServiceImpl implements AdminService {
     private AdminMapper adminMapper;
 
     @Autowired
+    private ButtonMapper buttonMapper;
+
+    @Autowired
+    private MenuRepository menuRepository;
+
+    @Autowired
     private MenuAuthorityRepository menuAuthorityRepository;
+
+    @Autowired
+    private ButtonAuthorityRepository buttonAuthorityRepository;
+
+    @Override
+    public UserDetailsImpl getAdminInfo(UserDetailsImpl userDetails) {
+        UserDetailsImpl user = new UserDetailsImpl();
+        AdminDto dto  = this.findByLoginId(userDetails.getUsername());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        // 加密(SpringSecurity默认有加密)
+        String encodedPassword = passwordEncoder.encode(dto.getPassword().trim());
+        user.setPassword(encodedPassword);
+        user.setUsername(userDetails.getUsername());
+        user.setUserId(dto.getUserId());
+        user.setIcon(dto.getPicUrl());
+        List<String> permissionCodeList = new ArrayList<>();
+        //设置用户角色
+        permissionCodeList.add(AdminRoleEnum.getValue(dto.getRole()));
+        //获取用户权限
+        List<String> buttonCodeList = adminMapper.getButtonCodeAuthority(dto);
+        permissionCodeList.addAll(buttonCodeList);
+        user.setPermissionCodeList(permissionCodeList);
+        //获取用户权限-按钮
+        List<String> menuCodeList = adminMapper.getMenuCodeListAuthority(dto);
+        user.setMenuList(menuCodeList);
+        return user;
+    }
 
     @Override
     public AdminEntity add(AdminDto dto) {
@@ -116,10 +157,25 @@ public class AdminServiceImpl implements AdminService {
             return;
         }
         dto.getMenuList().forEach(s -> {
-            MenuAuthorityEntity authorityEntity = new MenuAuthorityEntity();
-            authorityEntity.setMenuId(s);
+            MenuEntity menuEntity = menuRepository.findById(s).get();
+            if(!"0".equals(menuEntity.getParentId())){
+                MenuAuthorityEntity authorityEntity = new MenuAuthorityEntity();
+                authorityEntity.setMenuId(s);
+                authorityEntity.setUserId(dto.getUserId());
+                menuAuthorityRepository.save(authorityEntity);
+            }
+        });
+    }
+
+    @Override
+    public void buttonAuthority(AdminDto dto) {
+        buttonMapper.deleteByMenuIdAndUserId(dto);
+        dto.getButtonList().forEach(s -> {
+            ButtonAuthorityEntity authorityEntity = new ButtonAuthorityEntity();
+            authorityEntity.setButtonId(s.getButtonId());
+            authorityEntity.setMenuId(dto.getMenuId());
             authorityEntity.setUserId(dto.getUserId());
-            menuAuthorityRepository.save(authorityEntity);
+            buttonAuthorityRepository.save(authorityEntity);
         });
     }
 
@@ -127,4 +183,5 @@ public class AdminServiceImpl implements AdminService {
     public List<String> getAdminMenuAuthority(String userId) {
         return menuAuthorityRepository.findByUserId(userId).stream().map(s -> s.getMenuId()).collect(Collectors.toList());
     }
+
 }

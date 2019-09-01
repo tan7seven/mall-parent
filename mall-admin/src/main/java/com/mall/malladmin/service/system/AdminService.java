@@ -2,6 +2,7 @@ package com.mall.malladmin.service.system;
 
 import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;
+import com.mall.malladmin.security.UserDetailsImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,13 @@ import java.util.Optional;
  * 用户信息service
  */
 public interface AdminService {
+
+    /**
+     * 重新加载用户信息
+     * @param userDetails
+     * @return
+     */
+    UserDetailsImpl getAdminInfo(UserDetailsImpl userDetails);
     /**
      * 新增
      * @param dto
@@ -23,6 +31,8 @@ public interface AdminService {
      * @param dto
      * @return
      */
+
+
     void update(AdminDto dto, String id);
     /**
      * 获取用户信息
@@ -42,6 +52,7 @@ public interface AdminService {
      * @return
      */
     Optional<AdminEntity> findById(String userId);
+
 
     /**
      * 根据登录账号获取用户信息
@@ -69,10 +80,19 @@ public interface AdminService {
     @Transactional
     void menuAuthority(AdminDto dto);
 
+
+    /**
+     * 菜单授权
+     * @param dto
+     */
+    @Transactional
+    void buttonAuthority(AdminDto dto);
     /**
      * 根据用户ID获取已授权菜单列表ID
      * @param userId
      * @return
      */
+    @Transactional
     List<String> getAdminMenuAuthority(String userId);
+
 }

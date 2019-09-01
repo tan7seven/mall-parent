@@ -1,6 +1,7 @@
 package com.mall.malladmin.mapper.system;
 
 import com.mall.malladmin.dto.common.TreeDto;
+import com.mall.malladmin.dto.system.MenuAuthorityDto;
 import com.mall.malladmin.dto.system.MenuDto;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,5 +29,5 @@ public interface MenuMapper {
      * 获取菜单树
      * @return
      */
-    List<TreeDto> getMenuTree();
+    List<TreeDto> getMenuTree(@Param("dto") MenuAuthorityDto dto);
 }

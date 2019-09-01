@@ -5,7 +5,11 @@ import com.mall.malladmin.dto.orders.OrdersSettingDto;
 import com.mall.malladmin.entity.orders.OrdersSettingEntity;
 import com.mall.malladmin.service.orders.OrdersSettingService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -36,6 +40,7 @@ public class OrdersSettingController {
      * @param dto
      * @return
      */
+    @PreAuthorize(" hasAuthority('OMS:ORDERSETTING:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "updateOrdersSetting.do/{id}")
     protected Object updateOrdersSetting(@PathVariable Integer id, OrdersSettingDto dto){
         ordersSettingService.update(id, dto);

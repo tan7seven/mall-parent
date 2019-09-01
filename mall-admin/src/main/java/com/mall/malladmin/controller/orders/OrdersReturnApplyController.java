@@ -6,6 +6,7 @@ import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.orders.OrdersReturnApplyDto;
 import com.mall.malladmin.service.orders.OrdersReturnApplyService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -48,6 +49,7 @@ public class OrdersReturnApplyController extends GenericController {
      * 修改订单退货信息
      * @return
      */
+    @PreAuthorize(" hasAuthority('OMS:RETURNAPPLY:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "updateApplyStatus.do/{id}")
     protected Object updateApplyStatus(@PathVariable String id, @RequestBody OrdersReturnApplyDto dto){
         if (StringUtils.isBlank(id)) {
@@ -63,6 +65,7 @@ public class OrdersReturnApplyController extends GenericController {
      * @param ids
      * @return
      */
+    @PreAuthorize(" hasAuthority('OMS:RETURNAPPLY:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteApply.do")
     protected Object deleteApply(String...ids){
         if(null == ids || StringUtils.isBlank(ids.toString())){
