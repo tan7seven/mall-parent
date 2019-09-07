@@ -29,12 +29,6 @@ public interface ProductSkuService {
      * @return
      */
     ProductSkuDto findById(Integer id);
-
-    /**
-     * 删除
-     * @param entity
-     */
-    void delete(ProductSkuEntity entity);
     /**
      * 根据逐渐删除
      * @param id

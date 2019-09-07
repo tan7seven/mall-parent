@@ -2,6 +2,7 @@ package com.mall.malladmin.service.orders.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.orders.OrdersReturnApplyDto;
 import com.mall.malladmin.dto.product.ProductSkuDto;
 import com.mall.malladmin.entity.orders.OrdersReturnApplyEntity;
@@ -85,7 +86,7 @@ public class OrdersReturnApplyServiceImpl implements OrdersReturnApplyService {
     public void deleteApply(String[] ids) {
         for (String id : ids) {
             OrdersReturnApplyEntity entity = ordersReturnApplyRepository.findById(id).get();
-            entity.setIsDelete(OrdersReturnApplyEntity.IS_DELETE);
+            entity.setIsDelete(CommonConstant.IS_DELETE);
             ordersReturnApplyRepository.save(entity);
         }
     }

@@ -46,6 +46,16 @@
         FROM mall_product_type a
         LEFT JOIN mall_product_type b ON a.type_id = b.parent_id
         WHERE a.parent_id = 0
+        AND  a.is_delete = '0'
     </select>
 
+    <update id="updateUsableByParent">
+        UPDATE mall_product_type a
+        INNER JOIN mall_product_type b ON b.type_id = a.parent_id
+        SET a.is_usable = #{isUsable}
+        WHERE
+            a.parent_id = #{parentId}
+
+    </update>
+    
 </mapper>

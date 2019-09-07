@@ -4,10 +4,8 @@ package com.mall.malladmin.controller.product;
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductDto;
-import com.mall.malladmin.service.product.ProductPropertyValueService;
 import com.mall.malladmin.service.product.ProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +34,7 @@ public class ProductController {
     private ProductService productService;
 
     /**
-     * 获取商品分页信息
+     * 分页查询
      * @param dto
      * @return
      */
@@ -92,7 +90,7 @@ public class ProductController {
     }
 
     /**
-     * 删除
+     * 删除-逻辑删除
      * @param ids
      * @return
      */
@@ -115,6 +113,13 @@ public class ProductController {
         CommonResultDto result = productService.updateIsPutAway(isPutaway, ids);
         return result;
     }
+
+    /**
+     * 文件上传
+     * @param picture
+     * @param request
+     * @return
+     */
     @PostMapping(value = "/upload.do")
     protected CommonResultDto upload(@RequestParam("picture") MultipartFile picture, HttpServletRequest request){
         //获取文件在服务器的储存位置
@@ -146,6 +151,12 @@ public class ProductController {
             return new CommonResultDto().failed();
         }
     }
+
+    /**
+     * 删除图片文件
+     * @param picUrl
+     * @return
+     */
     @PostMapping(value = "/deletePic.do")
     protected Object deletePic(String picUrl){
         int lastIndexOf = picUrl.lastIndexOf("/");

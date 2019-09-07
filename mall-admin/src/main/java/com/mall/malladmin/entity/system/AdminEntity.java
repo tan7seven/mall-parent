@@ -15,14 +15,7 @@ import java.util.Date;
 @Table(name = "system_admin")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class AdminEntity implements Serializable {
-    /**
-     * 是否可用：可用
-     */
-    public static final String IS_USABLE = "0";
-    /**
-     * 是否可用：禁用
-     */
-    public static final String NOT_USABLE = "1";
+
     /**
      * 普通
      */
@@ -31,14 +24,6 @@ public class AdminEntity implements Serializable {
      * 管理员
      */
     public static final String ROLE_ADMIN ="1";
-    /**
-     * 已删除
-     */
-    public static final String IS_DELETE = "1";
-    /**
-     * 未删除
-     */
-    public static final String NOT_DELETE="0";
     public static final String DEFAULT_PASSWORD = "123456";
 
     /**

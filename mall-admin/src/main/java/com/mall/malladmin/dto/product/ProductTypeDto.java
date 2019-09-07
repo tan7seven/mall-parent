@@ -37,7 +37,13 @@ public class ProductTypeDto extends CommonDto implements Serializable {
      * 0:正常
      * 1：禁用
      */
-    private String status;
+    private String isUsable;
+    /**
+     * 状态
+     * 0:正常
+     * 1：已删除
+     */
+    private String isDelete;
     /**
      * 等级
      */

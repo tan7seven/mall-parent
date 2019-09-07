@@ -78,5 +78,18 @@ public class ProductEntity  implements Serializable {
      */
     @Column(name = "create_time")
     private Date createTime;
-
+    /**
+     * 是否可用
+     * 0：可用
+     * 1：禁用
+     */
+    @Column(length = 1, name = "is_usable")
+    private String isUsable;
+    /**
+     * 是否删除
+     * 0：正常
+     * 1：已删除
+     */
+    @Column(length = 1, name = "is_delete")
+    private String isDelete;
 }

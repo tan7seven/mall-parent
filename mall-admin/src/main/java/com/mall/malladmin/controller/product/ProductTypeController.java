@@ -1,5 +1,6 @@
 package com.mall.malladmin.controller.product;
 
+import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.common.CommonCascaderDto;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductTypeDto;
@@ -86,18 +87,19 @@ public class ProductTypeController {
     }
 
     /**
-     * 获取类目信息
+     * 分页查询
      * @param id
      * @param dto
      * @return
      */
     @GetMapping("/getPage.do/{id}")
-    protected CommonResultDto getPage(@PathVariable Long id, ProductTypeDto dto){
+    protected CommonResultDto getPage(@PathVariable Integer id, ProductTypeDto dto){
         Sort sort = new Sort(Sort.Direction.ASC, "sort", "typeId");
         Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(dto,entity);
-        entity.setParentId(id.intValue());
+        entity.setParentId(id);
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         Page<ProductTypeEntity> result = productTypeService.findPage(entity, page);
         ResultPage resultPage = new ResultPage();
         resultPage.setList(result.getContent());
@@ -114,7 +116,6 @@ public class ProductTypeController {
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/updateProductType.do/{typeId}")
     protected CommonResultDto updateProductType(@PathVariable Integer typeId, @RequestBody ProductTypeDto dto){
-        productPropertyNameService.deleteByTypeId(typeId);
         productTypeService.update(dto);
         return new CommonResultDto().success();
     }
@@ -143,13 +144,10 @@ public class ProductTypeController {
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/update/status.do")
     protected CommonResultDto updateStatus(@RequestBody ProductTypeDto dto){
-        ProductTypeEntity entity = productTypeService.findById(dto.getTypeId()).get();
-        if(null == entity){
-            return new CommonResultDto().validateFailed("typeId异常：获取不到相关类目！");
+        if(null == dto.getTypeId()){
+            return new CommonResultDto().validateFailed("类目ID为空！");
         }
-        entity.setStatus(dto.getStatus());
-        productTypeService.add(entity);
-        return new CommonResultDto().success();
+        return productTypeService.updateIsUsable(dto);
     }
 
     /**

@@ -35,11 +35,11 @@ public class ProductPropertyNameDto extends CommonDto implements Serializable {
      */
     private String isShow;
     /**
-     * 	是否可用
-     * 	0：是
-     * 	1：否
+     * 	是否删除
+     * 	0：正常
+     * 	1：已删除
      */
-    private String isUsable;
+    private String isDelete;
     /**
      * 商品分类一级编号
      */

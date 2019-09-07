@@ -1,5 +1,6 @@
 package com.mall.malladmin.controller.product;
 
+import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductPropertyNameDto;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
@@ -62,6 +63,7 @@ public class ProductPropertyController {
         Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
         ProductPropertyNameEntity entity = new ProductPropertyNameEntity();
         BeanUtils.copyProperties(dto,entity);
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         Page<ProductPropertyNameEntity> result = productPropertyNameService.findPage(entity, page);
         ResultPage resultPage = new ResultPage();
         resultPage.setList(result.getContent());
@@ -93,7 +95,7 @@ public class ProductPropertyController {
         return new CommonResultDto().success();
     }
     /**
-     * 删除
+     * 删除-逻辑删除
      * @return
      */
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:DELETE') or hasRole('ADMIN')")
@@ -128,17 +130,5 @@ public class ProductPropertyController {
             return new CommonResultDto().validateFailed("主键为空！");
         }
         return productPropertyNameService.updateIsShow(dto);
-    }
-    /**
-     * 是否可用
-     * @return
-     */
-    @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
-    @PostMapping("/updateIsUsable.do")
-    protected CommonResultDto updateIsUsable(@RequestBody ProductPropertyNameDto dto){
-        if(null == dto.getPropertyNameId()){
-            return new CommonResultDto().validateFailed("主键为空！");
-        }
-        return productPropertyNameService.updateIsUsable(dto);
     }
 }

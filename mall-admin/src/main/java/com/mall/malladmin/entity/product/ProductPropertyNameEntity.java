@@ -46,11 +46,11 @@ public class ProductPropertyNameEntity  implements Serializable {
     @Column(name = "is_show", length = 1)
     private String isShow;
     /**
-     * 	是否可用
-     * 	0：是
-     * 	1：否
+     * 	是否删除
+     * 	0：正常
+     * 	1：已删除
      */
-    @Column(name = "is_usable", length = 1)
-    private String isUsable;
+    @Column(name = "is_delete", length = 1)
+    private String isDelete;
 
 }

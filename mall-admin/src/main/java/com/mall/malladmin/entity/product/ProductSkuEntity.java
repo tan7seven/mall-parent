@@ -14,6 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "mall_product_sku")
 public class ProductSkuEntity  implements Serializable {
+
     /**
      * 编号
      */
@@ -64,4 +65,11 @@ public class ProductSkuEntity  implements Serializable {
      */
     @Column(name = "modify_time")
     private Date modifyTime = new Date();
+    /**
+     * 状态
+     * 0:正常
+     * 1：已删除
+     */
+    @Column(length = 1, name = "is_delete")
+    private String isDelete;
 }

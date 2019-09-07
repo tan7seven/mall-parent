@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,16 +16,25 @@ public class UserDetailsImpl implements UserDetails {
     private String password;
     private String username;
     /**
+     * 用户角色
+     */
+    private String role;
+    /**
      * 头像
      */
     private String icon;
-    private List<String> permissionCodeList;
+    private List<String> buttonList;
     private List<String> menuList;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return permissionCodeList.stream().map(
+        Collection<GrantedAuthority> authorityList = new ArrayList<>();
+        //按钮权限列表
+        authorityList.addAll(this.buttonList.stream().map(
                 s -> new SimpleGrantedAuthority(s)
-        ).collect(Collectors.toList());
+        ).collect(Collectors.toList()));
+        //用户角色
+        authorityList.add(new SimpleGrantedAuthority(this.role));
+        return authorityList;
     }
 
     @Override

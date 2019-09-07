@@ -2,6 +2,7 @@ package com.mall.malladmin.service.orders.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.orders.OrdersDto;
 import com.mall.malladmin.dto.orders.OrdersItemsDto;
 import com.mall.malladmin.dto.orders.OrdersOperationLogDto;
@@ -156,7 +157,7 @@ public class OrdersServiceImpl implements OrdersService
     public void deleteOrders(String[] ids, UserDetailsImpl userDetails) {
         for (String id : ids) {
             OrdersEntity result = ordersRepository.findById(id).get();
-            result.setIsDelete(OrdersEntity.IS_DELETE);
+            result.setIsDelete(CommonConstant.IS_DELETE);
             ordersRepository.save(result);
             OrdersOperationLogEntity logEntity = new OrdersOperationLogEntity();
             logEntity.setCreateTime(new Date());

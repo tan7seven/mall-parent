@@ -15,14 +15,6 @@ import java.io.Serializable;
 public class ProductTypeEntity  implements Serializable {
 
     /**
-     * 状态：0-正常
-     */
-    public static final String NORMAL = "0";
-    /**
-     * 状态：1-禁用
-     */
-    public static final String FORBIDDEN = "1";
-    /**
      * 编号
      */
     @Id
@@ -59,6 +51,13 @@ public class ProductTypeEntity  implements Serializable {
      * 0:正常
      * 1：禁用
      */
-    @Column(length = 1)
-    private String status;
+    @Column(length = 1, name = "is_usable")
+    private String isUsable;
+    /**
+     * 状态
+     * 0:正常
+     * 1：已删除
+     */
+    @Column(length = 1, name = "is_delete")
+    private String isDelete;
 }

@@ -23,9 +23,7 @@ public class OrdersEntity {
     public static final String ORDERS_STATUS_CLOSED = "4";
     public static final String ORDERS_STATUS_FINISHED = "5";
     public static final String ORDERS_STATUS_INVALID = "6";
-    //删除状态：0->未删除；1->已删除
-    public static final String NOT_DELETE = "0";
-    public static final String IS_DELETE = "1";
+
     /**
      * 订单ID
      */

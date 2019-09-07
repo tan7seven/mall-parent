@@ -1,8 +1,10 @@
 package com.mall.malladmin.service.product.impl;
 
+import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductPropertyNameDto;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
+import com.mall.malladmin.mapper.product.ProductPropertyMapper;
 import com.mall.malladmin.repository.product.ProductPropertyNameRepository;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import org.springframework.beans.BeanUtils;
@@ -20,6 +22,9 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     @Autowired
     private ProductPropertyNameRepository productPropertyNameRepository;
 
+    @Autowired
+    private ProductPropertyMapper productPropertyMapper;
+
     @Override
     public CommonResultDto add(ProductPropertyNameEntity entity) {
         if(ProductPropertyNameEntity.IS_SALE.equals(entity.getIsSale())){
@@ -32,6 +37,7 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
         if(null != typeIdAndNameList && typeIdAndNameList.size() > 0 ){
             return new CommonResultDto().validateFailed("同个分类下属性名不能相同！");
         }
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         ProductPropertyNameEntity result = productPropertyNameRepository.save(entity);
         if(result == null){
             return new CommonResultDto().failed();
@@ -52,18 +58,13 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     }
 
     @Override
-    public void delete(ProductPropertyNameEntity entity) {
-        productPropertyNameRepository.delete(entity);
-    }
-
-    @Override
     public void deleteById(Integer id) {
-        productPropertyNameRepository.deleteById(id);
+        productPropertyMapper.updateIsDelete(id);
     }
 
     @Override
-    public void deleteByTypeId(Integer typeId) {
-        productPropertyNameRepository.deleteByTypeId(typeId);
+    public void updateIsDeleteByTypeId(Integer typeId) {
+        productPropertyNameRepository.updateIsDeleteByTypeId(typeId);
     }
 
     @Override
@@ -107,11 +108,4 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
         return new CommonResultDto().success();
     }
 
-    @Override
-    public CommonResultDto updateIsUsable(ProductPropertyNameDto dto) {
-        ProductPropertyNameEntity entity = productPropertyNameRepository.findById(dto.getPropertyNameId()).get();
-        entity.setIsUsable(dto.getIsUsable());
-        productPropertyNameRepository.save(entity);
-        return new CommonResultDto().success();
-    }
 }

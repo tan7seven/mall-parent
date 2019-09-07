@@ -30,11 +30,7 @@ public interface ProductPropertyNameService {
      * @param dto
      */
     void update(ProductPropertyNameDto dto);
-    /**
-     * 删除
-     * @param entity
-     */
-    void delete(ProductPropertyNameEntity entity);
+
     /**
      * 根据逐渐删除
      * @param id
@@ -45,7 +41,7 @@ public interface ProductPropertyNameService {
      * 根据typeId删除
      * @param typeId
      */
-    void deleteByTypeId(Integer typeId);
+    void updateIsDeleteByTypeId(Integer typeId);
 
     /**
      * 查询
@@ -81,10 +77,4 @@ public interface ProductPropertyNameService {
      */
     CommonResultDto updateIsShow(ProductPropertyNameDto dto);
 
-    /**
-     * 修改是否可用
-     * @param dto
-     * @return
-     */
-    CommonResultDto updateIsUsable(ProductPropertyNameDto dto);
 }

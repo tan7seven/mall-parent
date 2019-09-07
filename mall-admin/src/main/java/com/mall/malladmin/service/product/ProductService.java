@@ -32,11 +32,6 @@ public interface ProductService {
     @Transactional
     CommonResultDto deleteList(Integer[] ids);
     /**
-     * 删除
-     * @param entity
-     */
-    void delete(ProductEntity entity);
-    /**
      * 根据逐渐删除
      * @param id
      */

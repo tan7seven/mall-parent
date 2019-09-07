@@ -22,13 +22,7 @@ public class OrdersReturnApplyEntity {
     public static final String RETURN_STATUS_RETURNING = "1";
     public static final String RETURN_STATUS_FINISHED = "2";
     public static final String RETURN_STATUS_REFUSE="3";
-    /**
-     * 是否删除
-     * 0-》否
-     * 1-》是
-     */
-    public static final String NOT_DELETE = "0";
-    public static final String IS_DELETE ="1";
+
     /**
      * 主键
      */

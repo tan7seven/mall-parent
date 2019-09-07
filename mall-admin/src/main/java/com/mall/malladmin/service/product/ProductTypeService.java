@@ -1,8 +1,9 @@
 package com.mall.malladmin.service.product;
 
-import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.dto.common.CommonCascaderDto;
+import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductTypeDto;
+import com.mall.malladmin.entity.product.ProductTypeEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,12 @@ public interface ProductTypeService {
      */
     ProductTypeEntity update(ProductTypeDto dto);
     /**
+     * 修改是否可用
+     * @param dto
+     * @return
+     */
+    CommonResultDto updateIsUsable(ProductTypeDto dto);
+    /**
      *
      * @param dto
      * @return
@@ -42,14 +49,10 @@ public interface ProductTypeService {
     Optional<ProductTypeEntity> findById(Integer id);
 
     /**
-     * 删除
-     * @param entity
-     */
-    void delete(ProductTypeEntity entity);
-    /**
-     * 根据逐渐删除
+     * 根据ID删除-逻辑删除
      * @param id
      */
+    @Transactional
     void deleteById(Integer id);
 
     /**

@@ -43,7 +43,7 @@ public class AdminController extends GenericController {
      */
     @GetMapping(value = "/getAdminInfo.do")
     protected  Object getAdminInfo(){
-        UserDetailsImpl result = adminService.getAdminInfo(this.getUserDetails());
+        UserDetailsImpl result = adminService.adminLogin(this.getUserDetails().getUsername());
         return new CommonResultDto().success(result);
     }
     /**

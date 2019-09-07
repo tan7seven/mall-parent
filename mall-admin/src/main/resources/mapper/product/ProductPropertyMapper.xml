@@ -22,6 +22,7 @@
         FROM mall_product_property_value a
         inner JOIN mall_product_property_name b ON  a.property_name_id = b.property_name_id
         where 1 = 1
+        AND b.is_delete = '0'
         <if test="propertyNameId!=null and propertyNameId!=''">
             AND a.property_name_id = #{propertyNameId}
         </if>

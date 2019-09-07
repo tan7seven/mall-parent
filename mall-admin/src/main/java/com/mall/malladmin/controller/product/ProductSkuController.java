@@ -81,7 +81,7 @@ public class ProductSkuController extends GenericController {
     }
 
     /**
-     * 删除
+     * 删除-逻辑删除
      * @param id
      * @return
      */

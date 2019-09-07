@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,8 +31,7 @@ public interface ProductPropertyNameRepository extends JpaRepository<ProductProp
      * 根据typeId删除
      * @param deleteByTypeId
      */
-    @Transactional
     @Modifying
-    @Query(value = "delete  from mall_product_property_name  where type_id=?1",nativeQuery=true)
-    void deleteByTypeId(Integer deleteByTypeId);
+    @Query(value = "update mall_product_property_name SET is_delete = '1' where type_id=?1",nativeQuery=true)
+    void updateIsDeleteByTypeId(Integer deleteByTypeId);
 }

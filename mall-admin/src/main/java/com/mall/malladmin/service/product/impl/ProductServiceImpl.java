@@ -2,6 +2,7 @@ package com.mall.malladmin.service.product.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductDto;
 import com.mall.malladmin.dto.product.ProductPropertyDto;
@@ -113,21 +114,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public CommonResultDto deleteList(Integer[] ids) {
         for (Integer id : ids) {
-            //删除商品库存信息
-            productSkuRepository.deleteByProductId(id);
+            //删除商品库存信息-逻辑删除
+            productSkuMapper.updateIsDeleteByProductId(id);
             //删除商品明细
             productDetailRepository.deleteByProductId(id);
             //删除商品属性值
             productPropertyMapper.deleteByProductId(id);
-            //删除商品信息
-            productRepository.deleteById(id);
+            //删除商品信息-逻辑删除
+            productMapper.updateIsDelete(id);
         }
         return new CommonResultDto().success();
-    }
-
-    @Override
-    public void delete(ProductEntity entity) {
-        productRepository.delete(entity);
     }
 
     @Override
@@ -166,9 +162,10 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity entity = new ProductEntity();
         BeanUtils.copyProperties(dto, entity);
         entity.setIsPutaway(ProductEntity.PUT_AWAY);
+        entity.setIsUsable(CommonConstant.IS_USABLE);
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         entity.setCreateTime(new Date());
         entity.setTypeId(dto.getProductTypeId());
-
         entity.setHits(0);
         if(null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0){
             //商品首页图片默认是第一张，其他的则保持到图片信息表里面

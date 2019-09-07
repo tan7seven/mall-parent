@@ -2,13 +2,14 @@ package com.mall.malladmin.service.product.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mall.malladmin.constant.CommonConstant;
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductSkuDto;
 import com.mall.malladmin.entity.product.*;
 import com.mall.malladmin.mapper.product.ProductPropertyMapper;
 import com.mall.malladmin.mapper.product.ProductSkuMapper;
 import com.mall.malladmin.repository.product.*;
 import com.mall.malladmin.service.product.ProductSkuService;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductSkuDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,9 @@ public class ProductSkuServiceImpl implements ProductSkuService {
             return new CommonResultDto().validateFailed("销售价格不能小于商品最低价！");
         }
         ProductSkuEntity entity = new ProductSkuEntity();
-        entity.setCreateTime(new Date());
-        entity.setModifyTime(new Date());
         entity.setCost(dto.getCost()==null?new BigDecimal(0):dto.getCost());
         entity.setPrice(dto.getPrice()==null?new BigDecimal(0):dto.getPrice());
         entity.setProductId(dto.getProductId());
-        entity.setSellSum(0);
         entity.setStock(dto.getStock()==null?0:dto.getStock());
         entity.setPicUrl(dto.getPicUrl());
         StringBuffer properties = new StringBuffer();
@@ -74,6 +72,10 @@ public class ProductSkuServiceImpl implements ProductSkuService {
             properties.append(dto.getPropertyValueC());
         }
         entity.setProperties(properties.toString());
+        entity.setCreateTime(new Date());
+        entity.setModifyTime(new Date());
+        entity.setSellSum(0);
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         productSkuRepository.save(entity);
         return new CommonResultDto().success();
     }
@@ -148,13 +150,8 @@ public class ProductSkuServiceImpl implements ProductSkuService {
     }
 
     @Override
-    public void delete(ProductSkuEntity entity) {
-        productSkuRepository.delete(entity);
-    }
-
-    @Override
     public void deleteById(Integer id) {
-        productSkuRepository.deleteById(id);
+        productSkuMapper.updateIsDeleteById(id);
     }
 
     @Override

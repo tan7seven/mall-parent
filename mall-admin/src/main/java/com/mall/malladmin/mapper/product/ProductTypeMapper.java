@@ -1,6 +1,7 @@
 package com.mall.malladmin.mapper.product;
 
 import com.mall.malladmin.dto.common.CommonCascaderDto;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,5 +15,12 @@ public interface ProductTypeMapper {
      */
     List<CommonCascaderDto> getCascader();
 
+    /**
+     * 根据父类ID更新usable字段
+     * @param parentId
+     * @param isUsable
+     * @return
+     */
+    int updateUsableByParent(@Param("parentId") Integer parentId,@Param("isUsable") String isUsable);
 
 }

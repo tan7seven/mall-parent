@@ -11,6 +11,8 @@ public class Instance {
         p1.setProvince("222");
         Person p2 = p1.clone();
         System.out.println(p2.toString());
-
+        TestEnum test = TestEnum.sss;
+        TestEnum test2 = TestEnum.sss;
+        System.out.println(test ==test2);
     }
 }

@@ -90,4 +90,10 @@ public class ProductSkuDto extends CommonDto implements Serializable {
      * 销售属性值C
      */
     private List<ProductPropertyValueDto> propertyValueCOptions;
+    /**
+     * 状态
+     * 0:正常
+     * 1：已删除
+     */
+    private String isDelete;
 }

@@ -19,7 +19,7 @@ public interface AdminService {
      * @param userDetails
      * @return
      */
-    UserDetailsImpl getAdminInfo(UserDetailsImpl userDetails);
+    UserDetailsImpl adminLogin(String username);
     /**
      * 新增
      * @param dto

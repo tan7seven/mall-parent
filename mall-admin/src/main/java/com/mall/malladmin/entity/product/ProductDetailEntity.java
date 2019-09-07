@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- *  商品属性名属性值关联表
+ *  商品详情介绍
  */
 @Data
 @Entity
@@ -29,6 +29,6 @@ public class ProductDetailEntity implements Serializable{
     /**
      * 详情信息
      */
-    @Column(length = 2550)
+    @Column()
     private String detail;
 }

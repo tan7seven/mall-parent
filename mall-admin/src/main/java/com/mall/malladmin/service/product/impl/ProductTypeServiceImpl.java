@@ -1,12 +1,15 @@
 package com.mall.malladmin.service.product.impl;
 
+import com.mall.malladmin.constant.CommonConstant;
+import com.mall.malladmin.dto.common.CommonCascaderDto;
+import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.product.ProductTypeDto;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
+import com.mall.malladmin.mapper.product.ProductMapper;
 import com.mall.malladmin.mapper.product.ProductTypeMapper;
 import com.mall.malladmin.repository.product.ProductTypeRepository;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
-import com.mall.malladmin.dto.common.CommonCascaderDto;
-import com.mall.malladmin.dto.product.ProductTypeDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
+
+
 @Service(value = "productTypeService")
 public class ProductTypeServiceImpl implements ProductTypeService {
 
@@ -26,6 +31,9 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Autowired
     private ProductTypeMapper productTypeMapper;
+
+    @Autowired
+    private ProductMapper productMapper;
 
     @Resource(name = "productPropertyNameService")
     private ProductPropertyNameService productPropertyNameService;
@@ -61,8 +69,43 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 productPropertyNameService.add(propertyName);
             }
         }*/
+        /**
+         * 修改对应商品状态
+         */
+        if(!entity.getIsUsable().equals(dto.getIsUsable())){
+            this.updateTypeIsUsable(dto);
+        }
+        if ("0".equals(String.valueOf(entity.getParentId()))) {
+            productTypeMapper.updateUsableByParent(entity.getTypeId(), dto.getIsUsable());
+        }
         BeanUtils.copyProperties(dto,entity);
+        if(0 == entity.getParentId()){
+            entity.setLevel(0);
+        }else{
+            ProductTypeEntity parent = productTypeRepository.findById(entity.getParentId()).get();
+            entity.setLevel(parent.getLevel()+1);
+        }
         return productTypeRepository.save(entity);
+    }
+
+    @Override
+    public CommonResultDto updateIsUsable(ProductTypeDto dto) {
+        ProductTypeEntity entity = this.findById(dto.getTypeId()).get();
+        if(null == dto.getTypeId()){
+            return new CommonResultDto().validateFailed("类目ID异常：查无数据！");
+        }
+        /**
+         * 修改对应商品状态
+         */
+        if(!entity.getIsUsable().equals(dto.getIsUsable())){
+            this.updateTypeIsUsable(dto);
+        }
+        if ("0".equals(String.valueOf(entity.getParentId()))) {
+            productTypeMapper.updateUsableByParent(entity.getTypeId(), dto.getIsUsable());
+        }
+        entity.setIsUsable(dto.getIsUsable());
+        this.add(entity);
+        return new CommonResultDto().success();
     }
 
     @Override
@@ -75,6 +118,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
             ProductTypeEntity parent = productTypeRepository.findById(entity.getParentId()).get();
             entity.setLevel(parent.getLevel()+1);
         }
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         ProductTypeEntity result = productTypeRepository.save(entity);
         /*//添加销售属性
         if(null != dto.getPropertyNameCheckedIsSale() && dto.getPropertyNameCheckedIsSale().length > 0){
@@ -107,19 +151,14 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
-    public void delete(ProductTypeEntity entity) {
-        productTypeRepository.delete(entity);
-    }
-
-    @Override
     public void deleteById(Integer id) {
-        productPropertyNameService.deleteByTypeId(id);
+        productPropertyNameService.updateIsDeleteByTypeId(id);
         List<ProductTypeEntity> entities = productTypeRepository.findAllByParentId(id);
         for (ProductTypeEntity entity: entities) {
-            productPropertyNameService.deleteByTypeId(entity.getTypeId());
+            productPropertyNameService.updateIsDeleteByTypeId(entity.getTypeId());
         }
-        productTypeRepository.deleteByParentId(id);
-        productTypeRepository.deleteById(id);
+        productTypeRepository.updateIsDeleteByParentId(id);
+        productTypeRepository.updateIsDelete(id);
     }
 
     @Override
@@ -143,5 +182,18 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Override
     public List<CommonCascaderDto> getCascader() {
         return productTypeMapper.getCascader();
+    }
+
+    /**
+     * 修改类目-是否可用
+     * 修改对应商品状态-是否可用
+     */
+    private int updateTypeIsUsable(ProductTypeDto dto){
+        if (CommonConstant.IS_USABLE.equals(dto.getIsUsable())) {
+            return productMapper.updateProductIsUsable(dto.getTypeId(), CommonConstant.IS_USABLE);
+        }else if (CommonConstant.NOT_USABLE.equals(dto.getIsUsable())) {
+            return productMapper.updateProductIsUsable(dto.getTypeId(), CommonConstant.NOT_USABLE);
+        }
+        return 0;
     }
 }

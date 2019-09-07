@@ -1,5 +1,6 @@
 package com.mall.malladmin.service.system.impl;
 
+import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;
 import com.mall.malladmin.entity.system.ButtonAuthorityEntity;
@@ -51,24 +52,24 @@ public class AdminServiceImpl implements AdminService {
     private ButtonAuthorityRepository buttonAuthorityRepository;
 
     @Override
-    public UserDetailsImpl getAdminInfo(UserDetailsImpl userDetails) {
+    public UserDetailsImpl adminLogin(String username) {
         UserDetailsImpl user = new UserDetailsImpl();
-        AdminDto dto  = this.findByLoginId(userDetails.getUsername());
+        AdminDto dto  = this.findByLoginId(username);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         // 加密(SpringSecurity默认有加密)
         String encodedPassword = passwordEncoder.encode(dto.getPassword().trim());
         user.setPassword(encodedPassword);
-        user.setUsername(userDetails.getUsername());
+        user.setUsername(username);
         user.setUserId(dto.getUserId());
         user.setIcon(dto.getPicUrl());
-        List<String> permissionCodeList = new ArrayList<>();
-        //设置用户角色
-        permissionCodeList.add(AdminRoleEnum.getValue(dto.getRole()));
-        //获取用户权限
-        List<String> buttonCodeList = adminMapper.getButtonCodeAuthority(dto);
-        permissionCodeList.addAll(buttonCodeList);
-        user.setPermissionCodeList(permissionCodeList);
+        List<String> buttonList = new ArrayList<>();
+        //获取用户角色
+        user.setRole(AdminRoleEnum.getValue(dto.getRole()));
         //获取用户权限-按钮
+        List<String> buttonCodeList = adminMapper.getButtonCodeAuthority(dto);
+        buttonList.addAll(buttonCodeList);
+        user.setButtonList(buttonList);
+        //获取用户权限-菜单
         List<String> menuCodeList = adminMapper.getMenuCodeListAuthority(dto);
         user.setMenuList(menuCodeList);
         return user;
@@ -79,11 +80,11 @@ public class AdminServiceImpl implements AdminService {
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
         entity.setCreateTime(new Date());
-        entity.setIsUsable(StringUtils.isNotBlank(entity.getIsUsable())?entity.getIsUsable():AdminEntity.IS_USABLE);
+        entity.setIsUsable(StringUtils.isNotBlank(entity.getIsUsable())?entity.getIsUsable():CommonConstant.IS_USABLE);
         entity.setModifyTime(new Date());
         entity.setRole(AdminEntity.ROLE_USER);
         entity.setPassword(AdminEntity.DEFAULT_PASSWORD);
-        entity.setIsDelete(AdminEntity.NOT_DELETE);
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         return adminRepository.save(entity);
     }
 
@@ -101,7 +102,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<AdminEntity> getList(AdminDto dto) {
-        List<AdminEntity>entitys = adminRepository.findAll((Specification<AdminEntity>) (root, query, criteriaBuilder)->{
+        List<AdminEntity>entities = adminRepository.findAll((Specification<AdminEntity>) (root, query, criteriaBuilder)->{
             List<Predicate> list = new ArrayList<>();
             if(StringUtils.isNotBlank(dto.getRole())){
                 list.add(criteriaBuilder.like(root.get("role").as(String.class), "%"+dto.getRole()+"%"));
@@ -109,7 +110,7 @@ public class AdminServiceImpl implements AdminService {
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
         });
-        return entitys;
+        return entities;
     }
 
     @Override
@@ -118,7 +119,7 @@ public class AdminServiceImpl implements AdminService {
         Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
-        entity.setIsDelete(AdminEntity.NOT_DELETE);
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         Example<AdminEntity> example = Example.of(entity);
         Page<AdminEntity> result = adminRepository.findAll(example, page);
         return result;
@@ -138,7 +139,7 @@ public class AdminServiceImpl implements AdminService {
     public void deleteAdmin(String[] ids) {
         for (String id : ids) {
             AdminEntity entity = adminRepository.findById(id).get();
-            entity.setIsDelete(AdminEntity.IS_DELETE);
+            entity.setIsDelete(CommonConstant.IS_DELETE);
             adminRepository.save(entity);
         }
     }
@@ -146,7 +147,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateIsUsable(AdminDto dto) {
         AdminEntity entity = adminRepository.findById(dto.getUserId()).get();
-        entity.setIsUsable(StringUtils.isBlank(dto.getIsUsable())?AdminEntity.IS_USABLE:dto.getIsUsable());
+        entity.setIsUsable(StringUtils.isBlank(dto.getIsUsable())?CommonConstant.IS_USABLE:dto.getIsUsable());
         adminRepository.save(entity);
     }
 

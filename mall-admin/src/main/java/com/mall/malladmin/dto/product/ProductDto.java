@@ -3,6 +3,7 @@ package com.mall.malladmin.dto.product;
 import com.mall.malladmin.dto.common.CommonDto;
 import lombok.Data;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -99,5 +100,16 @@ public class ProductDto extends CommonDto implements Serializable {
      * 是否销售属性
      */
     private String isSale;
-
+    /**
+     * 是否可用
+     * 0：可用
+     * 1：禁用
+     */
+    private String isUsable;
+    /**
+     * 是否删除
+     * 0：正常
+     * 1：已删除
+     */
+    private String isDelete;
 }
