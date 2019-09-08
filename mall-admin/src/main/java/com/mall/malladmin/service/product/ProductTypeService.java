@@ -5,7 +5,6 @@ import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductTypeDto;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -64,10 +63,10 @@ public interface ProductTypeService {
 
     /**
      * 查询
-     * @param entity
+     * @param dto
      * @return
      */
-    Page<ProductTypeEntity> findPage(ProductTypeEntity entity, Pageable page);
+    Page<ProductTypeEntity> findPage(ProductTypeDto dto);
 
     /**
      * 获取树结构

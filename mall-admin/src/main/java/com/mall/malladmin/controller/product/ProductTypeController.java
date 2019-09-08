@@ -1,6 +1,5 @@
 package com.mall.malladmin.controller.product;
 
-import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.common.CommonCascaderDto;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductTypeDto;
@@ -12,9 +11,6 @@ import com.mall.malladmin.util.ResultPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,19 +84,12 @@ public class ProductTypeController {
 
     /**
      * 分页查询
-     * @param id
      * @param dto
      * @return
      */
-    @GetMapping("/getPage.do/{id}")
-    protected CommonResultDto getPage(@PathVariable Integer id, ProductTypeDto dto){
-        Sort sort = new Sort(Sort.Direction.ASC, "sort", "typeId");
-        Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
-        ProductTypeEntity entity = new ProductTypeEntity();
-        BeanUtils.copyProperties(dto,entity);
-        entity.setParentId(id);
-        entity.setIsDelete(CommonConstant.NOT_DELETE);
-        Page<ProductTypeEntity> result = productTypeService.findPage(entity, page);
+    @GetMapping("/getPage.do")
+    protected CommonResultDto getPage(ProductTypeDto dto){
+        Page<ProductTypeEntity> result = productTypeService.findPage(dto);
         ResultPage resultPage = new ResultPage();
         resultPage.setList(result.getContent());
         resultPage.setTotal(result.getTotalElements());

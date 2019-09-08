@@ -29,5 +29,5 @@ public interface ProductTypeRepository extends JpaRepository<ProductTypeEntity, 
      * @param parentId
      * @return
      */
-    List<ProductTypeEntity> findAllByParentId(Integer parentId);
+    List<ProductTypeEntity> findByParentId(Integer parentId);
 }

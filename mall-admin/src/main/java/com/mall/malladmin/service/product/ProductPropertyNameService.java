@@ -1,10 +1,9 @@
 package com.mall.malladmin.service.product;
 
+import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductPropertyNameDto;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +28,7 @@ public interface ProductPropertyNameService {
      * 更新
      * @param dto
      */
-    void update(ProductPropertyNameDto dto);
+    CommonResultDto update(ProductPropertyNameDto dto);
 
     /**
      * 根据逐渐删除
@@ -58,10 +57,10 @@ public interface ProductPropertyNameService {
     List<ProductPropertyNameEntity> findByTypeId(Integer typeId);
     /**
      * 查询
-     * @param entity
+     * @param dto
      * @return
      */
-    Page<ProductPropertyNameEntity> findPage(ProductPropertyNameEntity entity, Pageable page);
+    PageInfo<ProductPropertyNameDto> findPage(ProductPropertyNameDto dto);
 
     /**
      * 修改是否销售属性

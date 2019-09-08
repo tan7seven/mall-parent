@@ -12,10 +12,7 @@ import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -153,7 +150,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Override
     public void deleteById(Integer id) {
         productPropertyNameService.updateIsDeleteByTypeId(id);
-        List<ProductTypeEntity> entities = productTypeRepository.findAllByParentId(id);
+        List<ProductTypeEntity> entities = productTypeRepository.findByParentId(id);
         for (ProductTypeEntity entity: entities) {
             productPropertyNameService.updateIsDeleteByTypeId(entity.getTypeId());
         }
@@ -169,7 +166,12 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
-    public Page<ProductTypeEntity> findPage(ProductTypeEntity entity, Pageable page) {
+    public Page<ProductTypeEntity> findPage(ProductTypeDto dto) {
+        Sort sort = new Sort(Sort.Direction.ASC, "sort", "typeId");
+        Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
+        ProductTypeEntity entity = new ProductTypeEntity();
+        BeanUtils.copyProperties(dto,entity);
+        entity.setIsDelete(CommonConstant.NOT_DELETE);
         ExampleMatcher matcher = ExampleMatcher.matching()
 //                .withMatcher("typeName", ExampleMatcher.GenericPropertyMatchers.startsWith())//模糊查询匹配开头，即{username}%
                 .withMatcher("typeName" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%

@@ -197,7 +197,7 @@ public class OrdersServiceImpl implements OrdersService
      */
     private void makePropertyKeyToValue(OrdersItemsDto dto){
         StringBuffer propertySb = new StringBuffer();
-        List<ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeId(dto.getTypeId());
+        List<ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeIdAndIsDelete(dto.getTypeId(), CommonConstant.NOT_DELETE);
         List<ProductPropertyValueEntity> valueList = productPropertyValueRepository.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProductProperty())){
             String skuProperties = dto.getProductProperty();

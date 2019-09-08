@@ -33,7 +33,12 @@ public class MallProductPropertyName implements Serializable {
 
     private String isShow;
 
-    private String isUsable;
+    /**
+     * 0：正常，1：已删除
+     *
+     * @mbggenerated
+     */
+    private String isDelete;
 
     private static final long serialVersionUID = 1L;
 
@@ -77,12 +82,12 @@ public class MallProductPropertyName implements Serializable {
         this.isShow = isShow;
     }
 
-    public String getIsUsable() {
-        return isUsable;
+    public String getIsDelete() {
+        return isDelete;
     }
 
-    public void setIsUsable(String isUsable) {
-        this.isUsable = isUsable;
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
     }
 
     @Override
@@ -96,7 +101,7 @@ public class MallProductPropertyName implements Serializable {
         sb.append(", name=").append(name);
         sb.append(", isSale=").append(isSale);
         sb.append(", isShow=").append(isShow);
-        sb.append(", isUsable=").append(isUsable);
+        sb.append(", isDelete=").append(isDelete);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

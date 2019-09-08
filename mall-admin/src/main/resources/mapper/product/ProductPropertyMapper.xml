@@ -9,7 +9,37 @@
         <result column="value" property="value"/>
         <result column="isSale" property="isSale"/>
         <result column="productId" property="productId"/>
+        <result column="idDelete" property="idDelete"/>
     </resultMap>
+    <resultMap id="ResultNameMap" type="com.mall.malladmin.dto.product.ProductPropertyNameDto">
+        <result column="propertyNameId" property="propertyNameId"/>
+        <result column="name" property="name"/>
+        <result column="typeId" property="typeId"/>
+        <result column="isSale" property="isSale"/>
+        <result column="isShow" property="isShow"/>
+        <result column="idDelete" property="idDelete"/>
+        <result column="typeName" property="typeName"/>
+    </resultMap>
+    <select id="findList" resultMap="ResultNameMap">
+        SELECT
+            a.property_Name_Id propertyNameId,
+            a.type_id typeId,
+            a.NAME NAME,
+            a.is_Sale isSale,
+            a.is_show isShow,
+            a.is_delete isDelete,
+            b.type_name typeName
+        FROM
+            mall_product_property_name a
+        INNER JOIN mall_product_type b ON a.type_id = b.type_id
+        WHERE  1 = 1
+        <if test="dto.name !=null and dto.name !=''">
+            AND a.NAME like concat('%', #{dto.name}, '%')
+        </if>
+        <if test="dto.typeName !=null and dto.typeName !=''">
+            AND b.type_name like concat('%', #{dto.typeName}, '%')
+        </if>
+    </select>
 
     <select id="findByPropertyNameIdAndProductId" resultMap="ResultMap">
         SELECT
@@ -35,6 +65,12 @@
         DELETE  FROM mall_product_property_value  WHERE product_id = #{productId}
     </delete>
 
+    <delete id="deleteSku">
+      delete a from mall_product_sku a where a.properties LIKE CONCAT('%&amp;', #{propertyNameId},':%');
+    </delete>
+    <delete id="deleteProperty">
+        delete a from mall_product_property_value a where a.property_name_id = #{propertyNameId};
+    </delete>
 </mapper>
         <!--
             <id>：主键字段

@@ -44,8 +44,9 @@
           b.type_id children_value,
           b.type_name children_label
         FROM mall_product_type a
-        LEFT JOIN mall_product_type b ON a.type_id = b.parent_id
+        LEFT JOIN mall_product_type b ON a.type_id = b.parent_id AND b.is_usable = '0'
         WHERE a.parent_id = 0
+        AND a.is_usable = '0'
         AND  a.is_delete = '0'
     </select>
 

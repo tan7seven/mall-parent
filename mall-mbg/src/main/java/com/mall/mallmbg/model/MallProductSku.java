@@ -75,6 +75,13 @@ public class MallProductSku implements Serializable {
      */
     private Date modifyTime;
 
+    /**
+     * 0：未删除，1：已删除
+     *
+     * @mbggenerated
+     */
+    private String isDelete;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getSkuId() {
@@ -157,6 +164,14 @@ public class MallProductSku implements Serializable {
         this.modifyTime = modifyTime;
     }
 
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -173,6 +188,7 @@ public class MallProductSku implements Serializable {
         sb.append(", stock=").append(stock);
         sb.append(", createTime=").append(createTime);
         sb.append(", modifyTime=").append(modifyTime);
+        sb.append(", isDelete=").append(isDelete);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

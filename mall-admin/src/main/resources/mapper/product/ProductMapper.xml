@@ -14,6 +14,8 @@
         <result column="addTime" property="addTime"/>
         <result column="detail" property="detail"/>
         <result column="typeName" property="typeName"/>
+        <result column="is_usable" jdbcType="CHAR" property="isUsable" />
+        <result column="is_delete" jdbcType="CHAR" property="isDelete" />
     </resultMap>
 
     <select id="getList" resultMap="ProductMap">
@@ -27,7 +29,8 @@
             a.is_Putaway isPutaway,
             a.hits,
             a.create_time createTime,
-            b.type_Name typeName
+            b.type_Name typeName,
+            a.is_usable is_usable
         FROM mall_product a
         INNER JOIN mall_product_type b ON b.type_id = a.type_id
         where 1 = 1

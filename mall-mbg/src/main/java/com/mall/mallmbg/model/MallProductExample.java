@@ -296,76 +296,6 @@ public class MallProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andPicListUrlIsNull() {
-            addCriterion("pic_list_url is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlIsNotNull() {
-            addCriterion("pic_list_url is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlEqualTo(String value) {
-            addCriterion("pic_list_url =", value, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlNotEqualTo(String value) {
-            addCriterion("pic_list_url <>", value, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlGreaterThan(String value) {
-            addCriterion("pic_list_url >", value, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlGreaterThanOrEqualTo(String value) {
-            addCriterion("pic_list_url >=", value, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlLessThan(String value) {
-            addCriterion("pic_list_url <", value, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlLessThanOrEqualTo(String value) {
-            addCriterion("pic_list_url <=", value, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlLike(String value) {
-            addCriterion("pic_list_url like", value, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlNotLike(String value) {
-            addCriterion("pic_list_url not like", value, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlIn(List<String> values) {
-            addCriterion("pic_list_url in", values, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlNotIn(List<String> values) {
-            addCriterion("pic_list_url not in", values, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlBetween(String value1, String value2) {
-            addCriterion("pic_list_url between", value1, value2, "picListUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andPicListUrlNotBetween(String value1, String value2) {
-            addCriterion("pic_list_url not between", value1, value2, "picListUrl");
-            return (Criteria) this;
-        }
-
         public Criteria andPicUrlIsNull() {
             addCriterion("pic_url is null");
             return (Criteria) this;
@@ -813,6 +743,146 @@ public class MallProductExample {
 
         public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
             addCriterion("create_time not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableIsNull() {
+            addCriterion("is_usable is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableIsNotNull() {
+            addCriterion("is_usable is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableEqualTo(String value) {
+            addCriterion("is_usable =", value, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableNotEqualTo(String value) {
+            addCriterion("is_usable <>", value, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableGreaterThan(String value) {
+            addCriterion("is_usable >", value, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableGreaterThanOrEqualTo(String value) {
+            addCriterion("is_usable >=", value, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableLessThan(String value) {
+            addCriterion("is_usable <", value, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableLessThanOrEqualTo(String value) {
+            addCriterion("is_usable <=", value, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableLike(String value) {
+            addCriterion("is_usable like", value, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableNotLike(String value) {
+            addCriterion("is_usable not like", value, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableIn(List<String> values) {
+            addCriterion("is_usable in", values, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableNotIn(List<String> values) {
+            addCriterion("is_usable not in", values, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableBetween(String value1, String value2) {
+            addCriterion("is_usable between", value1, value2, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUsableNotBetween(String value1, String value2) {
+            addCriterion("is_usable not between", value1, value2, "isUsable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteIsNull() {
+            addCriterion("is_delete is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteIsNotNull() {
+            addCriterion("is_delete is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteEqualTo(String value) {
+            addCriterion("is_delete =", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotEqualTo(String value) {
+            addCriterion("is_delete <>", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteGreaterThan(String value) {
+            addCriterion("is_delete >", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteGreaterThanOrEqualTo(String value) {
+            addCriterion("is_delete >=", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteLessThan(String value) {
+            addCriterion("is_delete <", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteLessThanOrEqualTo(String value) {
+            addCriterion("is_delete <=", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteLike(String value) {
+            addCriterion("is_delete like", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotLike(String value) {
+            addCriterion("is_delete not like", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteIn(List<String> values) {
+            addCriterion("is_delete in", values, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotIn(List<String> values) {
+            addCriterion("is_delete not in", values, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteBetween(String value1, String value2) {
+            addCriterion("is_delete between", value1, value2, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotBetween(String value1, String value2) {
+            addCriterion("is_delete not between", value1, value2, "isDelete");
             return (Criteria) this;
         }
     }

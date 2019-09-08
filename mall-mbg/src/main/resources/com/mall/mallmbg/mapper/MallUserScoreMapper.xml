@@ -240,4 +240,243 @@
       user_id = #{userId,jdbcType=VARCHAR}
     where user_score_id = #{userScoreId,jdbcType=VARCHAR}
   </update>
+  <resultMap id="BaseResultMap" type="com.mall.mallmbg.model.MallUserScore">
+    <id column="user_score_id" jdbcType="VARCHAR" property="userScoreId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="score_type" jdbcType="VARCHAR" property="scoreType" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="source_id" jdbcType="VARCHAR" property="sourceId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_score_id, create_time, score, score_type, source, source_id, user_id
+  </sql>
+  <select id="selectByExample" parameterType="com.mall.mallmbg.model.MallUserScoreExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_user_score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_user_score
+    where user_score_id = #{userScoreId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mall_user_score
+    where user_score_id = #{userScoreId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mall.mallmbg.model.MallUserScoreExample">
+    delete from mall_user_score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mall.mallmbg.model.MallUserScore">
+    insert into mall_user_score (user_score_id, create_time, score, 
+      score_type, source, source_id, 
+      user_id)
+    values (#{userScoreId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{score,jdbcType=INTEGER}, 
+      #{scoreType,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{sourceId,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.mallmbg.model.MallUserScore">
+    insert into mall_user_score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userScoreId != null">
+        user_score_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="scoreType != null">
+        score_type,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="sourceId != null">
+        source_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userScoreId != null">
+        #{userScoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="scoreType != null">
+        #{scoreType,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceId != null">
+        #{sourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mall.mallmbg.model.MallUserScoreExample" resultType="java.lang.Integer">
+    select count(*) from mall_user_score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mall_user_score
+    <set>
+      <if test="record.userScoreId != null">
+        user_score_id = #{record.userScoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+      <if test="record.scoreType != null">
+        score_type = #{record.scoreType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null">
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceId != null">
+        source_id = #{record.sourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mall_user_score
+    set user_score_id = #{record.userScoreId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      score = #{record.score,jdbcType=INTEGER},
+      score_type = #{record.scoreType,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      source_id = #{record.sourceId,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.mallmbg.model.MallUserScore">
+    update mall_user_score
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="scoreType != null">
+        score_type = #{scoreType,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceId != null">
+        source_id = #{sourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_score_id = #{userScoreId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.mallmbg.model.MallUserScore">
+    update mall_user_score
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      score = #{score,jdbcType=INTEGER},
+      score_type = #{scoreType,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      source_id = #{sourceId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where user_score_id = #{userScoreId,jdbcType=VARCHAR}
+  </update>
 </mapper>

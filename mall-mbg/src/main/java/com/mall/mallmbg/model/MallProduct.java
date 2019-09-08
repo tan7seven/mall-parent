@@ -27,13 +27,6 @@ public class MallProduct implements Serializable {
     private String productName;
 
     /**
-     * 商品图片列表
-     *
-     * @mbggenerated
-     */
-    private String picListUrl;
-
-    /**
      * 商品主图
      *
      * @mbggenerated
@@ -72,6 +65,20 @@ public class MallProduct implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 0:可用，1：禁用
+     *
+     * @mbggenerated
+     */
+    private String isUsable;
+
+    /**
+     * 0：正常，1：已删除
+     *
+     * @mbggenerated
+     */
+    private String isDelete;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getProductId() {
@@ -96,14 +103,6 @@ public class MallProduct implements Serializable {
 
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    public String getPicListUrl() {
-        return picListUrl;
-    }
-
-    public void setPicListUrl(String picListUrl) {
-        this.picListUrl = picListUrl;
     }
 
     public String getPicUrl() {
@@ -162,6 +161,22 @@ public class MallProduct implements Serializable {
         this.createTime = createTime;
     }
 
+    public String getIsUsable() {
+        return isUsable;
+    }
+
+    public void setIsUsable(String isUsable) {
+        this.isUsable = isUsable;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -171,7 +186,6 @@ public class MallProduct implements Serializable {
         sb.append(", productId=").append(productId);
         sb.append(", typeId=").append(typeId);
         sb.append(", productName=").append(productName);
-        sb.append(", picListUrl=").append(picListUrl);
         sb.append(", picUrl=").append(picUrl);
         sb.append(", priceMin=").append(priceMin);
         sb.append(", sort=").append(sort);
@@ -179,6 +193,8 @@ public class MallProduct implements Serializable {
         sb.append(", hits=").append(hits);
         sb.append(", isPutaway=").append(isPutaway);
         sb.append(", createTime=").append(createTime);
+        sb.append(", isUsable=").append(isUsable);
+        sb.append(", isDelete=").append(isDelete);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

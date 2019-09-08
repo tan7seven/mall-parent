@@ -67,18 +67,18 @@ public class ProductServiceImpl implements ProductService {
         ProductDto dto = new ProductDto();
         BeanUtils.copyProperties(entity, dto);
         //获取商品销售属性值
-        List<ProductPropertyValueEntity> propertyValues= productPropertyValueRepository.findByProductId(id);
+        List<ProductPropertyValueEntity> propertyValues = productPropertyValueRepository.findByProductId(id);
         List<Integer> properties = propertyValues.stream()
                 .filter(productPropertyValueEntity -> ProductPropertyValueEntity.IS_SALE.equals(productPropertyValueEntity.getIsSale()))
-                .map(productPropertyValueEntity->productPropertyValueEntity.getPropertyNameId())
+                .map(productPropertyValueEntity -> productPropertyValueEntity.getPropertyNameId())
                 .distinct().collect(Collectors.toList());
-        if(null != properties && !properties.isEmpty() && properties.size()>=1 ){
+        if (null != properties && !properties.isEmpty() && properties.size() >= 1) {
             dto.setPropertyValueAOptions(productPropertyMapper.findByPropertyNameIdAndProductId(properties.get(0), entity.getProductId()));
         }
-        if(null != properties && !properties.isEmpty() && properties.size()>=2 ){
+        if (null != properties && !properties.isEmpty() && properties.size() >= 2) {
             dto.setPropertyValueBOptions(productPropertyMapper.findByPropertyNameIdAndProductId(properties.get(1), entity.getProductId()));
         }
-        if(null != properties && !properties.isEmpty() && properties.size()>=3 ){
+        if (null != properties && !properties.isEmpty() && properties.size() >= 3) {
             dto.setPropertyValueCOptions(productPropertyMapper.findByPropertyNameIdAndProductId(properties.get(2), entity.getProductId()));
         }
         ProductEntity result = productRepository.findById(id).get();
@@ -92,13 +92,13 @@ public class ProductServiceImpl implements ProductService {
         isSaleParam.setProductId(dto.getProductId());
         isSaleParam.setIsSale(ProductPropertyNameEntity.IS_SALE);
         List<ProductPropertyDto> propertyIsSaleList = productMapper.findPropertyIsSale(isSaleParam);
-        dto.setProductPropertyIsSaleChecked(propertyIsSaleList.stream().map(ProductPropertyDto::getIsSalePropertyString).toArray(String[] ::new));
+        dto.setProductPropertyIsSaleChecked(propertyIsSaleList.stream().map(ProductPropertyDto::getIsSalePropertyString).toArray(String[]::new));
         //获取商品销售属性值
         ProductDto notSaleParam = new ProductDto();
         notSaleParam.setProductId(dto.getProductId());
         notSaleParam.setIsSale(ProductPropertyNameEntity.NOT_SALE);
         List<String> propertyNotList = productMapper.findPropertyNotSale(notSaleParam);
-        dto.setProductPropertyNotSaleChecked(propertyNotList.stream().toArray(String[] ::new));
+        dto.setProductPropertyNotSaleChecked(propertyNotList.stream().toArray(String[]::new));
         //获取商品明细
         List<ProductDetailEntity> detailEntityList = productDetailRepository.findByProductId(dto.getProductId());
         if (null != detailEntityList && !detailEntityList.isEmpty()) {
@@ -106,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
         }
         //商品图片
         List<ProductImgEntity> imgEntityList = productImgRepository.findByForeignIdAndAndTypeCode(String.valueOf(id), ProductImgEntity.TYPE_CODE_PRODUCT);
-        dto.setPicUrlArray(imgEntityList.stream().map(e-> e.getImgUrl()).toArray(String[] :: new));
+        dto.setPicUrlArray(imgEntityList.stream().map(e -> e.getImgUrl()).toArray(String[]::new));
         log.info("商品信息：{}", dto);
         return dto;
     }
@@ -141,7 +141,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductEntity> findPage(ProductEntity entity, Pageable page) {
         ExampleMatcher matcher = ExampleMatcher.matching()
-                .withMatcher("productName" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
+                .withMatcher("productName", ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
                 ;
         Example<ProductEntity> example = Example.of(entity, matcher);
         Page<ProductEntity> result = productRepository.findAll(example, page);
@@ -167,13 +167,13 @@ public class ProductServiceImpl implements ProductService {
         entity.setCreateTime(new Date());
         entity.setTypeId(dto.getProductTypeId());
         entity.setHits(0);
-        if(null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0){
+        if (null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0) {
             //商品首页图片默认是第一张，其他的则保持到图片信息表里面
             entity.setPicUrl(dto.getPicUrlArray()[0]);
 
         }
         ProductEntity resultProduct = productRepository.save(entity);
-        if(null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0){
+        if (null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0) {
             //商品首页图片默认是第一张，其他的则保持到图片信息表里面
             java.lang.String[] picUrls = dto.getPicUrlArray();
             for (String picUrl : picUrls) {
@@ -193,17 +193,18 @@ public class ProductServiceImpl implements ProductService {
         //添加销售属性值
         String[] propertyIsSales = dto.getProductPropertyIsSaleChecked();
 
-        for (String propertyIsSale: propertyIsSales) {
+        for (String propertyIsSale : propertyIsSales) {
 
             String[] proerties = propertyIsSale.split(":");
-            if(proerties.length < 2){
+            if (proerties.length < 2) {
                 continue;
             }
-            List<ProductPropertyNameEntity> propertyNameEntities = productPropertyNameRepository.findByTypeIdAndName(dto.getProductTypeId(), proerties[0]);
-            if(null == propertyNameEntities && propertyNameEntities.size() != 1){
+            List<ProductPropertyNameEntity> propertyNameEntities =
+                    productPropertyNameRepository.findByTypeIdAndNameAndIsDelete(dto.getProductTypeId(), proerties[0], CommonConstant.NOT_DELETE);
+            if (null == propertyNameEntities && propertyNameEntities.size() != 1) {
                 continue;
             }
-            String propertyValue =proerties[proerties.length-1];
+            String propertyValue = proerties[proerties.length - 1];
             ProductPropertyValueEntity propertyValueEntity = new ProductPropertyValueEntity();
             propertyValueEntity.setPropertyNameId(propertyNameEntities.get(0).getPropertyNameId());
             propertyValueEntity.setValue(propertyValue);
@@ -213,9 +214,10 @@ public class ProductServiceImpl implements ProductService {
         }
         //添加非销售属性值
         String[] propertyNotSales = dto.getProductPropertyNotSaleChecked();
-        List<ProductPropertyNameEntity> propertyNotSales2 = productPropertyNameRepository.findByTypeIdAndIsSale(dto.getProductTypeId(), ProductPropertyNameEntity.NOT_SALE);
-        for (int i=0; i<propertyNotSales.length; i++ ) {
-            if(null == propertyNotSales2 || propertyNotSales2.size() < i+1){
+        List<ProductPropertyNameEntity> propertyNotSales2 =
+                productPropertyNameRepository.findByTypeIdAndIsSaleAndIsDelete(dto.getProductTypeId(), ProductPropertyNameEntity.NOT_SALE, CommonConstant.NOT_DELETE);
+        for (int i = 0; i < propertyNotSales.length; i++) {
+            if (null == propertyNotSales2 || propertyNotSales2.size() < i + 1) {
                 break;
             }
             ProductPropertyValueEntity propertyValueEntity = new ProductPropertyValueEntity();
@@ -235,7 +237,7 @@ public class ProductServiceImpl implements ProductService {
         BeanUtils.copyProperties(dto, entity);
         productImgRepository.deleteByForeignIdAndTypeCode(String.valueOf(productId), ProductImgEntity.TYPE_CODE_PRODUCT);
         //删除图片
-        if(null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0){
+        if (null != dto.getPicUrlArray() && dto.getPicUrlArray().length > 0) {
             //商品首页图片默认是第一张，其他的则保持到图片信息表里面
             java.lang.String[] picUrls = dto.getPicUrlArray();
             entity.setPicUrl(picUrls[0]);
@@ -265,20 +267,21 @@ public class ProductServiceImpl implements ProductService {
         isSaleParam.setIsSale(ProductPropertyNameEntity.IS_SALE);
         List<ProductPropertyDto> propertyIsSaleList = productMapper.findPropertyIsSale(isSaleParam);
         //判断之前是否存在，存在则不操作，不存在则新增
-        for (String propertyIsSale: propertyIsSales) {
+        for (String propertyIsSale : propertyIsSales) {
             List<String> isExist = propertyIsSaleList.stream().map(ProductPropertyDto::getIsSalePropertyString).filter(s -> s.equals(propertyIsSale)).collect(Collectors.toList());
-            if(null != isExist && !isExist.isEmpty()){
+            if (null != isExist && !isExist.isEmpty()) {
                 continue;
             }
             String[] proerties = propertyIsSale.split(":");
-            if(proerties.length < 2){
+            if (proerties.length < 2) {
                 continue;
             }
-            List<ProductPropertyNameEntity> propertyNameEntities = productPropertyNameRepository.findByTypeIdAndName(dto.getProductTypeId(), proerties[0]);
-            if(null == propertyNameEntities && propertyNameEntities.size() != 1){
+            List<ProductPropertyNameEntity> propertyNameEntities =
+                    productPropertyNameRepository.findByTypeIdAndNameAndIsDelete(dto.getProductTypeId(), proerties[0], CommonConstant.NOT_DELETE);
+            if (null == propertyNameEntities && propertyNameEntities.size() != 1) {
                 continue;
             }
-            String propertyValue =proerties[proerties.length-1];
+            String propertyValue = proerties[proerties.length - 1];
             ProductPropertyValueEntity propertyValueEntity = new ProductPropertyValueEntity();
             propertyValueEntity.setPropertyNameId(propertyNameEntities.get(0).getPropertyNameId());
             propertyValueEntity.setValue(propertyValue);
@@ -288,26 +291,29 @@ public class ProductServiceImpl implements ProductService {
         }
         //判断之前的值是否被删除，删除需要删除对应的SKU信息
         for (ProductPropertyDto propertyIsSale : propertyIsSaleList) {
-            List<String> isExist = Arrays.stream(propertyIsSales).filter(s -> s.equals(propertyIsSale.getIsSalePropertyString())).collect(Collectors.toList());
-            if(null != isExist && !isExist.isEmpty()){
+            List<String> isExist = Arrays.stream(propertyIsSales)
+                    .filter(s -> s.equals(propertyIsSale.getIsSalePropertyString()))
+                    .collect(Collectors.toList());
+            if (null != isExist && !isExist.isEmpty()) {
                 continue;
             }
             //删除SKU
             productSkuMapper.deleteByIsSaleProperty(propertyIsSale.getIsSalePropertyId());
             String[] proerties = propertyIsSale.getIsSalePropertyId().split(":");
-            if(proerties.length < 2){
+            if (proerties.length < 2) {
                 continue;
             }
             //删除属性值
-            productPropertyValueRepository.deleteById(Integer.valueOf(proerties[proerties.length-1]));
+            productPropertyValueRepository.deleteById(Integer.valueOf(proerties[proerties.length - 1]));
 
         }
         //修改非销售属性值->先删除之前的值再添加
         String[] propertyNotSales = dto.getProductPropertyNotSaleChecked();
         productPropertyValueRepository.deleteByProductIdAndIsSale(productId, ProductPropertyValueEntity.NOT_SALE);
-        List<ProductPropertyNameEntity> propertyNotSales2 = productPropertyNameRepository.findByTypeIdAndIsSale(dto.getProductTypeId(), ProductPropertyNameEntity.NOT_SALE);
-        for (int i=0; i<propertyNotSales.length; i++ ) {
-            if(null == propertyNotSales2 || propertyNotSales2.size() < i+1){
+        List<ProductPropertyNameEntity> propertyNotSales2 =
+                productPropertyNameRepository.findByTypeIdAndIsSaleAndIsDelete(dto.getProductTypeId(), ProductPropertyNameEntity.NOT_SALE, CommonConstant.NOT_DELETE);
+        for (int i = 0; i < propertyNotSales.length; i++) {
+            if (null == propertyNotSales2 || propertyNotSales2.size() < i + 1) {
                 break;
             }
             ProductPropertyValueEntity propertyValueEntity = new ProductPropertyValueEntity();
@@ -334,7 +340,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> findByName(String name) {
         ProductDto dto = new ProductDto();
-        if(StringUtils.isNotBlank(name)){
+        if (StringUtils.isNotBlank(name)) {
             dto.setProductName(name);
         }
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
@@ -343,10 +349,11 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 删除图片
+     *
      * @param picUrl
      * @return
      */
-    private Object deletePic(String picUrl){
+    private Object deletePic(String picUrl) {
         int lastIndexOf = picUrl.lastIndexOf("/");
         String sb = picUrl.substring(lastIndexOf + 1, picUrl.length());
         sb = picPath + sb;

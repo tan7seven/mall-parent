@@ -39,13 +39,20 @@ public class MallProductType implements Serializable {
     private Integer sort;
 
     /**
-     * 状态
+     * 0：正常，1：禁用
      *
      * @mbggenerated
      */
-    private String status;
+    private String isUsable;
 
     private Integer level;
+
+    /**
+     * 0：正常，1：已删除
+     *
+     * @mbggenerated
+     */
+    private String isDelete;
 
     private static final long serialVersionUID = 1L;
 
@@ -89,12 +96,12 @@ public class MallProductType implements Serializable {
         this.sort = sort;
     }
 
-    public String getStatus() {
-        return status;
+    public String getIsUsable() {
+        return isUsable;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIsUsable(String isUsable) {
+        this.isUsable = isUsable;
     }
 
     public Integer getLevel() {
@@ -103,6 +110,14 @@ public class MallProductType implements Serializable {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
     }
 
     @Override
@@ -116,8 +131,9 @@ public class MallProductType implements Serializable {
         sb.append(", parentId=").append(parentId);
         sb.append(", isNavigationBar=").append(isNavigationBar);
         sb.append(", sort=").append(sort);
-        sb.append(", status=").append(status);
+        sb.append(", isUsable=").append(isUsable);
         sb.append(", level=").append(level);
+        sb.append(", isDelete=").append(isDelete);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

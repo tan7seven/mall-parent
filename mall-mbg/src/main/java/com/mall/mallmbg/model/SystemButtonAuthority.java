@@ -24,6 +24,13 @@ public class SystemButtonAuthority implements Serializable {
      */
     private String buttonId;
 
+    /**
+     * 菜单ID
+     *
+     * @mbggenerated
+     */
+    private String menuId;
+
     private static final long serialVersionUID = 1L;
 
     public String getButtonAuthorityId() {
@@ -50,6 +57,14 @@ public class SystemButtonAuthority implements Serializable {
         this.buttonId = buttonId;
     }
 
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -59,6 +74,7 @@ public class SystemButtonAuthority implements Serializable {
         sb.append(", buttonAuthorityId=").append(buttonAuthorityId);
         sb.append(", userId=").append(userId);
         sb.append(", buttonId=").append(buttonId);
+        sb.append(", menuId=").append(menuId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -186,7 +186,7 @@ public class ProductSkuServiceImpl implements ProductSkuService {
      */
     private void makePropertyKeyToValue(ProductSkuDto dto){
         StringBuffer propertySb = new StringBuffer();
-        List<ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeId(dto.getTypeId());
+        List<ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeIdAndIsDelete(dto.getTypeId(), CommonConstant.NOT_DELETE);
         List<ProductPropertyValueEntity> valueList = productPropertyValueRepository.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProperties())){
             String skuProperties = dto.getProperties();

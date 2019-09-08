@@ -1,5 +1,7 @@
 package com.mall.malladmin.service.product.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductPropertyNameDto;
@@ -10,12 +12,12 @@ import com.mall.malladmin.service.product.ProductPropertyNameService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service(value = "productPropertyNameService")
 public class ProductPropertyNameServiceImpl implements ProductPropertyNameService {
 
@@ -28,12 +30,12 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     @Override
     public CommonResultDto add(ProductPropertyNameEntity entity) {
         if(ProductPropertyNameEntity.IS_SALE.equals(entity.getIsSale())){
-            List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSale(entity.getTypeId(), ProductPropertyNameEntity.IS_SALE);
+            List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSaleAndIsDelete(entity.getTypeId(), ProductPropertyNameEntity.IS_SALE, CommonConstant.NOT_DELETE);
             if(null != propertyNameList && propertyNameList.size() >=3){
                 return new CommonResultDto().validateFailed("同个分类最多只能有三个销售属性！");
             }
         }
-        List<ProductPropertyNameEntity>  typeIdAndNameList = productPropertyNameRepository.findByTypeIdAndName(entity.getTypeId(), entity.getName());
+        List<ProductPropertyNameEntity>  typeIdAndNameList = productPropertyNameRepository.findByTypeIdAndNameAndIsDelete(entity.getTypeId(), entity.getName(), CommonConstant.NOT_DELETE);
         if(null != typeIdAndNameList && typeIdAndNameList.size() > 0 ){
             return new CommonResultDto().validateFailed("同个分类下属性名不能相同！");
         }
@@ -51,10 +53,31 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     }
 
     @Override
-    public void update(ProductPropertyNameDto dto) {
+    public CommonResultDto update(ProductPropertyNameDto dto) {
+        if(ProductPropertyNameEntity.IS_SALE.equals(dto.getIsSale())){
+            List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSaleAndIsDelete(dto.getTypeId(), ProductPropertyNameEntity.IS_SALE, CommonConstant.NOT_DELETE);
+            List<Integer> nameIdList = propertyNameList.stream().map(s -> s.getPropertyNameId()).collect(Collectors.toList());
+            if(null != propertyNameList
+                    && propertyNameList.size() >=3
+                    && nameIdList.indexOf(dto.getPropertyNameId()) == -1){
+                return new CommonResultDto().validateFailed("同个分类最多只能有三个销售属性！");
+            }
+        }
+        List<ProductPropertyNameEntity>  typeIdAndNameList = productPropertyNameRepository.findByTypeIdAndNameAndIsDelete(dto.getTypeId(), dto.getName(), CommonConstant.NOT_DELETE);
+        if(null != typeIdAndNameList && typeIdAndNameList.size() > 0 ){
+            return new CommonResultDto().validateFailed("同个分类下属性名不能相同！");
+        }
         ProductPropertyNameEntity entity = productPropertyNameRepository.findById(dto.getPropertyNameId()).get();
+        if(!entity.getIsSale().equals(dto.getIsSale())){
+            /**
+             * 修改属性名是否销售属性，对应删除商品属性值跟商品库存
+             */
+            productPropertyMapper.deleteProperty(dto.getPropertyNameId());
+            productPropertyMapper.deleteSku(dto.getPropertyNameId());
+        }
         BeanUtils.copyProperties(dto,entity);
         productPropertyNameRepository.save(entity);
+        return new CommonResultDto().success();
     }
 
     @Override
@@ -76,25 +99,31 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
 
     @Override
     public List<ProductPropertyNameEntity> findByTypeId(Integer typeId) {
-        return productPropertyNameRepository.findByTypeId(typeId);
+        return productPropertyNameRepository.findByTypeIdAndIsDelete(typeId, CommonConstant.NOT_DELETE);
     }
 
     @Override
-    public Page<ProductPropertyNameEntity> findPage(ProductPropertyNameEntity entity, Pageable page) {
-        Example<ProductPropertyNameEntity> example = Example.of(entity);
-        Page<ProductPropertyNameEntity> result = productPropertyNameRepository.findAll(example, page);
-        return result;
+    public PageInfo<ProductPropertyNameDto> findPage(ProductPropertyNameDto dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        List<ProductPropertyNameDto> resultList = productPropertyMapper.findList(dto);
+        PageInfo<ProductPropertyNameDto> page = new PageInfo<>(resultList);
+        return page;
     }
 
     @Override
     public CommonResultDto updateIsSale(ProductPropertyNameDto dto) {
         ProductPropertyNameEntity entity = productPropertyNameRepository.findById(dto.getPropertyNameId()).get();
         if(ProductPropertyNameEntity.IS_SALE.equals(dto.getIsSale())){
-            List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSale(entity.getTypeId(), ProductPropertyNameEntity.IS_SALE);
+            List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSaleAndIsDelete(entity.getTypeId(), ProductPropertyNameEntity.IS_SALE, CommonConstant.NOT_DELETE);
             if(null != propertyNameList && propertyNameList.size() >=3){
                 return new CommonResultDto().validateFailed("同个分类最多只能有三个销售属性！");
             }
         }
+        /**
+         * 修改属性名是否销售属性，对应删除商品属性值跟商品库存
+         */
+        productPropertyMapper.deleteProperty(dto.getPropertyNameId());
+        productPropertyMapper.deleteSku(dto.getPropertyNameId());
         entity.setIsSale(dto.getIsSale());
         productPropertyNameRepository.save(entity);
         return new CommonResultDto().success();

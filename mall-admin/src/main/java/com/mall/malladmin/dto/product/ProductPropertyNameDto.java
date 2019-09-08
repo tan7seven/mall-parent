@@ -44,4 +44,9 @@ public class ProductPropertyNameDto extends CommonDto implements Serializable {
      * 商品分类一级编号
      */
     private Integer parentId;
+
+    /**
+     * 类目名称
+     */
+    private String typeName;
 }

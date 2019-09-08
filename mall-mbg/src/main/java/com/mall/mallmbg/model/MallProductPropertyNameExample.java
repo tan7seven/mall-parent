@@ -434,73 +434,73 @@ public class MallProductPropertyNameExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableIsNull() {
-            addCriterion("is_usable is null");
+        public Criteria andIsDeleteIsNull() {
+            addCriterion("is_delete is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableIsNotNull() {
-            addCriterion("is_usable is not null");
+        public Criteria andIsDeleteIsNotNull() {
+            addCriterion("is_delete is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableEqualTo(String value) {
-            addCriterion("is_usable =", value, "isUsable");
+        public Criteria andIsDeleteEqualTo(String value) {
+            addCriterion("is_delete =", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableNotEqualTo(String value) {
-            addCriterion("is_usable <>", value, "isUsable");
+        public Criteria andIsDeleteNotEqualTo(String value) {
+            addCriterion("is_delete <>", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableGreaterThan(String value) {
-            addCriterion("is_usable >", value, "isUsable");
+        public Criteria andIsDeleteGreaterThan(String value) {
+            addCriterion("is_delete >", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableGreaterThanOrEqualTo(String value) {
-            addCriterion("is_usable >=", value, "isUsable");
+        public Criteria andIsDeleteGreaterThanOrEqualTo(String value) {
+            addCriterion("is_delete >=", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableLessThan(String value) {
-            addCriterion("is_usable <", value, "isUsable");
+        public Criteria andIsDeleteLessThan(String value) {
+            addCriterion("is_delete <", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableLessThanOrEqualTo(String value) {
-            addCriterion("is_usable <=", value, "isUsable");
+        public Criteria andIsDeleteLessThanOrEqualTo(String value) {
+            addCriterion("is_delete <=", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableLike(String value) {
-            addCriterion("is_usable like", value, "isUsable");
+        public Criteria andIsDeleteLike(String value) {
+            addCriterion("is_delete like", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableNotLike(String value) {
-            addCriterion("is_usable not like", value, "isUsable");
+        public Criteria andIsDeleteNotLike(String value) {
+            addCriterion("is_delete not like", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableIn(List<String> values) {
-            addCriterion("is_usable in", values, "isUsable");
+        public Criteria andIsDeleteIn(List<String> values) {
+            addCriterion("is_delete in", values, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableNotIn(List<String> values) {
-            addCriterion("is_usable not in", values, "isUsable");
+        public Criteria andIsDeleteNotIn(List<String> values) {
+            addCriterion("is_delete not in", values, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableBetween(String value1, String value2) {
-            addCriterion("is_usable between", value1, value2, "isUsable");
+        public Criteria andIsDeleteBetween(String value1, String value2) {
+            addCriterion("is_delete between", value1, value2, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsUsableNotBetween(String value1, String value2) {
-            addCriterion("is_usable not between", value1, value2, "isUsable");
+        public Criteria andIsDeleteNotBetween(String value1, String value2) {
+            addCriterion("is_delete not between", value1, value2, "isDelete");
             return (Criteria) this;
         }
     }

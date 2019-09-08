@@ -1,19 +1,14 @@
 package com.mall.malladmin.controller.product;
 
-import com.mall.malladmin.constant.CommonConstant;
+import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductPropertyNameDto;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
-import com.mall.malladmin.util.ResultPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,19 +51,8 @@ public class ProductPropertyController {
      */
     @GetMapping("/getPage.do")
     protected CommonResultDto getPage(ProductPropertyNameDto dto){
-        if(0 == dto.getTypeId()){
-            dto.setTypeId(null);
-        }
-        Sort sort = new Sort(Sort.Direction.ASC, "propertyNameId");
-        Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
-        ProductPropertyNameEntity entity = new ProductPropertyNameEntity();
-        BeanUtils.copyProperties(dto,entity);
-        entity.setIsDelete(CommonConstant.NOT_DELETE);
-        Page<ProductPropertyNameEntity> result = productPropertyNameService.findPage(entity, page);
-        ResultPage resultPage = new ResultPage();
-        resultPage.setList(result.getContent());
-        resultPage.setTotal(result.getTotalElements());
-        return new CommonResultDto().pageSuccess(resultPage);
+        PageInfo<ProductPropertyNameDto> result = productPropertyNameService.findPage(dto);
+        return new CommonResultDto().success(result);
     }
     /**
      * 新增
@@ -91,8 +75,7 @@ public class ProductPropertyController {
         if(null == id){
             return new CommonResultDto().validateFailed("主键为空！");
         }
-        productPropertyNameService.update(dto);
-        return new CommonResultDto().success();
+        return productPropertyNameService.update(dto);
     }
     /**
      * 删除-逻辑删除
