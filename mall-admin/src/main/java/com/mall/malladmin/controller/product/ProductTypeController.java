@@ -87,8 +87,9 @@ public class ProductTypeController {
      * @param dto
      * @return
      */
-    @GetMapping("/getPage.do")
-    protected CommonResultDto getPage(ProductTypeDto dto){
+    @GetMapping("/getPage.do/{id}")
+    protected CommonResultDto getPage(@PathVariable Integer id, ProductTypeDto dto){
+        dto.setParentId(id);
         Page<ProductTypeEntity> result = productTypeService.findPage(dto);
         ResultPage resultPage = new ResultPage();
         resultPage.setList(result.getContent());
