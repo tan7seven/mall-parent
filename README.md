@@ -30,6 +30,16 @@
 |  Axios   |  前端HTTP框架   |  https://github.com/axios/axios   |
 |  nprogress  |  进度条控件   |  https://github.com/rstacruz/nprogress   |
 
+- 项目环境
+
+|  技术   |  说明   |  官网   |
+| --- | --- | --- |
+|  JDK1.8   |  java环境   |  https://www.oracle.com/index.html   |
+|  MySql  |  数据库   |   https://www.mysql.com/  |
+|  Redis   | 缓存数据库  |   https://redis.io/  |
+|  Nginx   | 代理服务器 |  http://nginx.org/en/  |
+|  Maven   | 项目构建工具 |  http://maven.apache.org/  |
+
 
 ### 目录结构
 
