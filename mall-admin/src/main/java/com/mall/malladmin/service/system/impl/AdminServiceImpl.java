@@ -1,5 +1,7 @@
 package com.mall.malladmin.service.system.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.mall.malladmin.constant.CommonConstant;
 import com.mall.malladmin.dto.system.AdminDto;
 import com.mall.malladmin.entity.system.AdminEntity;
@@ -15,6 +17,8 @@ import com.mall.malladmin.repository.system.MenuAuthorityRepository;
 import com.mall.malladmin.repository.system.MenuRepository;
 import com.mall.malladmin.security.UserDetailsImpl;
 import com.mall.malladmin.service.system.AdminService;
+import com.mall.malladmin.util.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service(value = "adminService")
 public class AdminServiceImpl implements AdminService {
 
@@ -51,27 +56,70 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private ButtonAuthorityRepository buttonAuthorityRepository;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Override
     public UserDetailsImpl adminLogin(String username) {
         UserDetailsImpl user = new UserDetailsImpl();
-        AdminDto dto  = this.findByLoginId(username);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        // 加密(SpringSecurity默认有加密)
-        String encodedPassword = passwordEncoder.encode(dto.getPassword().trim());
-        user.setPassword(encodedPassword);
-        user.setUsername(username);
-        user.setUserId(dto.getUserId());
-        user.setIcon(dto.getPicUrl());
-        List<String> buttonList = new ArrayList<>();
-        //获取用户角色
-        user.setRole(AdminRoleEnum.getValue(dto.getRole()));
-        //获取用户权限-按钮
-        List<String> buttonCodeList = adminMapper.getButtonCodeAuthority(dto);
-        buttonList.addAll(buttonCodeList);
-        user.setButtonList(buttonList);
-        //获取用户权限-菜单
-        List<String> menuCodeList = adminMapper.getMenuCodeListAuthority(dto);
-        user.setMenuList(menuCodeList);
+        try{
+            String redisUser = (String) redisUtil.get(username);
+            log.info("redis获取用户信息{}", redisUser);
+            if(null != redisUser){
+                JSONObject resultJson = JSONObject.parseObject(redisUser);
+                user.setRole((String) resultJson.get("role"));
+                JSONArray menuList = resultJson.getJSONArray("menuList");
+                menuList = null == menuList? new JSONArray():menuList;
+                user.setMenuList(menuList.toJavaList(String.class));
+                user.setIcon((String) resultJson.get("icon"));
+                user.setUserId((String) resultJson.get("userId"));
+                user.setPassword((String) resultJson.get("password"));
+                user.setUsername((String) resultJson.get("username"));
+                JSONArray buttonList = resultJson.getJSONArray("buttonList");
+                buttonList = null == buttonList? new JSONArray():buttonList;
+                user.setButtonList(buttonList.toJavaList(String.class));
+                return user;
+            }
+            AdminDto dto  = this.findByLoginId(username);
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            // 加密(SpringSecurity默认有加密)
+            String encodedPassword = passwordEncoder.encode(dto.getPassword().trim());
+            user.setPassword(encodedPassword);
+            user.setUsername(username);
+            user.setUserId(dto.getUserId());
+            user.setIcon(dto.getPicUrl());
+            List<String> buttonList = new ArrayList<>();
+            //获取用户角色
+            user.setRole(AdminRoleEnum.getValue(dto.getRole()));
+            //获取用户权限-按钮
+            List<String> buttonCodeList = adminMapper.getButtonCodeAuthority(dto);
+            buttonList.addAll(buttonCodeList);
+            user.setButtonList(buttonList);
+            //获取用户权限-菜单
+            List<String> menuCodeList = adminMapper.getMenuCodeListAuthority(dto);
+            user.setMenuList(menuCodeList);
+            redisUtil.set(username, JSONObject.toJSONString(user), 30000);
+        }catch (Exception e){
+            AdminDto dto  = this.findByLoginId(username);
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            // 加密(SpringSecurity默认有加密)
+            String encodedPassword = passwordEncoder.encode(dto.getPassword().trim());
+            user.setPassword(encodedPassword);
+            user.setUsername(username);
+            user.setUserId(dto.getUserId());
+            user.setIcon(dto.getPicUrl());
+            List<String> buttonList = new ArrayList<>();
+            //获取用户角色
+            user.setRole(AdminRoleEnum.getValue(dto.getRole()));
+            //获取用户权限-按钮
+            List<String> buttonCodeList = adminMapper.getButtonCodeAuthority(dto);
+            buttonList.addAll(buttonCodeList);
+            user.setButtonList(buttonList);
+            //获取用户权限-菜单
+            List<String> menuCodeList = adminMapper.getMenuCodeListAuthority(dto);
+            user.setMenuList(menuCodeList);
+            return user;
+        }
         return user;
     }
 
@@ -166,6 +214,12 @@ public class AdminServiceImpl implements AdminService {
                 menuAuthorityRepository.save(authorityEntity);
             }
         });
+        try{
+            redisUtil.del(dto.getLoginCode());
+        }catch (Exception e){
+
+        }
+
     }
 
     @Override
@@ -178,6 +232,11 @@ public class AdminServiceImpl implements AdminService {
             authorityEntity.setUserId(dto.getUserId());
             buttonAuthorityRepository.save(authorityEntity);
         });
+        try{
+            redisUtil.del(dto.getLoginCode());
+        }catch (Exception e){
+
+        }
     }
 
     @Override

@@ -6,10 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,26 +15,12 @@ import java.util.Map;
  */
 @Slf4j
 public class JwtTokenUtil {
-
-    // 寻找证书文件
-    private static InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("jwt.jks"); // 寻找证书文件
-    private static PrivateKey privateKey = null;
-    private static PublicKey publicKey = null;
+    private static final String secret = "wjz-mall";
 
     private static final String CLAIM_KEY_USERNAME = "sub";
 
     private static final String CLAIM_KEY_CREATED = "created";
 
-    static { // 将证书文件里边的私钥公钥拿出来
-        try {
-            KeyStore keyStore = KeyStore.getInstance("JKS"); // java key store 固定常量
-            keyStore.load(inputStream, "123456".toCharArray());
-            privateKey = (PrivateKey) keyStore.getKey("jwt", "123456".toCharArray()); // jwt 为 命令生成整数文件时的别名
-            publicKey = keyStore.getCertificate("jwt").getPublicKey();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * 根据用户信息生成token
@@ -58,7 +40,7 @@ public class JwtTokenUtil {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + 604800*1000))//过期时间（秒）
-                .signWith(SignatureAlgorithm.RS256, privateKey)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
@@ -85,7 +67,7 @@ public class JwtTokenUtil {
 
     private static Claims getTokenBody(String token){
         return Jwts.parser()
-                .setSigningKey(publicKey)
+                .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -94,10 +76,7 @@ public class JwtTokenUtil {
         UserDetailsImpl user = new UserDetailsImpl();
         user.setUsername("123456");
         String jwtToken = JwtTokenUtil.generateToken(user);
-        String result = parseToken("eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjM0NTYiLCJjcmVhdGVkIjoxNTU4Njc5MTkyNDg5LCJleHAiOjE1NTkyODM5OTJ9.TW4Yir476fYNAtgUgjEcqvTJ-fW07vPfuGs7uOp3PewvGlAUUlXs05J3rlFcBcpSkL1LJALgbw0mKOEOpHvMSeCwyBp93HiAeH5_I-dRCwmYemRMTGJJi6D7iVa0H1AQEKDIlCxsI5TlXKG8JZ5jYjJi5OjzgPnxQFh7uceSHbs");
-        Claims result1 = getTokenBody(jwtToken);
         System.out.println(jwtToken);
-        System.out.println(result);
 
     }
 }

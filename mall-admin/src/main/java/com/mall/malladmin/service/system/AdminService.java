@@ -16,7 +16,6 @@ public interface AdminService {
 
     /**
      * 重新加载用户信息
-     * @param userDetails
      * @return
      */
     UserDetailsImpl adminLogin(String username);

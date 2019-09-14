@@ -12,11 +12,9 @@ import com.mall.malladmin.entity.system.MenuEntity;
 import com.mall.malladmin.enumUtil.ButtonEnum;
 import com.mall.malladmin.mapper.system.ButtonMapper;
 import com.mall.malladmin.mapper.system.MenuMapper;
-import com.mall.malladmin.repository.system.ButtonAuthorityRepository;
-import com.mall.malladmin.repository.system.ButtonRepository;
-import com.mall.malladmin.repository.system.MenuAuthorityRepository;
-import com.mall.malladmin.repository.system.MenuRepository;
+import com.mall.malladmin.repository.system.*;
 import com.mall.malladmin.service.system.MenuService;
+import com.mall.malladmin.util.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +46,12 @@ public class MenuServiceImpl implements MenuService{
     @Autowired
     private MenuAuthorityRepository menuAuthorityRepository;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Autowired
+    private AdminRepository adminRepository;
+
     @Override
     public MenuEntity add(MenuDto dto) {
         MenuEntity entity = new MenuEntity();
@@ -64,6 +68,12 @@ public class MenuServiceImpl implements MenuService{
                 buttonRepository.save(buttonEntity);
             });
         }
+        try {
+            String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
+            redisUtil.del(userNameArray);
+        }catch (Exception e){
+            return resultEntity;
+        }
         return resultEntity;
     }
 
@@ -78,6 +88,11 @@ public class MenuServiceImpl implements MenuService{
         entity.setParentId(dto.getParentId());
         menuRepository.save(entity);
         this.checkButton(dto, id);
+        try {
+            String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
+            redisUtil.del(userNameArray);
+        }catch (Exception e){
+        }
     }
 
     @Override
@@ -134,6 +149,11 @@ public class MenuServiceImpl implements MenuService{
             menuAuthorityRepository.deleteByMenuId(id);
             List<ButtonEntity> buttonEntities = buttonRepository.findByMenuId(id);
             buttonEntities.forEach(s ->this.deleteButton(s));
+        }
+        try {
+            String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
+            redisUtil.del(userNameArray);
+        }catch (Exception e){
         }
     }
 

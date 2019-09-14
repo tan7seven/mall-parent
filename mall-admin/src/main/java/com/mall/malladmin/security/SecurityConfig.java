@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
 //                .antMatchers("/admin/**").hasRole("ADMIN")
 //                .antMatchers("/**").access("hasRole('USER')")
-                .antMatchers("/admin/login.do", "/admin/register.do").permitAll()// 对登录注册要允许匿名访问
+                .antMatchers("/adminController/login.do", "/admin/register.do").permitAll()// 对登录注册要允许匿名访问
                 .antMatchers(HttpMethod.OPTIONS).permitAll()//跨域请求会先进行一次options请求
                 .anyRequest().authenticated()// 除上面外的所有请求全部需要鉴权认证
                 //自定义登录界面

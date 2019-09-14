@@ -25,7 +25,6 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
         String jwtToken = JwtTokenUtil.generateToken(userDetails);
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-        log.info("传给前段的token：{}", jwtToken);
         httpServletResponse.getWriter().write(JSON.toJSONString(ResultDto.success("登录成功！",userDetails ,jwtToken)));
     }
 }
