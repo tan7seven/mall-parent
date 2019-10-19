@@ -4,7 +4,7 @@ server:
       timeout: 72000s
 spring:
   profiles:
-    active: pro
+    active: dev
   datasource:
     url: jdbc:mysql://47.110.47.162:3306/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
     username: root
