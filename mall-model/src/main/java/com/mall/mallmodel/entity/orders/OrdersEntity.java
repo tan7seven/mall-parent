@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_orders")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class OrdersEntity {
     //订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
     public static final String ORDERS_STATUS_OBLIGATION = "0";
@@ -28,7 +28,7 @@ public class OrdersEntity {
      * 订单ID
      */
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "uuid2")
     @Column(length = 32,name = "orders_id")
     private String ordersId;
     /**

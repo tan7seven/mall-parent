@@ -100,7 +100,7 @@ public class OrdersController extends GenericController{
      */
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "closeOrdersList.do")
-    protected Object closeOrdersList(String[] ids, String remark){
+    protected Object closeOrdersList(List<String> ids, String remark){
         if (null ==ids || StringUtils.isBlank(ids.toString())) {
             return new CommonResultDto().success();
         }
@@ -115,7 +115,7 @@ public class OrdersController extends GenericController{
      */
     @PreAuthorize(" hasAuthority('OMS:ORDER:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteOrders.do")
-    protected  Object deleteOrders(String[] ids){
+    protected  Object deleteOrders(List<String> ids){
         if (StringUtils.isBlank(ids.toString())) {
             return new CommonResultDto().validateFailed("参数为空！");
         }

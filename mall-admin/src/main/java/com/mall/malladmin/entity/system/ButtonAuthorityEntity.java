@@ -8,13 +8,13 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "system_Button_Authority")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class ButtonAuthorityEntity {
     /**
      * 主键
      */
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "uuid2")
     @Column(length = 32,name = "button_Authority_Id")
     private String buttonAuthorityId;
     /**

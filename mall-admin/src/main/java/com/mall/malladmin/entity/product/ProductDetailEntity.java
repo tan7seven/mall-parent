@@ -18,7 +18,7 @@ public class ProductDetailEntity implements Serializable{
     @Id
     @Column(name = "detail_id",length = 32)
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @GeneratedValue(generator = "jpa-uuid")
+//    @GeneratedValue(generator = "uuid2")
     private Integer detailId;
 
     /**

@@ -11,13 +11,13 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "company_address")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class CompanyAddressEntity {
     /**
      * 主键
      */
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "uuid2")
     @Column(length = 32,name = "address_id")
     private String addressId;
     /**

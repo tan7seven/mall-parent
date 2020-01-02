@@ -63,7 +63,7 @@ public interface MenuService {
      * @param ids
      */
     @Transactional
-    void deleteMenu(String[] ids);
+    void deleteMenu(List<String> ids);
 
     /**
      * 是否隐藏

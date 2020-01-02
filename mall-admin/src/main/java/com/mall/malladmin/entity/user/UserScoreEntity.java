@@ -14,13 +14,13 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_user_score")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class UserScoreEntity implements Serializable {
     /**
      *UUID
      */
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "uuid2")
     @Column(length = 32,name = "user_score_id")
     private String userScoreId;
     /**

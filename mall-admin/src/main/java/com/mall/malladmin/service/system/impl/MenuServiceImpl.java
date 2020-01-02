@@ -14,7 +14,6 @@ import com.mall.malladmin.mapper.system.ButtonMapper;
 import com.mall.malladmin.mapper.system.MenuMapper;
 import com.mall.malladmin.repository.system.*;
 import com.mall.malladmin.service.system.MenuService;
-import com.mall.malladmin.util.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,8 +46,8 @@ public class MenuServiceImpl implements MenuService{
     @Autowired
     private MenuAuthorityRepository menuAuthorityRepository;
 
-    @Autowired
-    private RedisUtil redisUtil;
+//    @Autowired
+//    private RedisUtil redisUtil;
 
     @Autowired
     private AdminRepository adminRepository;
@@ -68,12 +68,12 @@ public class MenuServiceImpl implements MenuService{
                 buttonRepository.save(buttonEntity);
             });
         }
-        try {
+        /*try {
             String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
             redisUtil.del(userNameArray);
         }catch (Exception e){
             return resultEntity;
-        }
+        }*/
         return resultEntity;
     }
 
@@ -88,11 +88,11 @@ public class MenuServiceImpl implements MenuService{
         entity.setParentId(dto.getParentId());
         menuRepository.save(entity);
         this.checkButton(dto, id);
-        try {
+        /*try {
             String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
             redisUtil.del(userNameArray);
         }catch (Exception e){
-        }
+        }*/
     }
 
     @Override
@@ -139,22 +139,22 @@ public class MenuServiceImpl implements MenuService{
 
 
     @Override
-    public void deleteMenu(String[] ids) {
+    public void deleteMenu(List<String> ids) {
         for (String id : ids) {
             menuRepository.deleteById(id);
             List<MenuEntity> menuList = menuRepository.findByParentId(id);
             menuList.forEach(s -> {
-                this.deleteMenu(new String[]{s.getMenuId()});
+                this.deleteMenu(Arrays.asList(s.getMenuId()));
             });
             menuAuthorityRepository.deleteByMenuId(id);
             List<ButtonEntity> buttonEntities = buttonRepository.findByMenuId(id);
             buttonEntities.forEach(s ->this.deleteButton(s));
         }
-        try {
+        /*try {
             String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
             redisUtil.del(userNameArray);
         }catch (Exception e){
-        }
+        }*/
     }
 
     @Override

@@ -53,7 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http .authorizeRequests()
-                .antMatchers("/js/**","/image/**","/css/**","/druid/**").permitAll()
+                .antMatchers("/js/**","/image/**","/css/**","/druid/**","/webjars/**","/v2/**","/swagger-resources/configuration/ui",
+                        "/swagger-resources", "/swagger-resources/configuration/security",
+                        "/swagger-ui.html").permitAll()
 //                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
 //                .antMatchers("/admin/**").hasRole("ADMIN")
 //                .antMatchers("/**").access("hasRole('USER')")

@@ -3,10 +3,10 @@ server:
 logging:
   file: log
   path: /root/mall/mall_log
-spring:
-  mvc:
-    static-path-pattern: /image/**
-  resources:
-        static-locations: file:/root/mall/image
+#spring:
+#  mvc:
+#    static-path-pattern: /image/**
+#  resources:
+#        static-locations: file:/root/mall/image
 pic:
     path: /root/mall/image

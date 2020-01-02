@@ -12,13 +12,13 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "system_menu")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class MenuEntity {
     /**
      * 菜单主键
      */
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "uuid2")
     @Column(length = 32,name = "menu_id")
     private String menuId;
     /**

@@ -83,7 +83,7 @@ public class OrdersReturnApplyServiceImpl implements OrdersReturnApplyService {
     }
 
     @Override
-    public void deleteApply(String[] ids) {
+    public void deleteApply(List<String> ids) {
         for (String id : ids) {
             OrdersReturnApplyEntity entity = ordersReturnApplyRepository.findById(id).get();
             entity.setIsDelete(CommonConstant.IS_DELETE);

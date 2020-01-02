@@ -96,7 +96,7 @@ public class ProductController {
      */
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "/delete.do")
-    protected CommonResultDto delete(Integer... ids){
+    protected CommonResultDto delete(List<Integer> ids){
         CommonResultDto result = productService.deleteList(ids);
         return result;
     }
@@ -109,7 +109,7 @@ public class ProductController {
      */
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/updateIsPutaway.do")
-    protected CommonResultDto updateIsPutaway(String isPutaway, Integer...ids){
+    protected CommonResultDto updateIsPutaway(String isPutaway, List<Integer>  ids){
         CommonResultDto result = productService.updateIsPutAway(isPutaway, ids);
         return result;
     }

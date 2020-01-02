@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "system_admin")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class AdminEntity implements Serializable {
     /**
      * 是否可用：可用
@@ -29,7 +29,7 @@ public class AdminEntity implements Serializable {
      * 用户编号
      */
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "uuid2")
     @Column(length = 32,name = "user_id")
     private String userId;
     /**
