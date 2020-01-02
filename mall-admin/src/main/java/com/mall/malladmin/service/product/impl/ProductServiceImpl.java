@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResultDto deleteList(Integer[] ids) {
+    public CommonResultDto deleteList(List<Integer>  ids) {
         for (Integer id : ids) {
             //删除商品库存信息-逻辑删除
             productSkuMapper.updateIsDeleteByProductId(id);
@@ -328,7 +328,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResultDto updateIsPutAway(String isPutaway, Integer[] ids) {
+    public CommonResultDto updateIsPutAway(String isPutaway, List<Integer>  ids) {
         for (Integer id : ids) {
             ProductEntity entity = productRepository.findById(id).get();
             entity.setIsPutaway(isPutaway);

@@ -92,8 +92,8 @@ public class MenuController extends GenericController {
      */
     @PreAuthorize(" hasAuthority('SYSTEM:MENU:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteMenu.do")
-    protected Object deleteMenu(String...ids){
-        if(null == ids || ids.length==0){
+    protected Object deleteMenu(List<String> ids){
+        if(null == ids || ids.size()==0){
             return new CommonResultDto().validateFailed("id为空！");
         }
         menuService.deleteMenu(ids);

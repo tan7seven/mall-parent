@@ -3,6 +3,8 @@ package com.mall.malladmin.dto.orders;
 import com.mall.malladmin.dto.common.CommonDto;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ public class OrdersDto extends CommonDto {
     /**
      * 订单ID
      */
+    @NotBlank(message = "订单ID不能为空")
     private String ordersId;
 
     /**

@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.dto.orders.OrdersReturnApplyDto;
 import com.mall.malladmin.security.UserDetailsImpl;
 
+import java.util.List;
+
 /**
  * 订单退货申请
  */
@@ -32,5 +34,5 @@ public interface OrdersReturnApplyService {
      * 批量删除退货申请单
      * @param ids
      */
-    void deleteApply(String[] ids);
+    void deleteApply(List<String> ids);
 }

@@ -137,7 +137,7 @@ public class OrdersServiceImpl implements OrdersService
     }
 
     @Override
-    public void closeOrdersList(String[] ids, String remark, UserDetailsImpl userDetails) {
+    public void closeOrdersList(List<String> ids, String remark, UserDetailsImpl userDetails) {
         for (String id : ids) {
             OrdersEntity entity = ordersRepository.findById(id).get();
             OrdersOperationLogEntity logEntity = new OrdersOperationLogEntity();
@@ -154,7 +154,7 @@ public class OrdersServiceImpl implements OrdersService
     }
 
     @Override
-    public void deleteOrders(String[] ids, UserDetailsImpl userDetails) {
+    public void deleteOrders(List<String> ids, UserDetailsImpl userDetails) {
         for (String id : ids) {
             OrdersEntity result = ordersRepository.findById(id).get();
             result.setIsDelete(CommonConstant.IS_DELETE);

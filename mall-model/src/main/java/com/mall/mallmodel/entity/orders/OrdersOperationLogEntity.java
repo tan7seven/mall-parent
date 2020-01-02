@@ -12,13 +12,13 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_orders_operation_log")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class OrdersOperationLogEntity {
         /**
          * 主键
          */
         @Id
-        @GeneratedValue(generator = "jpa-uuid")
+        @GeneratedValue(generator = "uuid2")
         @Column(length = 32,name = "operation_id")
         private String operationId;
         /**

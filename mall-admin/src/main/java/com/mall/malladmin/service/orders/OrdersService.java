@@ -52,14 +52,14 @@ public interface OrdersService {
     /**
      * 关闭订单
      */
-    void closeOrdersList(String[] ids, String remark, UserDetailsImpl userDetails);
+    void closeOrdersList(List<String> ids, String remark, UserDetailsImpl userDetails);
     /**
      * 删除订单
      * @param ids
      * @param userDetails
      */
     @Transactional
-    void deleteOrders(String[] ids, UserDetailsImpl userDetails);
+    void deleteOrders(List<String> ids, UserDetailsImpl userDetails);
 
     /**
      * 订单发货

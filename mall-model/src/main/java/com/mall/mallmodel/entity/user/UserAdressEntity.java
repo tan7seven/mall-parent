@@ -13,13 +13,13 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_user_address")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class UserAdressEntity implements Serializable {
     /**
      * 主键
      */
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "uuid2")
     @Column(length = 32,name = "user_address_id")
     private String userAddressId;
     /**

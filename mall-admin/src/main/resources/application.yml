@@ -23,18 +23,32 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: false
   http:
     encoding:
       force: true
       charset: utf-8
       enabled: true
-  redis:
-    host: 127.0.0.1
-    port: 6379
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: com.mall.malladmin.entity.*
 #  驼峰转换
   configuration:
     map-underscore-to-camel-case: true
+# 配置swagger
+#swagger:
+#  enabled: true
+#  base-package: com.mall
+#  title: 订单底层服务模块API接口【内部调用不对外提供】
+#  version: 1.0
+#  description:  订单模块。
+#  contact:
+#    name: eijiazheng
+#  authorization:
+#    key-name: wjz-mall
+#    type: BaseAuth
+
 

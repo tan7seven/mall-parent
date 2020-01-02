@@ -64,7 +64,7 @@ public interface AdminService {
      * 删除（逻辑删除）
      * @param ids
      */
-    void deleteAdmin(String[] ids);
+    void deleteAdmin(List<String> ids);
 
     /**
      * 是否可用

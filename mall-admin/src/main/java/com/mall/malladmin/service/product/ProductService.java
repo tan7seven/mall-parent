@@ -30,7 +30,7 @@ public interface ProductService {
      * 批量删除
      */
     @Transactional
-    CommonResultDto deleteList(Integer[] ids);
+    CommonResultDto deleteList(List<Integer>  ids);
     /**
      * 根据逐渐删除
      * @param id
@@ -74,7 +74,7 @@ public interface ProductService {
      * @return
      */
     @Transactional
-    CommonResultDto updateIsPutAway(String isPutaway, Integer[] ids);
+    CommonResultDto updateIsPutAway(String isPutaway, List<Integer>  ids);
     /**
      * 根据商品名称查询
      * @param name

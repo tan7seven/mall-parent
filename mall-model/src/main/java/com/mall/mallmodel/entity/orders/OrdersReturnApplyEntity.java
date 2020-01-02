@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "mall_orders_return_apply")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class OrdersReturnApplyEntity {
     /**
      * 退货状态：0->待处理；1->退货中；2->已完成；3->已拒绝
@@ -27,7 +27,7 @@ public class OrdersReturnApplyEntity {
      * 主键
      */
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "uuid2")
     @Column(length = 32,name = "apply_id")
     private String applyId;
     /**

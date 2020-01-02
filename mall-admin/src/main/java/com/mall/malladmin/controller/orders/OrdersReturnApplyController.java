@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 订单退货申请
@@ -67,7 +68,7 @@ public class OrdersReturnApplyController extends GenericController {
      */
     @PreAuthorize(" hasAuthority('OMS:RETURNAPPLY:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteApply.do")
-    protected Object deleteApply(String...ids){
+    protected Object deleteApply(List<String> ids){
         if(null == ids || StringUtils.isBlank(ids.toString())){
             return new CommonResultDto().success();
         }

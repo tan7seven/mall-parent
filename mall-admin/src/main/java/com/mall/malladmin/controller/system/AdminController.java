@@ -7,6 +7,8 @@ import com.mall.malladmin.entity.system.AdminEntity;
 import com.mall.malladmin.security.UserDetailsImpl;
 import com.mall.malladmin.service.system.AdminService;
 import com.mall.malladmin.util.ResultPage;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+@Api(value="用户controller",tags={"用户操作接口"})
 @Slf4j
 @RestController
 @RequestMapping(value = "/adminController")
@@ -29,6 +32,7 @@ public class AdminController extends GenericController {
      * @param dto
      * @return
      */
+    @ApiOperation(value="分页查询",notes="分页查询")
     @PostMapping(value = "getPage.do")
     protected Object getPage(AdminDto dto){
         Page<AdminEntity> result = adminService.getPage(dto);
@@ -89,8 +93,8 @@ public class AdminController extends GenericController {
      */
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteAdmin.do")
-    protected Object deleteAdmin(String...ids){
-        if(null == ids || ids.length==0){
+    protected Object deleteAdmin(List<String> ids){
+        if(null == ids || ids.isEmpty()){
             return new CommonResultDto().validateFailed("id为空！");
         }
         adminService.deleteAdmin(ids);
