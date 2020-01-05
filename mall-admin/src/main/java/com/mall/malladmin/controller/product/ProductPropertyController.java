@@ -7,6 +7,8 @@ import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
 import com.mall.malladmin.service.product.ProductTypeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
 /**
  * 商品分类属性
  */
+@Api(value = "商品分类属性", tags = "商品分类属性")
 @Slf4j
 @RestController
 @RequestMapping(value = "productPropertyController")
@@ -28,6 +31,7 @@ public class ProductPropertyController {
     @Resource(name = "productTypeService")
     private ProductTypeService productTypeService;
 
+    @ApiOperation("获取详情")
     @GetMapping(value = "/getById.do/{id}")
     protected CommonResultDto getById(@PathVariable Integer id){
         if(null == id){
@@ -44,20 +48,14 @@ public class ProductPropertyController {
         return new CommonResultDto().success(result);
     }
 
-    /**
-     * 分页查询
-     * @param dto
-     * @return
-     */
+    @ApiOperation("分页查询")
     @GetMapping("/getPage.do")
     protected CommonResultDto getPage(ProductPropertyNameDto dto){
         PageInfo<ProductPropertyNameDto> result = productPropertyNameService.findPage(dto);
         return new CommonResultDto().success(result);
     }
-    /**
-     * 新增
-     * @return
-     */
+
+    @ApiOperation("新增")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:CREATE') or hasRole('ADMIN')")
     @PostMapping("/create.do")
     protected CommonResultDto create(@RequestBody ProductPropertyNameDto dto){
@@ -65,10 +63,8 @@ public class ProductPropertyController {
         BeanUtils.copyProperties(dto,entity);
         return  productPropertyNameService.add(entity);
     }
-    /**
-     * 更新
-     * @return
-     */
+
+    @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:UPDATE') or hasRole('ADMIN')")
     @PostMapping("/update.do/{id}")
     protected CommonResultDto update(@PathVariable Integer id, @RequestBody ProductPropertyNameDto dto){
@@ -77,10 +73,8 @@ public class ProductPropertyController {
         }
         return productPropertyNameService.update(dto);
     }
-    /**
-     * 删除-逻辑删除
-     * @return
-     */
+
+    @ApiOperation("删除-逻辑删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:DELETE') or hasRole('ADMIN')")
     @GetMapping("/delete.do/{id}")
     protected CommonResultDto delete(@PathVariable Integer id){
@@ -90,10 +84,8 @@ public class ProductPropertyController {
         productPropertyNameService.deleteById(id);
         return new CommonResultDto().success();
     }
-    /**
-     * 是否销售属性
-     * @return
-     */
+
+    @ApiOperation("是否销售属性")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsSale.do")
     protected CommonResultDto updateIsSale(@RequestBody ProductPropertyNameDto dto){
@@ -102,10 +94,8 @@ public class ProductPropertyController {
         }
         return productPropertyNameService.updateIsSale(dto);
     }
-    /**
-     * 是否显示
-     * @return
-     */
+
+    @ApiOperation("是否显示")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsShow.do")
     protected CommonResultDto updateIsShow(@RequestBody ProductPropertyNameDto dto){

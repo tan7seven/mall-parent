@@ -27,60 +27,42 @@ public class AdminController extends GenericController {
     @Resource(name = "adminService")
     private AdminService adminService;
 
-    /**
-     *分页查询
-     * @param dto
-     * @return
-     */
-    @ApiOperation(value="分页查询",notes="分页查询")
+    @ApiOperation("分页查询")
     @PostMapping(value = "getPage.do")
-    protected Object getPage(AdminDto dto){
+    protected CommonResultDto getPage(AdminDto dto){
         Page<AdminEntity> result = adminService.getPage(dto);
         ResultPage resultPage = new ResultPage();
         resultPage.setList(result.getContent());
         resultPage.setTotal(result.getTotalElements());
         return new CommonResultDto().success(resultPage);
     }
-    /**
-     * 获取信息
-     * @return
-     */
+
+    @ApiOperation("获取信息")
     @GetMapping(value = "/getAdminInfo.do")
-    protected  Object getAdminInfo(){
+    protected  CommonResultDto getAdminInfo(){
         UserDetailsImpl result = adminService.adminLogin(this.getUserDetails().getUsername());
         return new CommonResultDto().success(result);
     }
-    /**
-     * 获取信息
-     * @param id
-     * @return
-     */
+
+    @ApiOperation("获取信息")
     @GetMapping(value = "/getAdminInfo.do/{id}")
-    protected  Object getAdminInfo(@PathVariable String id){
+    protected  CommonResultDto getAdminInfo(@PathVariable String id){
         AdminEntity result = adminService.findById(id).get();
         return new CommonResultDto().success(result);
     }
 
-    /**
-     * 新建管理员信息
-     * @param dto
-     * @return
-     */
+    @ApiOperation("新建管理员信息")
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "createAdmin.do")
-    protected Object createAdmin(@RequestBody AdminDto dto){
+    protected CommonResultDto createAdmin(@RequestBody AdminDto dto){
         adminService.add(dto);
         return new CommonResultDto().success();
     }
 
-    /**
-     * 修改管理员信息
-     * @param dto
-     * @return
-     */
+    @ApiOperation("修改管理员信息")
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "updateAdmin.do/{id}")
-    protected Object updateAdmin(@RequestBody AdminDto dto,@PathVariable String id){
+    protected CommonResultDto updateAdmin(@RequestBody AdminDto dto,@PathVariable String id){
         if (StringUtils.isBlank(id)) {
             return new CommonResultDto().validateFailed("ID为空！");
         }
@@ -88,12 +70,10 @@ public class AdminController extends GenericController {
         return new CommonResultDto().success();
     }
 
-    /**
-     * 删除（逻辑删除）
-     */
+    @ApiOperation("删除（逻辑删除）")
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteAdmin.do")
-    protected Object deleteAdmin(List<String> ids){
+    protected CommonResultDto deleteAdmin(List<String> ids){
         if(null == ids || ids.isEmpty()){
             return new CommonResultDto().validateFailed("id为空！");
         }
@@ -101,13 +81,10 @@ public class AdminController extends GenericController {
         return new CommonResultDto().success();
     }
 
-    /**
-     * 是否可用
-     * @return
-     */
+    @ApiOperation("是否可用")
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "updateIsUsable.do")
-    protected Object updateIsUsable(@RequestBody AdminDto dto){
+    protected CommonResultDto updateIsUsable(@RequestBody AdminDto dto){
         if(StringUtils.isBlank(dto.getUserId())){
             return new CommonResultDto().validateFailed("用户编码为空！");
         }
@@ -115,13 +92,10 @@ public class AdminController extends GenericController {
         return new CommonResultDto().success();
     }
 
-    /**
-     * 菜单授权
-     * @return
-     */
+    @ApiOperation("菜单授权")
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "menuAuthorityConfirm.do")
-    protected Object menuAuthorityConfirm(@RequestBody AdminDto dto){
+    protected CommonResultDto menuAuthorityConfirm(@RequestBody AdminDto dto){
         if (StringUtils.isBlank(dto.getUserId())) {
             return new CommonResultDto().forbidden("用户ID为空！");
         }
@@ -129,13 +103,10 @@ public class AdminController extends GenericController {
         return new CommonResultDto().success();
     }
 
-    /**
-     * 按钮授权
-     * @return
-     */
+    @ApiOperation("按钮授权")
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "buttonAuthorityConfirm.do")
-    protected Object buttonAuthorityConfirm(@RequestBody AdminDto dto){
+    protected CommonResultDto buttonAuthorityConfirm(@RequestBody AdminDto dto){
         if (StringUtils.isBlank(dto.getUserId()) || StringUtils.isBlank(dto.getMenuId())) {
             return new CommonResultDto().forbidden("用户ID活菜单ID为空！");
         }
@@ -143,13 +114,9 @@ public class AdminController extends GenericController {
         return new CommonResultDto().success();
     }
 
-    /**
-     * 根据用户ID获取已授权菜单列表
-     * @param id
-     * @return
-     */
+    @ApiOperation("根据用户ID获取已授权菜单列表")
     @GetMapping(value = "getAdminMenuAuthority.do/{id}")
-    protected Object getAdminMenuAuthority(@PathVariable String id){
+    protected CommonResultDto getAdminMenuAuthority(@PathVariable String id){
         List<String> menuList =  adminService.getAdminMenuAuthority(id);
         return new CommonResultDto().success(menuList);
     }

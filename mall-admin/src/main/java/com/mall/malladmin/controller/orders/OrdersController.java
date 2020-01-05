@@ -6,6 +6,8 @@ import com.mall.malladmin.controller.common.GenericController;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.orders.OrdersDto;
 import com.mall.malladmin.service.orders.OrdersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * 订单信息
- */
+@Api(value = "订单信息", tags = "订单信息")
 @RestController
 @RequestMapping(value = "/ordersController")
 public class OrdersController extends GenericController{
@@ -24,19 +24,16 @@ public class OrdersController extends GenericController{
     @Resource(name = "ordersService")
     private OrdersService ordersService;
 
+    @ApiOperation("分页查询")
     @PostMapping(value = "getPage.do")
     protected CommonResultDto getPage(@RequestBody OrdersDto dto){
         PageInfo<OrdersDto> result = ordersService.getPage(dto);
         return new CommonResultDto().success(result);
     }
 
-    /**
-     * 根据主键获取订单跟订单明细信息
-     * @param id
-     * @return
-     */
+    @ApiOperation("订单明细")
     @GetMapping(value = "getOrders.do/{id}")
-    protected  Object getOrders(@PathVariable String id){
+    protected  CommonResultDto getOrders(@PathVariable String id){
         if(null == id || "undefined".equals(id)){
             return new CommonResultDto().validateFailed("ID为空！");
         }
@@ -44,26 +41,18 @@ public class OrdersController extends GenericController{
         return new CommonResultDto().success(result);
     }
 
-    /**
-     * 修改订单收货信息
-     * @param dto
-     * @return
-     */
+    @ApiOperation("修改订单收货信息")
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "updateReceiverInfo.do")
-    protected  Object updateReceiverInfo(@RequestBody OrdersDto dto){
+    protected  CommonResultDto updateReceiverInfo(@RequestBody OrdersDto dto){
         ordersService.updateReceiverInfo(dto, this.getUserDetails());
         return new CommonResultDto().success();
     }
 
-    /**
-     * 修改订单金额
-     * @param dto
-     * @return
-     */
+    @ApiOperation("修改订单金额")
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "updateMoneyInfo.do")
-    protected Object updateMoneyInfo(@RequestBody OrdersDto dto){
+    protected CommonResultDto updateMoneyInfo(@RequestBody OrdersDto dto){
         if(null == dto.getDiscountPrice()){
             dto.setDiscountPrice(new BigDecimal(0));
         }
@@ -71,36 +60,26 @@ public class OrdersController extends GenericController{
         return new CommonResultDto().success();
     }
 
-    /**
-     * 修改订单备注
-     * @param dto
-     * @return
-     */
+    @ApiOperation("修改订单备注")
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "updateRemarkInfo.do")
-    protected Object updateRemarkInfo( OrdersDto dto){
+    protected CommonResultDto updateRemarkInfo( OrdersDto dto){
         ordersService.updateRemarkInfo(dto, this.getUserDetails());
         return new CommonResultDto().success();
     }
 
-    /**
-     * 关闭订单 -> 手动关闭的订单为无效订单
-     * @param dto
-     * @return
-     */
+    @ApiOperation("关闭订单 -> 手动关闭的订单为无效订单")
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "closeOrders.do")
-    protected Object closeOrders(OrdersDto dto){
+    protected CommonResultDto closeOrders(OrdersDto dto){
         ordersService.closeOrders(dto, this.getUserDetails());
         return new CommonResultDto().success();
     }
-    /**
-     * 关闭订单 -> 手动关闭的订单为无效订单
-     * @return
-     */
+
+    @ApiOperation("关闭订单 -> 手动关闭的订单为无效订单")
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "closeOrdersList.do")
-    protected Object closeOrdersList(List<String> ids, String remark){
+    protected CommonResultDto closeOrdersList(List<String> ids, String remark){
         if (null ==ids || StringUtils.isBlank(ids.toString())) {
             return new CommonResultDto().success();
         }
@@ -108,14 +87,10 @@ public class OrdersController extends GenericController{
         return new CommonResultDto().success();
     }
 
-    /**
-     * 删除订单信息
-     * @param ids
-     * @return
-     */
+    @ApiOperation("删除订单信息")
     @PreAuthorize(" hasAuthority('OMS:ORDER:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteOrders.do")
-    protected  Object deleteOrders(List<String> ids){
+    protected  CommonResultDto deleteOrders(List<String> ids){
         if (StringUtils.isBlank(ids.toString())) {
             return new CommonResultDto().validateFailed("参数为空！");
         }
@@ -123,14 +98,10 @@ public class OrdersController extends GenericController{
         return new CommonResultDto().success();
     }
 
-    /**
-     * 批量发货
-     * @param dtoList
-     * @return
-     */
+    @ApiOperation("批量发货")
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "deliveryOrders.do")
-    protected Object deliveryOrders(@RequestBody List<OrdersDto> dtoList){
+    protected CommonResultDto deliveryOrders(@RequestBody List<OrdersDto> dtoList){
         if(null == dtoList || dtoList.isEmpty()){
             return new CommonResultDto().success();
         }

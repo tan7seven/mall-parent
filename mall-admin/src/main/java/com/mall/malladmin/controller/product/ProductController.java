@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.dto.common.CommonResultDto;
 import com.mall.malladmin.dto.product.ProductDto;
 import com.mall.malladmin.service.product.ProductService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,9 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
- * 商品信息
- */
+
+@Api(value = "商品信息", tags = "商品信息")
 @Slf4j
 @RestController
 @RequestMapping(value = "/productController")
@@ -33,32 +34,22 @@ public class ProductController {
     @Resource(name = "productService")
     private ProductService productService;
 
-    /**
-     * 分页查询
-     * @param dto
-     * @return
-     */
+    @ApiOperation("分页查询")
     @GetMapping(value = "/getPage.do")
     protected CommonResultDto getPage(ProductDto dto){
         PageInfo<ProductDto> result = productService.findPage(dto);
         return new CommonResultDto().success(result);
     }
 
-    /**
-     * 新建商品信息
-     * @param dto
-     * @return
-     */
+    @ApiOperation("新建商品信息")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:CREATE') or hasRole('ADMIN')")
     @PostMapping(value = "/create.do")
     protected CommonResultDto create(@RequestBody ProductDto dto){
         return productService.create(dto);
     }
 
-    /**
-     * 更新
-     * @return
-     */
+
+    @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/update.do/{id}")
     protected CommonResultDto update(@PathVariable Integer id , @RequestBody ProductDto dto){
@@ -67,19 +58,14 @@ public class ProductController {
         }
         return productService.update(id, dto);
     }
-    /**
-     * 根据商品名称获取商品列表
-     * @return
-     */
+
+    @ApiOperation("根据商品名称获取商品列表")
     @PostMapping(value = "/findProductByName.do")
     protected CommonResultDto findProductByName(String name){
         List<ProductDto> result = productService.findByName(name);
         return new CommonResultDto().success(result);
     }
-    /**
-     * 根据ID获取商品信息
-     * @return
-     */
+    @ApiOperation("根据ID获取商品信息")
     @GetMapping(value = "/getProduct.do/{id}")
     protected CommonResultDto getProduct(@PathVariable Integer id){
         if(null == id){
@@ -89,11 +75,7 @@ public class ProductController {
         return new CommonResultDto().success(result);
     }
 
-    /**
-     * 删除-逻辑删除
-     * @param ids
-     * @return
-     */
+    @ApiOperation("删除-逻辑删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "/delete.do")
     protected CommonResultDto delete(List<Integer> ids){
@@ -101,12 +83,7 @@ public class ProductController {
         return result;
     }
 
-    /**
-     * 修改是否上下架状态
-     * @param isPutaway
-     * @param ids
-     * @return
-     */
+    @ApiOperation("修改是否上下架状态")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/updateIsPutaway.do")
     protected CommonResultDto updateIsPutaway(String isPutaway, List<Integer>  ids){
@@ -114,12 +91,7 @@ public class ProductController {
         return result;
     }
 
-    /**
-     * 文件上传
-     * @param picture
-     * @param request
-     * @return
-     */
+    @ApiOperation("文件上传")
     @PostMapping(value = "/upload.do")
     protected CommonResultDto upload(@RequestParam("picture") MultipartFile picture, HttpServletRequest request){
         //获取文件在服务器的储存位置
@@ -152,11 +124,7 @@ public class ProductController {
         }
     }
 
-    /**
-     * 删除图片文件
-     * @param picUrl
-     * @return
-     */
+    @ApiOperation("删除图片文件")
     @PostMapping(value = "/deletePic.do")
     protected Object deletePic(String picUrl){
         int lastIndexOf = picUrl.lastIndexOf("/");
