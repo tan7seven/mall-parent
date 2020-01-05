@@ -1,4 +1,4 @@
-package com.mall.mallwechar.service.orders;
+package com.mall.mallwechar.service.order;
 
-public interface OrdersService {
+public interface OrderService {
 }

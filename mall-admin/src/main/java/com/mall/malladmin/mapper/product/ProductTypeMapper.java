@@ -1,6 +1,6 @@
 package com.mall.malladmin.mapper.product;
 
-import com.mall.malladmin.dto.common.CommonCascaderDto;
+import com.mall.malladmin.dto.common.CommonCascaderDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface ProductTypeMapper {
      * 获取商品类目的联级信息
      * @return
      */
-    List<CommonCascaderDto> getCascader();
+    List<CommonCascaderDTO> getCascader();
 
     /**
      * 根据父类ID更新usable字段

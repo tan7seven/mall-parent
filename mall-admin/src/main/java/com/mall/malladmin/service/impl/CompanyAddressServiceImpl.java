@@ -1,6 +1,6 @@
 package com.mall.malladmin.service.impl;
 
-import com.mall.malladmin.entity.CompanyAddressEntity;
+import com.mall.malladmin.entity.order.CompanyAddressEntity;
 import com.mall.malladmin.repository.CompanyAddressRespository;
 import com.mall.malladmin.service.CompanyAddressService;
 import org.springframework.beans.factory.annotation.Autowired;

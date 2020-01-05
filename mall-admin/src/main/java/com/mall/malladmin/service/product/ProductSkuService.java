@@ -2,8 +2,8 @@ package com.mall.malladmin.service.product;
 
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.entity.product.ProductSkuEntity;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductSkuDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductSkuDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,18 +17,18 @@ public interface ProductSkuService {
      * 新增
      * @return
      */
-    CommonResultDto add(ProductSkuDto dto);
+    CommonResultDTO add(ProductSkuDTO dto);
     /**
      * 更新
      * @return
      */
-    CommonResultDto update(Integer id, ProductSkuDto dto);
+    CommonResultDTO update(Integer id, ProductSkuDTO dto);
     /**
      *  根据ID查找
      * @param id
      * @return
      */
-    ProductSkuDto findById(Integer id);
+    ProductSkuDTO findById(Integer id);
     /**
      * 根据逐渐删除
      * @param id
@@ -54,5 +54,5 @@ public interface ProductSkuService {
      * @param dto
      * @return
      */
-    PageInfo<ProductSkuDto> findPage(ProductSkuDto dto);
+    PageInfo<ProductSkuDTO> findPage(ProductSkuDTO dto);
 }

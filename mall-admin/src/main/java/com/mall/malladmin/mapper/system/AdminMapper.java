@@ -1,6 +1,6 @@
 package com.mall.malladmin.mapper.system;
 
-import com.mall.malladmin.dto.system.AdminDto;
+import com.mall.malladmin.dto.system.AdminDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,18 +14,18 @@ public interface AdminMapper {
      * @param loginCode
      * @return
      */
-    AdminDto findByLoginId(@Param("loginCode") String loginCode);
+    AdminDTO findByLoginId(@Param("loginCode") String loginCode);
 
     /**
      * 获取用户按钮权限编码列表
      * @param dto
      * @return
      */
-    List<String> getButtonCodeAuthority(@Param("dto") AdminDto dto);
+    List<String> getButtonCodeAuthority(@Param("dto") AdminDTO dto);
     /**
      * 获取菜单按钮权限编码列表
      * @param dto
      * @return
      */
-    List<String> getMenuCodeListAuthority(@Param("dto") AdminDto dto);
+    List<String> getMenuCodeListAuthority(@Param("dto") AdminDTO dto);
 }

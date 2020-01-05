@@ -2,8 +2,8 @@ package com.mall.malladmin.controller.product;
 
 
 import com.github.pagehelper.PageInfo;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductDTO;
 import com.mall.malladmin.service.product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,15 +36,15 @@ public class ProductController {
 
     @ApiOperation("分页查询")
     @GetMapping(value = "/getPage.do")
-    protected CommonResultDto getPage(ProductDto dto){
-        PageInfo<ProductDto> result = productService.findPage(dto);
-        return new CommonResultDto().success(result);
+    protected CommonResultDTO getPage(ProductDTO dto){
+        PageInfo<ProductDTO> result = productService.findPage(dto);
+        return new CommonResultDTO().success(result);
     }
 
     @ApiOperation("新建商品信息")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:CREATE') or hasRole('ADMIN')")
     @PostMapping(value = "/create.do")
-    protected CommonResultDto create(@RequestBody ProductDto dto){
+    protected CommonResultDTO create(@RequestBody ProductDTO dto){
         return productService.create(dto);
     }
 
@@ -52,48 +52,48 @@ public class ProductController {
     @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/update.do/{id}")
-    protected CommonResultDto update(@PathVariable Integer id , @RequestBody ProductDto dto){
+    protected CommonResultDTO update(@PathVariable Integer id , @RequestBody ProductDTO dto){
         if(null == dto.getProductId()){
-            return new CommonResultDto().validateFailed("商品编号为空！");
+            return new CommonResultDTO().validateFailed("商品编号为空！");
         }
         return productService.update(id, dto);
     }
 
     @ApiOperation("根据商品名称获取商品列表")
     @PostMapping(value = "/findProductByName.do")
-    protected CommonResultDto findProductByName(String name){
-        List<ProductDto> result = productService.findByName(name);
-        return new CommonResultDto().success(result);
+    protected CommonResultDTO findProductByName(String name){
+        List<ProductDTO> result = productService.findByName(name);
+        return new CommonResultDTO().success(result);
     }
     @ApiOperation("根据ID获取商品信息")
     @GetMapping(value = "/getProduct.do/{id}")
-    protected CommonResultDto getProduct(@PathVariable Integer id){
+    protected CommonResultDTO getProduct(@PathVariable Integer id){
         if(null == id){
-            return new CommonResultDto().validateFailed("id为空！");
+            return new CommonResultDTO().validateFailed("id为空！");
         }
-        ProductDto result = productService.findById(id);
-        return new CommonResultDto().success(result);
+        ProductDTO result = productService.findById(id);
+        return new CommonResultDTO().success(result);
     }
 
     @ApiOperation("删除-逻辑删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "/delete.do")
-    protected CommonResultDto delete(List<Integer> ids){
-        CommonResultDto result = productService.deleteList(ids);
+    protected CommonResultDTO delete(List<Integer> ids){
+        CommonResultDTO result = productService.deleteList(ids);
         return result;
     }
 
     @ApiOperation("修改是否上下架状态")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/updateIsPutaway.do")
-    protected CommonResultDto updateIsPutaway(String isPutaway, List<Integer>  ids){
-        CommonResultDto result = productService.updateIsPutAway(isPutaway, ids);
+    protected CommonResultDTO updateIsPutaway(String isPutaway, List<Integer>  ids){
+        CommonResultDTO result = productService.updateIsPutAway(isPutaway, ids);
         return result;
     }
 
     @ApiOperation("文件上传")
     @PostMapping(value = "/upload.do")
-    protected CommonResultDto upload(@RequestParam("picture") MultipartFile picture, HttpServletRequest request){
+    protected CommonResultDTO upload(@RequestParam("picture") MultipartFile picture, HttpServletRequest request){
         //获取文件在服务器的储存位置
         String path = picPath;
         File filePath = new File(path);
@@ -117,10 +117,10 @@ public class ProductController {
         try {
             picture.transferTo(targetFile);
             //将文件在服务器的存储路径返回
-            return new CommonResultDto().success("image/"+fileName);
+            return new CommonResultDTO().success("image/"+fileName);
         } catch (IOException e) {
             e.printStackTrace();
-            return new CommonResultDto().failed();
+            return new CommonResultDTO().failed();
         }
     }
 
@@ -133,12 +133,12 @@ public class ProductController {
         File file = new File(sb);
         if (file.exists()) {
             if (file.delete()) {
-                return new CommonResultDto().success();
+                return new CommonResultDTO().success();
             } else {
-                return new CommonResultDto().failed();
+                return new CommonResultDTO().failed();
             }
         } else {
-            return new CommonResultDto().failed();
+            return new CommonResultDTO().failed();
         }
     }
 }

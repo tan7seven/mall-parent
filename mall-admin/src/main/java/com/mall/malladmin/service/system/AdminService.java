@@ -1,6 +1,6 @@
 package com.mall.malladmin.service.system;
 
-import com.mall.malladmin.dto.system.AdminDto;
+import com.mall.malladmin.dto.system.AdminDTO;
 import com.mall.malladmin.entity.system.AdminEntity;
 import com.mall.malladmin.security.UserDetailsImpl;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public interface AdminService {
      * @param dto
      * @return
      */
-    AdminEntity add(AdminDto dto);
+    AdminEntity add(AdminDTO dto);
     /**
      * 修改
      * @param dto
@@ -32,19 +32,19 @@ public interface AdminService {
      */
 
 
-    void update(AdminDto dto, String id);
+    void update(AdminDTO dto, String id);
     /**
      * 获取用户信息
      * @param dto
      * @return
      */
-    List<AdminEntity> getList(AdminDto dto);
+    List<AdminEntity> getList(AdminDTO dto);
     /**
      * 获取用户信息
      * @param dto
      * @return
      */
-    Page<AdminEntity> getPage(AdminDto dto);
+    Page<AdminEntity> getPage(AdminDTO dto);
     /**
      *  根据用户ID查找
      * @param userId
@@ -58,7 +58,7 @@ public interface AdminService {
      * @param loginCode
      * @return
      */
-    AdminDto findByLoginId(String loginCode);
+    AdminDTO findByLoginId(String loginCode);
 
     /**
      * 删除（逻辑删除）
@@ -70,14 +70,14 @@ public interface AdminService {
      * 是否可用
      * @param dto
      */
-    void updateIsUsable(AdminDto dto);
+    void updateIsUsable(AdminDTO dto);
 
     /**
      * 菜单授权
      * @param dto
      */
     @Transactional
-    void menuAuthority(AdminDto dto);
+    void menuAuthority(AdminDTO dto);
 
 
     /**
@@ -85,7 +85,7 @@ public interface AdminService {
      * @param dto
      */
     @Transactional
-    void buttonAuthority(AdminDto dto);
+    void buttonAuthority(AdminDTO dto);
     /**
      * 根据用户ID获取已授权菜单列表ID
      * @param userId

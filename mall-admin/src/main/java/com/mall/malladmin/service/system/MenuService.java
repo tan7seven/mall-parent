@@ -1,9 +1,9 @@
 package com.mall.malladmin.service.system;
 
 import com.github.pagehelper.PageInfo;
-import com.mall.malladmin.dto.common.TreeDto;
-import com.mall.malladmin.dto.system.MenuAuthorityDto;
-import com.mall.malladmin.dto.system.MenuDto;
+import com.mall.malladmin.dto.common.TreeDTO;
+import com.mall.malladmin.dto.system.MenuAuthorityDTO;
+import com.mall.malladmin.dto.system.MenuDTO;
 import com.mall.malladmin.entity.system.MenuEntity;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,45 +19,45 @@ public interface MenuService {
      * @return
      */
     @Transactional
-    MenuEntity add(MenuDto dto);
+    MenuEntity add(MenuDTO dto);
     /**
      * 修改
      * @param dto
      * @return
      */
     @Transactional
-    void update(MenuDto dto, String id);
+    void update(MenuDTO dto, String id);
     /**
      * 获取
      * @param dto
      * @return
      */
-    List<MenuEntity> getList(MenuDto dto);
+    List<MenuEntity> getList(MenuDTO dto);
     /**
      * 获取
      * @param dto
      * @return
      */
-    PageInfo<MenuDto> getPage(MenuDto dto);
+    PageInfo<MenuDTO> getPage(MenuDTO dto);
 
     /**
      * 获取菜单树
      * @return
      */
-    List<TreeDto> getMenuTree(MenuAuthorityDto dto);
+    List<TreeDTO> getMenuTree(MenuAuthorityDTO dto);
 
     /**
      * 根据父节点获取菜单列表
      * @param menuId
      * @return
      */
-    List<MenuDto> getListById(String menuId);
+    List<MenuDTO> getListById(String menuId);
     /**
      *  根据ID查找
      * @param menuId
      * @return
      */
-    MenuDto findById(String menuId);
+    MenuDTO findById(String menuId);
     /**
      * 删除（逻辑删除）
      * @param ids
@@ -69,11 +69,11 @@ public interface MenuService {
      * 是否隐藏
      * @param dto
      */
-    void updateIsHidden(MenuDto dto);
+    void updateIsHidden(MenuDTO dto);
 
     /**
      * 获取按钮列表
      * @return
      */
-    MenuDto getButtonList(MenuDto dto);
+    MenuDTO getButtonList(MenuDTO dto);
 }

@@ -1,4 +1,4 @@
-package com.mall.mallmodel.dto.orders;
+package com.mall.mallmodel.dto.order;
 
 import com.mall.mallmodel.dto.common.CommonDto;
 import lombok.Data;
@@ -11,11 +11,11 @@ import java.util.List;
  * 订单信息
  */
 @Data
-public class OrdersDto extends CommonDto {
+public class OrderDto extends CommonDto {
     /**
      * 订单ID
      */
-    private String ordersId;
+    private String orderId;
 
     /**
      * 用户ID
@@ -68,7 +68,7 @@ public class OrdersDto extends CommonDto {
     /**
      * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭；5->完成评价；6->无效订单
      */
-    private String ordersStatus;
+    private String orderStatus;
     /**
      * 物流公司(配送方式)
      */
@@ -112,7 +112,7 @@ public class OrdersDto extends CommonDto {
     /**
      * 订单备注
      */
-    private String ordersRemark;
+    private String orderRemark;
     /**
      * 确认收货状态：0->未确认；1->已确认
      */
@@ -154,10 +154,10 @@ public class OrdersDto extends CommonDto {
     /**
      * 订单商品明细
      */
-    private List<OrdersItemsDto> ordersItems;
+    private List<OrderItemsDto> orderItems;
 
     /**
      * 订单操作日志
      */
-    private List<OrdersOperationLogDto> ordersOperationLog;
+    private List<OrderOperationLogDto> orderOperationLog;
 }

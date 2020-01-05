@@ -1,6 +1,6 @@
 package com.mall.malladmin.controller.common;
 
-import com.mall.malladmin.dto.common.CommonResultDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +26,7 @@ public class CommonController {
     private String picPath;
 
     @PostMapping(value = "/upload.do")
-    protected CommonResultDto upload(@RequestParam("picture") MultipartFile picture, HttpServletRequest request){
+    protected CommonResultDTO upload(@RequestParam("picture") MultipartFile picture, HttpServletRequest request){
         //获取文件在服务器的储存位置
         String path = picPath;
         File filePath = new File(path);
@@ -50,10 +50,10 @@ public class CommonController {
         try {
             picture.transferTo(targetFile);
             //将文件在服务器的存储路径返回
-            return new CommonResultDto().success("image/"+fileName);
+            return new CommonResultDTO().success("image/"+fileName);
         } catch (IOException e) {
             e.printStackTrace();
-            return new CommonResultDto().failed();
+            return new CommonResultDTO().failed();
         }
     }
 
@@ -70,12 +70,12 @@ public class CommonController {
         File file = new File(sb);
         if (file.exists()) {
             if (file.delete()) {
-                return new CommonResultDto().success();
+                return new CommonResultDTO().success();
             } else {
-                return new CommonResultDto().failed();
+                return new CommonResultDTO().failed();
             }
         } else {
-            return new CommonResultDto().failed();
+            return new CommonResultDTO().failed();
         }
     }
 }

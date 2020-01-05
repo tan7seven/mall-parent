@@ -1,4 +1,4 @@
-package com.mall.mallmodel.dto.orders;
+package com.mall.mallmodel.dto.order;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  * 订单操作历史日志表
  */
 @Data
-public class OrdersOperationLogDto {
+public class OrderOperationLogDto {
     /**
      * 主键
      */
@@ -16,7 +16,7 @@ public class OrdersOperationLogDto {
     /**
      * 订单编号
      */
-    private String ordersId;
+    private String orderId;
     /**
      * 操作人ID
      */
@@ -28,7 +28,7 @@ public class OrdersOperationLogDto {
     /**
      * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
      */
-    private String ordersStatus;
+    private String orderStatus;
     /**
      * 备注
      */

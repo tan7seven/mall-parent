@@ -1,8 +1,8 @@
 package com.mall.malladmin.service.product;
 
 import com.github.pagehelper.PageInfo;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductPropertyNameDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductPropertyNameDTO;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface ProductPropertyNameService {
      * @param entity
      * @return
      */
-    CommonResultDto add(ProductPropertyNameEntity entity);
+    CommonResultDTO add(ProductPropertyNameEntity entity);
     /**
      *  根据ID查找
      * @param id
@@ -28,7 +28,7 @@ public interface ProductPropertyNameService {
      * 更新
      * @param dto
      */
-    CommonResultDto update(ProductPropertyNameDto dto);
+    CommonResultDTO update(ProductPropertyNameDTO dto);
 
     /**
      * 根据逐渐删除
@@ -60,20 +60,20 @@ public interface ProductPropertyNameService {
      * @param dto
      * @return
      */
-    PageInfo<ProductPropertyNameDto> findPage(ProductPropertyNameDto dto);
+    PageInfo<ProductPropertyNameDTO> findPage(ProductPropertyNameDTO dto);
 
     /**
      * 修改是否销售属性
      * @param dto
      * @return
      */
-    CommonResultDto updateIsSale(ProductPropertyNameDto dto);
+    CommonResultDTO updateIsSale(ProductPropertyNameDTO dto);
 
     /**
      * 修改是否显示
      * @param dto
      * @return
      */
-    CommonResultDto updateIsShow(ProductPropertyNameDto dto);
+    CommonResultDTO updateIsShow(ProductPropertyNameDTO dto);
 
 }

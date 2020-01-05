@@ -1,4 +1,4 @@
-package com.mall.mallmodel.dto.orders;
+package com.mall.mallmodel.dto.order;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  * 订单设置
  */
 @Data
-public class OrdersSettingDto {
+public class OrderSettingDto {
 
     /**
      * 订单ID
@@ -15,7 +15,7 @@ public class OrdersSettingDto {
     /**
      * 	正常订单超时时间(分)
      */
-    private Integer normalOrdersOvertime;
+    private Integer normalOrderOvertime;
 
     /**
      * 	发货后自动确认收货时间（天）

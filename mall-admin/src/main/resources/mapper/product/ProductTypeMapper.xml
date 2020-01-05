@@ -28,10 +28,10 @@
             column:外键
 
         -->
-    <resultMap id="ProductTypeMap" type="com.mall.malladmin.dto.common.CommonCascaderDto">
+    <resultMap id="ProductTypeMap" type="com.mall.malladmin.dto.common.CommonCascaderDTO">
         <result column="value" property="value"/>
         <result column="label" property="label"/>
-        <collection property="children" ofType="com.mall.malladmin.dto.common.CommonCascaderDto">
+        <collection property="children" ofType="com.mall.malladmin.dto.common.CommonCascaderDTO">
             <result column="children_value" property="value"/>
             <result column="children_label" property="label"/>
         </collection>

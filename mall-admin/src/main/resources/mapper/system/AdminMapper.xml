@@ -7,7 +7,7 @@
         modify_time
     </sql>
 
-    <select id="findByLoginId" resultType="com.mall.malladmin.dto.system.AdminDto" parameterType="String">
+    <select id="findByLoginId" resultType="com.mall.malladmin.dto.system.AdminDTO" parameterType="String">
         SELECT
         <include refid="Base_Column_List" />
         FROM system_admin m WHERE m.login_Code = #{loginCode}

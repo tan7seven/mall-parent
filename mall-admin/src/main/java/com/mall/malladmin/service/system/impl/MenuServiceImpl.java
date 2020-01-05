@@ -3,10 +3,10 @@ package com.mall.malladmin.service.system.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mall.malladmin.dto.common.TreeDto;
-import com.mall.malladmin.dto.system.ButtonDto;
-import com.mall.malladmin.dto.system.MenuAuthorityDto;
-import com.mall.malladmin.dto.system.MenuDto;
+import com.mall.malladmin.dto.common.TreeDTO;
+import com.mall.malladmin.dto.system.ButtonDTO;
+import com.mall.malladmin.dto.system.MenuAuthorityDTO;
+import com.mall.malladmin.dto.system.MenuDTO;
 import com.mall.malladmin.entity.system.ButtonEntity;
 import com.mall.malladmin.entity.system.MenuEntity;
 import com.mall.malladmin.enumUtil.ButtonEnum;
@@ -53,7 +53,7 @@ public class MenuServiceImpl implements MenuService{
     private AdminRepository adminRepository;
 
     @Override
-    public MenuEntity add(MenuDto dto) {
+    public MenuEntity add(MenuDTO dto) {
         MenuEntity entity = new MenuEntity();
         BeanUtils.copyProperties(dto, entity);
         MenuEntity resultEntity = menuRepository.save(entity);
@@ -78,7 +78,7 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
-    public void update(MenuDto dto, String id) {
+    public void update(MenuDTO dto, String id) {
         MenuEntity entity = menuRepository.findById(id).get();
         entity.setIsHidden(dto.getIsHidden());
         entity.setMenuCode(dto.getMenuCode());
@@ -96,7 +96,7 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
-    public List<MenuEntity> getList(MenuDto dto) {
+    public List<MenuEntity> getList(MenuDTO dto) {
         MenuEntity entity = new MenuEntity();
         entity.setMenuTitle(dto.getMenuTitle());
         entity.setParentId(dto.getParentId());
@@ -109,27 +109,27 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
-    public PageInfo<MenuDto> getPage(MenuDto dto) {
+    public PageInfo<MenuDTO> getPage(MenuDTO dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<MenuDto> resultList = menuMapper.getList(dto);
-        PageInfo<MenuDto> page = new PageInfo<>(resultList);
+        List<MenuDTO> resultList = menuMapper.getList(dto);
+        PageInfo<MenuDTO> page = new PageInfo<>(resultList);
         return page;
     }
 
     @Override
-    public List<TreeDto> getMenuTree(MenuAuthorityDto dto) {
+    public List<TreeDTO> getMenuTree(MenuAuthorityDTO dto) {
         return menuMapper.getMenuTree(dto);
     }
 
     @Override
-    public List<MenuDto> getListById(String menuId) {
+    public List<MenuDTO> getListById(String menuId) {
         return menuMapper.getListById(menuId);
     }
 
     @Override
-    public MenuDto findById(String id) {
+    public MenuDTO findById(String id) {
         MenuEntity entity = menuRepository.findById(id).get();
-        MenuDto result = new MenuDto();
+        MenuDTO result = new MenuDTO();
         BeanUtils.copyProperties(entity, result);
         List<ButtonEntity> buttonEntities = buttonRepository.findByMenuId(id);
         result.setButtonList(buttonEntities.stream().map(s -> s.getButtonName()).collect(Collectors.toList()));
@@ -158,17 +158,17 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
-    public void updateIsHidden(MenuDto dto) {
+    public void updateIsHidden(MenuDTO dto) {
         MenuEntity entity = menuRepository.findById(dto.getMenuId()).get();
         entity.setIsHidden(StringUtils.isBlank(dto.getIsHidden())?MenuEntity.IS_HIDDEN:dto.getIsHidden());
         menuRepository.save(entity);
     }
 
     @Override
-    public MenuDto getButtonList(MenuDto dto) {
+    public MenuDTO getButtonList(MenuDTO dto) {
         List<ButtonEntity> buttonEntities = buttonRepository.findByMenuId(dto.getMenuId());
-        List<ButtonDto> buttonDtos = buttonMapper.getListAuthority(dto);
-        MenuDto result = new MenuDto();
+        List<ButtonDTO> buttonDtos = buttonMapper.getListAuthority(dto);
+        MenuDTO result = new MenuDTO();
         result.setButtonListEntity(buttonEntities);
         result.setButtonListAuthority(buttonDtos.stream().map(s -> s.getButtonName()).collect(Collectors.toList()));
         return result;
@@ -179,7 +179,7 @@ public class MenuServiceImpl implements MenuService{
      * 1、验证哪些按钮是新增
      * 2、验证哪些按钮被删除
      */
-    private void checkButton(MenuDto dto, String id){
+    private void checkButton(MenuDTO dto, String id){
         List<ButtonEntity> buttonEntityList = buttonRepository.findByMenuId(id);
         List<String> buttonList = dto.getButtonList();
         //1、验证哪些按钮是新增

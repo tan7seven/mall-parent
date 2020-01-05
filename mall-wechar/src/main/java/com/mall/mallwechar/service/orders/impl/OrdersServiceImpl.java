@@ -1,4 +1,4 @@
-package com.mall.mallwechar.service.orders.impl;
+package com.mall.mallwechar.service.order.impl;
 
-public class OrdersServiceImpl {
+public class OrderServiceImpl {
 }

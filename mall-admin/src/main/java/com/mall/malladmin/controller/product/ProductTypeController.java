@@ -1,8 +1,8 @@
 package com.mall.malladmin.controller.product;
 
-import com.mall.malladmin.dto.common.CommonCascaderDto;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductTypeDto;
+import com.mall.malladmin.dto.common.CommonCascaderDTO;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductTypeDTO;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
@@ -36,83 +36,83 @@ public class ProductTypeController {
 
     @ApiOperation("详情")
     @GetMapping(value = "/getById.do/{id}")
-    protected CommonResultDto getById(@PathVariable Integer id) {
+    protected CommonResultDTO getById(@PathVariable Integer id) {
         if (null == id) {
-            return new CommonResultDto().validateFailed("ID为空！");
+            return new CommonResultDTO().validateFailed("ID为空！");
         }
         ProductTypeEntity entity = productTypeService.findById(id).get();
         if (null == entity) {
-            return new CommonResultDto().validateFailed("ID异常：获取不到对应的类目信息！");
+            return new CommonResultDTO().validateFailed("ID异常：获取不到对应的类目信息！");
         }
         List<ProductPropertyNameEntity> propertyNames = productPropertyNameService.findByTypeId(id);
-        ProductTypeDto result = new ProductTypeDto();
+        ProductTypeDTO result = new ProductTypeDTO();
         BeanUtils.copyProperties(entity, result);
         result.setPropertyNameCheckedIsSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).map(ProductPropertyNameEntity::getName).toArray(String[]::new));
         result.setPropertyNameCheckedNotSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).map(ProductPropertyNameEntity::getName).toArray(String[]::new));
-        return new CommonResultDto().success(result);
+        return new CommonResultDTO().success(result);
     }
 
     @ApiOperation("根据类目ID获取商品属性")
     @GetMapping(value = "/getProductTypeProperty.do/{id}")
-    protected CommonResultDto getProductTypeProperty(@PathVariable Integer id) {
+    protected CommonResultDTO getProductTypeProperty(@PathVariable Integer id) {
         List<ProductPropertyNameEntity> propertyNameEntities = productPropertyNameService.findByTypeId(id);
         List<ProductPropertyNameEntity> isSale = propertyNameEntities.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).collect(Collectors.toList());
         List<ProductPropertyNameEntity> notSale = propertyNameEntities.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).collect(Collectors.toList());
         Map<String, Object> result = new HashMap<>();
         result.put("productPropertyIsSale", isSale);
         result.put("productPropertyNotSale", notSale);
-        return new CommonResultDto().success(result);
+        return new CommonResultDTO().success(result);
     }
 
     @ApiOperation("创建")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:CREATE') or hasRole('ADMIN')")
     @PostMapping("/create.do")
-    protected CommonResultDto create(@RequestBody ProductTypeDto dto) {
+    protected CommonResultDTO create(@RequestBody ProductTypeDTO dto) {
         ProductTypeEntity result = productTypeService.create(dto);
         if (result == null) {
-            return new CommonResultDto().failed();
+            return new CommonResultDTO().failed();
         }
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @ApiOperation("分页查询")
     @GetMapping("/getPage.do/{id}")
-    protected CommonResultDto getPage(@PathVariable Integer id, ProductTypeDto dto) {
+    protected CommonResultDTO getPage(@PathVariable Integer id, ProductTypeDTO dto) {
         dto.setParentId(id);
         Page<ProductTypeEntity> result = productTypeService.findPage(dto);
         ResultPage resultPage = new ResultPage();
         resultPage.setList(result.getContent());
         resultPage.setTotal(result.getTotalElements());
-        return new CommonResultDto().pageSuccess(resultPage);
+        return new CommonResultDTO().pageSuccess(resultPage);
     }
 
     @ApiOperation("修改")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/updateProductType.do/{typeId}")
-    protected CommonResultDto updateProductType(@PathVariable Integer typeId, @RequestBody ProductTypeDto dto) {
+    protected CommonResultDTO updateProductType(@PathVariable Integer typeId, @RequestBody ProductTypeDTO dto) {
         productTypeService.update(dto);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @ApiOperation("修改是否显示在导航栏")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/update/isNavigationBar.do")
-    protected CommonResultDto updateBar(@RequestBody ProductTypeDto dto) {
+    protected CommonResultDTO updateBar(@RequestBody ProductTypeDTO dto) {
         ProductTypeEntity entity = productTypeService.findById(dto.getTypeId()).get();
         if (null == entity) {
-            return new CommonResultDto().validateFailed("typeId异常：获取不到相关类目！");
+            return new CommonResultDTO().validateFailed("typeId异常：获取不到相关类目！");
         }
         entity.setIsNavigationBar(dto.getIsNavigationBar());
         productTypeService.add(entity);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @ApiOperation("修改状态：正常、禁用")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/update/status.do")
-    protected CommonResultDto updateStatus(@RequestBody ProductTypeDto dto) {
+    protected CommonResultDTO updateStatus(@RequestBody ProductTypeDTO dto) {
         if (null == dto.getTypeId()) {
-            return new CommonResultDto().validateFailed("类目ID为空！");
+            return new CommonResultDTO().validateFailed("类目ID为空！");
         }
         return productTypeService.updateIsUsable(dto);
     }
@@ -120,18 +120,18 @@ public class ProductTypeController {
     @ApiOperation("删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:DELETE') or hasRole('ADMIN')")
     @GetMapping(value = "/delete.do/{typeId}")
-    protected CommonResultDto detele(@PathVariable Integer typeId) {
+    protected CommonResultDTO detele(@PathVariable Integer typeId) {
         if (null == typeId) {
-            return new CommonResultDto().validateFailed("typeId为空！");
+            return new CommonResultDTO().validateFailed("typeId为空！");
         }
         productTypeService.deleteById(typeId);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @ApiOperation("查询所有一级和子级分类")
     @GetMapping(value = "/getProductTypeCascader.do")
-    protected CommonResultDto getProductTypeCascader() {
-        List<CommonCascaderDto> result = productTypeService.getCascader();
-        return new CommonResultDto().success(result);
+    protected CommonResultDTO getProductTypeCascader() {
+        List<CommonCascaderDTO> result = productTypeService.getCascader();
+        return new CommonResultDTO().success(result);
     }
 }

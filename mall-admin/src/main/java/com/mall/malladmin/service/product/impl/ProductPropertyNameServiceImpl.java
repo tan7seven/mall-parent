@@ -3,8 +3,8 @@ package com.mall.malladmin.service.product.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.constant.CommonConstant;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductPropertyNameDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductPropertyNameDTO;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.mapper.product.ProductPropertyMapper;
 import com.mall.malladmin.repository.product.ProductPropertyNameRepository;
@@ -28,23 +28,23 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     private ProductPropertyMapper productPropertyMapper;
 
     @Override
-    public CommonResultDto add(ProductPropertyNameEntity entity) {
+    public CommonResultDTO add(ProductPropertyNameEntity entity) {
         if(ProductPropertyNameEntity.IS_SALE.equals(entity.getIsSale())){
             List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSaleAndIsDelete(entity.getTypeId(), ProductPropertyNameEntity.IS_SALE, CommonConstant.NOT_DELETE);
             if(null != propertyNameList && propertyNameList.size() >=3){
-                return new CommonResultDto().validateFailed("同个分类最多只能有三个销售属性！");
+                return new CommonResultDTO().validateFailed("同个分类最多只能有三个销售属性！");
             }
         }
         List<ProductPropertyNameEntity>  typeIdAndNameList = productPropertyNameRepository.findByTypeIdAndNameAndIsDelete(entity.getTypeId(), entity.getName(), CommonConstant.NOT_DELETE);
         if(null != typeIdAndNameList && typeIdAndNameList.size() > 0 ){
-            return new CommonResultDto().validateFailed("同个分类下属性名不能相同！");
+            return new CommonResultDTO().validateFailed("同个分类下属性名不能相同！");
         }
         entity.setIsDelete(CommonConstant.NOT_DELETE);
         ProductPropertyNameEntity result = productPropertyNameRepository.save(entity);
         if(result == null){
-            return new CommonResultDto().failed();
+            return new CommonResultDTO().failed();
         }
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
@@ -53,19 +53,19 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     }
 
     @Override
-    public CommonResultDto update(ProductPropertyNameDto dto) {
+    public CommonResultDTO update(ProductPropertyNameDTO dto) {
         if(ProductPropertyNameEntity.IS_SALE.equals(dto.getIsSale())){
             List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSaleAndIsDelete(dto.getTypeId(), ProductPropertyNameEntity.IS_SALE, CommonConstant.NOT_DELETE);
             List<Integer> nameIdList = propertyNameList.stream().map(s -> s.getPropertyNameId()).collect(Collectors.toList());
             if(null != propertyNameList
                     && propertyNameList.size() >=3
                     && nameIdList.indexOf(dto.getPropertyNameId()) == -1){
-                return new CommonResultDto().validateFailed("同个分类最多只能有三个销售属性！");
+                return new CommonResultDTO().validateFailed("同个分类最多只能有三个销售属性！");
             }
         }
         List<ProductPropertyNameEntity>  typeIdAndNameList = productPropertyNameRepository.findByTypeIdAndNameAndIsDelete(dto.getTypeId(), dto.getName(), CommonConstant.NOT_DELETE);
         if(null != typeIdAndNameList && typeIdAndNameList.size() > 0 ){
-            return new CommonResultDto().validateFailed("同个分类下属性名不能相同！");
+            return new CommonResultDTO().validateFailed("同个分类下属性名不能相同！");
         }
         ProductPropertyNameEntity entity = productPropertyNameRepository.findById(dto.getPropertyNameId()).get();
         if(!entity.getIsSale().equals(dto.getIsSale())){
@@ -77,7 +77,7 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
         }
         BeanUtils.copyProperties(dto,entity);
         productPropertyNameRepository.save(entity);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
@@ -103,20 +103,20 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     }
 
     @Override
-    public PageInfo<ProductPropertyNameDto> findPage(ProductPropertyNameDto dto) {
+    public PageInfo<ProductPropertyNameDTO> findPage(ProductPropertyNameDTO dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<ProductPropertyNameDto> resultList = productPropertyMapper.findList(dto);
-        PageInfo<ProductPropertyNameDto> page = new PageInfo<>(resultList);
+        List<ProductPropertyNameDTO> resultList = productPropertyMapper.findList(dto);
+        PageInfo<ProductPropertyNameDTO> page = new PageInfo<>(resultList);
         return page;
     }
 
     @Override
-    public CommonResultDto updateIsSale(ProductPropertyNameDto dto) {
+    public CommonResultDTO updateIsSale(ProductPropertyNameDTO dto) {
         ProductPropertyNameEntity entity = productPropertyNameRepository.findById(dto.getPropertyNameId()).get();
         if(ProductPropertyNameEntity.IS_SALE.equals(dto.getIsSale())){
             List<ProductPropertyNameEntity>  propertyNameList = productPropertyNameRepository.findByTypeIdAndIsSaleAndIsDelete(entity.getTypeId(), ProductPropertyNameEntity.IS_SALE, CommonConstant.NOT_DELETE);
             if(null != propertyNameList && propertyNameList.size() >=3){
-                return new CommonResultDto().validateFailed("同个分类最多只能有三个销售属性！");
+                return new CommonResultDTO().validateFailed("同个分类最多只能有三个销售属性！");
             }
         }
         /**
@@ -126,15 +126,15 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
         productPropertyMapper.deleteSku(dto.getPropertyNameId());
         entity.setIsSale(dto.getIsSale());
         productPropertyNameRepository.save(entity);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
-    public CommonResultDto updateIsShow(ProductPropertyNameDto dto) {
+    public CommonResultDTO updateIsShow(ProductPropertyNameDTO dto) {
         ProductPropertyNameEntity entity = productPropertyNameRepository.findById(dto.getPropertyNameId()).get();
         entity.setIsShow(dto.getIsShow());
         productPropertyNameRepository.save(entity);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
 }

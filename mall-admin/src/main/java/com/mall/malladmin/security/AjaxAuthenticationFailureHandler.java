@@ -2,7 +2,7 @@ package com.mall.malladmin.security;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.malladmin.enumUtil.ResultEnum;
-import com.mall.malladmin.dto.common.ResultDto;
+import com.mall.malladmin.dto.common.ResultDTO;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,7 @@ public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHa
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultDto.result(ResultEnum.USER_LOGIN_FAILED,null, false)));
+        httpServletResponse.getWriter().write(JSON.toJSONString(ResultDTO.result(ResultEnum.USER_LOGIN_FAILED,null, false)));
     }
 
 }

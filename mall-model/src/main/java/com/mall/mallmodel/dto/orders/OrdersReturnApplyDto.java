@@ -1,4 +1,4 @@
-package com.mall.mallmodel.dto.orders;
+package com.mall.mallmodel.dto.order;
 
 import com.mall.mallmodel.dto.common.CommonDto;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.Date;
  * 订单退货申请表
  */
 @Data
-public class OrdersReturnApplyDto extends CommonDto {
+public class OrderReturnApplyDto extends CommonDto {
     /**
      * 主键
      */
@@ -42,11 +42,11 @@ public class OrdersReturnApplyDto extends CommonDto {
     /**
      * 订单id
      */
-    private String ordersId;
+    private String orderId;
     /**
      * 订单商品明细编号
      */
-    private String ordersItemsId;
+    private String orderItemsId;
     /**
      * 用户id
      */

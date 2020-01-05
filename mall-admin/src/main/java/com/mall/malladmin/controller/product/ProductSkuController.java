@@ -2,8 +2,8 @@ package com.mall.malladmin.controller.product;
 
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.controller.common.GenericController;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductSkuDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductSkuDTO;
 import com.mall.malladmin.service.product.ProductSkuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,21 +24,21 @@ public class ProductSkuController extends GenericController {
 
     @ApiOperation("分页查询")
     @GetMapping(value = "/getPage.do")
-    protected CommonResultDto getPage(ProductSkuDto dto){
-        PageInfo<ProductSkuDto> result = productSkuService.findPage(dto);
-        return new CommonResultDto().success(result);
+    protected CommonResultDTO getPage(ProductSkuDTO dto){
+        PageInfo<ProductSkuDTO> result = productSkuService.findPage(dto);
+        return new CommonResultDTO().success(result);
     }
 
     @ApiOperation("新增")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:CREATE') or hasRole('ADMIN')")
     @PostMapping(value = "/create.do")
-    protected CommonResultDto create (@RequestBody ProductSkuDto dto){
+    protected CommonResultDTO create (@RequestBody ProductSkuDTO dto){
         log.info("{}",dto);
         if(null == dto.getProductId()){
-            return new CommonResultDto().validateFailed("商品编号为空！");
+            return new CommonResultDTO().validateFailed("商品编号为空！");
         }
         if(null == dto.getTypeId()){
-            return new CommonResultDto().validateFailed("商品类目为空！");
+            return new CommonResultDTO().validateFailed("商品类目为空！");
         }
         return productSkuService.add(dto);
     }
@@ -46,29 +46,29 @@ public class ProductSkuController extends GenericController {
     @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/update.do/{id}")
-    protected CommonResultDto update(@PathVariable Integer id, @RequestBody ProductSkuDto dto){
+    protected CommonResultDTO update(@PathVariable Integer id, @RequestBody ProductSkuDTO dto){
         log.info("{}",dto);
         if(null == dto.getProductId()){
-            return new CommonResultDto().validateFailed("商品编号为空！");
+            return new CommonResultDTO().validateFailed("商品编号为空！");
         }
         return productSkuService.update(id, dto);
     }
 
     @ApiOperation("根据主键查询")
     @GetMapping(value = "/findById.do/{id}")
-    protected CommonResultDto findById(@PathVariable Integer id){
+    protected CommonResultDTO findById(@PathVariable Integer id){
         if(null == id){
-            return new CommonResultDto().validateFailed("SKU编码为空！");
+            return new CommonResultDTO().validateFailed("SKU编码为空！");
         }
-        ProductSkuDto result = productSkuService.findById(id);
-        return new CommonResultDto().success(result);
+        ProductSkuDTO result = productSkuService.findById(id);
+        return new CommonResultDTO().success(result);
     }
 
     @ApiOperation("删除-逻辑删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:DELETE') or hasRole('ADMIN')")
     @GetMapping(value = "/delete.do/{id}")
-    protected CommonResultDto delete(@PathVariable Integer id){
+    protected CommonResultDTO delete(@PathVariable Integer id){
         productSkuService.deleteById(id);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 }

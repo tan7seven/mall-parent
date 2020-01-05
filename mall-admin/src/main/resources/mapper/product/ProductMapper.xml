@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.malladmin.mapper.product.ProductMapper">
 
-    <resultMap id="ProductMap" type="com.mall.malladmin.dto.product.ProductDto">
+    <resultMap id="ProductMap" type="com.mall.malladmin.dto.product.ProductDTO">
         <result column="productId" property="productId"/>
         <result column="typeId" property="typeId"/>
         <result column="hits" property="hits"/>
@@ -46,7 +46,7 @@
         </if>
     </select>
 
-    <select id="findPropertyIsSale" resultType="com.mall.malladmin.dto.product.ProductPropertyDto">
+    <select id="findPropertyIsSale" resultType="com.mall.malladmin.dto.product.ProductPropertyDTO">
       SELECT concat(a.name,':',b.value) as isSalePropertyString, concat(a.property_name_id,':',b.property_value_id) as isSalePropertyId
         FROM mall_product_property_name a
       INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id

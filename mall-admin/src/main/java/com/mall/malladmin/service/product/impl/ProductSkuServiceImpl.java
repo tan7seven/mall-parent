@@ -3,8 +3,8 @@ package com.mall.malladmin.service.product.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.constant.CommonConstant;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductSkuDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductSkuDTO;
 import com.mall.malladmin.entity.product.*;
 import com.mall.malladmin.mapper.product.ProductPropertyMapper;
 import com.mall.malladmin.mapper.product.ProductSkuMapper;
@@ -47,10 +47,10 @@ public class ProductSkuServiceImpl implements ProductSkuService {
     private ProductPropertyMapper productPropertyMapper;
 
     @Override
-    public CommonResultDto add(ProductSkuDto dto) {
+    public CommonResultDTO add(ProductSkuDTO dto) {
         ProductEntity product = productRepository.findById(dto.getProductId()).get();
         if(product.getPriceMin().compareTo(dto.getPrice())== 1){
-            return new CommonResultDto().validateFailed("销售价格不能小于商品最低价！");
+            return new CommonResultDTO().validateFailed("销售价格不能小于商品最低价！");
         }
         ProductSkuEntity entity = new ProductSkuEntity();
         entity.setCost(dto.getCost()==null?new BigDecimal(0):dto.getCost());
@@ -77,11 +77,11 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         entity.setSellSum(0);
         entity.setIsDelete(CommonConstant.NOT_DELETE);
         productSkuRepository.save(entity);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
-    public CommonResultDto update(Integer id, ProductSkuDto dto) {
+    public CommonResultDTO update(Integer id, ProductSkuDTO dto) {
         dto.setCreateTime(new Date());
         dto.setModifyTime(new Date());
         dto.setCost(dto.getCost()==null?new BigDecimal(0):dto.getCost());
@@ -106,13 +106,13 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         }
         skuEntity.setProperties(properties.toString());
         productSkuRepository.save(skuEntity);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
-    public ProductSkuDto findById(Integer id) {
+    public ProductSkuDTO findById(Integer id) {
         ProductSkuEntity entity = productSkuRepository.findById(id).get();
-        ProductSkuDto result = new ProductSkuDto();
+        ProductSkuDTO result = new ProductSkuDTO();
         BeanUtils.copyProperties(entity, result);
         //设置商品属性值
         String[] properties = entity.getProperties().split("&");
@@ -169,14 +169,14 @@ public class ProductSkuServiceImpl implements ProductSkuService {
     }
 
     @Override
-    public PageInfo<ProductSkuDto> findPage(ProductSkuDto dto) {
+    public PageInfo<ProductSkuDTO> findPage(ProductSkuDTO dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<ProductSkuDto> skuVoList = productSkuMapper.getList(dto);
+        List<ProductSkuDTO> skuVoList = productSkuMapper.getList(dto);
         //将property值转换成对应value值
-        for (ProductSkuDto skuDto: skuVoList){
+        for (ProductSkuDTO skuDto: skuVoList){
             this.makePropertyKeyToValue(skuDto);
         }
-        PageInfo<ProductSkuDto> page = new PageInfo<>(skuVoList);
+        PageInfo<ProductSkuDTO> page = new PageInfo<>(skuVoList);
         return page;
     }
 
@@ -184,7 +184,7 @@ public class ProductSkuServiceImpl implements ProductSkuService {
      * 将property值转换成对应value值
      * @param dto
      */
-    private void makePropertyKeyToValue(ProductSkuDto dto){
+    private void makePropertyKeyToValue(ProductSkuDTO dto){
         StringBuffer propertySb = new StringBuffer();
         List<ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeIdAndIsDelete(dto.getTypeId(), CommonConstant.NOT_DELETE);
         List<ProductPropertyValueEntity> valueList = productPropertyValueRepository.findByProductId(dto.getProductId());

@@ -1,6 +1,6 @@
 package com.mall.malladmin.repository;
 
-import com.mall.malladmin.entity.CompanyAddressEntity;
+import com.mall.malladmin.entity.order.CompanyAddressEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

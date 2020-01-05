@@ -1,7 +1,7 @@
 package com.mall.malladmin.mapper.product;
 
-import com.mall.malladmin.dto.product.ProductPropertyNameDto;
-import com.mall.malladmin.dto.product.ProductPropertyValueDto;
+import com.mall.malladmin.dto.product.ProductPropertyNameDTO;
+import com.mall.malladmin.dto.product.ProductPropertyValueDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -17,12 +17,12 @@ public interface ProductPropertyMapper {
      * @param dto
      * @return
      */
-    List<ProductPropertyNameDto> findList(@Param("dto") ProductPropertyNameDto dto);
+    List<ProductPropertyNameDTO> findList(@Param("dto") ProductPropertyNameDTO dto);
     /**
      * 查询-属性值
      * @return
      */
-    List<ProductPropertyValueDto> findByPropertyNameIdAndProductId(@Param(value = "propertyNameId")Integer propertyNameId, @Param(value = "productId") Integer productId);
+    List<ProductPropertyValueDTO> findByPropertyNameIdAndProductId(@Param(value = "propertyNameId")Integer propertyNameId, @Param(value = "productId") Integer productId);
 
     /**
      * 根据商品ID删除商品属性值-删除表信息

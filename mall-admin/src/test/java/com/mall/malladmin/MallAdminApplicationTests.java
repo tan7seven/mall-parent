@@ -1,8 +1,8 @@
 package com.mall.malladmin;
 
 import com.github.pagehelper.PageInfo;
-import com.mall.malladmin.dto.orders.OrdersDto;
-import com.mall.malladmin.service.orders.OrdersService;
+import com.mall.malladmin.dto.order.OrderDTO;
+import com.mall.malladmin.service.order.OrderService;
 import com.mall.malladmin.service.product.ProductDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -18,12 +18,12 @@ import javax.annotation.Resource;
 public class MallAdminApplicationTests {
     @Resource(name = "productDetailService")
     private ProductDetailService productDetailService;
-    @Resource(name = "ordersService")
-    private OrdersService ordersService;
+    @Resource(name = "orderService")
+    private OrderService orderService;
 	@Test
 	public void contextLoads( ) {
-        OrdersDto dto = new OrdersDto();
-        PageInfo<OrdersDto> result = ordersService.getPage(dto);
+        OrderDTO dto = new OrderDTO();
+        PageInfo<OrderDTO> result = orderService.getPage(dto);
         log.info("结果：{}",result);
 	}
 

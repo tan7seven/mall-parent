@@ -1,8 +1,8 @@
 package com.mall.malladmin.mapper.system;
 
-import com.mall.malladmin.dto.system.AdminDto;
-import com.mall.malladmin.dto.system.ButtonDto;
-import com.mall.malladmin.dto.system.MenuDto;
+import com.mall.malladmin.dto.system.AdminDTO;
+import com.mall.malladmin.dto.system.ButtonDTO;
+import com.mall.malladmin.dto.system.MenuDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,13 +17,13 @@ public interface ButtonMapper {
      * @param dto
      * @return
      */
-    List<ButtonDto> getListAuthority(@Param("dto") MenuDto dto);
+    List<ButtonDTO> getListAuthority(@Param("dto") MenuDTO dto);
 
     /**
      * 根据用户编码跟菜单ID删除
      * @param dto
      * @return
      */
-    int deleteByMenuIdAndUserId(@Param("dto")AdminDto dto);
+    int deleteByMenuIdAndUserId(@Param("dto") AdminDTO dto);
 
 }

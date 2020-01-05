@@ -1,9 +1,9 @@
 package com.mall.malladmin.service.product.impl;
 
 import com.mall.malladmin.constant.CommonConstant;
-import com.mall.malladmin.dto.common.CommonCascaderDto;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductTypeDto;
+import com.mall.malladmin.dto.common.CommonCascaderDTO;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductTypeDTO;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.mapper.product.ProductMapper;
 import com.mall.malladmin.mapper.product.ProductTypeMapper;
@@ -44,7 +44,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
-    public ProductTypeEntity update(ProductTypeDto dto) {
+    public ProductTypeEntity update(ProductTypeDTO dto) {
         ProductTypeEntity entity = productTypeRepository.findById(dto.getTypeId()).get();
         /*if(null != dto.getPropertyNameCheckedIsSale() && dto.getPropertyNameCheckedIsSale().length > 0){
             String[] propertyNames = dto.getPropertyNameCheckedIsSale();
@@ -86,10 +86,10 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
-    public CommonResultDto updateIsUsable(ProductTypeDto dto) {
+    public CommonResultDTO updateIsUsable(ProductTypeDTO dto) {
         ProductTypeEntity entity = this.findById(dto.getTypeId()).get();
         if(null == dto.getTypeId()){
-            return new CommonResultDto().validateFailed("类目ID异常：查无数据！");
+            return new CommonResultDTO().validateFailed("类目ID异常：查无数据！");
         }
         /**
          * 修改对应商品状态
@@ -102,11 +102,11 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         }
         entity.setIsUsable(dto.getIsUsable());
         this.add(entity);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
-    public ProductTypeEntity create(ProductTypeDto dto) {
+    public ProductTypeEntity create(ProductTypeDTO dto) {
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(dto, entity);
         if(0 == entity.getParentId()){
@@ -166,7 +166,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
-    public Page<ProductTypeEntity> findPage(ProductTypeDto dto) {
+    public Page<ProductTypeEntity> findPage(ProductTypeDTO dto) {
         Sort sort = new Sort(Sort.Direction.ASC, "sort", "typeId");
         Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
         ProductTypeEntity entity = new ProductTypeEntity();
@@ -182,7 +182,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
-    public List<CommonCascaderDto> getCascader() {
+    public List<CommonCascaderDTO> getCascader() {
         return productTypeMapper.getCascader();
     }
 
@@ -190,7 +190,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
      * 修改类目-是否可用
      * 修改对应商品状态-是否可用
      */
-    private int updateTypeIsUsable(ProductTypeDto dto){
+    private int updateTypeIsUsable(ProductTypeDTO dto){
         if (CommonConstant.IS_USABLE.equals(dto.getIsUsable())) {
             return productMapper.updateProductIsUsable(dto.getTypeId(), CommonConstant.IS_USABLE);
         }else if (CommonConstant.NOT_USABLE.equals(dto.getIsUsable())) {

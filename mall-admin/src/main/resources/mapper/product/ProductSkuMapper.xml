@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.malladmin.mapper.product.ProductSkuMapper">
 
-    <resultMap id="ProductSkuMap" type="com.mall.malladmin.dto.product.ProductSkuDto">
+    <resultMap id="ProductSkuMap" type="com.mall.malladmin.dto.product.ProductSkuDTO">
         <result column="skuId" property="skuId"/>
         <result column="productId" property="productId"/>
         <result column="productName" property="productName"/>

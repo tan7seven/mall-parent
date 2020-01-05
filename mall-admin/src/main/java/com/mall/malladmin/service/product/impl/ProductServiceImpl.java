@@ -3,9 +3,9 @@ package com.mall.malladmin.service.product.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.malladmin.constant.CommonConstant;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductDto;
-import com.mall.malladmin.dto.product.ProductPropertyDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductDTO;
+import com.mall.malladmin.dto.product.ProductPropertyDTO;
 import com.mall.malladmin.entity.product.*;
 import com.mall.malladmin.mapper.product.ProductMapper;
 import com.mall.malladmin.mapper.product.ProductPropertyMapper;
@@ -62,9 +62,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto findById(Integer id) {
+    public ProductDTO findById(Integer id) {
         ProductEntity entity = productRepository.findById(id).get();
-        ProductDto dto = new ProductDto();
+        ProductDTO dto = new ProductDTO();
         BeanUtils.copyProperties(entity, dto);
         //获取商品销售属性值
         List<ProductPropertyValueEntity> propertyValues = productPropertyValueRepository.findByProductId(id);
@@ -88,13 +88,13 @@ public class ProductServiceImpl implements ProductService {
         dto.setProductTypeParentId(typeEntity.getParentId());
         dto.setProductTypeId(result.getTypeId());
         //获取商品销售属性值
-        ProductDto isSaleParam = new ProductDto();
+        ProductDTO isSaleParam = new ProductDTO();
         isSaleParam.setProductId(dto.getProductId());
         isSaleParam.setIsSale(ProductPropertyNameEntity.IS_SALE);
-        List<ProductPropertyDto> propertyIsSaleList = productMapper.findPropertyIsSale(isSaleParam);
-        dto.setProductPropertyIsSaleChecked(propertyIsSaleList.stream().map(ProductPropertyDto::getIsSalePropertyString).toArray(String[]::new));
+        List<ProductPropertyDTO> propertyIsSaleList = productMapper.findPropertyIsSale(isSaleParam);
+        dto.setProductPropertyIsSaleChecked(propertyIsSaleList.stream().map(ProductPropertyDTO::getIsSalePropertyString).toArray(String[]::new));
         //获取商品销售属性值
-        ProductDto notSaleParam = new ProductDto();
+        ProductDTO notSaleParam = new ProductDTO();
         notSaleParam.setProductId(dto.getProductId());
         notSaleParam.setIsSale(ProductPropertyNameEntity.NOT_SALE);
         List<String> propertyNotList = productMapper.findPropertyNotSale(notSaleParam);
@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResultDto deleteList(List<Integer>  ids) {
+    public CommonResultDTO deleteList(List<Integer>  ids) {
         for (Integer id : ids) {
             //删除商品库存信息-逻辑删除
             productSkuMapper.updateIsDeleteByProductId(id);
@@ -123,7 +123,7 @@ public class ProductServiceImpl implements ProductService {
             //删除商品信息-逻辑删除
             productMapper.updateIsDelete(id);
         }
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
@@ -149,15 +149,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageInfo<ProductDto> findPage(ProductDto dto) {
+    public PageInfo<ProductDTO> findPage(ProductDTO dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<ProductDto> productVoList = productMapper.getList(dto);
-        PageInfo<ProductDto> page = new PageInfo<>(productVoList);
+        List<ProductDTO> productVoList = productMapper.getList(dto);
+        PageInfo<ProductDTO> page = new PageInfo<>(productVoList);
         return page;
     }
 
     @Override
-    public CommonResultDto create(ProductDto dto) {
+    public CommonResultDTO create(ProductDTO dto) {
         //添加商品信息
         ProductEntity entity = new ProductEntity();
         BeanUtils.copyProperties(dto, entity);
@@ -227,11 +227,11 @@ public class ProductServiceImpl implements ProductService {
             propertyValueEntity.setIsSale(ProductPropertyValueEntity.NOT_SALE);
             productPropertyValueRepository.save(propertyValueEntity);
         }
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
-    public CommonResultDto update(Integer productId, ProductDto dto) {
+    public CommonResultDTO update(Integer productId, ProductDTO dto) {
         //修改商品信息
         ProductEntity entity = productRepository.findById(productId).get();
         BeanUtils.copyProperties(dto, entity);
@@ -262,13 +262,13 @@ public class ProductServiceImpl implements ProductService {
         //修改销售属性值
         String[] propertyIsSales = dto.getProductPropertyIsSaleChecked();
         //获取商品销售属性值
-        ProductDto isSaleParam = new ProductDto();
+        ProductDTO isSaleParam = new ProductDTO();
         isSaleParam.setProductId(dto.getProductId());
         isSaleParam.setIsSale(ProductPropertyNameEntity.IS_SALE);
-        List<ProductPropertyDto> propertyIsSaleList = productMapper.findPropertyIsSale(isSaleParam);
+        List<ProductPropertyDTO> propertyIsSaleList = productMapper.findPropertyIsSale(isSaleParam);
         //判断之前是否存在，存在则不操作，不存在则新增
         for (String propertyIsSale : propertyIsSales) {
-            List<String> isExist = propertyIsSaleList.stream().map(ProductPropertyDto::getIsSalePropertyString).filter(s -> s.equals(propertyIsSale)).collect(Collectors.toList());
+            List<String> isExist = propertyIsSaleList.stream().map(ProductPropertyDTO::getIsSalePropertyString).filter(s -> s.equals(propertyIsSale)).collect(Collectors.toList());
             if (null != isExist && !isExist.isEmpty()) {
                 continue;
             }
@@ -290,7 +290,7 @@ public class ProductServiceImpl implements ProductService {
             productPropertyValueRepository.save(propertyValueEntity);
         }
         //判断之前的值是否被删除，删除需要删除对应的SKU信息
-        for (ProductPropertyDto propertyIsSale : propertyIsSaleList) {
+        for (ProductPropertyDTO propertyIsSale : propertyIsSaleList) {
             List<String> isExist = Arrays.stream(propertyIsSales)
                     .filter(s -> s.equals(propertyIsSale.getIsSalePropertyString()))
                     .collect(Collectors.toList());
@@ -324,22 +324,22 @@ public class ProductServiceImpl implements ProductService {
             productPropertyValueRepository.save(propertyValueEntity);
         }
 
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
-    public CommonResultDto updateIsPutAway(String isPutaway, List<Integer>  ids) {
+    public CommonResultDTO updateIsPutAway(String isPutaway, List<Integer>  ids) {
         for (Integer id : ids) {
             ProductEntity entity = productRepository.findById(id).get();
             entity.setIsPutaway(isPutaway);
             productRepository.save(entity);
         }
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @Override
-    public List<ProductDto> findByName(String name) {
-        ProductDto dto = new ProductDto();
+    public List<ProductDTO> findByName(String name) {
+        ProductDTO dto = new ProductDTO();
         if (StringUtils.isNotBlank(name)) {
             dto.setProductName(name);
         }
@@ -360,12 +360,12 @@ public class ProductServiceImpl implements ProductService {
         File file = new File(sb);
         if (file.exists()) {
             if (file.delete()) {
-                return new CommonResultDto().success();
+                return new CommonResultDTO().success();
             } else {
-                return new CommonResultDto().failed();
+                return new CommonResultDTO().failed();
             }
         } else {
-            return new CommonResultDto().failed();
+            return new CommonResultDTO().failed();
         }
     }
 }

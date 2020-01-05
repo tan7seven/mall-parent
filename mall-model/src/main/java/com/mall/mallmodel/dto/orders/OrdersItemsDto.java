@@ -1,4 +1,4 @@
-package com.mall.mallmodel.dto.orders;
+package com.mall.mallmodel.dto.order;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  * 订单商品明细表
  */
 @Data
-public class OrdersItemsDto {
+public class OrderItemsDto {
     /**
      * 主键
      */
@@ -17,7 +17,7 @@ public class OrdersItemsDto {
     /**
      * 订单主键
      */
-    private String ordersId;
+    private String orderId;
     /**
      * 类目编号
      */

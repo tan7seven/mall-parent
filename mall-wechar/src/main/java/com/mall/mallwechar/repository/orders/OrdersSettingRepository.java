@@ -1,8 +1,8 @@
-package com.mall.mallwechar.repository.orders;
+package com.mall.mallwechar.repository.order;
 
-import com.mall.mallmodel.entity.orders.OrdersSettingEntity;
+import com.mall.mallmodel.entity.order.OrderSettingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface OrdersSettingRepository extends JpaRepository<OrdersSettingEntity, Integer>, JpaSpecificationExecutor<OrdersSettingEntity> {
+public interface OrderSettingRepository extends JpaRepository<OrderSettingEntity, Integer>, JpaSpecificationExecutor<OrderSettingEntity> {
 }

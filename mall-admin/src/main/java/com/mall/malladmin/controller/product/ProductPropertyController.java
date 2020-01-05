@@ -1,8 +1,8 @@
 package com.mall.malladmin.controller.product;
 
 import com.github.pagehelper.PageInfo;
-import com.mall.malladmin.dto.common.CommonResultDto;
-import com.mall.malladmin.dto.product.ProductPropertyNameDto;
+import com.mall.malladmin.dto.common.CommonResultDTO;
+import com.mall.malladmin.dto.product.ProductPropertyNameDTO;
 import com.mall.malladmin.entity.product.ProductPropertyNameEntity;
 import com.mall.malladmin.entity.product.ProductTypeEntity;
 import com.mall.malladmin.service.product.ProductPropertyNameService;
@@ -33,32 +33,32 @@ public class ProductPropertyController {
 
     @ApiOperation("获取详情")
     @GetMapping(value = "/getById.do/{id}")
-    protected CommonResultDto getById(@PathVariable Integer id){
+    protected CommonResultDTO getById(@PathVariable Integer id){
         if(null == id){
-            return new CommonResultDto().validateFailed("ID为空！");
+            return new CommonResultDTO().validateFailed("ID为空！");
         }
         ProductPropertyNameEntity entity = productPropertyNameService.findById(id).get();
         if(null == entity){
-            return new CommonResultDto().validateFailed("ID异常：获取不到对应的类目信息！");
+            return new CommonResultDTO().validateFailed("ID异常：获取不到对应的类目信息！");
         }
-        ProductPropertyNameDto result = new ProductPropertyNameDto();
+        ProductPropertyNameDTO result = new ProductPropertyNameDTO();
         ProductTypeEntity productType = productTypeService.findById(entity.getTypeId()).get();
         BeanUtils.copyProperties(entity, result);
         result.setParentId(productType.getParentId());
-        return new CommonResultDto().success(result);
+        return new CommonResultDTO().success(result);
     }
 
     @ApiOperation("分页查询")
     @GetMapping("/getPage.do")
-    protected CommonResultDto getPage(ProductPropertyNameDto dto){
-        PageInfo<ProductPropertyNameDto> result = productPropertyNameService.findPage(dto);
-        return new CommonResultDto().success(result);
+    protected CommonResultDTO getPage(ProductPropertyNameDTO dto){
+        PageInfo<ProductPropertyNameDTO> result = productPropertyNameService.findPage(dto);
+        return new CommonResultDTO().success(result);
     }
 
     @ApiOperation("新增")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:CREATE') or hasRole('ADMIN')")
     @PostMapping("/create.do")
-    protected CommonResultDto create(@RequestBody ProductPropertyNameDto dto){
+    protected CommonResultDTO create(@RequestBody ProductPropertyNameDTO dto){
         ProductPropertyNameEntity entity = new ProductPropertyNameEntity();
         BeanUtils.copyProperties(dto,entity);
         return  productPropertyNameService.add(entity);
@@ -67,9 +67,9 @@ public class ProductPropertyController {
     @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:UPDATE') or hasRole('ADMIN')")
     @PostMapping("/update.do/{id}")
-    protected CommonResultDto update(@PathVariable Integer id, @RequestBody ProductPropertyNameDto dto){
+    protected CommonResultDTO update(@PathVariable Integer id, @RequestBody ProductPropertyNameDTO dto){
         if(null == id){
-            return new CommonResultDto().validateFailed("主键为空！");
+            return new CommonResultDTO().validateFailed("主键为空！");
         }
         return productPropertyNameService.update(dto);
     }
@@ -77,20 +77,20 @@ public class ProductPropertyController {
     @ApiOperation("删除-逻辑删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:DELETE') or hasRole('ADMIN')")
     @GetMapping("/delete.do/{id}")
-    protected CommonResultDto delete(@PathVariable Integer id){
+    protected CommonResultDTO delete(@PathVariable Integer id){
         if(null == id){
-            return new CommonResultDto().validateFailed("主键为空！");
+            return new CommonResultDTO().validateFailed("主键为空！");
         }
         productPropertyNameService.deleteById(id);
-        return new CommonResultDto().success();
+        return new CommonResultDTO().success();
     }
 
     @ApiOperation("是否销售属性")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsSale.do")
-    protected CommonResultDto updateIsSale(@RequestBody ProductPropertyNameDto dto){
+    protected CommonResultDTO updateIsSale(@RequestBody ProductPropertyNameDTO dto){
         if(null == dto.getPropertyNameId()){
-            return new CommonResultDto().validateFailed("主键为空！");
+            return new CommonResultDTO().validateFailed("主键为空！");
         }
         return productPropertyNameService.updateIsSale(dto);
     }
@@ -98,9 +98,9 @@ public class ProductPropertyController {
     @ApiOperation("是否显示")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsShow.do")
-    protected CommonResultDto updateIsShow(@RequestBody ProductPropertyNameDto dto){
+    protected CommonResultDTO updateIsShow(@RequestBody ProductPropertyNameDTO dto){
         if(null == dto.getPropertyNameId()){
-            return new CommonResultDto().validateFailed("主键为空！");
+            return new CommonResultDTO().validateFailed("主键为空！");
         }
         return productPropertyNameService.updateIsShow(dto);
     }

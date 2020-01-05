@@ -1,6 +1,6 @@
 package com.mall.malladmin.service;
 
-import com.mall.malladmin.entity.CompanyAddressEntity;
+import com.mall.malladmin.entity.order.CompanyAddressEntity;
 
 import java.util.List;
 
