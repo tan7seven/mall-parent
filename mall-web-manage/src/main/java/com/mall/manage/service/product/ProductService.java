@@ -1,0 +1,84 @@
+package com.mall.manage.service.product;
+
+import com.github.pagehelper.PageInfo;
+import com.mall.common.vo.RestResult;
+import com.mall.dao.dto.product.ProductDTO;
+import com.mall.dao.entity.product.ProductEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * 商品信息
+ */
+public interface ProductService {
+    /**
+     * 新增
+     * @param entity
+     * @return
+     */
+    ProductEntity add(ProductEntity entity);
+    /**
+     *  根据ID查找
+     * @param id
+     * @return
+     */
+    ProductDTO findById(Integer id);
+    /**
+     * 批量删除
+     */
+    @Transactional
+    RestResult deleteList(List<Integer>  ids);
+    /**
+     * 根据逐渐删除
+     * @param id
+     */
+    void deleteById(Integer id);
+    /**
+     * 查询
+     * @param entity
+     * @return
+     */
+    List<ProductEntity> findList(ProductEntity entity);
+    /**
+     * 查询
+     * @param entity
+     * @return
+     */
+    Page<ProductEntity> findPage(ProductEntity entity, Pageable page);
+
+    /**
+     * mybatis分页查询
+     * @returndto
+     */
+    PageInfo<ProductDTO> findPage(ProductDTO dto);
+
+    /**
+     * 创建商品信息
+     * @param dto
+     * @return
+     */
+    @Transactional
+    RestResult create(ProductDTO dto);
+    /**
+     * 更新商品信息
+     * @param dto
+     * @return
+     */
+    @Transactional
+    RestResult update(Integer id, ProductDTO dto);
+    /**
+     * 更新上下架状态
+     * @return
+     */
+    @Transactional
+    RestResult updateIsPutAway(String isPutaway, List<Integer>  ids);
+    /**
+     * 根据商品名称查询
+     * @param name
+     * @return
+     */
+    List<ProductDTO> findByName(String name);
+}

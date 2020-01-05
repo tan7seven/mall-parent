@@ -1,0 +1,54 @@
+server:
+  servlet:
+    session:
+      timeout: 72000s
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://47.110.47.162:3306/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: false
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.mall.mallmodel.entity.*
+#  驼峰转换
+  configuration:
+    map-underscore-to-camel-case: true
+# 配置swagger
+#swagger:
+#  enabled: true
+#  base-package: com.mall
+#  title: 订单底层服务模块API接口【内部调用不对外提供】
+#  version: 1.0
+#  description:  订单模块。
+#  contact:
+#    name: eijiazheng
+#  authorization:
+#    key-name: wjz-mall
+#    type: BaseAuth
+
+
