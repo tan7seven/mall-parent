@@ -15,7 +15,7 @@ public interface ProductMapper {
      * 查询
      * @return
      */
-    List<ProductDTO> getList(@Param("dto") ProductDTO dto);
+    List<ProductDTO> getList(@Param("dto") ProductDTO param);
 
     /**
      * 查询商品销售属性值

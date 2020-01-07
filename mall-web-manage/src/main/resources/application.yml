@@ -38,6 +38,13 @@ mybatis:
 #  驼峰转换
   configuration:
     map-underscore-to-camel-case: true
+aliyun:
+  accessKeyId: LTAI4FjhAeZusCt8fySLxnwh
+  accessKeySecret: nSuTUrtUK6QuDOZTzrMGafnSO3KMia
+  oss:
+    endpoint: http://oss-cn-beijing.aliyuncs.com
+    bucketName: wjz-mall-image
+    urlPrefix: https://wjz-mall-image.oss-cn-beijing.aliyuncs.com/
 # 配置swagger
 #swagger:
 #  enabled: true

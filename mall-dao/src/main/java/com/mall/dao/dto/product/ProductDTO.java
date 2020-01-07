@@ -98,6 +98,9 @@ public class ProductDTO extends CommonDTO implements Serializable {
     /**
      * 是否销售属性
      */
-    private String isSale;
+    private String isSale;/**
+     * 是否可用
+     */
+    private String isUsable;
 
 }

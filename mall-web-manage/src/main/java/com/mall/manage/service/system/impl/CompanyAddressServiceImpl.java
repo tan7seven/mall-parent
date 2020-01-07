@@ -1,4 +1,4 @@
-package com.mall.manage.service.impl;
+package com.mall.manage.service.system.impl;
 
 import com.mall.dao.entity.order.CompanyAddressEntity;
 import com.mall.dao.repository.system.CompanyAddressRespository;

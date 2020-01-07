@@ -2,10 +2,8 @@
 
 package com.mall.common.exception;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mall.common.vo.RestResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,7 +18,7 @@ import sun.security.validator.ValidatorException;
 
 
 @Slf4j
-@RestControllerAdvice({"com.microservice"})
+@RestControllerAdvice({"com.mall"})
 public class GlobalExceptionHandler {
 
     @Value("${spring.application.name:default}")

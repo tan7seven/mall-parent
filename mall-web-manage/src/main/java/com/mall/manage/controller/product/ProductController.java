@@ -4,21 +4,20 @@ package com.mall.manage.controller.product;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
+import com.mall.manage.param.product.ProductGetPageParam;
+import com.mall.common.manage.UploadPicService;
 import com.mall.manage.service.product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
@@ -34,10 +33,13 @@ public class ProductController {
     @Resource(name = "productService")
     private ProductService productService;
 
+    @Autowired
+    private UploadPicService uploadPicService;
+
     @ApiOperation("分页查询")
     @GetMapping(value = "/getPage.do")
-    protected RestResult getPage(ProductDTO dto){
-        PageInfo<ProductDTO> result = productService.findPage(dto);
+    protected RestResult getPage(ProductGetPageParam param){
+        PageInfo<ProductDTO> result = productService.findPage(param);
         return RestResult.success(result);
     }
 
@@ -90,8 +92,12 @@ public class ProductController {
         RestResult result = productService.updateIsPutAway(isPutaway, ids);
         return result;
     }
-
     @ApiOperation("文件上传")
+    @PostMapping(value = "/upload.do")
+    protected RestResult upload(@RequestParam("picture") MultipartFile picture){
+        return uploadPicService.upload(picture);
+    }
+   /* @ApiOperation("文件上传")
     @PostMapping(value = "/upload.do")
     protected RestResult upload(@RequestParam("picture") MultipartFile picture, HttpServletRequest request){
         //获取文件在服务器的储存位置
@@ -123,7 +129,7 @@ public class ProductController {
             return RestResult.failed();
         }
     }
-
+*/
     @ApiOperation("删除图片文件")
     @PostMapping(value = "/deletePic.do")
     protected Object deletePic(String picUrl){
@@ -131,12 +137,8 @@ public class ProductController {
         String sb = picUrl.substring(lastIndexOf + 1, picUrl.length());
         sb = picPath + sb;
         File file = new File(sb);
-        if (file.exists()) {
-            if (file.delete()) {
-                return RestResult.success();
-            } else {
-                return RestResult.failed();
-            }
+        if (file.exists() && file.delete()) {
+            return RestResult.success();
         } else {
             return RestResult.failed();
         }
