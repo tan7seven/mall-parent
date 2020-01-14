@@ -1,4 +1,4 @@
-package com.mall.manage.param.product;
+package com.mall.manage.param.product.product;
 
 import com.mall.common.Param.CommonParam;
 import io.swagger.annotations.ApiModel;
@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "订单获取分页信息")
-public class ProductGetPageParam extends CommonParam {
+public class GetPageParam extends CommonParam {
 
     /**
      *商品编号

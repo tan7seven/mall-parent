@@ -3,10 +3,8 @@ package com.mall.manage.service.product;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
-import com.mall.dao.entity.product.ProductEntity;
-import com.mall.manage.param.product.ProductGetPageParam;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.mall.manage.param.product.product.GetPageParam;
+import com.mall.manage.param.product.product.UpdateIsPutawayParam;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -31,7 +29,7 @@ public interface ProductService {
      * mybatis分页查询
      * @returndto
      */
-    PageInfo<ProductDTO> findPage(ProductGetPageParam param);
+    PageInfo<ProductDTO> findPage(GetPageParam param);
 
     /**
      * 创建商品信息
@@ -52,7 +50,7 @@ public interface ProductService {
      * @return
      */
     @Transactional
-    RestResult updateIsPutAway(String isPutaway, List<Integer>  ids);
+    RestResult updateIsPutAway(UpdateIsPutawayParam param);
     /**
      * 根据商品名称查询
      * @param name

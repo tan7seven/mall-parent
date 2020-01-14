@@ -22,7 +22,7 @@ import java.util.Date;
 @RequestMapping(value = "/commonController")
 public class CommonController {
 
-    @Value("${pic.path}")
+    @Value("${pic.path:}")
     private String picPath;
 
     @PostMapping(value = "/upload.do")

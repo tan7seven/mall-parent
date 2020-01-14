@@ -11,7 +11,8 @@ import com.mall.dao.mapper.product.ProductMapper;
 import com.mall.dao.mapper.product.ProductPropertyMapper;
 import com.mall.dao.mapper.product.ProductSkuMapper;
 import com.mall.dao.repository.product.*;
-import com.mall.manage.param.product.ProductGetPageParam;
+import com.mall.manage.param.product.product.GetPageParam;
+import com.mall.manage.param.product.product.UpdateIsPutawayParam;
 import com.mall.manage.service.product.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -118,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageInfo<ProductDTO> findPage(ProductGetPageParam param) {
+    public PageInfo<ProductDTO> findPage(GetPageParam param) {
         ProductDTO dto = new ProductDTO();
         BeanUtils.copyProperties(param, dto);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
@@ -299,10 +300,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public RestResult updateIsPutAway(String isPutaway, List<Integer>  ids) {
-        for (Integer id : ids) {
+    public RestResult updateIsPutAway(UpdateIsPutawayParam param) {
+        for (Integer id : param.getIds()) {
             ProductEntity entity = productRepository.findById(id).get();
-            entity.setIsPutaway(isPutaway);
+            entity.setIsPutaway(param.getIsPutaway());
             productRepository.save(entity);
         }
         return RestResult.success();

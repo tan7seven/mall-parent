@@ -4,8 +4,9 @@ package com.mall.manage.controller.product;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
-import com.mall.manage.param.product.ProductGetPageParam;
-import com.mall.common.manage.UploadPicService;
+import com.mall.manage.param.product.product.GetPageParam;
+import com.mall.common.manage.UploadPicManage;
+import com.mall.manage.param.product.product.UpdateIsPutawayParam;
 import com.mall.manage.service.product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,11 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
 import java.util.List;
 
 
@@ -27,18 +28,15 @@ import java.util.List;
 @RequestMapping(value = "/productController")
 public class ProductController {
 
-    @Value("${pic.path}")
-    private String picPath;
-
     @Resource(name = "productService")
     private ProductService productService;
 
     @Autowired
-    private UploadPicService uploadPicService;
+    private UploadPicManage uploadPicManage;
 
     @ApiOperation("分页查询")
     @GetMapping(value = "/getPage.do")
-    protected RestResult getPage(ProductGetPageParam param){
+    protected RestResult getPage(GetPageParam param){
         PageInfo<ProductDTO> result = productService.findPage(param);
         return RestResult.success(result);
     }
@@ -88,59 +86,13 @@ public class ProductController {
     @ApiOperation("修改是否上下架状态")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/updateIsPutaway.do")
-    protected RestResult updateIsPutaway(String isPutaway, List<Integer>  ids){
-        RestResult result = productService.updateIsPutAway(isPutaway, ids);
+    protected RestResult updateIsPutaway(@Validated @RequestBody UpdateIsPutawayParam param){
+        RestResult result = productService.updateIsPutAway(param);
         return result;
     }
     @ApiOperation("文件上传")
     @PostMapping(value = "/upload.do")
     protected RestResult upload(@RequestParam("picture") MultipartFile picture){
-        return uploadPicService.upload(picture);
-    }
-   /* @ApiOperation("文件上传")
-    @PostMapping(value = "/upload.do")
-    protected RestResult upload(@RequestParam("picture") MultipartFile picture, HttpServletRequest request){
-        //获取文件在服务器的储存位置
-        String path = picPath;
-        File filePath = new File(path);
-        if (!filePath.exists() && !filePath.isDirectory()) {
-            filePath.mkdir();
-        }
-        //获取原始文件名称(包含格式)
-        String originalFileName = picture.getOriginalFilename();
-        //获取文件类型，以最后一个`.`为标识
-        String type = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-        //获取文件名称（不包含格式）
-        String name = originalFileName.substring(0, originalFileName.lastIndexOf("."));
-        //设置文件新名称: 当前时间+文件名称（不包含格式）
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String date = sdf.format(d);
-        String fileName = date + name + "." + type;
-        //在指定路径下创建一个文件
-        File targetFile = new File(path, fileName);
-        //将文件保存到服务器指定位置
-        try {
-            picture.transferTo(targetFile);
-            //将文件在服务器的存储路径返回
-            return RestResult.success("image/"+fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return RestResult.failed();
-        }
-    }
-*/
-    @ApiOperation("删除图片文件")
-    @PostMapping(value = "/deletePic.do")
-    protected Object deletePic(String picUrl){
-        int lastIndexOf = picUrl.lastIndexOf("/");
-        String sb = picUrl.substring(lastIndexOf + 1, picUrl.length());
-        sb = picPath + sb;
-        File file = new File(sb);
-        if (file.exists() && file.delete()) {
-            return RestResult.success();
-        } else {
-            return RestResult.failed();
-        }
+        return uploadPicManage.upload(picture);
     }
 }

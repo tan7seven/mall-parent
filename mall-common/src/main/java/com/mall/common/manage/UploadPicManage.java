@@ -19,7 +19,7 @@ import java.io.IOException;
  * @createDate: 2020/1/7
  */
 @Service
-public class UploadPicService {
+public class UploadPicManage {
     // 允许上传的格式
     private static final String[] IMAGE_TYPE = new String[]{".bmp", ".jpg", ".jpeg", ".gif", ".png"};
 
@@ -36,7 +36,7 @@ public class UploadPicService {
         for (String type : IMAGE_TYPE) {
             if (StringUtils.endsWithIgnoreCase(multipartFile.getOriginalFilename(), type)) {
                 isLegal = true;
-                break;  // 只要与允许上传格式其中一个匹配就可以
+                break;
             }
         }
         // 格式错误, 返回与前端约定的error
@@ -53,7 +53,7 @@ public class UploadPicService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return RestResult.success();
+        return RestResult.success(filePath);
     }
 
     /**
@@ -65,7 +65,7 @@ public class UploadPicService {
      */
     private String getFilePath(String fileName) {
         return "images/" + +System.currentTimeMillis() +
-                RandomUtils.nextInt(100, 9999) + "." + StringUtils.substringAfterLast(fileName, ".");
+                RandomUtils.nextInt(1000, 9999) + "." + StringUtils.substringAfterLast(fileName, ".");
     }
 }
 
