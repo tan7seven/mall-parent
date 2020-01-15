@@ -3,6 +3,10 @@ server:
     session:
       timeout: 72000s
 spring:
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 20MB
   profiles:
     active: dev
   datasource:
@@ -45,6 +49,7 @@ aliyun:
     endpoint: http://oss-cn-beijing.aliyuncs.com
     bucketName: wjz-mall-image
     urlPrefix: https://wjz-mall-image.oss-cn-beijing.aliyuncs.com/
+
 # 配置swagger
 #swagger:
 #  enabled: true

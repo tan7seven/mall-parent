@@ -1,7 +1,7 @@
 package com.mall.manage.security;
 
 import com.alibaba.fastjson.JSON;
-import com.mall.common.enums.ResultEnum;
+import com.mall.common.enums.ResultStatus;
 import com.mall.common.vo.ResultVO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -21,7 +21,7 @@ public class AjaxLogoutSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.result(ResultEnum.USER_LOGOUT_SUCCESS,null, true)));
+        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.result(ResultStatus.USER_LOGOUT_SUCCESS,null, true)));
     }
 
 }

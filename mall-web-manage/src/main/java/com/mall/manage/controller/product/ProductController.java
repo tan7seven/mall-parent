@@ -4,6 +4,7 @@ package com.mall.manage.controller.product;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
+import com.mall.manage.param.product.product.DeleteParam;
 import com.mall.manage.param.product.product.GetPageParam;
 import com.mall.common.manage.UploadPicManage;
 import com.mall.manage.param.product.product.UpdateIsPutawayParam;
@@ -77,9 +78,9 @@ public class ProductController {
 
     @ApiOperation("删除-逻辑删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
-    @PostMapping(value = "/delete.do")
-    protected RestResult delete(List<Integer> ids){
-        RestResult result = productService.deleteList(ids);
+    @DeleteMapping(value = "/delete.do")
+    protected RestResult delete(@Validated @RequestBody DeleteParam param){
+        RestResult result = productService.deleteList(param.getIds());
         return result;
     }
 
