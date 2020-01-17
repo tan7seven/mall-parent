@@ -33,7 +33,6 @@ public class ProductSkuController extends GenericController {
     @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:CREATE') or hasRole('ADMIN')")
     @PostMapping(value = "/create.do")
     protected RestResult create (@RequestBody ProductSkuDTO dto){
-        log.info("{}",dto);
         if(null == dto.getProductId()){
             return RestResult.validateFailed("商品编号为空！");
         }
@@ -47,7 +46,6 @@ public class ProductSkuController extends GenericController {
     @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/update.do/{id}")
     protected RestResult update(@PathVariable Integer id, @RequestBody ProductSkuDTO dto){
-        log.info("{}",dto);
         if(null == dto.getProductId()){
             return RestResult.validateFailed("商品编号为空！");
         }

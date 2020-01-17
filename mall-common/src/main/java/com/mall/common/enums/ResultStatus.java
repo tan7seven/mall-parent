@@ -13,14 +13,10 @@ public enum ResultStatus implements BaseExceptionCode {
     /**
      * 请求成功
      */
-    // OK
     SUCCESS(200, "success"),
-    // 已创建
-    SUCCESS_CREATED(201, "created"),
-    // 接收
-    SUCCESS_RECEIVE(202, "receive"),
-    // 非认证信息
-    SUCCESS_ILLEGALITY_MSG(203, "illegality"),
+    SUCCESS_CREATED(201, "已创建"),
+    SUCCESS_RECEIVE(202, "接收"),
+    SUCCESS_ILLEGALITY_MSG(203, "非认证信息"),
     /**
      * 客户方错误
      */
@@ -35,7 +31,7 @@ public enum ResultStatus implements BaseExceptionCode {
     CLIENT_TIMEOUT(408, "请求超时"),
     CLIENT_CONFLICT(409, "请求冲突"),
     CLIENT_FAILED(410, "请求失败"),
-    CLIENT_Length_Required(411, "请求长度不够"),
+    CLIENT_LENGTH_REQUIRED(411, "请求长度不够"),
     /**
      * 服务方错误
      */
@@ -44,7 +40,7 @@ public enum ResultStatus implements BaseExceptionCode {
      * 自定义业务异常
      */
     BUS_MSG_NOT_FOUND(1000, "数据不存在"),
-    BUS_RESUBMIT(1001, "您的请求正在处理，请稍候再试。"),
+    BUS_RESUBMIT(1001, "您的请求正在处理，请稍候再试"),
     /**
      * 自定义用户权限异常
      */
