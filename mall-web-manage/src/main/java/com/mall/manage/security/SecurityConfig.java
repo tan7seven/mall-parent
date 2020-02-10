@@ -63,7 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS).permitAll()//跨域请求会先进行一次options请求
                 .anyRequest().authenticated()// 除上面外的所有请求全部需要鉴权认证
                 //自定义登录界面
-                .and().formLogin().loginProcessingUrl("/adminController/login.do").successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler).permitAll()
+                .and().formLogin().loginProcessingUrl("/adminController/login.do")
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler).permitAll()
                 .usernameParameter("username").passwordParameter("password")
                 .and().logout().logoutUrl("/adminController/logout.do").logoutSuccessHandler(logoutSuccessHandler)
                 .and().csrf().disable()
