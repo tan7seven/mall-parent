@@ -8,7 +8,7 @@
         <result column="menu_title" jdbcType="VARCHAR" property="menuTitle" />
         <result column="menu_url" jdbcType="VARCHAR" property="menuUrl" />
         <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon" />
-        <result column="is_hidden" jdbcType="CHAR" property="isHidden" />
+        <result column="is_hidden" property="isHidden" />
         <result column="parentTitle" jdbcType="VARCHAR" property="parentTitle" />
     </resultMap>
     <resultMap id="TreeResultMap" type="com.mall.dao.dto.common.TreeDTO">

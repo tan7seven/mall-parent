@@ -15,8 +15,8 @@ import javax.persistence.*;
 @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class MenuEntity {
 
-    public static final String IS_HIDDEN = "1";
-    public static final String NOT_HIDDEN = "0";
+    public static final Integer IS_HIDDEN = 1;
+    public static final Integer NOT_HIDDEN = 0;
     /**
      * 菜单主键
      */
@@ -53,6 +53,6 @@ public class MenuEntity {
      * 是否隐藏
      */
     @Column(length = 1,name = "is_Hidden")
-    private String isHidden;
+    private Integer isHidden;
 
 }

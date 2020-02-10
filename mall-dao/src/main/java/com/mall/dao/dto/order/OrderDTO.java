@@ -60,15 +60,15 @@ public class OrderDTO extends CommonDTO {
     /**
      * 支付方式：0->未支付；1->支付宝；2->微信
      */
-    private String payType;
+    private Integer payType;
     /**
      * 订单来源：0->PC订单；1->app订单
      */
-    private String sourceType;
+    private Integer sourceType;
     /**
      * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭；5->完成评价；6->无效订单
      */
-    private String orderStatus;
+    private Integer orderStatus;
     /**
      * 物流公司(配送方式)
      */
@@ -120,7 +120,7 @@ public class OrderDTO extends CommonDTO {
     /**
      * 删除状态：0->未删除；1->已删除
      */
-    private String isDelete;
+    private Integer isDelete;
     /**
      * 下单时使用的积分
      */

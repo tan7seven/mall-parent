@@ -13,7 +13,7 @@ public interface ProductPropertyValueRepository extends JpaRepository<ProductPro
      * @param productId
      * @param isSale
      */
-    void deleteByProductIdAndIsSale(Integer productId, String isSale);
+    void deleteByProductIdAndIsSale(Integer productId, Integer isSale);
 
     /**
      * 删除属性值
@@ -21,7 +21,7 @@ public interface ProductPropertyValueRepository extends JpaRepository<ProductPro
      * @param value
      * @param productID
      */
-    void deleteByIsSaleAndValueAndProductId(String isSale, String value, Integer productID);
+    void deleteByIsSaleAndValueAndProductId(Integer isSale, String value, Integer productID);
     /**
      * 根据商品ID获取属性值
      * @param id

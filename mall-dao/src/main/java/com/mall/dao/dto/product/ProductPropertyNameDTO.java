@@ -27,21 +27,26 @@ public class ProductPropertyNameDTO extends CommonDTO implements Serializable {
      * 	0：否
      * 	1：是
      */
-    private String isSale;
+    private Integer isSale;
     /**
      * 	是否显示
      * 	0：是
      * 	1：否
      */
-    private String isShow;
+    private Integer isShow;
     /**
      * 	是否可用
      * 	0：是
      * 	1：否
      */
-    private String isUsable;
+    private Integer isUsable;
     /**
      * 商品分类一级编号
      */
     private Integer parentId;
+
+    /**
+     *
+     */
+    private String typeName;
 }

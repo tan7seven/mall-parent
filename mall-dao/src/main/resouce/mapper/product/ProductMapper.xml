@@ -14,8 +14,8 @@
         <result column="addTime" property="addTime"/>
         <result column="detail" property="detail"/>
         <result column="typeName" property="typeName"/>
-        <result column="is_usable" jdbcType="CHAR" property="isUsable" />
-        <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+        <result column="is_usable" property="isUsable" />
+        <result column="is_delete"  property="isDelete" />
     </resultMap>
 
     <select id="getList" resultMap="ProductMap">

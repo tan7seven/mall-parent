@@ -18,11 +18,11 @@ public class ProductEntity  implements Serializable {
     /**
      * 状态：0-上架
      */
-    public static final String PUT_AWAY = "0";
+    public static final Integer PUT_AWAY = 0;
     /**
      * 状态：1-下架
      */
-    public static final String SOLD_OUT = "1";
+    public static final Integer SOLD_OUT = 1;
 
     /**
      *商品编号
@@ -72,7 +72,7 @@ public class ProductEntity  implements Serializable {
      * 1：下架
      */
     @Column(length = 1, name = "is_putaway")
-    private String isPutaway;
+    private Integer isPutaway;
     /**
      * 新增时间
      */
@@ -84,12 +84,12 @@ public class ProductEntity  implements Serializable {
      * 1：禁用
      */
     @Column(length = 1, name = "is_usable")
-    private String isUsable;
+    private Integer isUsable;
     /**
      * 是否删除
      * 0：正常
      * 1：已删除
      */
     @Column(length = 1, name = "is_delete")
-    private String isDelete;
+    private Integer isDelete;
 }

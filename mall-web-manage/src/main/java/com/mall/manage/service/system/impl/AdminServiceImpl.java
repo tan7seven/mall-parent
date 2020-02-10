@@ -103,7 +103,7 @@ public class AdminServiceImpl implements AdminService {
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
         entity.setCreateTime(new Date());
-        entity.setIsUsable(StringUtils.isNotBlank(entity.getIsUsable())?entity.getIsUsable(): CommonConstant.IS_USABLE);
+        entity.setIsUsable(null == entity.getIsUsable()?entity.getIsUsable(): CommonConstant.IS_USABLE);
         entity.setModifyTime(new Date());
         entity.setRole(AdminEntity.ROLE_USER);
         entity.setPassword(AdminEntity.DEFAULT_PASSWORD);
@@ -170,7 +170,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateIsUsable(AdminDTO dto) {
         AdminEntity entity = adminRepository.findById(dto.getUserId()).get();
-        entity.setIsUsable(StringUtils.isBlank(dto.getIsUsable())?CommonConstant.IS_USABLE:dto.getIsUsable());
+        entity.setIsUsable(null == dto.getIsUsable()?CommonConstant.IS_USABLE:dto.getIsUsable());
         adminRepository.save(entity);
     }
 

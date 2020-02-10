@@ -101,6 +101,6 @@ public class ProductDTO extends CommonDTO implements Serializable {
     private String isSale;/**
      * 是否可用
      */
-    private String isUsable;
+    private Integer isUsable;
 
 }

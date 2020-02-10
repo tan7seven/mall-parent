@@ -29,12 +29,12 @@ public class CompanyAddressEntity {
      * 默认发货地址：0->是；1->否
      */
     @Column(length = 1,name = "is_send")
-    private String isSend;
+    private Integer isSend;
     /**
      * 默认收货地址 ：0->是；1->否
      */
     @Column(length = 1,name = "is_receive")
-    private String isReceive;
+    private Integer isReceive;
     /**
      * 收货人姓名
      */

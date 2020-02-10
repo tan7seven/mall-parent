@@ -1,7 +1,7 @@
 package com.mall.manage.service.product;
 
-import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
+import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.manage.param.product.product.GetPageParam;
 import com.mall.manage.param.product.product.UpdateIsPutawayParam;
@@ -29,7 +29,7 @@ public interface ProductService {
      * mybatis分页查询
      * @returndto
      */
-    PageInfo<ProductDTO> findPage(GetPageParam param);
+    ResultPage<ProductDTO> findPage(GetPageParam param);
 
     /**
      * 创建商品信息

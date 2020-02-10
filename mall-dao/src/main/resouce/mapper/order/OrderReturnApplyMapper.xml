@@ -11,7 +11,7 @@
         <result column="company_address_id" jdbcType="VARCHAR" property="companyAddressId" />
         <result column="return_reason" jdbcType="VARCHAR" property="returnReason" />
         <result column="return_pic" jdbcType="VARCHAR" property="returnPic" />
-        <result column="return_status" jdbcType="CHAR" property="returnStatus" />
+        <result column="return_status"  property="returnStatus" />
         <result column="return_amount" jdbcType="INTEGER" property="returnAmount" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime" />

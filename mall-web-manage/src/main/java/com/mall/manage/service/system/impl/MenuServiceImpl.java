@@ -160,7 +160,7 @@ public class MenuServiceImpl implements MenuService{
     @Override
     public void updateIsHidden(MenuDTO dto) {
         MenuEntity entity = menuRepository.findById(dto.getMenuId()).get();
-        entity.setIsHidden(StringUtils.isBlank(dto.getIsHidden())?MenuEntity.IS_HIDDEN:dto.getIsHidden());
+        entity.setIsHidden(null == dto.getIsHidden()?MenuEntity.IS_HIDDEN:dto.getIsHidden());
         menuRepository.save(entity);
     }
 

@@ -37,7 +37,7 @@ public class UserScoreEntity implements Serializable {
      * 	积分来源 	1->订单、2->评价、3->订单取消返还、4->拒收返还
      */
     @Column(length = 1,name = "source")
-    private String source;
+    private Integer source;
     /**
      * 	积分来源ID
      */
@@ -47,7 +47,7 @@ public class UserScoreEntity implements Serializable {
      * 	积分标识 0->收入、1->支出
      */
     @Column(length = 1,name = "score_type")
-    private String scoreType;
+    private Integer scoreType;
     /**
      * 	创建时间
      */

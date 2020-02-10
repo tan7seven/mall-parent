@@ -35,7 +35,7 @@ public class OrderOperationLogEntity {
          * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单
          */
         @Column(name = "order_status", length = 1)
-        private String orderStatus;
+        private Integer orderStatus;
         /**
          * 备注
          */

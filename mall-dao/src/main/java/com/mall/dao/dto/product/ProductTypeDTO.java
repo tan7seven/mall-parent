@@ -31,19 +31,19 @@ public class ProductTypeDTO extends CommonDTO implements Serializable {
     /**
      * 是否显示在导航栏
      */
-    private String isNavigationBar;
+    private Integer isNavigationBar;
     /**
      * 状态
      * 0:正常
      * 1：禁用
      */
-    private String isUsable;
+    private Integer isUsable;
     /**
      * 状态
      * 0:正常
      * 1：已删除
      */
-    private String isDelete;
+    private Integer isDelete;
     /**
      * 等级
      */

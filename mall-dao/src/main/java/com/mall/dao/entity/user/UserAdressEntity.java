@@ -61,12 +61,12 @@ public class UserAdressEntity implements Serializable {
      * 是否可用：0->是；1->否
      */
     @Column(length = 1,name = "is_usable")
-    private String isUsable;
+    private Integer isUsable;
     /**
      * 默认收货地址 ：0->是；1->否
      */
     @Column(length = 1,name = "is_receive")
-    private String isReceive;
+    private Integer isReceive;
     /**
      * 新增时间
      */

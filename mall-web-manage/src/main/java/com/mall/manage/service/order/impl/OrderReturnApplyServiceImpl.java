@@ -1,8 +1,8 @@
 package com.mall.manage.service.order.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.mall.common.constant.CommonConstant;
+import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.order.OrderReturnApplyDTO;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.order.OrderReturnApplyEntity;
@@ -48,10 +48,10 @@ public class OrderReturnApplyServiceImpl implements OrderReturnApplyService {
     }
 
     @Override
-    public PageInfo<OrderReturnApplyDTO> getPage(OrderReturnApplyDTO dto) {
+    public ResultPage<OrderReturnApplyDTO> getPage(OrderReturnApplyDTO dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<OrderReturnApplyDTO> resultList = orderReturnApplyMapper.findList(dto);
-        PageInfo<OrderReturnApplyDTO> page = new PageInfo<>(resultList);
+        ResultPage<OrderReturnApplyDTO> page = new ResultPage<>(resultList);
         return page;
     }
 

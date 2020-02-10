@@ -5,7 +5,7 @@
         <id column="operation_id" jdbcType="VARCHAR" property="operationId" />
         <result column="order_id" jdbcType="VARCHAR" property="orderId" />
         <result column="operation_person" jdbcType="VARCHAR" property="operationPerson" />
-        <result column="order_status" jdbcType="CHAR" property="orderStatus" />
+        <result column="order_status"  property="orderStatus" />
         <result column="remark" jdbcType="VARCHAR" property="remark" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="name"  property="name" />

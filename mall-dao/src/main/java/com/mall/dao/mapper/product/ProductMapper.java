@@ -44,6 +44,6 @@ public interface ProductMapper {
      * @param isUsable
      * @return
      */
-    int updateProductIsUsable(@Param("typeId") Integer typeId, @Param("isUsable")String isUsable);
+    int updateProductIsUsable(@Param("typeId") Integer typeId, @Param("isUsable")Integer isUsable);
 
 }

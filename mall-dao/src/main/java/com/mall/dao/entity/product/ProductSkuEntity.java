@@ -48,7 +48,7 @@ public class ProductSkuEntity  implements Serializable {
     @Column()
     private BigDecimal cost;
 
-    @Column(length = 1, name = "sell_sum")
+    @Column(length = 11, name = "sell_sum")
     private Integer sellSum;
     /**
      * 	商品库存
@@ -71,5 +71,5 @@ public class ProductSkuEntity  implements Serializable {
      * 1：已删除
      */
     @Column(length = 1, name = "is_delete")
-    private String isDelete;
+    private Integer isDelete;
 }

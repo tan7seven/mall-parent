@@ -13,8 +13,8 @@ import java.io.Serializable;
 @Table(name = "mall_product_property_value")
 public class ProductPropertyValueEntity  implements Serializable {
 
-    public static final String IS_SALE = "0";
-    public static final String NOT_SALE = "1";
+    public static final Integer IS_SALE = 0;
+    public static final Integer NOT_SALE = 1;
     /**
      * 编号
      */
@@ -43,5 +43,5 @@ public class ProductPropertyValueEntity  implements Serializable {
      * 1：否
      */
     @Column(name = "is_sale", length = 1)
-    private String isSale;
+    private Integer isSale;
 }

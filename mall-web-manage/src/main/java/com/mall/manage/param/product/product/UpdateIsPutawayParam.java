@@ -18,7 +18,7 @@ import java.util.List;
 public class UpdateIsPutawayParam {
     @ApiModelProperty("是否上下架 0上架 1下架")
     @NotBlank(message = "是否上下架不能为空")
-    private String isPutaway;
+    private Integer isPutaway;
     @ApiModelProperty("id列表")
     @NotEmpty(message = "ID不能为空")
     private List<Integer> ids;

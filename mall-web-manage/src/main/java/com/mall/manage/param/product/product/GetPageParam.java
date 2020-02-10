@@ -1,6 +1,6 @@
 package com.mall.manage.param.product.product;
 
-import com.mall.common.Param.CommonParam;
+import com.mall.common.param.CommonParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

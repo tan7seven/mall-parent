@@ -1,6 +1,6 @@
 package com.mall.manage.param.product.product;
 
-import com.mall.common.Param.CommonParam;
+import com.mall.common.param.CommonParam;
 
 /**
  * @description:

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.vo.RestResult;
+import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.dto.product.ProductPropertyDTO;
 import com.mall.dao.entity.product.*;
@@ -119,12 +120,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageInfo<ProductDTO> findPage(GetPageParam param) {
+    public ResultPage<ProductDTO> findPage(GetPageParam param) {
         ProductDTO dto = new ProductDTO();
         BeanUtils.copyProperties(param, dto);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<ProductDTO> productVoList = productMapper.getList(dto);
-        PageInfo<ProductDTO> page = new PageInfo<>(productVoList);
+        ResultPage<ProductDTO> page = new ResultPage<>(productVoList);
         return page;
     }
 

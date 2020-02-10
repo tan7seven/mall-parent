@@ -1,6 +1,6 @@
 package com.mall.manage.service.order;
 
-import com.github.pagehelper.PageInfo;
+import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.order.OrderReturnApplyDTO;
 import com.mall.manage.security.UserDetailsImpl;
 
@@ -22,7 +22,7 @@ public interface OrderReturnApplyService {
      * @param dto
      * @return
      */
-    PageInfo<OrderReturnApplyDTO> getPage(OrderReturnApplyDTO dto);
+    ResultPage<OrderReturnApplyDTO> getPage(OrderReturnApplyDTO dto);
 
     /**
      * 退货订单确认

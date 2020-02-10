@@ -54,7 +54,7 @@ public class AdminDTO extends CommonDTO implements Serializable{
      * 0：可用
      * 1：禁用
      */
-    private String isUsable;
+    private Integer isUsable;
     /**
      * 新增时间
      */
@@ -68,7 +68,7 @@ public class AdminDTO extends CommonDTO implements Serializable{
      * 0-》未删除
      * 1-》已删除
      */
-    private String isDelete;
+    private Integer isDelete;
     /**
      * 菜单ID列表
      */

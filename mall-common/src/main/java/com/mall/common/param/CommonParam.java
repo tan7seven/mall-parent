@@ -1,4 +1,4 @@
-package com.mall.common.Param;
+package com.mall.common.param;
 
 import lombok.Data;
 

@@ -21,6 +21,6 @@ public interface ProductTypeMapper {
      * @param isUsable
      * @return
      */
-    int updateUsableByParent(@Param("parentId") Integer parentId,@Param("isUsable") String isUsable);
+    int updateUsableByParent(@Param("parentId") Integer parentId,@Param("isUsable") Integer isUsable);
 
 }

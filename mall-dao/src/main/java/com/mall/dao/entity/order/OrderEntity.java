@@ -16,13 +16,13 @@ import java.util.Date;
 @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 public class OrderEntity {
     //订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
-    public static final String ORDER_STATUS_OBLIGATION = "0";
-    public static final String ORDER_STATUS_TO_SEND = "1";
-    public static final String ORDER_STATUS_SEND = "2";
-    public static final String ORDER_STATUS_RECEIVE = "3";
-    public static final String ORDER_STATUS_CLOSED = "4";
-    public static final String ORDER_STATUS_FINISHED = "5";
-    public static final String ORDER_STATUS_INVALID = "6";
+    public static final Integer ORDER_STATUS_OBLIGATION = 0;
+    public static final Integer ORDER_STATUS_TO_SEND = 1;
+    public static final Integer ORDER_STATUS_SEND = 2;
+    public static final Integer ORDER_STATUS_RECEIVE = 3;
+    public static final Integer ORDER_STATUS_CLOSED = 4;
+    public static final Integer ORDER_STATUS_FINISHED = 5;
+    public static final Integer ORDER_STATUS_INVALID = 6;
 
     /**
      * 订单ID
@@ -85,17 +85,17 @@ public class OrderEntity {
      * 支付方式：0->未支付；1->支付宝；2->微信
      */
     @Column(length = 1,name = "pay_Type")
-    private String payType;
+    private Integer payType;
     /**
      * 订单来源：0->PC订单；1->app订单
      */
     @Column(length = 1,name = "source_Type")
-    private String sourceType;
+    private Integer sourceType;
     /**
      * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
      */
     @Column(length = 1,name = "order_Status")
-    private String orderStatus;
+    private Integer orderStatus;
     /**
      * 物流公司(配送方式)
      */
@@ -155,12 +155,12 @@ public class OrderEntity {
      * 确认收货状态：0->未确认；1->已确认
      */
     @Column(length = 1,name = "is_Confirm")
-    private String isConfirm;
+    private Integer isConfirm;
     /**
      * 删除状态：0->未删除；1->已删除
      */
     @Column(length = 1,name = "is_Delete")
-    private String isDelete;
+    private Integer isDelete;
     /**
      * 下单时使用的积分
      */

@@ -15,11 +15,11 @@ public class CompanyAddressDTO {
     /**
      * 默认发货地址：0->是；1->否
      */
-    private String isSend;
+    private Integer isSend;
     /**
      * 默认发货地址 ：0->是；1->否
      */
-    private String isReceive;
+    private Integer isReceive;
     /**
      * 收货人姓名
      */

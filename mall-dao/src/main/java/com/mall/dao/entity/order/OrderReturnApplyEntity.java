@@ -126,5 +126,5 @@ public class OrderReturnApplyEntity {
      * 1-》是
      */
     @Column(name = "is_Delete", length = 1)
-    private String isDelete;
+    private Integer isDelete;
 }

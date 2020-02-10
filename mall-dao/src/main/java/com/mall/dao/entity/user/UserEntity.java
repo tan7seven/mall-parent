@@ -73,7 +73,7 @@ public class UserEntity implements Serializable{
      * 1：禁用
      */
     @Column(length = 1,name = "is_usable")
-    private String isUsable;
+    private Integer isUsable;
     /**
      * 新增时间
      */

@@ -9,13 +9,13 @@ public class CommonConstant {
      * 0：正常
      * 1：已删除
      */
-    public static final String NOT_DELETE ="0";
-    public static final String IS_DELETE ="1";
+    public static final Integer NOT_DELETE =0;
+    public static final Integer IS_DELETE =1;
     /**
      * 是否可用
      * 0：可用
      * 1：禁用
      */
-    public static final String IS_USABLE ="0";
-    public static final String NOT_USABLE = "1";
+    public static final Integer IS_USABLE =0;
+    public static final Integer NOT_USABLE = 1;
 }

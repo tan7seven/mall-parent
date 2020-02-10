@@ -71,7 +71,7 @@ public class AdminEntity implements Serializable {
      * 1：禁用
      */
     @Column(length = 1,name = "is_usable")
-    private String isUsable;
+    private Integer isUsable;
     /**
      * 新增时间
      */
@@ -87,5 +87,5 @@ public class AdminEntity implements Serializable {
      * 0-》未删除
      * 1-》已删除
      */
-    private String isDelete;
+    private Integer isDelete;
 }

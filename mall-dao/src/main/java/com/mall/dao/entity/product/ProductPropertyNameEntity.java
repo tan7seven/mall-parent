@@ -37,20 +37,20 @@ public class ProductPropertyNameEntity  implements Serializable {
      * 	1：是
      */
     @Column(name = "is_sale", length = 1)
-    private String isSale;
+    private Integer isSale;
     /**
      * 	是否显示
      * 	0：是
      * 	1：否
      */
     @Column(name = "is_show", length = 1)
-    private String isShow;
+    private Integer isShow;
     /**
      * 	是否删除
      * 	0：正常
      * 	1：已删除
      */
     @Column(name = "is_delete", length = 1)
-    private String isDelete;
+    private Integer isDelete;
 
 }

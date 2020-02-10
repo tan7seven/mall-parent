@@ -1,7 +1,7 @@
 package com.mall.manage.controller.order;
 
-import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
+import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.order.OrderReturnApplyDTO;
 import com.mall.manage.controller.common.GenericController;
 import com.mall.manage.service.order.OrderReturnApplyService;
@@ -25,7 +25,7 @@ public class OrderReturnApplyController extends GenericController {
     @ApiOperation("分页查询")
     @PostMapping(value = "getPage.do")
     protected RestResult getPage(OrderReturnApplyDTO dto){
-        PageInfo<OrderReturnApplyDTO> result = orderReturnApplyService.getPage(dto);
+        ResultPage<OrderReturnApplyDTO> result = orderReturnApplyService.getPage(dto);
         return RestResult.success(result);
     }
 

@@ -1,19 +1,18 @@
 package com.mall.manage.controller.product;
 
 
-import com.github.pagehelper.PageInfo;
+import com.mall.common.manage.UploadPicManage;
 import com.mall.common.vo.RestResult;
+import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.manage.param.product.product.DeleteParam;
 import com.mall.manage.param.product.product.GetPageParam;
-import com.mall.common.manage.UploadPicManage;
 import com.mall.manage.param.product.product.UpdateIsPutawayParam;
 import com.mall.manage.service.product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +37,7 @@ public class ProductController {
     @ApiOperation("分页查询")
     @GetMapping(value = "/getPage.do")
     protected RestResult getPage(GetPageParam param){
-        PageInfo<ProductDTO> result = productService.findPage(param);
+        ResultPage<ProductDTO> result = productService.findPage(param);
         return RestResult.success(result);
     }
 
