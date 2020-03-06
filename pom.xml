@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>mall-dao</module>
-        <module>mall-uni-app</module>
+        <!--<module>mall-uni-app</module>-->
         <module>mall-web-manage</module>
         <module>mall-common</module>
     </modules>

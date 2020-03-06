@@ -6,10 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mall-uni-app" />
-        <module name="mall-web-manage" />
-        <module name="mall-dao" />
         <module name="mall-common" />
+        <module name="mall-dao" />
+        <module name="mall-web-manage" />
         <module name="mallmodel" />
       </profile>
     </annotationProcessing>
