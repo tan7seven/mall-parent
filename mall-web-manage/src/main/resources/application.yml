@@ -13,16 +13,10 @@ spring:
     url: jdbc:mysql://47.110.47.162:3306/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
     username: root
     password: 12345678
-    driver-class-name: com.mysql.jdbc.Driver
-    druid:
-      initial-size: 5 #连接池初始化大小
-      min-idle: 10 #最小空闲连接数
-      max-active: 20 #最大连接数
-      web-stat-filter:
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
-      stat-view-servlet: #访问监控网页的登录用户名和密码
-        login-username: druid
-        login-password: druid
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 50
   jpa:
     hibernate:
       ddl-auto: update
@@ -49,18 +43,21 @@ aliyun:
     endpoint: http://oss-cn-beijing.aliyuncs.com
     bucketName: wjz-mall-image
     urlPrefix: https://wjz-mall-image.oss-cn-beijing.aliyuncs.com/
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    map-underscore-to-camel-case: true
 
 # 配置swagger
-#swagger:
-#  enabled: true
-#  base-package: com.mall
-#  title: 订单底层服务模块API接口【内部调用不对外提供】
-#  version: 1.0
-#  description:  订单模块。
-#  contact:
-#    name: eijiazheng
-#  authorization:
-#    key-name: wjz-mall
-#    type: BaseAuth
+swagger:
+  title: 碧直播APP接口API
+  version: 1.0
+  base-package: com.mall
+  authorization:
+    key-name: Authorization
 
 
