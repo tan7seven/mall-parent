@@ -1,12 +1,16 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductPropertyNameDTO;
+import com.mall.dao.entity.product.ProductImgEntity;
 import com.mall.dao.entity.product.ProductPropertyNameEntity;
-import com.mall.dao.mapper.product.ProductPropertyMapper;
+import com.mall.dao.mapper.product.ProductImgMapper;
+import com.mall.dao.mapper.product.ProductPropertyNameMapper;
 import com.mall.dao.repository.product.ProductPropertyNameRepository;
 import com.mall.manage.service.product.ProductPropertyNameService;
 import org.springframework.beans.BeanUtils;
@@ -19,13 +23,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service(value = "productPropertyNameService")
-public class ProductPropertyNameServiceImpl implements ProductPropertyNameService {
+public class ProductPropertyNameServiceImpl extends ServiceImpl<ProductPropertyNameMapper,ProductPropertyNameEntity> implements ProductPropertyNameService {
 
     @Autowired
     private ProductPropertyNameRepository productPropertyNameRepository;
 
     @Autowired
-    private ProductPropertyMapper productPropertyMapper;
+    private ProductPropertyNameMapper productPropertyMapper;
 
     @Override
     public RestResult add(ProductPropertyNameEntity entity) {
@@ -103,10 +107,10 @@ public class ProductPropertyNameServiceImpl implements ProductPropertyNameServic
     }
 
     @Override
-    public PageInfo<ProductPropertyNameDTO> findPage(ProductPropertyNameDTO dto) {
-        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<ProductPropertyNameDTO> resultList = productPropertyMapper.findList(dto);
-        PageInfo<ProductPropertyNameDTO> page = new PageInfo<>(resultList);
+    public Page<ProductPropertyNameDTO> findPage(ProductPropertyNameDTO dto) {
+        Page page = new Page<>(dto.getPageNum(), dto.getPageSize());
+        List<ProductPropertyNameDTO> resultList = productPropertyMapper.findList(page, dto);
+        page.setRecords(resultList);
         return page;
     }
 

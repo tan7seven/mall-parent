@@ -1,7 +1,7 @@
 package com.mall.manage.controller.order;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.vo.RestResult;
-import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.order.OrderReturnApplyDTO;
 import com.mall.manage.controller.common.GenericController;
 import com.mall.manage.service.order.OrderReturnApplyService;
@@ -24,8 +24,8 @@ public class OrderReturnApplyController extends GenericController {
 
     @ApiOperation("分页查询")
     @PostMapping(value = "getPage.do")
-    protected RestResult getPage(OrderReturnApplyDTO dto){
-        ResultPage<OrderReturnApplyDTO> result = orderReturnApplyService.getPage(dto);
+    protected RestResult<Page<OrderReturnApplyDTO>> getPage(OrderReturnApplyDTO dto){
+        Page<OrderReturnApplyDTO> result = orderReturnApplyService.getPage(dto);
         return RestResult.success(result);
     }
 

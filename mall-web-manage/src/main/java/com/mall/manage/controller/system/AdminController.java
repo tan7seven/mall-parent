@@ -1,7 +1,6 @@
 package com.mall.manage.controller.system;
 
 import com.mall.common.vo.RestResult;
-import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.system.AdminDTO;
 import com.mall.dao.entity.system.AdminEntity;
 import com.mall.manage.controller.common.GenericController;

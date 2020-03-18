@@ -1,6 +1,8 @@
 package com.mall.dao.entity.product;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,8 +11,7 @@ import java.io.Serializable;
  * 商品属性名
  */
 @Data
-@Entity
-@Table(name = "mall_product_property_value")
+@TableName("mall_product_property_value")
 public class ProductPropertyValueEntity  implements Serializable {
 
     public static final Integer IS_SALE = 0;
@@ -19,29 +20,23 @@ public class ProductPropertyValueEntity  implements Serializable {
      * 编号
      */
     @Id
-    @Column(name = "property_value_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer propertyValueId;
     /**
      * 属性名编码
      */
-    @Column(name = "property_name_id")
     private Integer propertyNameId;
     /**
      * 属性值
      */
-    @Column()
     private String value;
     /**
      * 商品编号
      */
-    @Column(name = "product_id")
     private Integer productId;
     /**
      * 是否销售属性
      * 0:是
      * 1：否
      */
-    @Column(name = "is_sale", length = 1)
     private Integer isSale;
 }

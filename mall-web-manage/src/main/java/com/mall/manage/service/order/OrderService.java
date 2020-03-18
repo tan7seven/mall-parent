@@ -1,7 +1,9 @@
 package com.mall.manage.service.order;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.order.OrderDTO;
+import com.mall.dao.entity.order.OrderEntity;
 import com.mall.manage.security.UserDetailsImpl;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,13 +12,13 @@ import java.util.List;
 /**
  * 订单信息
  */
-public interface OrderService {
+public interface OrderService extends IService<OrderEntity> {
     /**
      * 分页查询
      * @param dto
      * @return
      */
-    PageInfo<OrderDTO> getPage(OrderDTO dto);
+    Page<OrderDTO> getPage(OrderDTO dto);
 
     /**
      * 根据主键获取

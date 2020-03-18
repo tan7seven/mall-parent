@@ -1,7 +1,11 @@
 package com.mall.dao.mapper.product;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.dao.dto.product.ProductPropertyNameDTO;
 import com.mall.dao.dto.product.ProductPropertyValueDTO;
+import com.mall.dao.entity.product.ProductEntity;
+import com.mall.dao.entity.product.ProductPropertyNameEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -10,14 +14,14 @@ import java.util.List;
 /**
  * 商品信息
  */
-public interface ProductPropertyMapper {
+public interface ProductPropertyNameMapper extends BaseMapper<ProductPropertyNameEntity> {
 
     /**
      * 查询-属性名
      * @param dto
      * @return
      */
-    List<ProductPropertyNameDTO> findList(@Param("dto") ProductPropertyNameDTO dto);
+    List<ProductPropertyNameDTO> findList(Page page, @Param("dto") ProductPropertyNameDTO dto);
     /**
      * 查询-属性值
      * @return

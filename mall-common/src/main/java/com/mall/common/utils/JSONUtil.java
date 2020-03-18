@@ -20,6 +20,12 @@ import java.util.List;
  */
 public class JSONUtil {
 
+
+    /**
+     * 将Date转换成long字符串
+     * @param converters
+     * @return
+     */
     public static MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter(List<HttpMessageConverter<?>> converters) {
         List<MappingJackson2HttpMessageConverter> originalConverters = new ArrayList();
         Iterator var2 = converters.iterator();

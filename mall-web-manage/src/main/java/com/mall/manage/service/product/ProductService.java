@@ -1,8 +1,9 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.vo.RestResult;
-import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.product.ProductDTO;
+import com.mall.dao.entity.product.ProductEntity;
 import com.mall.manage.param.product.product.GetPageParam;
 import com.mall.manage.param.product.product.UpdateIsPutawayParam;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * 商品信息
  */
-public interface ProductService {
+public interface ProductService extends IService<ProductEntity> {
     /**
      *  根据ID查找
      * @param id

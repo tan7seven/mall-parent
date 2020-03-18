@@ -1,6 +1,8 @@
 package com.mall.dao.entity.product;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,8 +13,7 @@ import java.util.Date;
  * 商品信息（代码冲突测试github）
  */
 @Data
-@Entity
-@Table(name = "mall_product")
+@TableName("mall_product")
 public class ProductEntity  implements Serializable {
 
     /**
@@ -28,68 +29,55 @@ public class ProductEntity  implements Serializable {
      *商品编号
      */
     @Id
-    @Column(name = "product_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer productId;
     /**
      * 分类编号
      */
-    @Column(name = "type_id")
     private Integer typeId;
     /**
      * 商品名称
      */
-    @Column(length = 64,name = "product_name")
     private String productName;
     /**
      * 商品主图
      */
-    @Column(name = "pic_url", length = 765)
     private String picUrl;
     /**
      * 商品最低价
      */
-    @Column(name = "price_min")
     private BigDecimal priceMin;
     /**
      * 点击量
      */
-    @Column()
     private Integer hits;
     /**
      * 排序
      */
-    @Column()
     private Integer sort;
     /**
      * 计量单位
      */
-    @Column
     private String unit;
     /**
      * 商品状态
      * 0：上架
      * 1：下架
      */
-    @Column(length = 1, name = "is_putaway")
     private Integer isPutaway;
     /**
      * 新增时间
      */
-    @Column(name = "create_time")
     private Date createTime;
     /**
      * 是否可用
      * 0：可用
      * 1：禁用
      */
-    @Column(length = 1, name = "is_usable")
     private Integer isUsable;
     /**
      * 是否删除
      * 0：正常
      * 1：已删除
      */
-    @Column(length = 1, name = "is_delete")
     private Integer isDelete;
 }

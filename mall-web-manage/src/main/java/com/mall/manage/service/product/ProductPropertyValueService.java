@@ -1,5 +1,6 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.entity.product.ProductPropertyValueEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,7 @@ import java.util.Optional;
 /**
  * 商品属性值
  */
-public interface ProductPropertyValueService {
+public interface ProductPropertyValueService extends IService<ProductPropertyValueEntity> {
     /**
      * 新增
      * @param entity

@@ -1,5 +1,6 @@
 package com.mall.manage.service.system.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.enums.AdminRoleEnum;
 import com.mall.dao.dto.system.AdminDTO;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service(value = "adminService")
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
@@ -59,23 +60,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public UserDetailsImpl adminLogin(String username) {
         UserDetailsImpl user = new UserDetailsImpl();
-            /*String redisUser = (String) redisUtil.get(username);
-            log.info("redis获取用户信息{}", redisUser);
-            if(null != redisUser){
-                JSONObject resultJson = JSONObject.parseObject(redisUser);
-                user.setRole((String) resultJson.get("role"));
-                JSONArray menuList = resultJson.getJSONArray("menuList");
-                menuList = null == menuList? new JSONArray():menuList;
-                user.setMenuList(menuList.toJavaList(String.class));
-                user.setIcon((String) resultJson.get("icon"));
-                user.setUserId((String) resultJson.get("userId"));
-                user.setPassword((String) resultJson.get("password"));
-                user.setUsername((String) resultJson.get("username"));
-                JSONArray buttonList = resultJson.getJSONArray("buttonList");
-                buttonList = null == buttonList? new JSONArray():buttonList;
-                user.setButtonList(buttonList.toJavaList(String.class));
-                return user;
-            }*/
         AdminDTO dto  = this.findByLoginId(username);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         // 加密(SpringSecurity默认有加密)
@@ -94,7 +78,6 @@ public class AdminServiceImpl implements AdminService {
         //获取用户权限-菜单
         List<String> menuCodeList = adminMapper.getMenuCodeListAuthority(dto);
         user.setMenuList(menuCodeList);
-//            redisUtil.set(username, JSONObject.toJSONString(user), 30000);
         return user;
     }
 
@@ -189,7 +172,6 @@ public class AdminServiceImpl implements AdminService {
                 menuAuthorityRepository.save(authorityEntity);
             }
         });
-//        redisUtil.del(dto.getLoginCode());
     }
 
     @Override
@@ -202,7 +184,6 @@ public class AdminServiceImpl implements AdminService {
             authorityEntity.setUserId(dto.getUserId());
             buttonAuthorityRepository.save(authorityEntity);
         });
-//        redisUtil.del(dto.getLoginCode());
     }
 
     @Override

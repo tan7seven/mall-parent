@@ -1,12 +1,13 @@
 package com.mall.manage.service.order;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.order.OrderSettingDTO;
 import com.mall.dao.entity.order.OrderSettingEntity;
 
 /**
  * 订单设置
  */
-public interface OrderSettingService {
+public interface OrderSettingService extends IService<OrderSettingEntity> {
 
     /**
      * 获取配置信息
@@ -19,5 +20,5 @@ public interface OrderSettingService {
      * @param id
      * @param dto
      */
-    OrderSettingEntity update(Integer id, OrderSettingDTO dto);
+    Boolean update(Integer id, OrderSettingDTO dto);
 }

@@ -1,11 +1,14 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
+import com.mall.dao.entity.product.ProductSkuEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
 import com.mall.dao.mapper.product.ProductMapper;
+import com.mall.dao.mapper.product.ProductSkuMapper;
 import com.mall.dao.mapper.product.ProductTypeMapper;
 import com.mall.dao.repository.product.ProductTypeRepository;
 import com.mall.manage.service.product.ProductPropertyNameService;
@@ -21,7 +24,7 @@ import java.util.Optional;
 
 
 @Service(value = "productTypeService")
-public class ProductTypeServiceImpl implements ProductTypeService {
+public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, ProductTypeEntity> implements ProductTypeService {
 
     @Autowired
     private ProductTypeRepository productTypeRepository;

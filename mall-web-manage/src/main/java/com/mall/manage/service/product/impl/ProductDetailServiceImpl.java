@@ -1,64 +1,50 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.dao.entity.product.ProductDetailEntity;
-import com.mall.dao.repository.product.ProductDetailRepository;
+import com.mall.dao.mapper.product.ProductDetailMapper;
 import com.mall.manage.service.product.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 @Service(value = "productDetailService")
-public class ProductDetailServiceImpl implements ProductDetailService {
+public class ProductDetailServiceImpl extends ServiceImpl<ProductDetailMapper, ProductDetailEntity> implements ProductDetailService {
 
     @Autowired
-    private ProductDetailRepository productDetailRepository;
+    private ProductDetailService productDetailService;
 
     @Override
-    public ProductDetailEntity add(ProductDetailEntity entity) {
-        return productDetailRepository.save(entity);
+    public Boolean add(ProductDetailEntity entity) {
+        return productDetailService.save(entity);
     }
 
     @Override
     public Optional<ProductDetailEntity> findById(Integer id) {
-        return productDetailRepository.findById(id);
+        return productDetailService.findById(id);
     }
 
     @Override
     public void delete(ProductDetailEntity entity) {
-        productDetailRepository.delete(entity);
+        productDetailService.delete(entity);
     }
 
     @Override
     public void deleteById(Integer id) {
-        productDetailRepository.deleteById(id);
+        productDetailService.deleteById(id);
     }
 
     @Override
     public List<ProductDetailEntity> findList(ProductDetailEntity entity) {
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.startsWith())//模糊查询匹配开头，即{username}%
-                .withMatcher("address" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
-                .withIgnorePaths("password")//忽略字段，即不管password是什么值都不加入查询条件
-                .withIgnorePaths("id");  //忽略属性：是否关注。因为是基本类型，需要忽略掉
-        Example<ProductDetailEntity> example = Example.of(entity);
-        List<ProductDetailEntity> result = productDetailRepository.findAll(example);
+        List<ProductDetailEntity> result = productDetailService.list();
         return result;
     }
 
     @Override
-    public Page<ProductDetailEntity> findPage(ProductDetailEntity entity,Pageable page) {
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.startsWith())//模糊查询匹配开头，即{username}%
-                .withMatcher("address" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
-                .withIgnorePaths("password")//忽略字段，即不管password是什么值都不加入查询条件
-                .withIgnorePaths("id");  //忽略属性：是否关注。因为是基本类型，需要忽略掉
-        Example<ProductDetailEntity> example = Example.of(entity);
-        Page<ProductDetailEntity> result = productDetailRepository.findAll(example, page);
+    public Page<ProductDetailEntity> findPage(Page<ProductDetailEntity> page) {
+        Page<ProductDetailEntity> result = (Page<ProductDetailEntity>) productDetailService.page(page);
         return result;
     }
 }

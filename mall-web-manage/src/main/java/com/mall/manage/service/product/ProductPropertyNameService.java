@@ -1,5 +1,7 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductPropertyNameDTO;
@@ -11,7 +13,7 @@ import java.util.Optional;
 /**
  * 商品属性名
  */
-public interface ProductPropertyNameService {
+public interface ProductPropertyNameService extends IService<ProductPropertyNameEntity> {
     /**
      * 新增
      * @param entity
@@ -60,7 +62,7 @@ public interface ProductPropertyNameService {
      * @param dto
      * @return
      */
-    PageInfo<ProductPropertyNameDTO> findPage(ProductPropertyNameDTO dto);
+    Page<ProductPropertyNameDTO> findPage(ProductPropertyNameDTO dto);
 
     /**
      * 修改是否销售属性

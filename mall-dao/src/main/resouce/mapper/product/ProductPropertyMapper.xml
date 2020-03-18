@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mall.dao.mapper.product.ProductPropertyMapper">
+<mapper namespace="com.mall.dao.mapper.product.ProductPropertyNameMapper">
 
     <resultMap id="ResultMap" type="com.mall.dao.dto.product.ProductPropertyValueDTO">
         <result column="propertyValueId" property="propertyValueId"/>

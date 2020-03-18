@@ -36,6 +36,7 @@ public enum ResultStatus implements BaseExceptionCode {
      * 服务方错误
      */
     SERVER_ERROR(500, "服务异常"),
+
     /**
      * 自定义业务异常
      */

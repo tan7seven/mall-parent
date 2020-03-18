@@ -1,12 +1,14 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.product.ProductPropertyNameEntity;
-import com.mall.dao.mapper.product.ProductPropertyMapper;
+import com.mall.dao.entity.product.ProductSkuEntity;
+import com.mall.dao.mapper.product.ProductPropertyNameMapper;
 import com.mall.dao.mapper.product.ProductSkuMapper;
 import com.mall.dao.repository.product.*;
 import com.mall.manage.service.product.ProductSkuService;
@@ -24,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service(value = "productSkuService")
-public class ProductSkuServiceImpl implements ProductSkuService {
+public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, ProductSkuEntity> implements ProductSkuService {
     @Autowired
     private ProductSkuRepository productSkuRepository;
 
@@ -44,7 +46,7 @@ public class ProductSkuServiceImpl implements ProductSkuService {
     private ProductSkuMapper productSkuMapper;
 
     @Autowired
-    private ProductPropertyMapper productPropertyMapper;
+    private ProductPropertyNameMapper productPropertyMapper;
 
     @Override
     public RestResult add(ProductSkuDTO dto) {

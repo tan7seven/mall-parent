@@ -1,15 +1,14 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.vo.RestResult;
-import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.dto.product.ProductPropertyDTO;
 import com.mall.dao.entity.product.*;
 import com.mall.dao.mapper.product.ProductMapper;
-import com.mall.dao.mapper.product.ProductPropertyMapper;
+import com.mall.dao.mapper.product.ProductPropertyNameMapper;
 import com.mall.dao.mapper.product.ProductSkuMapper;
 import com.mall.dao.repository.product.*;
 import com.mall.manage.param.product.product.GetPageParam;
@@ -30,7 +29,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service(value = "productService")
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity> implements ProductService {
     @Value("${pic.path}")
     private String picPath;
     @Autowired
@@ -48,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductMapper productMapper;
     @Autowired
-    private ProductPropertyMapper productPropertyMapper;
+    private ProductPropertyNameMapper productPropertyMapper;
     @Autowired
     private ProductSkuMapper productSkuMapper;
     @Autowired

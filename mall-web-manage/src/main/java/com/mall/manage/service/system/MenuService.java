@@ -1,5 +1,6 @@
 package com.mall.manage.service.system;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * 菜单信息service
  */
-public interface MenuService {
+public interface MenuService extends IService<MenuEntity> {
     /**
      * 新增
      * @param dto

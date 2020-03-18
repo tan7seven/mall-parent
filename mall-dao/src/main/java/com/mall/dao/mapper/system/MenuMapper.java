@@ -1,8 +1,11 @@
 package com.mall.dao.mapper.system;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
 import com.mall.dao.dto.system.MenuDTO;
+import com.mall.dao.entity.product.ProductPropertyNameEntity;
+import com.mall.dao.entity.system.MenuEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,7 +13,7 @@ import java.util.List;
 /**
  * 菜单列表
  */
-public interface MenuMapper {
+public interface MenuMapper extends BaseMapper<MenuEntity> {
 
     /**
      * 获取列表

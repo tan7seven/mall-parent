@@ -1,6 +1,7 @@
 package com.mall.manage.service.system.impl;
 
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.enums.ButtonEnum;
@@ -8,6 +9,7 @@ import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.ButtonDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
 import com.mall.dao.dto.system.MenuDTO;
+import com.mall.dao.entity.order.CompanyAddressEntity;
 import com.mall.dao.entity.system.ButtonEntity;
 import com.mall.dao.entity.system.MenuEntity;
 import com.mall.dao.mapper.system.ButtonMapper;
@@ -26,7 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service(value = "menuService")
-public class MenuServiceImpl implements MenuService{
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> implements MenuService{
 
     @Autowired
     private MenuRepository menuRepository;
@@ -45,9 +47,6 @@ public class MenuServiceImpl implements MenuService{
 
     @Autowired
     private MenuAuthorityRepository menuAuthorityRepository;
-
-//    @Autowired
-//    private RedisUtil redisUtil;
 
     @Autowired
     private AdminRepository adminRepository;
@@ -68,12 +67,6 @@ public class MenuServiceImpl implements MenuService{
                 buttonRepository.save(buttonEntity);
             });
         }
-        /*try {
-            String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
-            redisUtil.del(userNameArray);
-        }catch (Exception e){
-            return resultEntity;
-        }*/
         return resultEntity;
     }
 
@@ -88,11 +81,6 @@ public class MenuServiceImpl implements MenuService{
         entity.setParentId(dto.getParentId());
         menuRepository.save(entity);
         this.checkButton(dto, id);
-        /*try {
-            String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
-            redisUtil.del(userNameArray);
-        }catch (Exception e){
-        }*/
     }
 
     @Override
@@ -150,11 +138,7 @@ public class MenuServiceImpl implements MenuService{
             List<ButtonEntity> buttonEntities = buttonRepository.findByMenuId(id);
             buttonEntities.forEach(s ->this.deleteButton(s));
         }
-        /*try {
-            String[] userNameArray = adminRepository.findAll().stream().map(s -> s.getLoginCode()).toArray(String[]::new);
-            redisUtil.del(userNameArray);
-        }catch (Exception e){
-        }*/
+
     }
 
     @Override

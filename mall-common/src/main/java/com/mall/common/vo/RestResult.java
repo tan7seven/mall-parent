@@ -32,7 +32,7 @@ public class RestResult <T> extends BaseResult {
      *
      * @param data 获取的数据
      */
-    public static RestResult success(Object data) {
+    public static <T> RestResult<T>  success(T data) {
         RestResult restResult = new RestResult();
         restResult.code = SUCCESS;
         restResult.message = "操作成功";
@@ -49,16 +49,6 @@ public class RestResult <T> extends BaseResult {
         restResult.message = "操作成功";
         return restResult;
     }
-    /**
-     * 返回分页成功数据
-     */
-    public static RestResult pageSuccess(ResultPage data) {
-        RestResult restResult = new RestResult();
-        restResult.code = SUCCESS;
-        restResult.message = "操作成功";
-        restResult.data = data;
-        return restResult;
-    }
 
     /**
      * 普通失败提示信息
@@ -67,6 +57,15 @@ public class RestResult <T> extends BaseResult {
         RestResult restResult = new RestResult();
         restResult.code = FAILED;
         restResult.message = "操作失败";
+        return restResult;
+    }
+    /**
+     * 普通失败提示信息
+     */
+    public static RestResult failed(String message) {
+        RestResult restResult = new RestResult();
+        restResult.code = FAILED;
+        restResult.message = message;
         return restResult;
     }
     /**

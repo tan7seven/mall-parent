@@ -3,7 +3,6 @@ package com.mall.manage.controller.product;
 
 import com.mall.common.manage.UploadPicManage;
 import com.mall.common.vo.RestResult;
-import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.manage.param.product.product.DeleteParam;
 import com.mall.manage.param.product.product.GetPageParam;

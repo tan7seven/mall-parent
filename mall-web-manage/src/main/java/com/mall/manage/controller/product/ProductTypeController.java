@@ -1,7 +1,6 @@
 package com.mall.manage.controller.product;
 
 import com.mall.common.vo.RestResult;
-import com.mall.common.vo.ResultPage;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
 import com.mall.dao.entity.product.ProductPropertyNameEntity;

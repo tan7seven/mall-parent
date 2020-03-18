@@ -1,5 +1,6 @@
 package com.mall.manage.service.system;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.system.AdminDTO;
 import com.mall.dao.entity.system.AdminEntity;
 import com.mall.manage.security.UserDetailsImpl;
@@ -12,7 +13,7 @@ import java.util.Optional;
 /**
  * 用户信息service
  */
-public interface AdminService {
+public interface AdminService extends IService<AdminEntity> {
 
     /**
      * 重新加载用户信息

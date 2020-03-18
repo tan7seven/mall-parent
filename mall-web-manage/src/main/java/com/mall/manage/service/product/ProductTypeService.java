@@ -1,5 +1,6 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
@@ -13,7 +14,7 @@ import java.util.Optional;
 /**
  * 商品类目
  */
-public interface ProductTypeService {
+public interface ProductTypeService extends IService<ProductTypeEntity> {
     /**
      * 新增
      * @param entity

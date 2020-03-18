@@ -1,7 +1,8 @@
 package com.mall.manage.service.order.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.constant.CommonConstant;
 import com.mall.dao.dto.order.OrderDTO;
 import com.mall.dao.dto.order.OrderItemsDTO;
@@ -12,12 +13,11 @@ import com.mall.dao.entity.product.ProductPropertyNameEntity;
 import com.mall.dao.entity.product.ProductPropertyValueEntity;
 import com.mall.dao.mapper.order.OrderMapper;
 import com.mall.dao.mapper.order.OrderOperationLogMapper;
-import com.mall.dao.repository.order.OrderRepository;
-import com.mall.dao.repository.product.ProductPropertyNameRepository;
-import com.mall.dao.repository.product.ProductPropertyValueRepository;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.order.OrderOperationLogService;
 import com.mall.manage.service.order.OrderService;
+import com.mall.manage.service.product.ProductPropertyNameService;
+import com.mall.manage.service.product.ProductPropertyValueService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,15 +27,15 @@ import java.util.Date;
 import java.util.List;
 
 @Service(value = "orderService")
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> implements OrderService{
     @Autowired
-    private ProductPropertyValueRepository productPropertyValueRepository;
+    private ProductPropertyValueService productPropertyValueService;
 
     @Autowired
-    private ProductPropertyNameRepository productPropertyNameRepository;
+    private ProductPropertyNameService productPropertyNameService;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderService orderService;
 
     @Autowired
     private OrderOperationLogMapper orderOperationLogMapper;
@@ -47,10 +47,10 @@ public class OrderServiceImpl implements OrderService{
     private OrderOperationLogService orderOperationLogService;
 
     @Override
-    public PageInfo<OrderDTO> getPage(OrderDTO dto) {
-        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<OrderDTO> resultList = orderMapper.findList(dto);
-        PageInfo<OrderDTO> page = new PageInfo<>(resultList);
+    public Page<OrderDTO> getPage(OrderDTO dto) {
+        Page page = new Page(dto.getPageNum(), dto.getPageSize());
+        List<OrderDTO> resultList = orderMapper.findList(page, dto);
+        page.setRecords(resultList);
         return page;
     }
 
@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void updateReceiverInfo(OrderDTO dto, UserDetailsImpl userDetails) {
-        OrderEntity entity = orderRepository.findById(dto.getOrderId()).get();
+        OrderEntity entity = orderService.getById(dto.getOrderId());
         entity.setReceiverCity(dto.getReceiverCity());
         entity.setReceiverDetailAddress(dto.getReceiverDetailAddress());
         entity.setReceiverName(dto.getReceiverName());
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService{
         entity.setReceiverPostCode(dto.getReceiverPostCode());
         entity.setReceiverProvince(dto.getReceiverProvince());
         entity.setReceiverRegion(dto.getReceiverRegion());
-        orderRepository.save(entity);
+        orderService.save(entity);
         OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
         logEntity.setCreateTime(new Date());
         logEntity.setOperationPerson(userDetails.getUserId());
@@ -89,12 +89,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void updateMoneyInfo(OrderDTO dto, UserDetailsImpl userDetails) {
-        OrderEntity entity = orderRepository.findById(dto.getOrderId()).get();
+        OrderEntity entity = orderService.getById(dto.getOrderId());
         entity.setDiscountPrice(dto.getDiscountPrice());
         entity.setPayPrice(entity.getTotalPrice().add(entity.getFreightPrice())
                 .subtract(entity.getPromotionPrice()).subtract(entity.getScorePrice()).subtract(entity.getCouponPrice())
                 .subtract(dto.getDiscountPrice()));
-        orderRepository.save(entity);
+        orderService.save(entity);
         OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
         logEntity.setCreateTime(new Date());
         logEntity.setOperationPerson(userDetails.getUserId());
@@ -106,9 +106,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void updateRemarkInfo(OrderDTO dto, UserDetailsImpl userDetails) {
-        OrderEntity entity = orderRepository.findById(dto.getOrderId()).get();
+        OrderEntity entity = orderService.getById(dto.getOrderId());
         entity.setOrderRemark(dto.getOrderRemark());
-        orderRepository.save(entity);
+        orderService.save(entity);
         OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
         logEntity.setCreateTime(new Date());
         logEntity.setOperationPerson(userDetails.getUserId());
@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void closeOrder(OrderDTO dto, UserDetailsImpl userDetails) {
-        OrderEntity entity = orderRepository.findById(dto.getOrderId()).get();
+        OrderEntity entity = orderService.getById(dto.getOrderId());
         OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
         logEntity.setCreateTime(new Date());
         logEntity.setOperationPerson(userDetails.getUserId());
@@ -130,14 +130,14 @@ public class OrderServiceImpl implements OrderService{
         orderOperationLogService.save(logEntity);
         entity.setOrderStatus(OrderEntity.ORDER_STATUS_INVALID);
         entity.setOrderRemark(dto.getOrderRemark());
-        orderRepository.save(entity);
+        orderService.save(entity);
 
     }
 
     @Override
     public void closeOrderList(List<String> ids, String remark, UserDetailsImpl userDetails) {
         for (String id : ids) {
-            OrderEntity entity = orderRepository.findById(id).get();
+            OrderEntity entity = orderService.getById(id);
             OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
             logEntity.setCreateTime(new Date());
             logEntity.setOperationPerson(userDetails.getUserId());
@@ -147,16 +147,16 @@ public class OrderServiceImpl implements OrderService{
             orderOperationLogService.save(logEntity);
             entity.setOrderStatus(OrderEntity.ORDER_STATUS_INVALID);
             entity.setOrderRemark(remark);
-            orderRepository.save(entity);
+            orderService.save(entity);
         }
     }
 
     @Override
     public void deleteOrder(List<String> ids, UserDetailsImpl userDetails) {
         for (String id : ids) {
-            OrderEntity result = orderRepository.findById(id).get();
+            OrderEntity result = orderService.getById(id);
             result.setIsDelete(CommonConstant.IS_DELETE);
-            orderRepository.save(result);
+            orderService.save(result);
             OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
             logEntity.setCreateTime(new Date());
             logEntity.setOperationPerson(userDetails.getUserId());
@@ -173,12 +173,12 @@ public class OrderServiceImpl implements OrderService{
             if (StringUtils.isBlank(dto.getOrderId())) {
                 continue;
             }
-            OrderEntity entity = orderRepository.findById(dto.getOrderId()).get();
+            OrderEntity entity = orderService.getById(dto.getOrderId());
             entity.setDeliveryCode(dto.getDeliveryCode());
             entity.setDeliveryCompany(dto.getDeliveryCompany());
             entity.setDeliveryTime(new Date());
             entity.setOrderStatus(OrderEntity.ORDER_STATUS_SEND);
-            entity = orderRepository.save(entity);
+            orderService.save(entity);
             OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
             logEntity.setCreateTime(new Date());
             logEntity.setOperationPerson(userDetails.getUserId());
@@ -195,8 +195,10 @@ public class OrderServiceImpl implements OrderService{
      */
     private void makePropertyKeyToValue(OrderItemsDTO dto){
         StringBuffer propertySb = new StringBuffer();
-        List<ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeIdAndIsDelete(dto.getTypeId(), CommonConstant.NOT_DELETE);
-        List<ProductPropertyValueEntity> valueList = productPropertyValueRepository.findByProductId(dto.getProductId());
+        List<ProductPropertyNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductPropertyNameEntity>lambdaQuery()
+                .eq(ProductPropertyNameEntity::getTypeId, dto.getTypeId())
+                .eq(ProductPropertyNameEntity::getIsDelete, CommonConstant.NOT_DELETE));
+        List<ProductPropertyValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProductProperty())){
             String skuProperties = dto.getProductProperty();
             String[] properties = skuProperties.split("&");

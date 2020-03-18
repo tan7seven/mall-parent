@@ -1,6 +1,10 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.dao.entity.product.ProductPropertyNameEntity;
 import com.mall.dao.entity.product.ProductPropertyValueEntity;
+import com.mall.dao.mapper.product.ProductPropertyNameMapper;
+import com.mall.dao.mapper.product.ProductPropertyValueMapper;
 import com.mall.dao.repository.product.ProductPropertyValueRepository;
 import com.mall.manage.service.product.ProductPropertyValueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service(value = "productPropertyValueService")
-public class ProductPropertyValueServiceImpl implements ProductPropertyValueService {
+public class ProductPropertyValueServiceImpl extends ServiceImpl<ProductPropertyValueMapper, ProductPropertyValueEntity> implements ProductPropertyValueService {
     @Autowired
     private ProductPropertyValueRepository productPropertyValueRepository;
 

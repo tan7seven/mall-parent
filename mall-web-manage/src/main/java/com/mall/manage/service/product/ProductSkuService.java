@@ -1,5 +1,6 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * 商品SKU
  */
-public interface ProductSkuService {
+public interface ProductSkuService extends IService<ProductSkuEntity> {
     /**
      * 新增
      * @return

@@ -1,7 +1,10 @@
 package com.mall.dao.mapper.product;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.dto.product.ProductPropertyDTO;
+import com.mall.dao.entity.order.OrderReturnApplyEntity;
+import com.mall.dao.entity.product.ProductEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -10,7 +13,7 @@ import java.util.List;
 /**
  * 商品信息
  */
-public interface ProductMapper {
+public interface ProductMapper extends BaseMapper<ProductEntity> {
     /**
      * 查询
      * @return

@@ -1,7 +1,9 @@
 package com.mall.manage.service.order;
 
-import com.mall.common.vo.ResultPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.order.OrderReturnApplyDTO;
+import com.mall.dao.entity.order.OrderReturnApplyEntity;
 import com.mall.manage.security.UserDetailsImpl;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
 /**
  * 订单退货申请
  */
-public interface OrderReturnApplyService {
+public interface OrderReturnApplyService extends IService<OrderReturnApplyEntity> {
 
     /**
      * 根据ID获取明细
@@ -22,7 +24,7 @@ public interface OrderReturnApplyService {
      * @param dto
      * @return
      */
-    ResultPage<OrderReturnApplyDTO> getPage(OrderReturnApplyDTO dto);
+    Page<OrderReturnApplyDTO> getPage(OrderReturnApplyDTO dto);
 
     /**
      * 退货订单确认

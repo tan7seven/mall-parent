@@ -1,8 +1,8 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.entity.product.ProductDetailEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,13 +10,13 @@ import java.util.Optional;
 /**
  * 商品详情
  */
-public interface ProductDetailService {
+public interface ProductDetailService extends IService<ProductDetailEntity> {
     /**
      * 新增
      * @param entity
      * @return
      */
-    ProductDetailEntity add(ProductDetailEntity entity);
+    Boolean add(ProductDetailEntity entity);
     /**
      *  根据ID查找
      * @param id
@@ -44,8 +44,7 @@ public interface ProductDetailService {
 
     /**
      * 查询
-     * @param entity
      * @return
      */
-    Page<ProductDetailEntity> findPage(ProductDetailEntity entity,Pageable page);
+    Page<ProductDetailEntity> findPage(Page<ProductDetailEntity> page);
 }
