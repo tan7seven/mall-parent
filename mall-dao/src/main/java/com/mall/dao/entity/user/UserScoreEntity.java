@@ -2,6 +2,7 @@ package com.mall.dao.entity.user;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  */
 @Data
 @TableName("mall_user_score")
-public class UserScoreEntity implements Serializable {
+public class UserScoreEntity extends BaseEntity {
     /**
      *UUID
      */

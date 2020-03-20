@@ -1,6 +1,7 @@
 package com.mall.dao.entity.user;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @TableName("mall_user")
-public class UserEntity implements Serializable{
+public class UserEntity extends BaseEntity {
     /**
      * 是否可用：可用
      */
