@@ -1,26 +1,26 @@
 package com.mall.manage.service.system.impl;
 
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.mall.common.enums.ButtonEnum;
 import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.ButtonDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
 import com.mall.dao.dto.system.MenuDTO;
-import com.mall.dao.entity.order.CompanyAddressEntity;
+import com.mall.dao.entity.system.ButtonAuthorityEntity;
 import com.mall.dao.entity.system.ButtonEntity;
+import com.mall.dao.entity.system.MenuAuthorityEntity;
 import com.mall.dao.entity.system.MenuEntity;
 import com.mall.dao.mapper.system.ButtonMapper;
 import com.mall.dao.mapper.system.MenuMapper;
-import com.mall.dao.repository.system.*;
+import com.mall.manage.service.system.ButtonAuthorityService;
+import com.mall.manage.service.system.ButtonService;
+import com.mall.manage.service.system.MenuAuthorityService;
 import com.mall.manage.service.system.MenuService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -31,31 +31,28 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> implements MenuService{
 
     @Autowired
-    private MenuRepository menuRepository;
+    private MenuService menuService;
 
     @Autowired
     private MenuMapper menuMapper;
 
     @Autowired
-    private ButtonRepository buttonRepository;
+    private ButtonService buttonService;
 
     @Autowired
     private ButtonMapper buttonMapper;
 
     @Autowired
-    private ButtonAuthorityRepository buttonAuthorityRepository;
+    private ButtonAuthorityService buttonAuthorityService;
 
     @Autowired
-    private MenuAuthorityRepository menuAuthorityRepository;
-
-    @Autowired
-    private AdminRepository adminRepository;
+    private MenuAuthorityService menuAuthorityService;
 
     @Override
     public MenuEntity add(MenuDTO dto) {
         MenuEntity entity = new MenuEntity();
         BeanUtils.copyProperties(dto, entity);
-        MenuEntity resultEntity = menuRepository.save(entity);
+        menuService.save(entity);
         List<String> buttonList = dto.getButtonList();
         if (!buttonList.isEmpty()) {
             buttonList.forEach(s -> {
@@ -63,45 +60,36 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
                 String buttonCode = ButtonEnum.getKey(s);
                 buttonEntity.setButtonCode(buttonCode);
                 buttonEntity.setButtonName(s);
-                buttonEntity.setMenuId(resultEntity.getMenuId());
-                buttonRepository.save(buttonEntity);
+                buttonEntity.setMenuId(entity.getMenuId());
+                buttonService.save(buttonEntity);
             });
         }
-        return resultEntity;
+        return entity;
     }
 
     @Override
     public void update(MenuDTO dto, String id) {
-        MenuEntity entity = menuRepository.findById(id).get();
+        MenuEntity entity = menuService.getById(id);
         entity.setIsHidden(dto.getIsHidden());
         entity.setMenuCode(dto.getMenuCode());
         entity.setMenuIcon(dto.getMenuIcon());
         entity.setMenuTitle(dto.getMenuTitle());
         entity.setMenuUrl(dto.getMenuUrl());
         entity.setParentId(dto.getParentId());
-        menuRepository.save(entity);
+        menuService.save(entity);
         this.checkButton(dto, id);
     }
 
     @Override
     public List<MenuEntity> getList(MenuDTO dto) {
-        MenuEntity entity = new MenuEntity();
-        entity.setMenuTitle(dto.getMenuTitle());
-        entity.setParentId(dto.getParentId());
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withMatcher("menuTitle" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
-                ;
-        Example<MenuEntity> example = Example.of(entity, matcher);
-        List<MenuEntity> result = menuRepository.findAll(example);
+        List<MenuEntity> result = menuService.list();
         return result;
     }
 
     @Override
-    public PageInfo<MenuDTO> getPage(MenuDTO dto) {
-        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+    public Page<MenuDTO> getPage(MenuDTO dto) {
         List<MenuDTO> resultList = menuMapper.getList(dto);
-        PageInfo<MenuDTO> page = new PageInfo<>(resultList);
-        return page;
+        return new Page<MenuDTO>();
     }
 
     @Override
@@ -116,10 +104,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 
     @Override
     public MenuDTO findById(String id) {
-        MenuEntity entity = menuRepository.findById(id).get();
+        MenuEntity entity = menuService.getById(id);
         MenuDTO result = new MenuDTO();
         BeanUtils.copyProperties(entity, result);
-        List<ButtonEntity> buttonEntities = buttonRepository.findByMenuId(id);
+        List<ButtonEntity> buttonEntities = buttonService.list(Wrappers.<ButtonEntity>lambdaQuery().eq(ButtonEntity::getButtonId, id));
         result.setButtonList(buttonEntities.stream().map(s -> s.getButtonName()).collect(Collectors.toList()));
         return result;
     }
@@ -129,13 +117,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     public void deleteMenu(List<String> ids) {
         for (String id : ids) {
-            menuRepository.deleteById(id);
-            List<MenuEntity> menuList = menuRepository.findByParentId(id);
+            menuService.removeById(id);
+            List<MenuEntity> menuList = menuService.list(Wrappers.<MenuEntity>lambdaQuery().eq(MenuEntity::getParentId, id));
             menuList.forEach(s -> {
                 this.deleteMenu(Arrays.asList(s.getMenuId()));
             });
-            menuAuthorityRepository.deleteByMenuId(id);
-            List<ButtonEntity> buttonEntities = buttonRepository.findByMenuId(id);
+            menuAuthorityService.remove(Wrappers.<MenuAuthorityEntity>lambdaQuery().eq(MenuAuthorityEntity::getMenuId, id));
+            List<ButtonEntity> buttonEntities = buttonService.list(Wrappers.<ButtonEntity>lambdaQuery().eq(ButtonEntity::getMenuId, id));
             buttonEntities.forEach(s ->this.deleteButton(s));
         }
 
@@ -143,14 +131,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 
     @Override
     public void updateIsHidden(MenuDTO dto) {
-        MenuEntity entity = menuRepository.findById(dto.getMenuId()).get();
+        MenuEntity entity = menuService.getById(dto.getMenuId());
         entity.setIsHidden(null == dto.getIsHidden()?MenuEntity.IS_HIDDEN:dto.getIsHidden());
-        menuRepository.save(entity);
+        menuService.save(entity);
     }
 
     @Override
     public MenuDTO getButtonList(MenuDTO dto) {
-        List<ButtonEntity> buttonEntities = buttonRepository.findByMenuId(dto.getMenuId());
+        List<ButtonEntity> buttonEntities = buttonService.list(Wrappers.<ButtonEntity>lambdaQuery().eq(ButtonEntity::getMenuId, dto.getMenuId()));
         List<ButtonDTO> buttonDtos = buttonMapper.getListAuthority(dto);
         MenuDTO result = new MenuDTO();
         result.setButtonListEntity(buttonEntities);
@@ -164,7 +152,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * 2、验证哪些按钮被删除
      */
     private void checkButton(MenuDTO dto, String id){
-        List<ButtonEntity> buttonEntityList = buttonRepository.findByMenuId(id);
+        List<ButtonEntity> buttonEntityList = buttonService.list(Wrappers.<ButtonEntity>lambdaQuery().eq(ButtonEntity::getMenuId, id));
         List<String> buttonList = dto.getButtonList();
         //1、验证哪些按钮是新增
         buttonList.forEach(s -> {
@@ -174,7 +162,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
                 buttonEntity.setButtonName(s);
                 buttonEntity.setButtonCode(ButtonEnum.getKey(s));
                 buttonEntity.setMenuId(id);
-                buttonRepository.save(buttonEntity);
+                buttonService.save(buttonEntity);
             }
         });
         //2、验证哪些按钮被删除
@@ -191,7 +179,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * @param entity
      */
     private void deleteButton(ButtonEntity entity){
-        buttonRepository.delete(entity);
-        buttonAuthorityRepository.deleteByButtonId(entity.getButtonId());
+        buttonService.removeById(entity.getButtonId());
+        buttonAuthorityService.remove(Wrappers.<ButtonAuthorityEntity>lambdaQuery().eq(ButtonAuthorityEntity::getButtonId, entity.getButtonId()));
     }
 }

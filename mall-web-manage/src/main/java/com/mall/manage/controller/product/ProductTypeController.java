@@ -1,5 +1,6 @@
 package com.mall.manage.controller.product;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
@@ -11,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,10 +79,7 @@ public class ProductTypeController {
     protected RestResult getPage(@PathVariable Integer id, ProductTypeDTO dto) {
         dto.setParentId(id);
         Page<ProductTypeEntity> result = productTypeService.findPage(dto);
-        ResultPage resultPage = new ResultPage();
-        resultPage.setList(result.getContent());
-        resultPage.setTotal(result.getTotalElements());
-        return RestResult.pageSuccess(resultPage);
+        return RestResult.success(result);
     }
 
     @ApiOperation("修改")

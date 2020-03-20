@@ -26,7 +26,6 @@ public class UserEntity implements Serializable{
     /**
      * 用户编号
      */
-    @Id
     private String userId;
     /**
      * 登录账号

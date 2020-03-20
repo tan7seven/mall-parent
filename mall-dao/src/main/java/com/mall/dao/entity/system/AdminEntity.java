@@ -1,6 +1,7 @@
 package com.mall.dao.entity.system;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @TableName("system_admin")
-public class AdminEntity implements Serializable {
+public class AdminEntity extends BaseEntity {
 
     /**
      * 普通
@@ -27,7 +28,6 @@ public class AdminEntity implements Serializable {
     /**
      * 用户编号
      */
-    @Id
     private String userId;
     /**
      * 登录账号

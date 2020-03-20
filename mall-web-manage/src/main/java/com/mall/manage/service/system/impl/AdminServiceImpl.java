@@ -1,5 +1,7 @@
 package com.mall.manage.service.system.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.enums.AdminRoleEnum;
@@ -10,22 +12,17 @@ import com.mall.dao.entity.system.MenuAuthorityEntity;
 import com.mall.dao.entity.system.MenuEntity;
 import com.mall.dao.mapper.system.AdminMapper;
 import com.mall.dao.mapper.system.ButtonMapper;
-import com.mall.dao.repository.system.AdminRepository;
-import com.mall.dao.repository.system.ButtonAuthorityRepository;
-import com.mall.dao.repository.system.MenuAuthorityRepository;
-import com.mall.dao.repository.system.MenuRepository;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.system.AdminService;
+import com.mall.manage.service.system.ButtonAuthorityService;
+import com.mall.manage.service.system.MenuAuthorityService;
+import com.mall.manage.service.system.MenuService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,25 +34,19 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements AdminService {
 
     @Autowired
-    private AdminRepository adminRepository;
-
-    @Autowired
     private AdminMapper adminMapper;
 
     @Autowired
     private ButtonMapper buttonMapper;
 
     @Autowired
-    private MenuRepository menuRepository;
+    private MenuService menuService;
 
     @Autowired
-    private MenuAuthorityRepository menuAuthorityRepository;
+    private MenuAuthorityService menuAuthorityService;
 
     @Autowired
-    private ButtonAuthorityRepository buttonAuthorityRepository;
-
-//    @Autowired
-//    private RedisUtil redisUtil;
+    private ButtonAuthorityService buttonAuthorityService;
 
     @Override
     public UserDetailsImpl adminLogin(String username) {
@@ -91,49 +82,41 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         entity.setRole(AdminEntity.ROLE_USER);
         entity.setPassword(AdminEntity.DEFAULT_PASSWORD);
         entity.setIsDelete(CommonConstant.NOT_DELETE);
-        return adminRepository.save(entity);
+        this.save(entity);
+        return entity;
     }
 
     @Override
     public void update(AdminDTO dto, String id) {
-        AdminEntity entity = adminRepository.findById(id).get();
+        AdminEntity entity = this.findById(id).get();
         entity.setLoginCode(dto.getLoginCode());
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
         entity.setPicUrl(dto.getPicUrl());
         entity.setIsUsable(dto.getIsUsable());
         entity.setModifyTime(new Date());
-        adminRepository.save(entity);
+        this.save(entity);
     }
 
     @Override
     public List<AdminEntity> getList(AdminDTO dto) {
-        List<AdminEntity>entities = adminRepository.findAll((Specification<AdminEntity>) (root, query, criteriaBuilder)->{
-            List<Predicate> list = new ArrayList<>();
-            if(StringUtils.isNotBlank(dto.getRole())){
-                list.add(criteriaBuilder.like(root.get("role").as(String.class), "%"+dto.getRole()+"%"));
-            }
-            Predicate[] p = new Predicate[list.size()];
-            return criteriaBuilder.and(list.toArray(p));
-        });
+        List<AdminEntity>entities = this.list();
         return entities;
     }
 
     @Override
     public Page<AdminEntity> getPage(AdminDTO dto) {
-        Sort sort = new Sort(Sort.Direction.ASC, "modifyTime");
-        Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
+        Page page = new Page(dto.getPageNum()-1, dto.getPageSize());
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
         entity.setIsDelete(CommonConstant.NOT_DELETE);
-        Example<AdminEntity> example = Example.of(entity);
-        Page<AdminEntity> result = adminRepository.findAll(example, page);
+        Page<AdminEntity> result = (Page<AdminEntity>) this.page(page);
         return result;
     }
 
     @Override
     public Optional<AdminEntity> findById(String userId) {
-        return adminRepository.findById(userId);
+        return this.findById(userId);
     }
 
     @Override
@@ -144,32 +127,32 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     @Override
     public void deleteAdmin(List<String> ids) {
         for (String id : ids) {
-            AdminEntity entity = adminRepository.findById(id).get();
+            AdminEntity entity = this.findById(id).get();
             entity.setIsDelete(CommonConstant.IS_DELETE);
-            adminRepository.save(entity);
+            this.save(entity);
         }
     }
 
     @Override
     public void updateIsUsable(AdminDTO dto) {
-        AdminEntity entity = adminRepository.findById(dto.getUserId()).get();
+        AdminEntity entity = this.getById(dto.getUserId());
         entity.setIsUsable(null == dto.getIsUsable()?CommonConstant.IS_USABLE:dto.getIsUsable());
-        adminRepository.save(entity);
+        this.save(entity);
     }
 
     @Override
     public void menuAuthority(AdminDTO dto) {
-        menuAuthorityRepository.deleteByUserId(dto.getUserId());
+        menuAuthorityService.remove(Wrappers.<MenuAuthorityEntity>lambdaQuery().eq(MenuAuthorityEntity::getMenuId, dto.getUserId()));
         if (dto.getMenuList().isEmpty()) {
             return;
         }
         dto.getMenuList().forEach(s -> {
-            MenuEntity menuEntity = menuRepository.findById(s).get();
+            MenuEntity menuEntity = menuService.getById(s);
             if(!"0".equals(menuEntity.getParentId())){
                 MenuAuthorityEntity authorityEntity = new MenuAuthorityEntity();
                 authorityEntity.setMenuId(s);
                 authorityEntity.setUserId(dto.getUserId());
-                menuAuthorityRepository.save(authorityEntity);
+                menuAuthorityService.save(authorityEntity);
             }
         });
     }
@@ -182,13 +165,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
             authorityEntity.setButtonId(s.getButtonId());
             authorityEntity.setMenuId(dto.getMenuId());
             authorityEntity.setUserId(dto.getUserId());
-            buttonAuthorityRepository.save(authorityEntity);
+            buttonAuthorityService.save(authorityEntity);
         });
     }
 
     @Override
     public List<String> getAdminMenuAuthority(String userId) {
-        return menuAuthorityRepository.findByUserId(userId).stream().map(s -> s.getMenuId()).collect(Collectors.toList());
+        return menuAuthorityService.list(Wrappers.<MenuAuthorityEntity>lambdaQuery().eq(MenuAuthorityEntity::getUserId, userId)).stream().map(s -> s.getMenuId()).collect(Collectors.toList());
     }
 
 }

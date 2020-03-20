@@ -1,6 +1,7 @@
 package com.mall.dao.entity.order;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @TableName("mall_order_return_apply")
-public class OrderReturnApplyEntity {
+public class OrderReturnApplyEntity extends BaseEntity {
     /**
      * 退货状态：0->待处理；1->退货中；2->已完成；3->已拒绝
      */
@@ -24,7 +25,6 @@ public class OrderReturnApplyEntity {
     /**
      * 主键
      */
-    @Id
     private String applyId;
     /**
      * 订单id

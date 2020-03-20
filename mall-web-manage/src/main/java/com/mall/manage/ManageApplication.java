@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @MapperScan(value= "com.mall.dao.mapper")
 @ComponentScan(basePackages={"com.mall"})
 @EntityScan(basePackages = "com.mall.dao.entity")
-@EnableJpaRepositories(basePackages = { "com.mall.dao.repository" })
 public class ManageApplication {
 
 	public static void main(String[] args) {

@@ -1,6 +1,6 @@
 package com.mall.manage.controller.product;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductPropertyNameDTO;
 import com.mall.dao.entity.product.ProductPropertyNameEntity;
@@ -51,7 +51,7 @@ public class ProductPropertyController {
     @ApiOperation("分页查询")
     @GetMapping("/getPage.do")
     protected RestResult getPage(ProductPropertyNameDTO dto){
-        PageInfo<ProductPropertyNameDTO> result = productPropertyNameService.findPage(dto);
+        Page<ProductPropertyNameDTO> result = productPropertyNameService.findPage(dto);
         return RestResult.success(result);
     }
 

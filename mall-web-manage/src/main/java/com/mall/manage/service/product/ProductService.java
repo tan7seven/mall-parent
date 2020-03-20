@@ -1,5 +1,6 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
@@ -30,7 +31,7 @@ public interface ProductService extends IService<ProductEntity> {
      * mybatis分页查询
      * @returndto
      */
-    ResultPage<ProductDTO> findPage(GetPageParam param);
+    Page<ProductDTO> findPage(GetPageParam param);
 
     /**
      * 创建商品信息

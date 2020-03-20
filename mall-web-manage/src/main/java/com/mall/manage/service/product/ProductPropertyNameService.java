@@ -2,7 +2,6 @@ package com.mall.manage.service.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductPropertyNameDTO;
 import com.mall.dao.entity.product.ProductPropertyNameEntity;

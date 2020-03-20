@@ -1,10 +1,10 @@
 package com.mall.manage.service.system;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.system.AdminDTO;
 import com.mall.dao.entity.system.AdminEntity;
 import com.mall.manage.security.UserDetailsImpl;
-import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

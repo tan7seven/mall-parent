@@ -1,6 +1,7 @@
 package com.mall.dao.entity.system;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -9,11 +10,10 @@ import org.springframework.data.annotation.Id;
  */
 @Data
 @TableName("system_button")
-public class ButtonEntity {
+public class ButtonEntity extends BaseEntity {
     /**
      * 主键
      */
-    @Id
     private String buttonId;
     /**
      * 菜单主键

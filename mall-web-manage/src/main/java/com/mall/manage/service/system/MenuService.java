@@ -1,7 +1,7 @@
 package com.mall.manage.service.system;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
 import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
 import com.mall.dao.dto.system.MenuDTO;
@@ -39,7 +39,7 @@ public interface MenuService extends IService<MenuEntity> {
      * @param dto
      * @return
      */
-    PageInfo<MenuDTO> getPage(MenuDTO dto);
+    Page<MenuDTO> getPage(MenuDTO dto);
 
     /**
      * 获取菜单树

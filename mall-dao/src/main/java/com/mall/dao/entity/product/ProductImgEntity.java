@@ -1,10 +1,10 @@
 package com.mall.dao.entity.product;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,14 +13,13 @@ import java.util.Date;
  */
 @Data
 @TableName("mall_product_img")
-public class ProductImgEntity  implements Serializable {
+public class ProductImgEntity extends BaseEntity {
 
     public static final String TYPE_CODE_PRODUCT = "RODUCT";
     public static final String TYPE_CODE_SKU="SKU";
     /**
      *商品图片编号
      */
-    @Id
     private Integer imgId;
     /**
      * 图片路径

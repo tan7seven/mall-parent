@@ -1,5 +1,6 @@
 package com.mall.manage.controller.system;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.system.AdminDTO;
 import com.mall.dao.entity.system.AdminEntity;
@@ -10,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,10 +30,7 @@ public class AdminController extends GenericController {
     @PostMapping(value = "getPage.do")
     protected RestResult getPage(AdminDTO dto){
         Page<AdminEntity> result = adminService.getPage(dto);
-        ResultPage resultPage = new ResultPage();
-        resultPage.setList(result.getContent());
-        resultPage.setTotal(result.getTotalElements());
-        return RestResult.success(resultPage);
+        return RestResult.success(result);
     }
 
     @ApiOperation("获取信息")

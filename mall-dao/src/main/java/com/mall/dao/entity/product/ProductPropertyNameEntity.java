@@ -1,10 +1,10 @@
 package com.mall.dao.entity.product;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -12,13 +12,12 @@ import java.io.Serializable;
  */
 @Data
 @TableName("mall_product_property_name")
-public class ProductPropertyNameEntity  implements Serializable {
+public class ProductPropertyNameEntity extends BaseEntity {
     public static final String IS_SALE = "0";
     public static final String NOT_SALE = "1";
     /**
      * 编号
      */
-    @Id
     private Integer propertyNameId;
     /**
      * 商品类目ID

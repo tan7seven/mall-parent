@@ -17,7 +17,6 @@ public class UserScoreEntity implements Serializable {
     /**
      *UUID
      */
-    @Id
     private String userScoreId;
     /**
      * 用户ID

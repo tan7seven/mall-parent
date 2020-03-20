@@ -1,11 +1,10 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.product.ProductSkuEntity;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -48,12 +47,12 @@ public interface ProductSkuService extends IService<ProductSkuEntity> {
      * @param entity
      * @return
      */
-    Page<ProductSkuEntity> findPage(ProductSkuEntity entity, Pageable page);
+    Page<ProductSkuEntity> findPage(ProductSkuEntity entity, Page page);
 
     /**
      * mybatis-pagehelper分页查询
      * @param dto
      * @return
      */
-    PageInfo<ProductSkuDTO> findPage(ProductSkuDTO dto);
+    Page<ProductSkuDTO> findPage(ProductSkuDTO dto);
 }

@@ -22,6 +22,6 @@ public class CompanyAddressController {
     @ApiOperation("获取公司收货地址列表")
     @PostMapping(value = "getCompanyAddressList.do")
     protected RestResult getCompanyAddressList(){
-        return RestResult.success(companyAddressService.getCompanyAddressList());
+        return RestResult.success(companyAddressService.list());
     }
 }

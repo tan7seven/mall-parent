@@ -1,6 +1,7 @@
 package com.mall.dao.entity.system;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -9,11 +10,10 @@ import org.springframework.data.annotation.Id;
  */
 @Data
 @TableName("company_address")
-public class CompanyAddressEntity {
+public class CompanyAddressEntity extends BaseEntity {
     /**
      * 主键
      */
-    @Id
     private String addressId;
     /**
      * 地址名称

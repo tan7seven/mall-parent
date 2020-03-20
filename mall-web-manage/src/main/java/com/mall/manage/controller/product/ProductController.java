@@ -1,6 +1,7 @@
 package com.mall.manage.controller.product;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.manage.UploadPicManage;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
@@ -36,7 +37,7 @@ public class ProductController {
     @ApiOperation("分页查询")
     @GetMapping(value = "/getPage.do")
     protected RestResult getPage(GetPageParam param){
-        ResultPage<ProductDTO> result = productService.findPage(param);
+        Page<ProductDTO> result = productService.findPage(param);
         return RestResult.success(result);
     }
 

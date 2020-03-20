@@ -1,6 +1,7 @@
 package com.mall.dao.entity.order;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -12,11 +13,10 @@ import java.util.Date;
  */
 @Data
 @TableName("mall_order_items")
-public class OrderItemsEntity {
+public class OrderItemsEntity extends BaseEntity {
     /**
      * 主键
      */
-    @Id
     private String itemsId;
     /**
      * 订单主键

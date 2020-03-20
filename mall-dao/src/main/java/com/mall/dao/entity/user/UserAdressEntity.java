@@ -16,7 +16,6 @@ public class UserAdressEntity implements Serializable {
     /**
      * 主键
      */
-    @Id
     private String userAddressId;
     /**
      * 用户编号

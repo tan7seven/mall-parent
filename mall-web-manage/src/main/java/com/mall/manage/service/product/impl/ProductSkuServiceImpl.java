@@ -1,23 +1,18 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
-import com.mall.dao.entity.product.ProductSkuEntity;
+import com.mall.dao.entity.product.*;
 import com.mall.dao.mapper.product.ProductPropertyNameMapper;
 import com.mall.dao.mapper.product.ProductSkuMapper;
-import com.mall.dao.repository.product.*;
-import com.mall.manage.service.product.ProductSkuService;
+import com.mall.manage.service.product.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,20 +22,18 @@ import java.util.stream.Collectors;
 
 @Service(value = "productSkuService")
 public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, ProductSkuEntity> implements ProductSkuService {
-    @Autowired
-    private ProductSkuRepository productSkuRepository;
 
     @Autowired
-    private ProductPropertyValueRepository productPropertyValueRepository;
+    private ProductPropertyValueService productPropertyValueService;
 
     @Autowired
-    private ProductPropertyNameRepository productPropertyNameRepository;
+    private ProductPropertyNameService productPropertyNameService;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @Autowired
-    private ProductTypeRepository productTypeRepository;
+    private ProductTypeService productTypeService;
 
     @Autowired
     private ProductSkuMapper productSkuMapper;
@@ -50,11 +43,11 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
 
     @Override
     public RestResult add(ProductSkuDTO dto) {
-        com.mall.dao.entity.product.ProductEntity product = productRepository.findById(dto.getProductId()).get();
+        ProductEntity product = productService.getById(dto.getProductId());
         if(product.getPriceMin().compareTo(dto.getPrice())== 1){
             return RestResult.validateFailed("销售价格不能小于商品最低价！");
         }
-        com.mall.dao.entity.product.ProductSkuEntity entity = new com.mall.dao.entity.product.ProductSkuEntity();
+        ProductSkuEntity entity = new ProductSkuEntity();
         entity.setCost(dto.getCost()==null?new BigDecimal(0):dto.getCost());
         entity.setPrice(dto.getPrice()==null?new BigDecimal(0):dto.getPrice());
         entity.setProductId(dto.getProductId());
@@ -78,7 +71,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         entity.setModifyTime(new Date());
         entity.setSellSum(0);
         entity.setIsDelete(CommonConstant.NOT_DELETE);
-        productSkuRepository.save(entity);
+        this.save(entity);
         return RestResult.success();
     }
 
@@ -91,7 +84,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         dto.setStock(dto.getStock()==null?0:dto.getStock());
         dto.setSellSum(dto.getSellSum()==null?0:dto.getSellSum());
         dto.setSkuId(id);
-        com.mall.dao.entity.product.ProductSkuEntity skuEntity = productSkuRepository.findById(id).get();
+        ProductSkuEntity skuEntity = this.getById(id);
         BeanUtils.copyProperties(dto, skuEntity);
         StringBuffer properties = new StringBuffer();
         if(StringUtils.isNotBlank(dto.getPropertyValueA())){
@@ -107,13 +100,13 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             properties.append(dto.getPropertyValueC());
         }
         skuEntity.setProperties(properties.toString());
-        productSkuRepository.save(skuEntity);
+        this.save(skuEntity);
         return RestResult.success();
     }
 
     @Override
     public ProductSkuDTO findById(Integer id) {
-        com.mall.dao.entity.product.ProductSkuEntity entity = productSkuRepository.findById(id).get();
+        ProductSkuEntity entity = this.getById(id);
         ProductSkuDTO result = new ProductSkuDTO();
         BeanUtils.copyProperties(entity, result);
         //设置商品属性值
@@ -128,12 +121,12 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             result.setPropertyValueC(properties[3]);
         }
         //获取商品信息
-        com.mall.dao.entity.product.ProductEntity productEntity = productRepository.findById(entity.getProductId()).get();
+        ProductEntity productEntity = productService.getById(entity.getProductId());
         result.setProductName(productEntity.getProductName());
         //获取商品可选属性值
-        List<com.mall.dao.entity.product.ProductPropertyValueEntity> propertyValues= productPropertyValueRepository.findByProductId(productEntity.getProductId());
+        List<ProductPropertyValueEntity> propertyValues= productPropertyValueService.findByProductId(productEntity.getProductId());
         List<Integer> propertiesInt = propertyValues.stream()
-                .filter(productPropertyValueEntity -> com.mall.dao.entity.product.ProductPropertyValueEntity.IS_SALE.equals(productPropertyValueEntity.getIsSale()))
+                .filter(productPropertyValueEntity -> ProductPropertyValueEntity.IS_SALE.equals(productPropertyValueEntity.getIsSale()))
                 .map(productPropertyValueEntity->productPropertyValueEntity.getPropertyNameId())
                 .distinct().collect(Collectors.toList());
        if(null != properties && !propertiesInt.isEmpty() && propertiesInt.size()>=1 ){
@@ -146,7 +139,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             result.setPropertyValueCOptions(productPropertyMapper.findByPropertyNameIdAndProductId(propertiesInt.get(2), entity.getProductId()));
         }
         //获取分类名称
-        com.mall.dao.entity.product.ProductTypeEntity typeEntity = productTypeRepository.findById(productEntity.getTypeId()).get();
+        ProductTypeEntity typeEntity = productTypeService.getById(productEntity.getTypeId());
         result.setTypeName(typeEntity.getTypeName());
         return result;
     }
@@ -157,29 +150,25 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
     }
 
     @Override
-    public List<com.mall.dao.entity.product.ProductSkuEntity> findList(com.mall.dao.entity.product.ProductSkuEntity entity) {
-        Example<com.mall.dao.entity.product.ProductSkuEntity> example = Example.of(entity);
-        List<com.mall.dao.entity.product.ProductSkuEntity> result = productSkuRepository.findAll(example);
+    public List<ProductSkuEntity> findList(ProductSkuEntity entity) {
+        List<ProductSkuEntity> result = this.list();
         return result;
     }
 
     @Override
-    public Page<com.mall.dao.entity.product.ProductSkuEntity> findPage(com.mall.dao.entity.product.ProductSkuEntity entity, Pageable page) {
-        Example<com.mall.dao.entity.product.ProductSkuEntity> example = Example.of(entity);
-        Page<com.mall.dao.entity.product.ProductSkuEntity> result = productSkuRepository.findAll(example, page);
+    public Page<ProductSkuEntity> findPage(ProductSkuEntity entity, Page page) {
+        Page<ProductSkuEntity> result = (Page<ProductSkuEntity>) this.page(page);
         return result;
     }
 
     @Override
-    public PageInfo<ProductSkuDTO> findPage(ProductSkuDTO dto) {
-        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+    public Page<ProductSkuDTO> findPage(ProductSkuDTO dto) {
         List<ProductSkuDTO> skuVoList = productSkuMapper.getList(dto);
         //将property值转换成对应value值
         for (ProductSkuDTO skuDto: skuVoList){
             this.makePropertyKeyToValue(skuDto);
         }
-        PageInfo<ProductSkuDTO> page = new PageInfo<>(skuVoList);
-        return page;
+        return new Page<ProductSkuDTO>();
     }
 
     /**
@@ -188,8 +177,10 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
      */
     private void makePropertyKeyToValue(ProductSkuDTO dto){
         StringBuffer propertySb = new StringBuffer();
-        List<com.mall.dao.entity.product.ProductPropertyNameEntity> nameList = productPropertyNameRepository.findByTypeIdAndIsDelete(dto.getTypeId(), CommonConstant.NOT_DELETE);
-        List<com.mall.dao.entity.product.ProductPropertyValueEntity> valueList = productPropertyValueRepository.findByProductId(dto.getProductId());
+        List<ProductPropertyNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductPropertyNameEntity>lambdaQuery()
+                .eq(ProductPropertyNameEntity::getTypeId, dto.getTypeId())
+                .eq(ProductPropertyNameEntity::getIsDelete, CommonConstant.NOT_DELETE));
+        List<ProductPropertyValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProperties())){
             String skuProperties = dto.getProperties();
             String[] properties = skuProperties.split("&");
@@ -206,7 +197,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
                     }
                 }
                 //获取propertyValue值
-                for (com.mall.dao.entity.product.ProductPropertyValueEntity valueEntity: valueList) {
+                for (ProductPropertyValueEntity valueEntity: valueList) {
                     if(propertyValues[1].equals(String.valueOf(valueEntity.getPropertyValueId()))){
                         propertySb.append(valueEntity.getValue());
                         propertySb.append("、");

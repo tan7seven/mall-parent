@@ -1,6 +1,7 @@
 package com.mall.dao.entity.order;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @TableName("mall_order")
-public class OrderEntity {
+public class OrderEntity extends BaseEntity {
     //订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
     public static final Integer ORDER_STATUS_OBLIGATION = 0;
     public static final Integer ORDER_STATUS_TO_SEND = 1;
@@ -25,7 +26,6 @@ public class OrderEntity {
     /**
      * 订单ID
      */
-    @Id
     private String orderId;
     /**
      * 用户ID

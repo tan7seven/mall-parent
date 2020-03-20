@@ -1,5 +1,6 @@
 package com.mall.manage.service.product;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.entity.product.ProductPropertyValueEntity;
 import org.springframework.data.domain.Page;
@@ -54,5 +55,5 @@ public interface ProductPropertyValueService extends IService<ProductPropertyVal
      * @param entity
      * @return
      */
-    Page<ProductPropertyValueEntity> findPage(ProductPropertyValueEntity entity, Pageable page);
+    IPage<ProductPropertyValueEntity> findPage(ProductPropertyValueEntity entity, IPage page);
 }

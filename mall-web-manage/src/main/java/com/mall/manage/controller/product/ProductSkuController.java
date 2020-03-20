@@ -1,6 +1,6 @@
 package com.mall.manage.controller.product;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.manage.controller.common.GenericController;
@@ -25,7 +25,7 @@ public class ProductSkuController extends GenericController {
     @ApiOperation("分页查询")
     @GetMapping(value = "/getPage.do")
     protected RestResult getPage(ProductSkuDTO dto){
-        PageInfo<ProductSkuDTO> result = productSkuService.findPage(dto);
+        Page<ProductSkuDTO> result = productSkuService.findPage(dto);
         return RestResult.success(result);
     }
 

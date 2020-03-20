@@ -1,6 +1,6 @@
 package com.mall.manage.controller.system;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
@@ -34,7 +34,7 @@ public class MenuController extends GenericController {
     @ApiOperation("分页查询")
     @PostMapping(value = "getPage.do")
     protected RestResult getPage(MenuDTO dto){
-        PageInfo<MenuDTO> result = menuService.getPage(dto);
+        Page<MenuDTO> result = menuService.getPage(dto);
         return RestResult.success(result);
     }
 

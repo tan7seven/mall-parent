@@ -1,6 +1,7 @@
 package com.mall.dao.entity.system;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -10,14 +11,13 @@ import org.springframework.data.annotation.Id;
  */
 @Data
 @TableName("system_menu")
-public class MenuEntity {
+public class MenuEntity extends BaseEntity {
 
     public static final Integer IS_HIDDEN = 1;
     public static final Integer NOT_HIDDEN = 0;
     /**
      * 菜单主键
      */
-    @Id
     private String menuId;
     /**
      * 父级菜单主键

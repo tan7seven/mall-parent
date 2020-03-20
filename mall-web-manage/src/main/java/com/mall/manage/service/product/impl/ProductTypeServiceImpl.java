@@ -1,21 +1,20 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
-import com.mall.dao.entity.product.ProductSkuEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
 import com.mall.dao.mapper.product.ProductMapper;
-import com.mall.dao.mapper.product.ProductSkuMapper;
 import com.mall.dao.mapper.product.ProductTypeMapper;
-import com.mall.dao.repository.product.ProductTypeRepository;
 import com.mall.manage.service.product.ProductPropertyNameService;
 import com.mall.manage.service.product.ProductTypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,7 +26,7 @@ import java.util.Optional;
 public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, ProductTypeEntity> implements ProductTypeService {
 
     @Autowired
-    private ProductTypeRepository productTypeRepository;
+    private ProductTypeService productTypeService;
 
     @Autowired
     private ProductTypeMapper productTypeMapper;
@@ -43,32 +42,13 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         if(null == entity.getSort()){
             entity.setSort(999);
         }
-        return productTypeRepository.save(entity);
+        productTypeService.save(entity);
+        return entity;
     }
 
     @Override
     public ProductTypeEntity update(ProductTypeDTO dto) {
-        ProductTypeEntity entity = productTypeRepository.findById(dto.getTypeId()).get();
-        /*if(null != dto.getPropertyNameCheckedIsSale() && dto.getPropertyNameCheckedIsSale().length > 0){
-            String[] propertyNames = dto.getPropertyNameCheckedIsSale();
-            for (int i = 0 ; i <propertyNames.length ; i++){
-                ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
-                propertyName.setName(propertyNames[i]);
-                propertyName.setTypeId(entity.getTypeId());
-                propertyName.setIsSale(ProductPropertyNameEntity.IS_SALE);
-                productPropertyNameService.add(propertyName);
-            }
-        }
-        if(null != dto.getPropertyNameCheckedNotSale() && dto.getPropertyNameCheckedNotSale().length > 0){
-            String[] propertyNames = dto.getPropertyNameCheckedNotSale();
-            for (int i = 0 ; i <propertyNames.length ; i++){
-                ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
-                propertyName.setName(propertyNames[i]);
-                propertyName.setTypeId(entity.getTypeId());
-                propertyName.setIsSale(ProductPropertyNameEntity.NOT_SALE);
-                productPropertyNameService.add(propertyName);
-            }
-        }*/
+        ProductTypeEntity entity = productTypeService.findById(dto.getTypeId()).get();
         /**
          * 修改对应商品状态
          */
@@ -82,10 +62,11 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         if(0 == entity.getParentId()){
             entity.setLevel(0);
         }else{
-            ProductTypeEntity parent = productTypeRepository.findById(entity.getParentId()).get();
+            ProductTypeEntity parent = productTypeService.findById(entity.getParentId()).get();
             entity.setLevel(parent.getLevel()+1);
         }
-        return productTypeRepository.save(entity);
+        productTypeService.save(entity);
+        return entity;
     }
 
     @Override
@@ -115,72 +96,42 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         if(0 == entity.getParentId()){
             entity.setLevel(0);
         }else{
-            ProductTypeEntity parent = productTypeRepository.findById(entity.getParentId()).get();
+            ProductTypeEntity parent = productTypeService.findById(entity.getParentId()).get();
             entity.setLevel(parent.getLevel()+1);
         }
         entity.setIsDelete(CommonConstant.NOT_DELETE);
-        ProductTypeEntity result = productTypeRepository.save(entity);
-        /*//添加销售属性
-        if(null != dto.getPropertyNameCheckedIsSale() && dto.getPropertyNameCheckedIsSale().length > 0){
-            String[] propertyNames = dto.getPropertyNameCheckedIsSale();
-            for (int i = 0 ; i <propertyNames.length ; i++){
-                ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
-                propertyName.setName(propertyNames[i]);
-                propertyName.setTypeId(result.getTypeId());
-                propertyName.setIsSale(ProductPropertyNameEntity.IS_SALE);
-                productPropertyNameService.add(propertyName);
-            }
-        }
-        //添加非销售属性
-        if(null != dto.getPropertyNameCheckedNotSale() && dto.getPropertyNameCheckedNotSale().length > 0){
-            String[] propertyNames = dto.getPropertyNameCheckedNotSale();
-            for (int i = 0 ; i <propertyNames.length ; i++){
-                ProductPropertyNameEntity propertyName = new ProductPropertyNameEntity();
-                propertyName.setName(propertyNames[i]);
-                propertyName.setTypeId(result.getTypeId());
-                propertyName.setIsSale(ProductPropertyNameEntity.NOT_SALE);
-                productPropertyNameService.add(propertyName);
-            }
-        }*/
-        return result;
+        productTypeService.save(entity);
+        return entity;
     }
 
     @Override
     public Optional<ProductTypeEntity> findById(Integer id) {
-        return productTypeRepository.findById(id);
+        return productTypeService.findById(id);
     }
 
     @Override
     public void deleteById(Integer id) {
         productPropertyNameService.updateIsDeleteByTypeId(id);
-        List<ProductTypeEntity> entities = productTypeRepository.findByParentId(id);
+        List<ProductTypeEntity> entities = productTypeService.list(Wrappers.<ProductTypeEntity>lambdaQuery()
+                .eq(ProductTypeEntity::getParentId, id));
         for (ProductTypeEntity entity: entities) {
             productPropertyNameService.updateIsDeleteByTypeId(entity.getTypeId());
         }
-        productTypeRepository.updateIsDeleteByParentId(id);
-        productTypeRepository.updateIsDelete(id);
     }
 
     @Override
     public List<ProductTypeEntity> findList(ProductTypeEntity entity) {
-        Example<ProductTypeEntity> example = Example.of(entity);
-        List<ProductTypeEntity> result = productTypeRepository.findAll(example);
+        List<ProductTypeEntity> result = productTypeService.list();
         return result;
     }
 
     @Override
     public Page<ProductTypeEntity> findPage(ProductTypeDTO dto) {
-        Sort sort = new Sort(Sort.Direction.ASC, "sort", "typeId");
-        Pageable page = PageRequest.of(dto.getPageNum()-1, dto.getPageSize(), sort);
+        Page page = new Page(dto.getPageNum()-1, dto.getPageSize());
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(dto,entity);
         entity.setIsDelete(CommonConstant.NOT_DELETE);
-        ExampleMatcher matcher = ExampleMatcher.matching()
-//                .withMatcher("typeName", ExampleMatcher.GenericPropertyMatchers.startsWith())//模糊查询匹配开头，即{username}%
-                .withMatcher("typeName" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
-                .withIgnorePaths("sort");  //忽略属性：是否关注。因为是基本类型，需要忽略掉
-        Example<ProductTypeEntity> example = Example.of(entity, matcher);
-        Page<ProductTypeEntity> result = productTypeRepository.findAll(example, page);
+        Page<ProductTypeEntity> result = (Page<ProductTypeEntity>) productTypeService.page(page);
         return result;
     }
 

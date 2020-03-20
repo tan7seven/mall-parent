@@ -1,6 +1,7 @@
 package com.mall.dao.entity.order;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -9,12 +10,11 @@ import org.springframework.data.annotation.Id;
  */
 @Data
 @TableName("mall_order_setting")
-public class OrderSettingEntity {
+public class OrderSettingEntity extends BaseEntity {
 
     /**
      * 订单ID
      */
-    @Id
     private Integer settingId;
     /**
      * 	正常订单超时时间(分)
