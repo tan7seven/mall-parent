@@ -14,24 +14,24 @@ public enum ResultStatus implements BaseExceptionCode {
      * 请求成功
      */
     SUCCESS(200, "success"),
-    SUCCESS_CREATED(201, "已创建"),
-    SUCCESS_RECEIVE(202, "接收"),
-    SUCCESS_ILLEGALITY_MSG(203, "非认证信息"),
+//    SUCCESS_CREATED(201, "已创建"),
+//    SUCCESS_RECEIVE(202, "接收"),
+//    SUCCESS_ILLEGALITY_MSG(203, "非认证信息"),
     /**
      * 客户方错误
      */
     CLIENT_BAD_REQUEST(400, "请求失败"),
     CLIENT_NEED_APPROVE(401, "未认证"),
-    CLIENT_NEED_PAY(402, "需要付费"),
-    CLIENT_FORBIDDEN(403, "禁止"),
-    CLIENT_NOT_FOUND(404, "未找到"),
-    CLIENT_NOT_AGREE(405, "不允许"),
-    CLIENT_NOT_RECEIVE(406, "不接受"),
-    CLIENT_NOT_AGENCY(407, "需要代理认证"),
-    CLIENT_TIMEOUT(408, "请求超时"),
-    CLIENT_CONFLICT(409, "请求冲突"),
-    CLIENT_FAILED(410, "请求失败"),
-    CLIENT_LENGTH_REQUIRED(411, "请求长度不够"),
+//    CLIENT_NEED_PAY(402, "需要付费"),
+//    CLIENT_FORBIDDEN(403, "禁止"),
+//    CLIENT_NOT_FOUND(404, "未找到"),
+//    CLIENT_NOT_AGREE(405, "不允许"),
+//    CLIENT_NOT_RECEIVE(406, "不接受"),
+//    CLIENT_NOT_AGENCY(407, "需要代理认证"),
+//    CLIENT_TIMEOUT(408, "请求超时"),
+//    CLIENT_CONFLICT(409, "请求冲突"),
+//    CLIENT_FAILED(410, "请求失败"),
+//    CLIENT_LENGTH_REQUIRED(411, "请求长度不够"),
     /**
      * 服务方错误
      */
@@ -42,6 +42,8 @@ public enum ResultStatus implements BaseExceptionCode {
      */
     BUS_MSG_NOT_FOUND(1000, "数据不存在"),
     BUS_RESUBMIT(1001, "您的请求正在处理，请稍候再试"),
+    HANDLE_FAILED(1002, "操作失败"),
+    PARAM_FAILED(1003, "参数异常"),
     /**
      * 自定义用户权限异常
      */

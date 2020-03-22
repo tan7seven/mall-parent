@@ -1,4 +1,4 @@
-package com.mall.manage.param.product.product;
+package com.mall.manage.model.param.product.product;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;

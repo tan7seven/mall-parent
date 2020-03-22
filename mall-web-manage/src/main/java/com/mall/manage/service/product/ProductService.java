@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.entity.product.ProductEntity;
-import com.mall.manage.param.product.product.GetPageParam;
-import com.mall.manage.param.product.product.UpdateIsPutawayParam;
+import com.mall.manage.model.param.product.product.GetPageParam;
+import com.mall.manage.model.param.product.product.UpdateIsPutawayParam;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

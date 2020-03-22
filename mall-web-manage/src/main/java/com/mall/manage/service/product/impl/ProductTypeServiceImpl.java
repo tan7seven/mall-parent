@@ -1,24 +1,28 @@
 package com.mall.manage.service.product.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.constant.CommonConstant;
+import com.mall.common.vo.RestPage;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
 import com.mall.dao.entity.product.ProductTypeEntity;
 import com.mall.dao.mapper.product.ProductMapper;
 import com.mall.dao.mapper.product.ProductTypeMapper;
+import com.mall.manage.model.vo.product.type.ProductTypePageVO;
 import com.mall.manage.service.product.ProductAttrNameService;
 import com.mall.manage.service.product.ProductTypeService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service(value = "productTypeService")
@@ -98,7 +102,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
             ProductTypeEntity parent = productTypeService.getById(entity.getParentId());
             entity.setLevel(parent.getLevel()+1);
         }
-        entity.setDelete(Boolean.FALSE);
+        entity.setDeleted(Boolean.FALSE);
         productTypeService.save(entity);
         return entity;
     }
@@ -121,12 +125,24 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
     }
 
     @Override
-    public Page<ProductTypeEntity> findPage(ProductTypeDTO dto) {
-        Page page = new Page(dto.getPageNum()-1, dto.getPageSize());
-        ProductTypeEntity entity = new ProductTypeEntity();
-        BeanUtils.copyProperties(dto,entity);
-        entity.setDelete(Boolean.FALSE);
-        Page<ProductTypeEntity> result = (Page<ProductTypeEntity>) productTypeService.page(page);
+    public RestPage<ProductTypePageVO> findPage(Long id, String typeName, Integer page, Integer pageSize) {
+        Page pageParam = new Page(page, pageSize, true);
+        QueryWrapper<ProductTypeEntity> wrapper = new QueryWrapper();
+        wrapper.eq("parent_id", id);
+        if (StringUtils.isNoneBlank(typeName)) {
+            wrapper.like("type_name", typeName);
+        }
+        Page<ProductTypeEntity> entityPage = (Page<ProductTypeEntity>) productTypeService.page(pageParam, wrapper);
+        RestPage<ProductTypePageVO> result = new RestPage(entityPage.getCurrent(), entityPage.getSize(), entityPage.getTotal());
+        List<ProductTypePageVO> resultList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entityPage.getRecords())) {
+            for (ProductTypeEntity record : entityPage.getRecords()) {
+                ProductTypePageVO vo = new ProductTypePageVO();
+                BeanUtils.copyProperties(record, vo);
+                resultList.add(vo);
+            }
+        }
+        result.setRecords(resultList);
         return result;
     }
 

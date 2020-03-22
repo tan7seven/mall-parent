@@ -1,6 +1,7 @@
 package com.mall.common.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mall.common.enums.ResultStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,16 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestResult <T> extends BaseResult {
-    //操作成功
-    public static final int SUCCESS = 200;
-    //操作失败
-    public static final int FAILED = 500;
-    //参数校验失败
-    public static final int VALIDATE_FAILED = 402;
-    //未认证
-    public static final int UNAUTHORIZED = 401;
-    //未授权
-    public static final int  FORBIDDEN = 403;
     private int code;
     private String message;
     private Object data;
@@ -55,8 +46,8 @@ public class RestResult <T> extends BaseResult {
      */
     public static RestResult failed() {
         RestResult restResult = new RestResult();
-        restResult.code = FAILED;
-        restResult.message = "操作失败";
+        restResult.code = ResultStatus.HANDLE_FAILED.getCode();
+        restResult.message = ResultStatus.HANDLE_FAILED.getMessage();
         return restResult;
     }
     /**
@@ -64,7 +55,7 @@ public class RestResult <T> extends BaseResult {
      */
     public static RestResult failed(String message) {
         RestResult restResult = new RestResult();
-        restResult.code = FAILED;
+        restResult.code = ResultStatus.HANDLE_FAILED.getCode();
         restResult.message = message;
         return restResult;
     }
@@ -78,13 +69,22 @@ public class RestResult <T> extends BaseResult {
         return restResult;
     }
     /**
+     * 普通失败提示信息
+     */
+    public static RestResult failed(ResultStatus resultStatus) {
+        RestResult restResult = new RestResult();
+        restResult.code = resultStatus.getCode();
+        restResult.message = resultStatus.getMessage();
+        return restResult;
+    }
+    /**
      * 参数验证失败使用
      *
      * @param message 错误信息
      */
     public static RestResult validateFailed(String message) {
         RestResult restResult = new RestResult();
-        restResult.code = VALIDATE_FAILED;
+        restResult.code = ResultStatus.PARAM_FAILED.getCode();
         restResult.message = message;
         return restResult;
     }
@@ -96,21 +96,8 @@ public class RestResult <T> extends BaseResult {
      */
     public static RestResult unauthorized(String message) {
         RestResult restResult = new RestResult();
-        restResult.code = UNAUTHORIZED;
+        restResult.code = ResultStatus.CLIENT_NEED_APPROVE.getCode();
         restResult.message = "暂未登录或token已经过期";
-        restResult.data = message;
-        return restResult;
-    }
-
-    /**
-     * 未授权时使用
-     *
-     * @param message 错误信息
-     */
-    public static RestResult forbidden(String message) {
-        RestResult restResult = new RestResult();
-        restResult.code = FORBIDDEN;
-        restResult.message = "没有相关权限";
         restResult.data = message;
         return restResult;
     }

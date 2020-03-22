@@ -1,4 +1,4 @@
-package com.mall.manage.param.order;
+package com.mall.manage.model.param.order;
 
 import com.mall.common.param.CommonParam;
 

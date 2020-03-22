@@ -1,4 +1,4 @@
-package com.mall.manage.param.product.product;
+package com.mall.manage.model.param.product.product;
 
 import com.mall.common.param.CommonParam;
 
@@ -7,5 +7,5 @@ import com.mall.common.param.CommonParam;
  * @author: weijiazheng
  * @createDate: 2020/1/7
  */
-public class CreateParam extends CommonParam {
+public class UpdateParam extends CommonParam {
 }

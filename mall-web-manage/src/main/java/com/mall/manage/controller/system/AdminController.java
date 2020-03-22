@@ -92,9 +92,6 @@ public class AdminController extends GenericController {
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "menuAuthorityConfirm.do")
     protected RestResult menuAuthorityConfirm(@RequestBody AdminDTO dto){
-        if (StringUtils.isBlank(dto.getUserId())) {
-            return RestResult.forbidden("用户ID为空！");
-        }
         adminService.menuAuthority(dto);
         return RestResult.success();
     }
@@ -103,9 +100,6 @@ public class AdminController extends GenericController {
     @PreAuthorize(" hasAuthority('SYSTEM:ADMIN:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "buttonAuthorityConfirm.do")
     protected RestResult buttonAuthorityConfirm(@RequestBody AdminDTO dto){
-        if (StringUtils.isBlank(dto.getUserId()) || StringUtils.isBlank(dto.getMenuId())) {
-            return RestResult.forbidden("用户ID活菜单ID为空！");
-        }
         adminService.buttonAuthority(dto);
         return RestResult.success();
     }

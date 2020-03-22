@@ -1,16 +1,19 @@
 package com.mall.manage.controller.product;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.enums.ProductAttrNameTypeEnum;
+import com.mall.common.enums.ResultStatus;
+import com.mall.common.vo.RestPage;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
+import com.mall.manage.model.vo.product.type.ProductTypePageVO;
 import com.mall.manage.service.product.ProductAttrNameService;
 import com.mall.manage.service.product.ProductTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +28,7 @@ import java.util.stream.Collectors;
 @Api(value = "商品类目", tags = "商品类目")
 @Slf4j
 @RestController
-@RequestMapping("/productType")
+@RequestMapping("/product-type")
 public class ProductTypeController {
 
     @Resource(name = "productTypeService")
@@ -35,14 +38,14 @@ public class ProductTypeController {
     private ProductAttrNameService productPropertyNameService;
 
     @ApiOperation("详情")
-    @GetMapping(value = "/foundById.do/{id}")
-    protected RestResult getById(@PathVariable Integer id) {
+    @GetMapping(value = "/detail/{id}")
+    protected RestResult detail(@PathVariable Integer id) {
         if (null == id) {
             return RestResult.validateFailed("ID为空！");
         }
         ProductTypeEntity entity = productTypeService.getById(id);
         if (null == entity) {
-            return RestResult.validateFailed("ID异常：获取不到对应的类目信息！");
+            return RestResult.failed(ResultStatus.BUS_MSG_NOT_FOUND);
         }
         List<ProductAttrNameEntity> propertyNames = productPropertyNameService.findByTypeId(id);
         ProductTypeDTO result = new ProductTypeDTO();
@@ -76,10 +79,12 @@ public class ProductTypeController {
     }
 
     @ApiOperation("分页查询")
-    @GetMapping("/getPage.do/{id}")
-    protected RestResult getPage(@PathVariable Integer id, ProductTypeDTO dto) {
-        dto.setParentId(id);
-        Page<ProductTypeEntity> result = productTypeService.findPage(dto);
+    @GetMapping("/page/query")
+    protected RestResult<RestPage<ProductTypePageVO>> getPage(@ApiParam(value = "类目ID") @RequestParam Long id,
+                                                          @ApiParam(value = "类目名") @RequestParam(required = false) String typeName,
+                                                          @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer page,
+                                                          @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize) {
+        RestPage<ProductTypePageVO> result = productTypeService.findPage(id, typeName, page, pageSize);
         return RestResult.success(result);
     }
 
@@ -99,7 +104,7 @@ public class ProductTypeController {
         if (null == entity) {
             return RestResult.validateFailed("typeId异常：获取不到相关类目！");
         }
-        entity.setShow(dto.getIsNavigationBar());
+        entity.setShowed(dto.getIsNavigationBar());
         productTypeService.add(entity);
         return RestResult.success();
     }

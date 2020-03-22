@@ -1,15 +1,15 @@
 package com.mall.manage.service.product;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mall.common.vo.RestPage;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
 import com.mall.dao.entity.product.ProductTypeEntity;
+import com.mall.manage.model.vo.product.type.ProductTypePageVO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 商品类目
@@ -57,11 +57,10 @@ public interface ProductTypeService extends IService<ProductTypeEntity> {
     List<ProductTypeEntity> findList(ProductTypeEntity entity);
 
     /**
-     * 查询
-     * @param dto
+     * 分页查询
      * @return
      */
-    Page<ProductTypeEntity> findPage(ProductTypeDTO dto);
+    RestPage<ProductTypePageVO> findPage(Long id, String typeName, Integer page, Integer pageSize);
 
     /**
      * 获取树结构

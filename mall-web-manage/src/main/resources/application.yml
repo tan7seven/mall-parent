@@ -2,6 +2,9 @@ server:
   servlet:
     session:
       timeout: 72000s
+logging:
+  level:
+    com.mall.dao.mapper: debug #打印sql
 spring:
   servlet:
     multipart:
