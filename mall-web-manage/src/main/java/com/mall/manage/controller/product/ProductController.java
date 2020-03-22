@@ -56,7 +56,7 @@ public class ProductController {
         if(null == dto.getProductId()){
             return RestResult.validateFailed("商品编号为空！");
         }
-        return productService.update(id, dto);
+        return RestResult.failed();
     }
 
     @ApiOperation("根据商品名称获取商品列表")
@@ -71,8 +71,7 @@ public class ProductController {
         if(null == id){
             return RestResult.validateFailed("id为空！");
         }
-        ProductDTO result = productService.findById(id);
-        return RestResult.success(result);
+        return RestResult.success();
     }
 
     @ApiOperation("删除-逻辑删除")

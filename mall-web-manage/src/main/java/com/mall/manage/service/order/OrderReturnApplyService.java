@@ -18,7 +18,7 @@ public interface OrderReturnApplyService extends IService<OrderReturnApplyEntity
      * @param id
      * @return
      */
-    OrderReturnApplyDTO findById(String id);
+    OrderReturnApplyDTO queryById(String id);
     /**
      * 分页查询
      * @param dto

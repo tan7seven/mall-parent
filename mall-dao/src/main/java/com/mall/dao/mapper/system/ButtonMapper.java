@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.dao.dto.system.AdminDTO;
 import com.mall.dao.dto.system.ButtonDTO;
 import com.mall.dao.dto.system.MenuDTO;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
 import com.mall.dao.entity.system.ButtonEntity;
 import org.apache.ibatis.annotations.Param;
 

@@ -35,7 +35,7 @@ public class OrderReturnApplyController extends GenericController {
         if (StringUtils.isBlank(id)) {
             return RestResult.validateFailed("编号为空！");
         }
-        OrderReturnApplyDTO result = orderReturnApplyService.findById(id);
+        OrderReturnApplyDTO result = orderReturnApplyService.queryById(id);
         return RestResult.success(result);
     }
 

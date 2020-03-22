@@ -2,10 +2,9 @@ package com.mall.dao.mapper.product;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mall.dao.dto.product.ProductPropertyNameDTO;
-import com.mall.dao.dto.product.ProductPropertyValueDTO;
-import com.mall.dao.entity.product.ProductEntity;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
+import com.mall.dao.dto.product.ProductAttrNameDTO;
+import com.mall.dao.dto.product.ProductAttrValueDTO;
+import com.mall.dao.entity.product.ProductAttrNameEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -14,19 +13,19 @@ import java.util.List;
 /**
  * 商品信息
  */
-public interface ProductPropertyNameMapper extends BaseMapper<ProductPropertyNameEntity> {
+public interface ProductAttrNameMapper extends BaseMapper<ProductAttrNameEntity> {
 
     /**
      * 查询-属性名
      * @param dto
      * @return
      */
-    List<ProductPropertyNameDTO> findList(Page page, @Param("dto") ProductPropertyNameDTO dto);
+    List<ProductAttrNameDTO> findList(Page page, @Param("param") ProductAttrNameDTO param);
     /**
      * 查询-属性值
      * @return
      */
-    List<ProductPropertyValueDTO> findByPropertyNameIdAndProductId(@Param(value = "propertyNameId")Integer propertyNameId, @Param(value = "productId") Integer productId);
+    List<ProductAttrValueDTO> findByPropertyNameIdAndProductId(@Param(value = "propertyNameId")Long propertyNameId, @Param(value = "productId") Long productId);
 
     /**
      * 根据商品ID删除商品属性值-删除表信息

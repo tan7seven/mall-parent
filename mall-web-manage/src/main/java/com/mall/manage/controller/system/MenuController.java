@@ -48,7 +48,7 @@ public class MenuController extends GenericController {
     @ApiOperation("获取信息")
     @GetMapping(value = "/getMenuInfo.do/{id}")
     protected  RestResult getMenuInfo(@PathVariable String id){
-        MenuDTO result = menuService.findById(id);
+        MenuDTO result = menuService.foundById(id);
         return RestResult.success(result);
     }
 

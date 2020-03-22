@@ -1,12 +1,13 @@
 package com.mall.manage.controller.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
+import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
-import com.mall.manage.service.product.ProductPropertyNameService;
+import com.mall.manage.service.product.ProductAttrNameService;
 import com.mall.manage.service.product.ProductTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,32 +32,32 @@ public class ProductTypeController {
     private ProductTypeService productTypeService;
 
     @Resource(name = "productPropertyNameService")
-    private ProductPropertyNameService productPropertyNameService;
+    private ProductAttrNameService productPropertyNameService;
 
     @ApiOperation("详情")
-    @GetMapping(value = "/getById.do/{id}")
+    @GetMapping(value = "/foundById.do/{id}")
     protected RestResult getById(@PathVariable Integer id) {
         if (null == id) {
             return RestResult.validateFailed("ID为空！");
         }
-        ProductTypeEntity entity = productTypeService.findById(id).get();
+        ProductTypeEntity entity = productTypeService.getById(id);
         if (null == entity) {
             return RestResult.validateFailed("ID异常：获取不到对应的类目信息！");
         }
-        List<ProductPropertyNameEntity> propertyNames = productPropertyNameService.findByTypeId(id);
+        List<ProductAttrNameEntity> propertyNames = productPropertyNameService.findByTypeId(id);
         ProductTypeDTO result = new ProductTypeDTO();
         BeanUtils.copyProperties(entity, result);
-        result.setPropertyNameCheckedIsSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).map(ProductPropertyNameEntity::getName).toArray(String[]::new));
-        result.setPropertyNameCheckedNotSale(propertyNames.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).map(ProductPropertyNameEntity::getName).toArray(String[]::new));
+        result.setPropertyNameCheckedIsSale(propertyNames.stream().filter(a -> a.getType().equals(ProductAttrNameTypeEnum.SALE.getCode())).map(ProductAttrNameEntity::getName).toArray(String[]::new));
+        result.setPropertyNameCheckedNotSale(propertyNames.stream().filter(a -> a.getType().equals(Boolean.FALSE)).map(ProductAttrNameEntity::getName).toArray(String[]::new));
         return RestResult.success(result);
     }
 
     @ApiOperation("根据类目ID获取商品属性")
     @GetMapping(value = "/getProductTypeProperty.do/{id}")
     protected RestResult getProductTypeProperty(@PathVariable Integer id) {
-        List<ProductPropertyNameEntity> propertyNameEntities = productPropertyNameService.findByTypeId(id);
-        List<ProductPropertyNameEntity> isSale = propertyNameEntities.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.IS_SALE)).collect(Collectors.toList());
-        List<ProductPropertyNameEntity> notSale = propertyNameEntities.stream().filter(a -> a.getIsSale().equals(ProductPropertyNameEntity.NOT_SALE)).collect(Collectors.toList());
+        List<ProductAttrNameEntity> propertyNameEntities = productPropertyNameService.findByTypeId(id);
+        List<ProductAttrNameEntity> isSale = propertyNameEntities.stream().filter(a -> a.getType().equals(ProductAttrNameTypeEnum.SALE.getCode())).collect(Collectors.toList());
+        List<ProductAttrNameEntity> notSale = propertyNameEntities.stream().filter(a -> a.getType().equals(Boolean.FALSE)).collect(Collectors.toList());
         Map<String, Object> result = new HashMap<>();
         result.put("productPropertyIsSale", isSale);
         result.put("productPropertyNotSale", notSale);
@@ -94,11 +95,11 @@ public class ProductTypeController {
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/update/isNavigationBar.do")
     protected RestResult updateBar(@RequestBody ProductTypeDTO dto) {
-        ProductTypeEntity entity = productTypeService.findById(dto.getTypeId()).get();
+        ProductTypeEntity entity = productTypeService.getById(dto.getTypeId());
         if (null == entity) {
             return RestResult.validateFailed("typeId异常：获取不到相关类目！");
         }
-        entity.setIsNavigationBar(dto.getIsNavigationBar());
+        entity.setShow(dto.getIsNavigationBar());
         productTypeService.add(entity);
         return RestResult.success();
     }
@@ -116,7 +117,7 @@ public class ProductTypeController {
     @ApiOperation("删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:DELETE') or hasRole('ADMIN')")
     @GetMapping(value = "/delete.do/{typeId}")
-    protected RestResult detele(@PathVariable Integer typeId) {
+    protected RestResult detele(@PathVariable Long typeId) {
         if (null == typeId) {
             return RestResult.validateFailed("typeId为空！");
         }

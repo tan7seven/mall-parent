@@ -22,7 +22,7 @@ public interface ProductDetailService extends IService<ProductDetailEntity> {
      * @param id
      * @return
      */
-    Optional<ProductDetailEntity> findById(Integer id);
+    Optional<ProductDetailEntity> getById(Integer id);
 
     /**
      * 删除

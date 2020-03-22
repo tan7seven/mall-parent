@@ -3,9 +3,7 @@ package com.mall.dao.entity.system;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -60,7 +58,7 @@ public class AdminEntity extends BaseEntity {
      * 0：可用
      * 1：禁用
      */
-    private Integer isUsable;
+    private Boolean isUsable;
     /**
      * 新增时间
      */
@@ -74,5 +72,5 @@ public class AdminEntity extends BaseEntity {
      * 0-》未删除
      * 1-》已删除
      */
-    private Integer isDelete;
+    private Boolean isDelete;
 }

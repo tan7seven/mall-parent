@@ -2,10 +2,10 @@ package com.mall.manage.controller.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.vo.RestResult;
-import com.mall.dao.dto.product.ProductPropertyNameDTO;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
+import com.mall.dao.dto.product.ProductAttrNameDTO;
+import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
-import com.mall.manage.service.product.ProductPropertyNameService;
+import com.mall.manage.service.product.ProductAttrNameService;
 import com.mall.manage.service.product.ProductTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,23 +26,23 @@ import javax.annotation.Resource;
 public class ProductPropertyController {
 
     @Resource(name = "productPropertyNameService")
-    private ProductPropertyNameService productPropertyNameService;
+    private ProductAttrNameService productPropertyNameService;
 
     @Resource(name = "productTypeService")
     private ProductTypeService productTypeService;
 
     @ApiOperation("获取详情")
-    @GetMapping(value = "/getById.do/{id}")
+    @GetMapping(value = "/foundById.do/{id}")
     protected RestResult getById(@PathVariable Integer id){
         if(null == id){
             return RestResult.validateFailed("ID为空！");
         }
-        ProductPropertyNameEntity entity = productPropertyNameService.findById(id).get();
+        ProductAttrNameEntity entity = productPropertyNameService.getById(id);
         if(null == entity){
             return RestResult.validateFailed("ID异常：获取不到对应的类目信息！");
         }
-        ProductPropertyNameDTO result = new ProductPropertyNameDTO();
-        ProductTypeEntity productType = productTypeService.findById(entity.getTypeId()).get();
+        ProductAttrNameDTO result = new ProductAttrNameDTO();
+        ProductTypeEntity productType = productTypeService.getById(entity.getTypeId());
         BeanUtils.copyProperties(entity, result);
         result.setParentId(productType.getParentId());
         return RestResult.success(result);
@@ -50,16 +50,16 @@ public class ProductPropertyController {
 
     @ApiOperation("分页查询")
     @GetMapping("/getPage.do")
-    protected RestResult getPage(ProductPropertyNameDTO dto){
-        Page<ProductPropertyNameDTO> result = productPropertyNameService.findPage(dto);
+    protected RestResult getPage(ProductAttrNameDTO dto){
+        Page<ProductAttrNameDTO> result = productPropertyNameService.findPage(dto);
         return RestResult.success(result);
     }
 
     @ApiOperation("新增")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:CREATE') or hasRole('ADMIN')")
     @PostMapping("/create.do")
-    protected RestResult create(@RequestBody ProductPropertyNameDTO dto){
-        ProductPropertyNameEntity entity = new ProductPropertyNameEntity();
+    protected RestResult create(@RequestBody ProductAttrNameDTO dto){
+        ProductAttrNameEntity entity = new ProductAttrNameEntity();
         BeanUtils.copyProperties(dto,entity);
         return  productPropertyNameService.add(entity);
     }
@@ -67,7 +67,7 @@ public class ProductPropertyController {
     @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:UPDATE') or hasRole('ADMIN')")
     @PostMapping("/update.do/{id}")
-    protected RestResult update(@PathVariable Integer id, @RequestBody ProductPropertyNameDTO dto){
+    protected RestResult update(@PathVariable Integer id, @RequestBody ProductAttrNameDTO dto){
         if(null == id){
             return RestResult.validateFailed("主键为空！");
         }
@@ -88,7 +88,7 @@ public class ProductPropertyController {
     @ApiOperation("是否销售属性")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsSale.do")
-    protected RestResult updateIsSale(@RequestBody ProductPropertyNameDTO dto){
+    protected RestResult updateIsSale(@RequestBody ProductAttrNameDTO dto){
         if(null == dto.getPropertyNameId()){
             return RestResult.validateFailed("主键为空！");
         }
@@ -98,7 +98,7 @@ public class ProductPropertyController {
     @ApiOperation("是否显示")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/updateIsShow.do")
-    protected RestResult updateIsShow(@RequestBody ProductPropertyNameDTO dto){
+    protected RestResult updateIsShow(@RequestBody ProductAttrNameDTO dto){
         if(null == dto.getPropertyNameId()){
             return RestResult.validateFailed("主键为空！");
         }

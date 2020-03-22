@@ -3,11 +3,8 @@ package com.mall.dao.entity.product;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 商品信息（代码冲突测试github）
@@ -15,24 +12,10 @@ import java.util.Date;
 @Data
 @TableName("mall_product")
 public class ProductEntity extends BaseEntity {
-
-    /**
-     * 状态：0-上架
-     */
-    public static final Integer PUT_AWAY = 0;
-    /**
-     * 状态：1-下架
-     */
-    public static final Integer SOLD_OUT = 1;
-
-    /**
-     *商品编号
-     */
-    private Integer productId;
     /**
      * 分类编号
      */
-    private Integer typeId;
+    private Long typeId;
     /**
      * 商品名称
      */
@@ -44,7 +27,7 @@ public class ProductEntity extends BaseEntity {
     /**
      * 商品最低价
      */
-    private BigDecimal priceMin;
+    private BigDecimal minPrice;
     /**
      * 点击量
      */
@@ -58,25 +41,15 @@ public class ProductEntity extends BaseEntity {
      */
     private String unit;
     /**
-     * 商品状态
-     * 0：上架
-     * 1：下架
+     * 是否上下架
      */
-    private Integer isPutaway;
-    /**
-     * 新增时间
-     */
-    private Date createTime;
+    private Boolean putaway;
     /**
      * 是否可用
-     * 0：可用
-     * 1：禁用
      */
-    private Integer isUsable;
+    private Boolean usable;
     /**
      * 是否删除
-     * 0：正常
-     * 1：已删除
      */
-    private Integer isDelete;
+    private Boolean delete;
 }

@@ -3,21 +3,20 @@ package com.mall.manage.service.order.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.constant.CommonConstant;
 import com.mall.dao.dto.order.OrderDTO;
 import com.mall.dao.dto.order.OrderItemsDTO;
 import com.mall.dao.dto.order.OrderOperationLogDTO;
 import com.mall.dao.entity.order.OrderEntity;
 import com.mall.dao.entity.order.OrderOperationLogEntity;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
-import com.mall.dao.entity.product.ProductPropertyValueEntity;
+import com.mall.dao.entity.product.ProductAttrNameEntity;
+import com.mall.dao.entity.product.ProductAttrValueEntity;
 import com.mall.dao.mapper.order.OrderMapper;
 import com.mall.dao.mapper.order.OrderOperationLogMapper;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.order.OrderOperationLogService;
 import com.mall.manage.service.order.OrderService;
-import com.mall.manage.service.product.ProductPropertyNameService;
-import com.mall.manage.service.product.ProductPropertyValueService;
+import com.mall.manage.service.product.ProductAttValueService;
+import com.mall.manage.service.product.ProductAttrNameService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +28,10 @@ import java.util.List;
 @Service(value = "orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> implements OrderService{
     @Autowired
-    private ProductPropertyValueService productPropertyValueService;
+    private ProductAttValueService productPropertyValueService;
 
     @Autowired
-    private ProductPropertyNameService productPropertyNameService;
+    private ProductAttrNameService productPropertyNameService;
 
     @Autowired
     private OrderService orderService;
@@ -155,7 +154,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     public void deleteOrder(List<String> ids, UserDetailsImpl userDetails) {
         for (String id : ids) {
             OrderEntity result = orderService.getById(id);
-            result.setIsDelete(CommonConstant.IS_DELETE);
             orderService.save(result);
             OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
             logEntity.setCreateTime(new Date());
@@ -195,10 +193,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
      */
     private void makePropertyKeyToValue(OrderItemsDTO dto){
         StringBuffer propertySb = new StringBuffer();
-        List<ProductPropertyNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductPropertyNameEntity>lambdaQuery()
-                .eq(ProductPropertyNameEntity::getTypeId, dto.getTypeId())
-                .eq(ProductPropertyNameEntity::getIsDelete, CommonConstant.NOT_DELETE));
-        List<ProductPropertyValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
+        List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
+                .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId())
+                .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+        List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProductProperty())){
             String skuProperties = dto.getProductProperty();
             String[] properties = skuProperties.split("&");
@@ -207,20 +205,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                     continue;
                 }
                 String[] propertyValues = property.split(":");
-                //获取propertyName值
-                for (ProductPropertyNameEntity nameEntity: nameList) {
-                    if(propertyValues[0].equals(String.valueOf(nameEntity.getPropertyNameId()))){
-                        propertySb.append(nameEntity.getName());
-                        propertySb.append("：");
-                    }
-                }
-                //获取propertyValue值
-                for (ProductPropertyValueEntity valueEntity: valueList) {
-                    if(propertyValues[1].equals(String.valueOf(valueEntity.getPropertyValueId()))){
-                        propertySb.append(valueEntity.getValue());
-                        propertySb.append("、");
-                    }
-                }
+
             }
             dto.setProductProperty(propertySb.toString());
         }

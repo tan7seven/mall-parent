@@ -6,12 +6,5 @@ logging:
   #mybatis打印SQL
   level:
     com.mall.malladmin : debug
-spring:
-#  mvc:
-#    static-path-pattern: /image/**
-  jpa:
-      show-sql: true
-#  resources:
-#        static-locations: file:E://IDEA-WorkPlace//mall//pic//
 pic:
     path:  E://IDEA-WorkPlace//mall//pic//

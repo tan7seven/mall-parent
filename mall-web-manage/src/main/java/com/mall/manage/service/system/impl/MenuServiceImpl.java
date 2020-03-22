@@ -103,8 +103,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     }
 
     @Override
-    public MenuDTO findById(String id) {
-        MenuEntity entity = menuService.getById(id);
+    public MenuDTO foundById(String id) {
+        MenuDTO entity = menuService.foundById(id);
         MenuDTO result = new MenuDTO();
         BeanUtils.copyProperties(entity, result);
         List<ButtonEntity> buttonEntities = buttonService.list(Wrappers.<ButtonEntity>lambdaQuery().eq(ButtonEntity::getButtonId, id));
@@ -132,7 +132,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     public void updateIsHidden(MenuDTO dto) {
         MenuEntity entity = menuService.getById(dto.getMenuId());
-        entity.setIsHidden(null == dto.getIsHidden()?MenuEntity.IS_HIDDEN:dto.getIsHidden());
+        entity.setIsHidden(null == dto.getIsHidden()?Boolean.FALSE:dto.getIsHidden());
         menuService.save(entity);
     }
 

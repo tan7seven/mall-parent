@@ -47,14 +47,6 @@ public interface AdminService extends IService<AdminEntity> {
      */
     Page<AdminEntity> getPage(AdminDTO dto);
     /**
-     *  根据用户ID查找
-     * @param userId
-     * @return
-     */
-    Optional<AdminEntity> findById(String userId);
-
-
-    /**
      * 根据登录账号获取用户信息
      * @param loginCode
      * @return

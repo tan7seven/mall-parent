@@ -3,9 +3,6 @@ package com.mall.dao.entity.product;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-
-import java.io.Serializable;
 
 
 /**
@@ -16,17 +13,13 @@ import java.io.Serializable;
 public class ProductTypeEntity extends BaseEntity {
 
     /**
-     * 编号
-     */
-    private Integer typeId;
-    /**
      * 分类名称
      */
     private String typeName;
     /**
      * 父类目编号
      */
-    private Integer parentId;
+    private Long parentId;
     /**
      * 等级
      */
@@ -38,17 +31,17 @@ public class ProductTypeEntity extends BaseEntity {
     /**
      * 是否显示在导航栏
      */
-    private Integer isNavigationBar;
+    private Boolean show;
     /**
      * 状态
      * 0:正常
      * 1：禁用
      */
-    private Integer isUsable;
+    private Boolean usable;
     /**
      * 状态
      * 0:正常
      * 1：已删除
      */
-    private Integer isDelete;
+    private Boolean delete;
 }

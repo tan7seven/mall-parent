@@ -49,11 +49,11 @@ public class UserAdressEntity extends BaseEntity {
     /**
      * 是否可用：0->是；1->否
      */
-    private Integer isUsable;
+    private Boolean isUsable;
     /**
      * 默认收货地址 ：0->是；1->否
      */
-    private Integer isReceive;
+    private Boolean isReceive;
     /**
      * 新增时间
      */

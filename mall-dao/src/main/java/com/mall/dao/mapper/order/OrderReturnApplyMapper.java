@@ -26,5 +26,5 @@ public interface OrderReturnApplyMapper extends BaseMapper<OrderReturnApplyEntit
      * @param id
      * @return
      */
-    OrderReturnApplyDTO findById(@Param("id") String id);
+    OrderReturnApplyDTO getById(@Param("id") String id);
 }

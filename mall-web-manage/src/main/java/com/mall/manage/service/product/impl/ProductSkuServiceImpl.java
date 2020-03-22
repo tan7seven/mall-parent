@@ -3,11 +3,10 @@ package com.mall.manage.service.product.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.constant.CommonConstant;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.product.*;
-import com.mall.dao.mapper.product.ProductPropertyNameMapper;
+import com.mall.dao.mapper.product.ProductAttrNameMapper;
 import com.mall.dao.mapper.product.ProductSkuMapper;
 import com.mall.manage.service.product.*;
 import org.apache.commons.lang3.StringUtils;
@@ -24,10 +23,10 @@ import java.util.stream.Collectors;
 public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, ProductSkuEntity> implements ProductSkuService {
 
     @Autowired
-    private ProductPropertyValueService productPropertyValueService;
+    private ProductAttValueService productPropertyValueService;
 
     @Autowired
-    private ProductPropertyNameService productPropertyNameService;
+    private ProductAttrNameService productPropertyNameService;
 
     @Autowired
     private ProductService productService;
@@ -39,17 +38,15 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
     private ProductSkuMapper productSkuMapper;
 
     @Autowired
-    private ProductPropertyNameMapper productPropertyMapper;
+    private ProductAttrNameMapper productPropertyMapper;
 
     @Override
     public RestResult add(ProductSkuDTO dto) {
         ProductEntity product = productService.getById(dto.getProductId());
-        if(product.getPriceMin().compareTo(dto.getPrice())== 1){
+        if(product.getMinPrice().compareTo(dto.getPrice())== 1){
             return RestResult.validateFailed("销售价格不能小于商品最低价！");
         }
         ProductSkuEntity entity = new ProductSkuEntity();
-        entity.setCost(dto.getCost()==null?new BigDecimal(0):dto.getCost());
-        entity.setPrice(dto.getPrice()==null?new BigDecimal(0):dto.getPrice());
         entity.setProductId(dto.getProductId());
         entity.setStock(dto.getStock()==null?0:dto.getStock());
         entity.setPicUrl(dto.getPicUrl());
@@ -66,24 +63,24 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             properties.append("&");
             properties.append(dto.getPropertyValueC());
         }
-        entity.setProperties(properties.toString());
+        entity.setAttrJson(properties.toString());
         entity.setCreateTime(new Date());
         entity.setModifyTime(new Date());
         entity.setSellSum(0);
-        entity.setIsDelete(CommonConstant.NOT_DELETE);
+        entity.setDelete(Boolean.FALSE);
         this.save(entity);
         return RestResult.success();
     }
 
     @Override
-    public RestResult update(Integer id, ProductSkuDTO dto) {
+    public RestResult update(Long id, ProductSkuDTO dto) {
         dto.setCreateTime(new Date());
         dto.setModifyTime(new Date());
         dto.setCost(dto.getCost()==null?new BigDecimal(0):dto.getCost());
         dto.setPrice(dto.getPrice()==null?new BigDecimal(0):dto.getPrice());
         dto.setStock(dto.getStock()==null?0:dto.getStock());
         dto.setSellSum(dto.getSellSum()==null?0:dto.getSellSum());
-        dto.setSkuId(id);
+        dto.setId(id);
         ProductSkuEntity skuEntity = this.getById(id);
         BeanUtils.copyProperties(dto, skuEntity);
         StringBuffer properties = new StringBuffer();
@@ -99,18 +96,18 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             properties.append("&");
             properties.append(dto.getPropertyValueC());
         }
-        skuEntity.setProperties(properties.toString());
+        skuEntity.setAttrJson(properties.toString());
         this.save(skuEntity);
         return RestResult.success();
     }
 
     @Override
-    public ProductSkuDTO findById(Integer id) {
+    public ProductSkuDTO queryById(Long id) {
         ProductSkuEntity entity = this.getById(id);
         ProductSkuDTO result = new ProductSkuDTO();
         BeanUtils.copyProperties(entity, result);
         //设置商品属性值
-        String[] properties = entity.getProperties().split("&");
+        String[] properties = entity.getAttrJson().split("&");
         if (properties.length > 1 && StringUtils.isNotBlank(properties[1])) {
             result.setPropertyValueA(properties[1]);
         }
@@ -124,10 +121,10 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         ProductEntity productEntity = productService.getById(entity.getProductId());
         result.setProductName(productEntity.getProductName());
         //获取商品可选属性值
-        List<ProductPropertyValueEntity> propertyValues= productPropertyValueService.findByProductId(productEntity.getProductId());
-        List<Integer> propertiesInt = propertyValues.stream()
-                .filter(productPropertyValueEntity -> ProductPropertyValueEntity.IS_SALE.equals(productPropertyValueEntity.getIsSale()))
-                .map(productPropertyValueEntity->productPropertyValueEntity.getPropertyNameId())
+        List<ProductAttrValueEntity> propertyValues= productPropertyValueService.findByProductId(productEntity.getId());
+        List<Long> propertiesInt = propertyValues.stream()
+                .filter(productPropertyValueEntity -> Boolean.TRUE.equals(productPropertyValueEntity.getType()))
+                .map(productPropertyValueEntity->productPropertyValueEntity.getNameId())
                 .distinct().collect(Collectors.toList());
        if(null != properties && !propertiesInt.isEmpty() && propertiesInt.size()>=1 ){
             result.setPropertyValueAOptions(productPropertyMapper.findByPropertyNameIdAndProductId(propertiesInt.get(0), entity.getProductId()));
@@ -177,10 +174,10 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
      */
     private void makePropertyKeyToValue(ProductSkuDTO dto){
         StringBuffer propertySb = new StringBuffer();
-        List<ProductPropertyNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductPropertyNameEntity>lambdaQuery()
-                .eq(ProductPropertyNameEntity::getTypeId, dto.getTypeId())
-                .eq(ProductPropertyNameEntity::getIsDelete, CommonConstant.NOT_DELETE));
-        List<ProductPropertyValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
+        List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
+                .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId())
+                .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+        List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProperties())){
             String skuProperties = dto.getProperties();
             String[] properties = skuProperties.split("&");
@@ -190,15 +187,15 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
                 }
                 String[] propertyValues = property.split(":");
                 //获取propertyName值
-                for (ProductPropertyNameEntity nameEntity: nameList) {
-                    if(propertyValues[0].equals(String.valueOf(nameEntity.getPropertyNameId()))){
+                for (ProductAttrNameEntity nameEntity: nameList) {
+                    if(propertyValues[0].equals(String.valueOf(nameEntity.getId()))){
                         propertySb.append(nameEntity.getName());
                         propertySb.append("：");
                     }
                 }
                 //获取propertyValue值
-                for (ProductPropertyValueEntity valueEntity: valueList) {
-                    if(propertyValues[1].equals(String.valueOf(valueEntity.getPropertyValueId()))){
+                for (ProductAttrValueEntity valueEntity: valueList) {
+                    if(propertyValues[1].equals(String.valueOf(valueEntity.getId()))){
                         propertySb.append(valueEntity.getValue());
                         propertySb.append("、");
                     }

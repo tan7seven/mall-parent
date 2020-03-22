@@ -10,6 +10,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/mall-uni-app/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
       </set>
     </option>

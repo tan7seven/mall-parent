@@ -49,17 +49,16 @@ public class ProductSkuController extends GenericController {
         if(null == dto.getProductId()){
             return RestResult.validateFailed("商品编号为空！");
         }
-        return productSkuService.update(id, dto);
+        return RestResult.failed();
     }
 
     @ApiOperation("根据主键查询")
-    @GetMapping(value = "/findById.do/{id}")
-    protected RestResult findById(@PathVariable Integer id){
+    @GetMapping(value = "/foundById.do/{id}")
+    protected RestResult getById(@PathVariable Integer id){
         if(null == id){
             return RestResult.validateFailed("SKU编码为空！");
         }
-        ProductSkuDTO result = productSkuService.findById(id);
-        return RestResult.success(result);
+        return RestResult.success();
     }
 
     @ApiOperation("删除-逻辑删除")

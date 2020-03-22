@@ -43,7 +43,7 @@ public class AdminController extends GenericController {
     @ApiOperation("获取信息")
     @GetMapping(value = "/getAdminInfo.do/{id}")
     protected RestResult getAdminInfo(@PathVariable String id){
-        AdminEntity result = adminService.findById(id).get();
+        AdminEntity result = adminService.getById(id);
         return RestResult.success(result);
     }
 

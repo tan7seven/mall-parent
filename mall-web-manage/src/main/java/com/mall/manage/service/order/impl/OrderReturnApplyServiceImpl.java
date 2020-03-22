@@ -3,17 +3,16 @@ package com.mall.manage.service.order.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.constant.CommonConstant;
 import com.mall.dao.dto.order.OrderReturnApplyDTO;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.order.OrderReturnApplyEntity;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
-import com.mall.dao.entity.product.ProductPropertyValueEntity;
+import com.mall.dao.entity.product.ProductAttrNameEntity;
+import com.mall.dao.entity.product.ProductAttrValueEntity;
 import com.mall.dao.mapper.order.OrderReturnApplyMapper;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.order.OrderReturnApplyService;
-import com.mall.manage.service.product.ProductPropertyNameService;
-import com.mall.manage.service.product.ProductPropertyValueService;
+import com.mall.manage.service.product.ProductAttrNameService;
+import com.mall.manage.service.product.ProductAttValueService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +24,10 @@ import java.util.List;
 public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMapper, OrderReturnApplyEntity> implements OrderReturnApplyService {
 
     @Autowired
-    private ProductPropertyValueService productPropertyValueService;
+    private ProductAttValueService productPropertyValueService;
 
     @Autowired
-    private ProductPropertyNameService productPropertyNameService;
+    private ProductAttrNameService productPropertyNameService;
 
     @Autowired
     private OrderReturnApplyMapper orderReturnApplyMapper;
@@ -37,11 +36,10 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
     private OrderReturnApplyService orderReturnApplyService;
 
     @Override
-    public OrderReturnApplyDTO findById(String id) {
-        OrderReturnApplyDTO result = orderReturnApplyMapper.findById(id);
+    public OrderReturnApplyDTO queryById(String id) {
+        OrderReturnApplyDTO result = orderReturnApplyMapper.getById(id);
         ProductSkuDTO productSkuDto = new ProductSkuDTO();
         productSkuDto.setTypeId(result.getTypeId());
-        productSkuDto.setProductId(result.getProductId());
         productSkuDto.setProperties(result.getProductProperty());
         result.setProductPropertyLabel(this.makePropertyKeyToValue(productSkuDto));
         return result;
@@ -86,7 +84,6 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
     public void deleteApply(List<String> ids) {
         for (String id : ids) {
             OrderReturnApplyEntity entity = orderReturnApplyService.getById(id);
-            entity.setIsDelete(CommonConstant.IS_DELETE);
             orderReturnApplyService.save(entity);
         }
     }
@@ -97,10 +94,10 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
      */
     private String makePropertyKeyToValue(ProductSkuDTO dto){
         StringBuffer propertySb = new StringBuffer();
-        List<ProductPropertyNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductPropertyNameEntity>lambdaQuery()
-                .eq(ProductPropertyNameEntity::getTypeId, dto.getTypeId())
-                .eq(ProductPropertyNameEntity::getIsDelete, CommonConstant.NOT_DELETE));
-        List<ProductPropertyValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
+        List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
+                .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId())
+                .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+        List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProperties())){
             String skuProperties = dto.getProperties();
             String[] properties = skuProperties.split("&");
@@ -110,18 +107,12 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
                 }
                 String[] propertyValues = property.split(":");
                 //获取propertyName值
-                for (ProductPropertyNameEntity nameEntity: nameList) {
-                    if(propertyValues[0].equals(String.valueOf(nameEntity.getPropertyNameId()))){
-                        propertySb.append(nameEntity.getName());
-                        propertySb.append("：");
-                    }
+                for (ProductAttrNameEntity nameEntity: nameList) {
+
                 }
                 //获取propertyValue值
-                for (ProductPropertyValueEntity valueEntity: valueList) {
-                    if(propertyValues[1].equals(String.valueOf(valueEntity.getPropertyValueId()))){
-                        propertySb.append(valueEntity.getValue());
-                        propertySb.append("、");
-                    }
+                for (ProductAttrValueEntity valueEntity: valueList) {
+
                 }
             }
             return propertySb.toString();

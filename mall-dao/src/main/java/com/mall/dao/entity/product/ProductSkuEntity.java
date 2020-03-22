@@ -3,11 +3,8 @@ package com.mall.dao.entity.product;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 商品库存表
@@ -15,23 +12,18 @@ import java.util.Date;
 @Data
 @TableName("mall_product_sku")
 public class ProductSkuEntity extends BaseEntity {
-
-    /**
-     * 编号
-     */
-    private Integer skuId;
     /**
      * 商品编号
      */
-    private Integer productId;
+    private Long productId;
     /**
      * 属性值
      */
-    private String properties;
+    private String attrJson;
     /**
      * 	商品价格
      */
-    private BigDecimal price;
+    private BigDecimal salePrice;
     /**
      * 	图片地址
      */
@@ -39,7 +31,7 @@ public class ProductSkuEntity extends BaseEntity {
     /**
      * 	商品成本
      */
-    private BigDecimal cost;
+    private BigDecimal costPrice;
 
     private Integer sellSum;
     /**
@@ -47,17 +39,9 @@ public class ProductSkuEntity extends BaseEntity {
      */
     private Integer stock;
     /**
-     * 新增时间
-     */
-    private Date createTime = new Date();
-    /**
-     * 更新时间
-     */
-    private Date modifyTime = new Date();
-    /**
      * 状态
      * 0:正常
      * 1：已删除
      */
-    private Integer isDelete;
+    private Boolean delete;
 }

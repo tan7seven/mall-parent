@@ -53,12 +53,7 @@ public interface MenuService extends IService<MenuEntity> {
      * @return
      */
     List<MenuDTO> getListById(String menuId);
-    /**
-     *  根据ID查找
-     * @param menuId
-     * @return
-     */
-    MenuDTO findById(String menuId);
+    MenuDTO foundById(String id);
     /**
      * 删除（逻辑删除）
      * @param ids

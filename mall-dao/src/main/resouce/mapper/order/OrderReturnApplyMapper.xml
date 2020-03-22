@@ -56,7 +56,7 @@
         </if>
     </select>
 
-    <select id="findById" resultMap="BaseResultMap">
+    <select id="getById" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/> ,b.login_code, c.pic_Url, c.product_Name, c.product_Price, c.product_Property, c.product_id, d.type_id
         , e.name handle_Person_Name, f.name receive_person_name
         FROM mall_order_return_apply a

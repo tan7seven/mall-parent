@@ -61,7 +61,7 @@ public class UserEntity extends BaseEntity {
      * 0：可用
      * 1：禁用
      */
-    private Integer isUsable;
+    private Boolean isUsable;
     /**
      * 新增时间
      */

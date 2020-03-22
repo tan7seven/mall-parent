@@ -2,7 +2,6 @@ package com.mall.dao.mapper.product;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.dao.dto.product.ProductSkuDTO;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
 import com.mall.dao.entity.product.ProductSkuEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -17,7 +16,7 @@ public interface ProductSkuMapper extends BaseMapper<ProductSkuEntity> {
      * 查询库存信息
      * @return
      */
-    List<ProductSkuDTO> getList(@Param("dto") ProductSkuDTO dto);
+    List<ProductSkuDTO> getList(@Param("param") ProductSkuDTO param);
 
     /**
      * 根据销售属性值删除

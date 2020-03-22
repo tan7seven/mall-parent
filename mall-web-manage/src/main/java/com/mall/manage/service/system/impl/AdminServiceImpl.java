@@ -3,7 +3,6 @@ package com.mall.manage.service.system.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.constant.CommonConstant;
 import com.mall.common.enums.AdminRoleEnum;
 import com.mall.dao.dto.system.AdminDTO;
 import com.mall.dao.entity.system.AdminEntity;
@@ -26,7 +25,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -77,18 +75,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
         entity.setCreateTime(new Date());
-        entity.setIsUsable(null == entity.getIsUsable()?entity.getIsUsable(): CommonConstant.IS_USABLE);
+        entity.setIsUsable(null == entity.getIsUsable()?entity.getIsUsable(): Boolean.FALSE);
         entity.setModifyTime(new Date());
         entity.setRole(AdminEntity.ROLE_USER);
         entity.setPassword(AdminEntity.DEFAULT_PASSWORD);
-        entity.setIsDelete(CommonConstant.NOT_DELETE);
+        entity.setIsDelete(Boolean.FALSE);
         this.save(entity);
         return entity;
     }
 
     @Override
     public void update(AdminDTO dto, String id) {
-        AdminEntity entity = this.findById(id).get();
+        AdminEntity entity = this.getById(id);
         entity.setLoginCode(dto.getLoginCode());
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
@@ -109,14 +107,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         Page page = new Page(dto.getPageNum()-1, dto.getPageSize());
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
-        entity.setIsDelete(CommonConstant.NOT_DELETE);
+        entity.setIsDelete(Boolean.FALSE);
         Page<AdminEntity> result = (Page<AdminEntity>) this.page(page);
         return result;
-    }
-
-    @Override
-    public Optional<AdminEntity> findById(String userId) {
-        return this.findById(userId);
     }
 
     @Override
@@ -127,8 +120,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     @Override
     public void deleteAdmin(List<String> ids) {
         for (String id : ids) {
-            AdminEntity entity = this.findById(id).get();
-            entity.setIsDelete(CommonConstant.IS_DELETE);
+            AdminEntity entity = this.getById(id);
+            entity.setIsDelete(Boolean.TRUE);
             this.save(entity);
         }
     }
@@ -136,7 +129,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     @Override
     public void updateIsUsable(AdminDTO dto) {
         AdminEntity entity = this.getById(dto.getUserId());
-        entity.setIsUsable(null == dto.getIsUsable()?CommonConstant.IS_USABLE:dto.getIsUsable());
+        entity.setIsUsable(null == dto.getIsUsable()?Boolean.TRUE:dto.getIsUsable());
         this.save(entity);
     }
 

@@ -17,11 +17,11 @@ public class ProductSkuDTO extends CommonDTO implements Serializable {
     /**
      * 编号
      */
-    private Integer skuId;
+    private Long id;
     /**
      * 商品编号
      */
-    private Integer productId;
+    private Long productId;
     /**
      * 商品名称
      */
@@ -81,13 +81,13 @@ public class ProductSkuDTO extends CommonDTO implements Serializable {
     /**
      * 销售属性值A
      */
-    private List<ProductPropertyValueDTO> propertyValueAOptions;
+    private List<ProductAttrValueDTO> propertyValueAOptions;
     /**
      * 销售属性值B
      */
-    private List<ProductPropertyValueDTO> propertyValueBOptions;
+    private List<ProductAttrValueDTO> propertyValueBOptions;
     /**
      * 销售属性值C
      */
-    private List<ProductPropertyValueDTO> propertyValueCOptions;
+    private List<ProductAttrValueDTO> propertyValueCOptions;
 }

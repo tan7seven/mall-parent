@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 商品属性名
  */
 @Data
-public class ProductPropertyValueDTO extends CommonDTO implements Serializable {
+public class ProductAttrValueDTO extends CommonDTO implements Serializable {
     /**
      * 编号
      */

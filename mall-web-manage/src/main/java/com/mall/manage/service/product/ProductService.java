@@ -20,7 +20,7 @@ public interface ProductService extends IService<ProductEntity> {
      * @param id
      * @return
      */
-    ProductDTO findById(Integer id);
+    ProductDTO queryById(Long id);
     /**
      * 批量删除
      */
@@ -46,7 +46,7 @@ public interface ProductService extends IService<ProductEntity> {
      * @return
      */
     @Transactional
-    RestResult update(Integer id, ProductDTO dto);
+    RestResult update(Long id, ProductDTO dto);
     /**
      * 更新上下架状态
      * @return

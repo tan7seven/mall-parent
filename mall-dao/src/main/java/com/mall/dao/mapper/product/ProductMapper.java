@@ -3,7 +3,6 @@ package com.mall.dao.mapper.product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.dto.product.ProductPropertyDTO;
-import com.mall.dao.entity.order.OrderReturnApplyEntity;
 import com.mall.dao.entity.product.ProductEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -18,20 +17,20 @@ public interface ProductMapper extends BaseMapper<ProductEntity> {
      * 查询
      * @return
      */
-    List<ProductDTO> getList(@Param("dto") ProductDTO param);
+    List<ProductDTO> getList(@Param("param") ProductDTO param);
 
     /**
      * 查询商品销售属性值
      * @param dto
      * @return
      */
-    List<ProductPropertyDTO> findPropertyIsSale(@Param("dto") ProductDTO dto);
+    List<ProductPropertyDTO> findPropertyIsSale(@Param("param") ProductDTO param);
     /**
      * 查询商品非销售属性值
      * @param dto
      * @return
      */
-    List<String> findPropertyNotSale(@Param("dto") ProductDTO dto);
+    List<String> findPropertyNotSale(@Param("param") ProductDTO param);
 
     /**
      * 逻辑删除
@@ -47,6 +46,6 @@ public interface ProductMapper extends BaseMapper<ProductEntity> {
      * @param isUsable
      * @return
      */
-    int updateProductIsUsable(@Param("typeId") Integer typeId, @Param("isUsable")Integer isUsable);
+    int updateProductIsUsable(@Param("typeId") Long typeId, @Param("isUsable")Boolean isUsable);
 
 }

@@ -129,6 +129,6 @@ public class OrderReturnApplyDTO extends CommonDTO {
      * 0-》否
      * 1-》是
      */
-    private Integer isDelete;
+    private Boolean isDelete;
 
 }

@@ -1,7 +1,8 @@
-package com.mall.manage.security;
+package com.mall.manage.config;
 
 
 import com.mall.manage.jwt.JwtAuthenticationTokenFilter;
+import com.mall.manage.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,6 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-//@Order(-1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -56,12 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**","/image/**","/css/**","/druid/**","/webjars/**","/v2/**","/swagger-resources/configuration/ui",
                         "/swagger-resources", "/swagger-resources/configuration/security",
                         "/swagger-ui.html").permitAll()
-//                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                .antMatchers("/**").access("hasRole('USER')")
                 .antMatchers("/adminController/login.do", "/admin/register.do").permitAll()// 对登录注册要允许匿名访问
                 .antMatchers(HttpMethod.OPTIONS).permitAll()//跨域请求会先进行一次options请求
-                .anyRequest().authenticated()// 除上面外的所有请求全部需要鉴权认证
+//                .anyRequest().authenticated()// 除上面外的所有请求全部需要鉴权认证
                 //自定义登录界面
                 .and().formLogin().loginProcessingUrl("/adminController/login.do")
                 .successHandler(authenticationSuccessHandler)

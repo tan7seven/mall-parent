@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.product.ProductSkuEntity;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -22,13 +21,13 @@ public interface ProductSkuService extends IService<ProductSkuEntity> {
      * 更新
      * @return
      */
-    RestResult update(Integer id, ProductSkuDTO dto);
+    RestResult update(Long id, ProductSkuDTO dto);
     /**
      *  根据ID查找
      * @param id
      * @return
      */
-    ProductSkuDTO findById(Integer id);
+    ProductSkuDTO queryById(Long id);
     /**
      * 根据逐渐删除
      * @param id

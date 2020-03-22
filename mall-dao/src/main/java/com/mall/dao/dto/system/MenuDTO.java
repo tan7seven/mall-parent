@@ -44,7 +44,7 @@ public class MenuDTO extends CommonDTO {
     /**
      * 图标路径
      */
-    private Integer isHidden;
+    private Boolean isHidden;
     /**
      * 子级菜单
      */

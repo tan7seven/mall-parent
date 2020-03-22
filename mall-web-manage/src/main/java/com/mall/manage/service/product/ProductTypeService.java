@@ -41,19 +41,13 @@ public interface ProductTypeService extends IService<ProductTypeEntity> {
      */
     @Transactional
     ProductTypeEntity create(ProductTypeDTO dto);
-    /**
-     *  根据ID查找
-     * @param id
-     * @return
-     */
-    Optional<ProductTypeEntity> findById(Integer id);
 
     /**
      * 根据ID删除-逻辑删除
      * @param id
      */
     @Transactional
-    void deleteById(Integer id);
+    void deleteById(Long id);
 
     /**
      * 查询

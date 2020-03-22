@@ -17,11 +17,6 @@ spring:
     hikari:
       minimum-idle: 5
       maximum-pool-size: 50
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL57Dialect
-    open-in-view: false
   http:
     encoding:
       force: true

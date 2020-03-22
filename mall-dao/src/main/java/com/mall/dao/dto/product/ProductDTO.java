@@ -16,11 +16,11 @@ public class ProductDTO extends CommonDTO implements Serializable {
     /**
      *商品编号
      */
-    private Integer productId;
+    private Long productId;
     /**
      * 分类编号
      */
-    private Integer typeId;
+    private Long typeId;
     /**
      * 分类名称
      */
@@ -66,11 +66,11 @@ public class ProductDTO extends CommonDTO implements Serializable {
     /**
      * 类目ID
      */
-    private Integer productTypeId;
+    private Long productTypeId;
     /**
      * 类目父类ID
      */
-    private Integer productTypeParentId;
+    private Long productTypeParentId;
     /**
      * 类目销售属性
      */
@@ -86,21 +86,22 @@ public class ProductDTO extends CommonDTO implements Serializable {
     /**
      * 销售属性值A
      */
-    private List<ProductPropertyValueDTO> propertyValueAOptions;
+    private List<ProductAttrValueDTO> propertyValueAOptions;
     /**
      * 销售属性值B
      */
-    private List<ProductPropertyValueDTO> propertyValueBOptions;
+    private List<ProductAttrValueDTO> propertyValueBOptions;
     /**
      * 销售属性值C
      */
-    private List<ProductPropertyValueDTO> propertyValueCOptions;
+    private List<ProductAttrValueDTO> propertyValueCOptions;
     /**
      * 是否销售属性
      */
-    private String isSale;/**
+    private Integer type;
+    /**
      * 是否可用
      */
-    private Integer isUsable;
+    private Boolean isUsable;
 
 }

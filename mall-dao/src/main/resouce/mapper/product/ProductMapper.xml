@@ -35,28 +35,28 @@
         INNER JOIN mall_product_type b ON b.type_id = a.type_id
         where 1 = 1
         AND a.is_delete = '0'
-        <if test="dto.productName!=null and dto.productName!=''">
-            AND a.product_name like '%${dto.productName}%'
+        <if test="param.productName!=null and param.productName!=''">
+            AND a.product_name like '%${param.productName}%'
         </if>
-        <if test="dto.typeId!=null and dto.typeId!=''">
-            AND b.type_Id = #{dto.typeId}
+        <if test="param.typeId!=null and param.typeId!=''">
+            AND b.type_Id = #{param.typeId}
         </if>
-        <if test="dto.isPutaway!=null and dto.isPutaway!=''">
-            AND a.is_Putaway = #{dto.isPutaway}
+        <if test="param.isPutaway!=null and param.isPutaway!=''">
+            AND a.is_Putaway = #{param.isPutaway}
         </if>
     </select>
 
-    <select id="findPropertyIsSale" resultType="com.mall.dao.dto.product.ProductPropertyDTO">
+    <select id="findPropertyIsSale" resultType="com.mall.dao.dto.product.ProductAttrNameDTO">
       SELECT concat(a.name,':',b.value) as isSalePropertyString, concat(a.property_name_id,':',b.property_value_id) as isSalePropertyId
         FROM mall_product_property_name a
       INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
       WHERE  1= 1
         AND a.is_delete ='0'
-        <if test="dto.isSale!=null and dto.isSale!=''">
-            AND b.is_sale = #{dto.isSale}
+        <if test="param.isSale!=null and param.isSale!=''">
+            AND b.is_sale = #{param.isSale}
         </if>
-        <if test="dto.productId!=null and dto.productId!=''">
-            AND b.product_id = #{dto.productId}
+        <if test="param.productId!=null and param.productId!=''">
+            AND b.product_id = #{param.productId}
         </if>
     </select>
     <select id="findPropertyNotSale" resultType="java.lang.String">
@@ -64,11 +64,11 @@
         INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
         WHERE  1= 1
         AND a.is_delete = '0'
-        <if test="dto.isSale!=null and dto.isSale!=''">
-            AND b.is_sale = #{dto.isSale}
+        <if test="param.isSale!=null and param.isSale!=''">
+            AND b.is_sale = #{param.isSale}
         </if>
-        <if test="dto.productId!=null and dto.productId!=''">
-            AND b.product_id = #{dto.productId}
+        <if test="param.productId!=null and param.productId!=''">
+            AND b.product_id = #{param.productId}
         </if>
     </select>
     

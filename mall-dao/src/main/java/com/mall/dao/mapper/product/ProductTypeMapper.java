@@ -2,7 +2,6 @@ package com.mall.dao.mapper.product;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.dao.dto.common.CommonCascaderDTO;
-import com.mall.dao.entity.product.ProductPropertyNameEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,6 +23,6 @@ public interface ProductTypeMapper extends BaseMapper<ProductTypeEntity> {
      * @param isUsable
      * @return
      */
-    int updateUsableByParent(@Param("parentId") Integer parentId,@Param("isUsable") Integer isUsable);
+    int updateUsableByParent(@Param("parentId") Long parentId,@Param("isUsable") Boolean isUsable);
 
 }

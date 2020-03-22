@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 商品属性名
  */
 @Data
-public class ProductPropertyNameDTO extends CommonDTO implements Serializable {
+public class ProductAttrNameDTO extends CommonDTO implements Serializable {
     /**
      * 编号
      */
@@ -27,23 +27,28 @@ public class ProductPropertyNameDTO extends CommonDTO implements Serializable {
      * 	0：否
      * 	1：是
      */
-    private Integer isSale;
+    private Boolean isSale;
     /**
      * 	是否显示
      * 	0：是
      * 	1：否
      */
-    private Integer isShow;
+    private Boolean show;
     /**
      * 	是否可用
      * 	0：是
      * 	1：否
      */
-    private Integer isUsable;
+    private Boolean usable;
     /**
      * 商品分类一级编号
      */
-    private Integer parentId;
+    private Long parentId;
+
+    /**
+     * 类型
+     */
+    private Integer type;
 
     /**
      *

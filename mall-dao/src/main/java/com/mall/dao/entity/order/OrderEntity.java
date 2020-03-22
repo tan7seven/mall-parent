@@ -3,7 +3,6 @@ package com.mall.dao.entity.order;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -126,19 +125,15 @@ public class OrderEntity extends BaseEntity {
     /**
      * 确认收货状态：0->未确认；1->已确认
      */
-    private Integer isConfirm;
+    private Boolean isConfirm;
     /**
      * 删除状态：0->未删除；1->已删除
      */
-    private Integer isDelete;
+    private Boolean isDelete;
     /**
      * 下单时使用的积分
      */
     private Integer useScore;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
     /**
      * 支付时间
      */
@@ -151,8 +146,4 @@ public class OrderEntity extends BaseEntity {
      * 确认收货时间
      */
     private Date receiveTime;
-    /**
-     * 修改时间
-     */
-    private Date modifyTime;
 }

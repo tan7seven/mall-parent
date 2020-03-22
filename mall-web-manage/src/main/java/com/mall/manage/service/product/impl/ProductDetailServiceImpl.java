@@ -22,8 +22,8 @@ public class ProductDetailServiceImpl extends ServiceImpl<ProductDetailMapper, P
     }
 
     @Override
-    public Optional<ProductDetailEntity> findById(Integer id) {
-        return productDetailService.findById(id);
+    public Optional<ProductDetailEntity> getById(Integer id) {
+        return productDetailService.getById(id);
     }
 
     @Override

@@ -3,47 +3,45 @@ package com.mall.dao.entity.product;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-
-import java.io.Serializable;
 
 /**
  * 商品属性名
  */
 @Data
 @TableName("mall_product_property_name")
-public class ProductPropertyNameEntity extends BaseEntity {
-    public static final String IS_SALE = "0";
-    public static final String NOT_SALE = "1";
-    /**
-     * 编号
-     */
-    private Integer propertyNameId;
+public class ProductAttrNameEntity extends BaseEntity {
     /**
      * 商品类目ID
      */
-    private Integer typeId;
+    private Long typeId;
     /**
      * 属性名
      */
     private String name;
     /**
-     * 	是否销售属性
+     * 	是否可用
      * 	0：否
      * 	1：是
      */
-    private Integer isSale;
+    private Boolean usable;
     /**
      * 	是否显示
      * 	0：是
      * 	1：否
      */
-    private Integer isShow;
+    private Boolean show;
     /**
      * 	是否删除
      * 	0：正常
      * 	1：已删除
      */
-    private Integer isDelete;
+    private Boolean delete;
+
+    /**
+     * 类型
+     * 1：销售属性
+     * 2：非销售属性
+     */
+    private Integer type;
 
 }

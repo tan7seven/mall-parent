@@ -15,7 +15,7 @@ public class ProductTypeDTO extends CommonDTO implements Serializable {
     /**
      * 编号
      */
-    private Integer typeId;
+    private Long typeId;
     /**
      * 分类名称
      */
@@ -31,19 +31,19 @@ public class ProductTypeDTO extends CommonDTO implements Serializable {
     /**
      * 是否显示在导航栏
      */
-    private Integer isNavigationBar;
+    private Boolean isNavigationBar;
     /**
      * 状态
      * 0:正常
      * 1：禁用
      */
-    private Integer isUsable;
+    private Boolean isUsable;
     /**
      * 状态
      * 0:正常
      * 1：已删除
      */
-    private Integer isDelete;
+    private Boolean isDelete;
     /**
      * 等级
      */

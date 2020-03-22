@@ -23,7 +23,7 @@ public class OrderItemsDTO {
     /**
      * 商品编号
      */
-    private Integer productId;
+    private Long productId;
     /**
      * 商品SKU编号
      */

@@ -120,7 +120,7 @@ public class OrderDTO extends CommonDTO {
     /**
      * 删除状态：0->未删除；1->已删除
      */
-    private Integer isDelete;
+    private Boolean isDelete;
     /**
      * 下单时使用的积分
      */

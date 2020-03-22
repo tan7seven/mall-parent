@@ -13,8 +13,6 @@ import org.springframework.data.annotation.Id;
 @TableName("system_menu")
 public class MenuEntity extends BaseEntity {
 
-    public static final Integer IS_HIDDEN = 1;
-    public static final Integer NOT_HIDDEN = 0;
     /**
      * 菜单主键
      */
@@ -42,6 +40,6 @@ public class MenuEntity extends BaseEntity {
     /**
      * 是否隐藏
      */
-    private Integer isHidden;
+    private Boolean isHidden;
 
 }
