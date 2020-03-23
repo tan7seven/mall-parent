@@ -46,6 +46,6 @@ public interface ProductMapper extends BaseMapper<ProductEntity> {
      * @param isUsable
      * @return
      */
-    int updateProductIsUsable(@Param("typeId") Long typeId, @Param("isUsable")Boolean isUsable);
+    int updateProductIsUsable(@Param("typeId") Long typeId, @Param("usable")Boolean isUsable);
 
 }

@@ -2,7 +2,6 @@ package com.mall.manage.service.product;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.vo.RestPage;
-import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
 import com.mall.dao.entity.product.ProductTypeEntity;
@@ -27,20 +26,7 @@ public interface ProductTypeService extends IService<ProductTypeEntity> {
      * @param dto
      * @return
      */
-    ProductTypeEntity update(ProductTypeDTO dto);
-    /**
-     * 修改是否可用
-     * @param dto
-     * @return
-     */
-    RestResult updateIsUsable(ProductTypeDTO dto);
-    /**
-     *
-     * @param dto
-     * @return
-     */
-    @Transactional
-    ProductTypeEntity create(ProductTypeDTO dto);
+    ProductTypeEntity updateType(ProductTypeDTO dto);
 
     /**
      * 根据ID删除-逻辑删除
@@ -60,7 +46,7 @@ public interface ProductTypeService extends IService<ProductTypeEntity> {
      * 分页查询
      * @return
      */
-    RestPage<ProductTypePageVO> findPage(Long id, String typeName, Integer page, Integer pageSize);
+    RestPage<ProductTypePageVO> findPage(Long parentId, String typeName, Integer page, Integer pageSize);
 
     /**
      * 获取树结构

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.TimeZone;
 
 @SpringBootApplication()
-@MapperScan(value= "com.mall.dao.mapper")
 @ComponentScan(basePackages={"com.mall"})
 public class ManageApplication {
 

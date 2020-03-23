@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.vo.RestPage;
-import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.dto.product.ProductTypeDTO;
 import com.mall.dao.entity.product.ProductTypeEntity;
@@ -50,7 +49,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
     }
 
     @Override
-    public ProductTypeEntity update(ProductTypeDTO dto) {
+    public ProductTypeEntity updateType(ProductTypeDTO dto) {
         ProductTypeEntity entity = productTypeService.getById(dto.getTypeId());
         /**
          * 修改对应商品状态
@@ -73,42 +72,6 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
     }
 
     @Override
-    public RestResult updateIsUsable(ProductTypeDTO dto) {
-        ProductTypeEntity entity = this.getById(dto.getTypeId());
-        if(null == dto.getTypeId()){
-            return RestResult.validateFailed("类目ID异常：查无数据！");
-        }
-        /**
-         * 修改对应商品状态
-         */
-        if(!entity.getUsable().equals(dto.getIsUsable())){
-            this.updateTypeIsUsable(dto);
-        }
-        if ("0".equals(String.valueOf(entity.getParentId()))) {
-            productTypeMapper.updateUsableByParent(entity.getId(), dto.getIsUsable());
-        }
-        entity.setUsable(dto.getIsUsable());
-        this.add(entity);
-        return RestResult.success();
-    }
-
-    @Override
-    public ProductTypeEntity create(ProductTypeDTO dto) {
-        ProductTypeEntity entity = new ProductTypeEntity();
-        BeanUtils.copyProperties(dto, entity);
-        if(0 == entity.getParentId()){
-            entity.setLevel(0);
-        }else{
-            ProductTypeEntity parent = productTypeService.getById(entity.getParentId());
-            entity.setLevel(parent.getLevel()+1);
-        }
-        entity.setDeleted(Boolean.FALSE);
-        productTypeService.save(entity);
-        return entity;
-    }
-
-
-    @Override
     public void deleteById(Long id) {
         productPropertyNameService.updateIsDeleteByTypeId(id);
         List<ProductTypeEntity> entities = productTypeService.list(Wrappers.<ProductTypeEntity>lambdaQuery()
@@ -125,10 +88,10 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
     }
 
     @Override
-    public RestPage<ProductTypePageVO> findPage(Long id, String typeName, Integer page, Integer pageSize) {
+    public RestPage<ProductTypePageVO> findPage(Long parentId, String typeName, Integer page, Integer pageSize) {
         Page pageParam = new Page(page, pageSize, true);
         QueryWrapper<ProductTypeEntity> wrapper = new QueryWrapper();
-        wrapper.eq("parent_id", id);
+        wrapper.eq("parent_id", parentId);
         if (StringUtils.isNoneBlank(typeName)) {
             wrapper.like("type_name", typeName);
         }
@@ -139,6 +102,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
             for (ProductTypeEntity record : entityPage.getRecords()) {
                 ProductTypePageVO vo = new ProductTypePageVO();
                 BeanUtils.copyProperties(record, vo);
+                vo.setHasChildren(Boolean.TRUE);
                 resultList.add(vo);
             }
         }

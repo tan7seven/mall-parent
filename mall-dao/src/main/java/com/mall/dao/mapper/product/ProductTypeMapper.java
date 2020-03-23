@@ -23,6 +23,6 @@ public interface ProductTypeMapper extends BaseMapper<ProductTypeEntity> {
      * @param isUsable
      * @return
      */
-    int updateUsableByParent(@Param("parentId") Long parentId,@Param("isUsable") Boolean isUsable);
+    int updateUsableByParent(@Param("parentId") Long parentId,@Param("usable") Boolean isUsable);
 
 }

@@ -5,9 +5,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @ApiModel
 public class ProductTypePageVO extends BaseVO {
+    @ApiModelProperty(value = "主键ID")
+    private Long id;
     /**
      * 分类名称
      */
@@ -32,7 +36,7 @@ public class ProductTypePageVO extends BaseVO {
      * 是否显示在导航栏
      */
     @ApiModelProperty(value = "是否显示")
-    private Boolean show;
+    private Boolean showed;
     /**
      * 状态
      * 0:正常
@@ -40,4 +44,10 @@ public class ProductTypePageVO extends BaseVO {
      */
     @ApiModelProperty(value = "状态")
     private Boolean usable;
+
+    @ApiModelProperty(value = "是否有下级")
+    private Boolean hasChildren;
+
+    @ApiModelProperty(value = "子级")
+    private List<ProductTypePageVO> children;
 }

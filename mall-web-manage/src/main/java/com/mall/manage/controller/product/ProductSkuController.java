@@ -44,7 +44,7 @@ public class ProductSkuController extends GenericController {
 
     @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:UPDATE') or hasRole('ADMIN')")
-    @PostMapping(value = "/update.do/{id}")
+    @PostMapping(value = "/updateType.do/{id}")
     protected RestResult update(@PathVariable Integer id, @RequestBody ProductSkuDTO dto){
         if(null == dto.getProductId()){
             return RestResult.validateFailed("商品编号为空！");

@@ -66,7 +66,7 @@ public class ProductPropertyController {
 
     @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:UPDATE') or hasRole('ADMIN')")
-    @PostMapping("/update.do/{id}")
+    @PostMapping("/updateType.do/{id}")
     protected RestResult update(@PathVariable Integer id, @RequestBody ProductAttrNameDTO dto){
         if(null == id){
             return RestResult.validateFailed("主键为空！");
