@@ -7,10 +7,10 @@ import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
-import com.mall.manage.model.param.product.productType.TypeCreateParam;
-import com.mall.manage.model.param.product.productType.TypeShowedUpdateParam;
-import com.mall.manage.model.param.product.productType.TypeUpdateParam;
-import com.mall.manage.model.param.product.productType.TypeUsableUpdateParam;
+import com.mall.manage.model.param.product.type.TypeCreateParam;
+import com.mall.manage.model.param.product.type.TypeShowedUpdateParam;
+import com.mall.manage.model.param.product.type.TypeUpdateParam;
+import com.mall.manage.model.param.product.type.TypeUsableUpdateParam;
 import com.mall.manage.model.vo.product.type.ProductTypeDetailVO;
 import com.mall.manage.model.vo.product.type.ProductTypePageVO;
 import com.mall.manage.service.product.ProductAttrNameService;
@@ -39,17 +39,17 @@ public class ProductTypeController {
     @Resource(name = "productTypeService")
     private ProductTypeService productTypeService;
 
-    @Resource(name = "productPropertyNameService")
-    private ProductAttrNameService productPropertyNameService;
+    @Resource(name = "productAttrNameService")
+    private ProductAttrNameService productAttrNameService;
 
 
     @ApiOperation("分页查询")
     @GetMapping("/page/query")
     protected RestResult<RestPage<ProductTypePageVO>> getPage(@ApiParam(value = "类目ID") @RequestParam Long parentId,
                                                               @ApiParam(value = "类目名") @RequestParam(required = false) String typeName,
-                                                              @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer page,
+                                                              @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                                               @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize) {
-        RestPage<ProductTypePageVO> result = productTypeService.findPage(parentId, typeName, page, pageSize);
+        RestPage<ProductTypePageVO> result = productTypeService.findPage(parentId, typeName, pageNum, pageSize);
         return RestResult.success(result);
     }
     @ApiOperation("详情")
@@ -93,7 +93,8 @@ public class ProductTypeController {
             return RestResult.failed(ResultStatus.BUS_MSG_NOT_FOUND);
         }
         entity.setShowed(param.getShowed());
-        return RestResult.success(productTypeService.updateById(entity));
+        Boolean result = productTypeService.updateById(entity);
+        return RestResult.success(result);
     }
 
     @ApiOperation("修改状态：正常、禁用")
@@ -105,46 +106,37 @@ public class ProductTypeController {
             return RestResult.failed(ResultStatus.BUS_MSG_NOT_FOUND);
         }
         entity.setUsable( param.getUsable());
-        return RestResult.success(productTypeService.updateById(entity));
-    }
-
-
-    @ApiOperation("根据类目ID获取商品属性")
-    @GetMapping(value = "/getProductTypeProperty.do/{id}")
-    protected RestResult getProductTypeProperty(@PathVariable Integer id) {
-        List<ProductAttrNameEntity> propertyNameEntities = productPropertyNameService.findByTypeId(id);
-        List<ProductAttrNameEntity> isSale = propertyNameEntities.stream().filter(a -> a.getType().equals(ProductAttrNameTypeEnum.SALE.getCode())).collect(Collectors.toList());
-        List<ProductAttrNameEntity> notSale = propertyNameEntities.stream().filter(a -> a.getType().equals(Boolean.FALSE)).collect(Collectors.toList());
-        Map<String, Object> result = new HashMap<>();
-        result.put("productPropertyIsSale", isSale);
-        result.put("productPropertyNotSale", notSale);
+        Boolean result = productTypeService.updateById(entity);
         return RestResult.success(result);
     }
-
-
-
-
-
-
-
-
-
 
     @ApiOperation("删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:DELETE') or hasRole('ADMIN')")
-    @GetMapping(value = "/delete.do/{typeId}")
-    protected RestResult detele(@PathVariable Long typeId) {
-        if (null == typeId) {
-            return RestResult.validateFailed("typeId为空！");
-        }
-        productTypeService.deleteById(typeId);
-        return RestResult.success();
+    @GetMapping(value = "/delete/{id}")
+    protected RestResult<Boolean> detele(@PathVariable Long id) {
+        Boolean result = productTypeService.removeById(id);
+        return RestResult.success(result);
     }
-
     @ApiOperation("查询所有一级和子级分类")
-    @GetMapping(value = "/getProductTypeCascader.do")
-    protected RestResult getProductTypeCascader() {
+    @GetMapping(value = "/cascader/get")
+    protected RestResult getCascader() {
         List<CommonCascaderDTO> result = productTypeService.getCascader();
         return RestResult.success(result);
     }
+    //todo 还没改造
+
+    @ApiOperation("根据类目ID获取商品属性")
+    @GetMapping(value = "/getProductTypeAttr.do/{id}")
+    protected RestResult getProductTypeAttr(@PathVariable Integer id) {
+        List<ProductAttrNameEntity> AttrNameEntities = productAttrNameService.findByTypeId(id);
+        List<ProductAttrNameEntity> isSale = AttrNameEntities.stream().filter(a -> a.getType().equals(ProductAttrNameTypeEnum.SALE.getCode())).collect(Collectors.toList());
+        List<ProductAttrNameEntity> notSale = AttrNameEntities.stream().filter(a -> a.getType().equals(Boolean.FALSE)).collect(Collectors.toList());
+        Map<String, Object> result = new HashMap<>();
+        result.put("productAttrIsSale", isSale);
+        result.put("productAttrNotSale", notSale);
+        return RestResult.success(result);
+    }
+
+
+
 }

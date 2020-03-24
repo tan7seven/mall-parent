@@ -176,7 +176,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         StringBuffer propertySb = new StringBuffer();
         List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                 .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId())
-                .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+                .eq(ProductAttrNameEntity::getDeleted, Boolean.FALSE));
         List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProperties())){
             String skuProperties = dto.getProperties();

@@ -95,8 +95,7 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
     private String makePropertyKeyToValue(ProductSkuDTO dto){
         StringBuffer propertySb = new StringBuffer();
         List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
-                .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId())
-                .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+                .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId()));
         List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProperties())){
             String skuProperties = dto.getProperties();

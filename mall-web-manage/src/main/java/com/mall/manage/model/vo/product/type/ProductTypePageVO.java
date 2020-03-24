@@ -1,15 +1,15 @@
 package com.mall.manage.model.vo.product.type;
 
-import com.mall.manage.model.BaseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @ApiModel
-public class ProductTypePageVO extends BaseVO {
+public class ProductTypePageVO implements Serializable {
     @ApiModelProperty(value = "主键ID")
     private Long id;
     /**

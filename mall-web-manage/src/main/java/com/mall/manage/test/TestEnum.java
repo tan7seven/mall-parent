@@ -27,7 +27,7 @@ public enum TestEnum {
                 TestEnum instance = TestEnum.sss;
                 instance.printHello();
                 instance.printHello();
-//                instanceSet.add(obj);
+//                instanceSet.createAttrName(obj);
                 countDownLatch.countDown();
             });
         }

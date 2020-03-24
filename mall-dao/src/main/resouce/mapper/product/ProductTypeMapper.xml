@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mall.dao.mapper.product.ProductAttrMapper">
+<mapper namespace="com.mall.dao.mapper.product.ProductTypeMapper">
 
     <!--
     <id>：主键字段
@@ -39,15 +39,17 @@
 
     <select id="getCascader" resultMap="ProductTypeMap">
         SELECT
-          a.type_id value,
+          a.id value,
           a.type_name label,
-          b.type_id children_value,
+          b.id children_value,
           b.type_name children_label
         FROM mall_product_type a
-        LEFT JOIN mall_product_type b ON a.type_id = b.parent_id AND b.is_usable = '0'
+        LEFT JOIN mall_product_type b
+            ON a.id = b.parent_id
+            AND b.is_usable = 1
         WHERE a.parent_id = 0
-        AND a.is_usable = '0'
-        AND  a.is_delete = '0'
+            AND a.is_usable = 1
+            AND  a.is_deleted = 0
     </select>
 
     <update id="updateUsableByParent">

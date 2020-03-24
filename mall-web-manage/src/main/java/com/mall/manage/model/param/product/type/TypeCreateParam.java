@@ -1,4 +1,4 @@
-package com.mall.manage.model.param.product.productType;
+package com.mall.manage.model.param.product.type;
 
 import com.mall.manage.model.param.BaseParam;
 import io.swagger.annotations.ApiModel;
@@ -10,11 +10,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @ApiModel
-public class TypeUpdateParam extends BaseParam {
+public class TypeCreateParam extends BaseParam {
 
-    @NotNull(message = "主键ID不能为空")
-    @ApiModelProperty(value = "主键ID")
-    private Long id;
     /**
      * 分类名称
      */

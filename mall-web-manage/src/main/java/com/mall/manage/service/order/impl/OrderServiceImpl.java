@@ -194,8 +194,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     private void makePropertyKeyToValue(OrderItemsDTO dto){
         StringBuffer propertySb = new StringBuffer();
         List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
-                .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId())
-                .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+                .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId()));
         List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProductProperty())){
             String skuProperties = dto.getProductProperty();

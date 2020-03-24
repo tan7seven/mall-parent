@@ -171,8 +171,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
             List<ProductAttrNameEntity> propertyNameEntities =
                     productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                             .eq(ProductAttrNameEntity::getTypeId, dto.getProductTypeId())
-                            .eq(ProductAttrNameEntity::getName, proerties[0])
-                            .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+                            .eq(ProductAttrNameEntity::getName, proerties[0]));
             if (null == propertyNameEntities && propertyNameEntities.size() != 1) {
                 continue;
             }
@@ -188,8 +187,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
         List<ProductAttrNameEntity> propertyNotSales2 =
                 productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                         .eq(ProductAttrNameEntity::getTypeId, dto.getProductTypeId())
-                        .eq(ProductAttrNameEntity::getType, Boolean.FALSE)
-                        .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+                        .eq(ProductAttrNameEntity::getType, Boolean.FALSE));
         for (int i = 0; i < propertyNotSales.length; i++) {
             if (null == propertyNotSales2 || propertyNotSales2.size() < i + 1) {
                 break;
@@ -291,8 +289,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
         List<ProductAttrNameEntity> propertyNotSales2 =
                 productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                         .eq(ProductAttrNameEntity::getTypeId, dto.getProductTypeId())
-                        .eq(ProductAttrNameEntity::getType, Boolean.FALSE)
-                        .eq(ProductAttrNameEntity::getDelete, Boolean.FALSE));
+                        .eq(ProductAttrNameEntity::getType, Boolean.FALSE));
         for (int i = 0; i < propertyNotSales.length; i++) {
             if (null == propertyNotSales2 || propertyNotSales2.size() < i + 1) {
                 break;

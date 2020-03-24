@@ -1,10 +1,13 @@
 package com.mall.manage.service.product;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.common.vo.RestResult;
-import com.mall.dao.dto.product.ProductAttrNameDTO;
+import com.mall.common.vo.RestPage;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
+import com.mall.manage.model.param.product.attr.AttrCreateParam;
+import com.mall.manage.model.param.product.attr.AttrShowedUpdateParam;
+import com.mall.manage.model.param.product.attr.AttrUpdateParam;
+import com.mall.manage.model.param.product.attr.AttrUsableUpdateParam;
+import com.mall.manage.model.vo.product.attr.AttrPageVO;
 
 import java.util.List;
 
@@ -12,36 +15,24 @@ import java.util.List;
  * 商品属性名
  */
 public interface ProductAttrNameService extends IService<ProductAttrNameEntity> {
-    /**
-     * 新增
-     * @param entity
-     * @return
-     */
-    RestResult add(ProductAttrNameEntity entity);
-    /**
-     * 更新
-     * @param dto
-     */
-    RestResult update(ProductAttrNameDTO dto);
 
-    /**
-     * 根据逐渐删除
-     * @param id
-     */
-    void deleteById(Integer id);
-
-    /**
-     * 根据typeId删除
-     * @param typeId
-     */
-    void updateIsDeleteByTypeId(Long typeId);
 
     /**
      * 查询
-     * @param entity
      * @return
      */
-    List<ProductAttrNameEntity> findList(ProductAttrNameEntity entity);
+    RestPage<AttrPageVO> findPage(String typeName, String name, Integer page, Integer pageSize);
+
+    // todo  done
+    /**
+     * 新增
+     * @return
+     */
+    Boolean createAttrName(AttrCreateParam param);
+    /**
+     * 更新
+     */
+    Boolean update(AttrUpdateParam param);
 
     /**
      * 根据typeId获取
@@ -49,25 +40,17 @@ public interface ProductAttrNameService extends IService<ProductAttrNameEntity> 
      * @return
      */
     List<ProductAttrNameEntity> findByTypeId(Integer typeId);
-    /**
-     * 查询
-     * @param dto
-     * @return
-     */
-    Page<ProductAttrNameDTO> findPage(ProductAttrNameDTO dto);
 
     /**
      * 修改是否销售属性
-     * @param dto
      * @return
      */
-    RestResult updateIsSale(ProductAttrNameDTO dto);
+    Boolean updateIsSale(AttrUsableUpdateParam param);
 
     /**
      * 修改是否显示
-     * @param dto
      * @return
      */
-    RestResult updateIsShow(ProductAttrNameDTO dto);
+    Boolean updateIsShow(AttrShowedUpdateParam param);
 
 }
