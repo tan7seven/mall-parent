@@ -3,46 +3,46 @@
 <mapper namespace="com.mall.dao.mapper.product.ProductMapper">
 
     <resultMap id="ProductMap" type="com.mall.dao.dto.product.ProductDTO">
-        <result column="productId" property="productId"/>
-        <result column="typeId" property="typeId"/>
+        <result column="id" property="id"/>
+        <result column="type_id" property="typeId"/>
         <result column="hits" property="hits"/>
-        <result column="productName" property="productName"/>
-        <result column="picUrl" property="picUrl"/>
-        <result column="priceMin" property="priceMin"/>
+        <result column="product_name" property="productName"/>
+        <result column="pic_url" property="picUrl"/>
+        <result column="min_price" property="minPrice"/>
         <result column="unit" property="unit"/>
-        <result column="isPutaway" property="isPutaway"/>
-        <result column="addTime" property="addTime"/>
+        <result column="is_putaway" property="putaway"/>
+        <result column="create_time" property="createTime"/>
         <result column="detail" property="detail"/>
-        <result column="typeName" property="typeName"/>
-        <result column="is_usable" property="isUsable" />
-        <result column="is_delete"  property="isDelete" />
+        <result column="type_name" property="typeName"/>
+        <result column="is_usable" property="usable" />
+        <result column="is_deletedd"  property="deleted" />
     </resultMap>
 
     <select id="getList" resultMap="ProductMap">
         SELECT
-            a.product_Id productId,
-            a.type_Id typeId,
-            a.product_Name productName,
-            a.price_Min priceMin,
-            a.unit unit,
-            a.pic_Url picUrl,
-            a.is_Putaway isPutaway,
+            a.id ,
+            a.type_Id ,
+            a.product_Name ,
+            a.min_price ,
+            a.unit ,
+            a.pic_Url ,
+            a.is_Putaway ,
             a.hits,
-            a.create_time createTime,
-            b.type_Name typeName,
-            a.is_usable is_usable
+            a.create_time ,
+            b.type_Name ,
+            a.is_usable 
         FROM mall_product a
-        INNER JOIN mall_product_type b ON b.type_id = a.type_id
+        INNER JOIN mall_product_type b ON b.id = a.type_id
         where 1 = 1
-        AND a.is_delete = '0'
+        AND a.is_deleted = 0
         <if test="param.productName!=null and param.productName!=''">
-            AND a.product_name like '%${param.productName}%'
+            AND a.product_name like concat('%', #{param.productName}, '%')
         </if>
         <if test="param.typeId!=null and param.typeId!=''">
-            AND b.type_Id = #{param.typeId}
+            AND a.type_Id = #{param.typeId}
         </if>
-        <if test="param.isPutaway!=null and param.isPutaway!=''">
-            AND a.is_Putaway = #{param.isPutaway}
+        <if test="param.putaway!=null and param.putaway!=''">
+            AND a.is_putaway = #{param.putaway}
         </if>
     </select>
 
@@ -51,7 +51,7 @@
         FROM mall_product_property_name a
       INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
       WHERE  1= 1
-        AND a.is_delete ='0'
+        AND a.is_deleted ='0'
         <if test="param.isSale!=null and param.isSale!=''">
             AND b.is_sale = #{param.isSale}
         </if>
@@ -63,7 +63,7 @@
         SELECT concat(b.value) as result FROM mall_product_property_name a
         INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
         WHERE  1= 1
-        AND a.is_delete = '0'
+        AND a.is_deleted = '0'
         <if test="param.isSale!=null and param.isSale!=''">
             AND b.is_sale = #{param.isSale}
         </if>

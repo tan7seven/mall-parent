@@ -29,7 +29,7 @@ import java.util.List;
 public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMapper, ProductAttrNameEntity> implements ProductAttrNameService {
 
     @Override
-    public RestPage<AttrPageVO> findPage(String typeName, String name, Integer page, Integer pageSize) {
+    public RestPage<AttrPageVO> findPage(String typeName, Long typeId, String name, Integer page, Integer pageSize) {
         Page pageParam = new Page<>(page, pageSize);
         AttrFindPageParam param = new AttrFindPageParam();
         if (StringUtils.isNoneBlank(name)) {
@@ -37,6 +37,9 @@ public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMappe
         }
         if (StringUtils.isNoneBlank(typeName)) {
             param.setTypeName(typeName);
+        }
+        if (null != typeId) {
+            param.setTypeId(typeId);
         }
         Page<ProductAttrNameDTO> dtoPage = this.baseMapper.findPage(pageParam, param);
         RestPage<AttrPageVO> result = new RestPage<>(dtoPage.getCurrent(), dtoPage.getSize(), dtoPage.getTotal());

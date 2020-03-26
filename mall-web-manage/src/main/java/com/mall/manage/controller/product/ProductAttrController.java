@@ -42,10 +42,11 @@ public class ProductAttrController {
     @ApiOperation("分页查询")
     @GetMapping("/page/get")
     protected RestResult<RestPage<AttrPageVO>> getPage(@ApiParam(value = "类目名称") @RequestParam(required = false) String typeName,
+                                                       @ApiParam(value = "类目ID") @RequestParam(required = false) Long typeId,
                                                        @ApiParam(value = "属性名称") @RequestParam(required = false) String name,
                                                        @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                                        @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
-        RestPage<AttrPageVO> result = productAttrNameService.findPage(typeName, name, pageNum, pageSize);
+        RestPage<AttrPageVO> result = productAttrNameService.findPage(typeName, typeId, name, pageNum, pageSize);
         return RestResult.success(result);
     }
 

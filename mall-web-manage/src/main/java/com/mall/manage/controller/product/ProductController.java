@@ -3,14 +3,18 @@ package com.mall.manage.controller.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.manage.UploadPicManage;
+import com.mall.common.vo.RestPage;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.manage.model.param.product.product.DeleteParam;
-import com.mall.manage.model.param.product.product.GetPageParam;
+import com.mall.manage.model.param.product.product.ProductGetPageParam;
 import com.mall.manage.model.param.product.product.UpdateIsPutawayParam;
+import com.mall.manage.model.vo.product.product.ProductPageVO;
 import com.mall.manage.service.product.ProductService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +29,7 @@ import java.util.List;
 @Api(value = "商品信息", tags = "商品信息")
 @Slf4j
 @RestController
-@RequestMapping(value = "/productController")
+@RequestMapping(value = "/product")
 public class ProductController {
 
     @Resource(name = "productService")
@@ -35,9 +39,13 @@ public class ProductController {
     private UploadPicManage uploadPicManage;
 
     @ApiOperation("分页查询")
-    @GetMapping(value = "/getPage.do")
-    protected RestResult getPage(GetPageParam param){
-        Page<ProductDTO> result = productService.findPage(param);
+    @GetMapping(value = "/page/get")
+    protected RestResult<RestPage<ProductPageVO>> getPage(@ApiParam(value = "类目ID") @RequestParam(required = false) Long typeId,
+                                                          @ApiParam(value = "商品名称") @RequestParam(required = false) String productName,
+                                                          @ApiParam(value = "上下架") @RequestParam(required = false) Boolean putaway,
+                                                          @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
+                                                          @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
+        RestPage<ProductPageVO> result = productService.findPage(typeId, productName, putaway, pageNum, pageSize);
         return RestResult.success(result);
     }
 
@@ -53,9 +61,6 @@ public class ProductController {
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "/updateType.do/{id}")
     protected RestResult update(@PathVariable Integer id , @RequestBody ProductDTO dto){
-        if(null == dto.getProductId()){
-            return RestResult.validateFailed("商品编号为空！");
-        }
         return RestResult.failed();
     }
 

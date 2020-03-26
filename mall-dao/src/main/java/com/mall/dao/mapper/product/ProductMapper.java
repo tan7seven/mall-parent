@@ -1,6 +1,7 @@
 package com.mall.dao.mapper.product;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.dto.product.ProductPropertyDTO;
 import com.mall.dao.entity.product.ProductEntity;
@@ -13,21 +14,25 @@ import java.util.List;
  * 商品信息
  */
 public interface ProductMapper extends BaseMapper<ProductEntity> {
+
     /**
      * 查询
      * @return
      */
-    List<ProductDTO> getList(@Param("param") ProductDTO param);
+    Page<ProductDTO> getPage(Page pageParam, @Param("param") ProductDTO param);
+    /**
+     * 查询
+     * @return
+     */
+    Page<ProductDTO> getList(Page pageParam, @Param("param") ProductDTO param);
 
     /**
      * 查询商品销售属性值
-     * @param dto
      * @return
      */
     List<ProductPropertyDTO> findPropertyIsSale(@Param("param") ProductDTO param);
     /**
      * 查询商品非销售属性值
-     * @param dto
      * @return
      */
     List<String> findPropertyNotSale(@Param("param") ProductDTO param);

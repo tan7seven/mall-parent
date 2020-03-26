@@ -12,13 +12,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "订单获取分页信息")
-public class GetPageParam extends CommonParam {
-
-    /**
-     *商品编号
-     */
-    @ApiModelProperty(value = "商品编号")
-    private Integer productId;
+public class ProductGetPageParam extends CommonParam {
     /**
      * 分类编号
      */
@@ -36,5 +30,4 @@ public class GetPageParam extends CommonParam {
      */
     @ApiModelProperty(value = "商品状态 0：上架 1：下架")
     private String isPutaway;
-
 }

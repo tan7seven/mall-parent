@@ -51,5 +51,5 @@ public class ProductEntity extends BaseEntity {
     /**
      * 是否删除
      */
-    private Boolean delete;
+    private Boolean deleted;
 }

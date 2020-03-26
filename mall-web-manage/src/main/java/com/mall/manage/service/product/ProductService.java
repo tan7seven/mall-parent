@@ -2,12 +2,16 @@ package com.mall.manage.service.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mall.common.vo.RestPage;
 import com.mall.common.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.entity.product.ProductEntity;
-import com.mall.manage.model.param.product.product.GetPageParam;
+import com.mall.manage.model.param.product.product.ProductGetPageParam;
 import com.mall.manage.model.param.product.product.UpdateIsPutawayParam;
+import com.mall.manage.model.vo.product.product.ProductPageVO;
+import io.swagger.annotations.ApiParam;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -31,7 +35,7 @@ public interface ProductService extends IService<ProductEntity> {
      * mybatis分页查询
      * @returndto
      */
-    Page<ProductDTO> findPage(GetPageParam param);
+    RestPage<ProductPageVO> findPage(Long typeId, String productName, Boolean putaway, Integer pageNum, Integer pageSize);
 
     /**
      * 创建商品信息

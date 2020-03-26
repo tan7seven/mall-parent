@@ -45,6 +45,9 @@
             <if test="param.typeName !=null and param.typeName !=''">
                 AND b.type_name like concat('%', #{param.typeName}, '%')
             </if>
+            <if test="param.typeId !=null ">
+                AND a.type_id = #{param.typeId}
+            </if>
         </where>
 
     </select>

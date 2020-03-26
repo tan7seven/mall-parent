@@ -12,4 +12,9 @@ public class AttrFindPageParam extends BaseParam {
      * 类目名称
      */
     private String typeName;
+
+    /**
+     * 类目ID
+     */
+    private Long typeId;
 }

@@ -21,7 +21,7 @@ public interface ProductAttrNameService extends IService<ProductAttrNameEntity> 
      * 查询
      * @return
      */
-    RestPage<AttrPageVO> findPage(String typeName, String name, Integer page, Integer pageSize);
+    RestPage<AttrPageVO> findPage(String typeName, Long typeId, String name, Integer page, Integer pageSize);
 
     // todo  done
     /**
