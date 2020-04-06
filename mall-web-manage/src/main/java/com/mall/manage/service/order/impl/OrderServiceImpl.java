@@ -195,7 +195,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         StringBuffer propertySb = new StringBuffer();
         List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                 .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId()));
-        List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProductProperty())){
             String skuProperties = dto.getProductProperty();
             String[] properties = skuProperties.split("&");
@@ -203,8 +202,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                 if(StringUtils.isBlank(property)){
                     continue;
                 }
-                String[] propertyValues = property.split(":");
-
             }
             dto.setProductProperty(propertySb.toString());
         }

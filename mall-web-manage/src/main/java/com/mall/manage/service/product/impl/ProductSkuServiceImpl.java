@@ -102,54 +102,10 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
     }
 
     @Override
-    public ProductSkuDTO queryById(Long id) {
-        ProductSkuEntity entity = this.getById(id);
-        ProductSkuDTO result = new ProductSkuDTO();
-        BeanUtils.copyProperties(entity, result);
-        //设置商品属性值
-        String[] properties = entity.getAttrJson().split("&");
-        if (properties.length > 1 && StringUtils.isNotBlank(properties[1])) {
-            result.setPropertyValueA(properties[1]);
-        }
-        if (properties.length > 2 && StringUtils.isNotBlank(properties[2])) {
-            result.setPropertyValueB(properties[2]);
-        }
-        if (properties.length > 3 && StringUtils.isNotBlank(properties[3])) {
-            result.setPropertyValueC(properties[3]);
-        }
-        //获取商品信息
-        ProductEntity productEntity = productService.getById(entity.getProductId());
-        result.setProductName(productEntity.getProductName());
-        //获取商品可选属性值
-        List<ProductAttrValueEntity> propertyValues= productPropertyValueService.findByProductId(productEntity.getId());
-        List<Long> propertiesInt = propertyValues.stream()
-                .map(productPropertyValueEntity->productPropertyValueEntity.getNameId())
-                .distinct().collect(Collectors.toList());
-       if(null != properties && !propertiesInt.isEmpty() && propertiesInt.size()>=1 ){
-            result.setPropertyValueAOptions(productPropertyMapper.findByPropertyNameIdAndProductId(propertiesInt.get(0), entity.getProductId()));
-        }
-        if(null != properties && !propertiesInt.isEmpty() && propertiesInt.size()>=2 ){
-            result.setPropertyValueBOptions(productPropertyMapper.findByPropertyNameIdAndProductId(propertiesInt.get(1), entity.getProductId()));
-        }
-        if(null != properties && !propertiesInt.isEmpty() && propertiesInt.size()>=3 ){
-            result.setPropertyValueCOptions(productPropertyMapper.findByPropertyNameIdAndProductId(propertiesInt.get(2), entity.getProductId()));
-        }
-        //获取分类名称
-        ProductTypeEntity typeEntity = productTypeService.getById(productEntity.getTypeId());
-        result.setTypeName(typeEntity.getTypeName());
-        return result;
-    }
-
-    @Override
     public void deleteById(Integer id) {
         productSkuMapper.updateIsDeleteById(id);
     }
 
-    @Override
-    public List<ProductSkuEntity> findList(ProductSkuEntity entity) {
-        List<ProductSkuEntity> result = this.list();
-        return result;
-    }
 
     @Override
     public Page<ProductSkuEntity> findPage(ProductSkuEntity entity, Page page) {
@@ -176,7 +132,6 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                 .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId())
                 .eq(ProductAttrNameEntity::getDeleted, Boolean.FALSE));
-        List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProperties())){
             String skuProperties = dto.getProperties();
             String[] properties = skuProperties.split("&");
@@ -190,13 +145,6 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
                     if(propertyValues[0].equals(String.valueOf(nameEntity.getId()))){
                         propertySb.append(nameEntity.getName());
                         propertySb.append("：");
-                    }
-                }
-                //获取propertyValue值
-                for (ProductAttrValueEntity valueEntity: valueList) {
-                    if(propertyValues[1].equals(String.valueOf(valueEntity.getId()))){
-                        propertySb.append(valueEntity.getValue());
-                        propertySb.append("、");
                     }
                 }
             }

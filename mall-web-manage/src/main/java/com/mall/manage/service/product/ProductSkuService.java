@@ -23,31 +23,16 @@ public interface ProductSkuService extends IService<ProductSkuEntity> {
      */
     RestResult update(Long id, ProductSkuDTO dto);
     /**
-     *  根据ID查找
-     * @param id
-     * @return
-     */
-    ProductSkuDTO queryById(Long id);
-    /**
      * 根据逐渐删除
      * @param id
      */
     void deleteById(Integer id);
-
-    /**
-     * 查询
-     * @param entity
-     * @return
-     */
-    List<ProductSkuEntity> findList(ProductSkuEntity entity);
-
     /**
      * SpringJPA分页查询
      * @param entity
      * @return
      */
     Page<ProductSkuEntity> findPage(ProductSkuEntity entity, Page page);
-
     /**
      * mybatis-pagehelper分页查询
      * @param dto

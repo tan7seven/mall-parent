@@ -20,8 +20,6 @@ public interface ProductAttrNameService extends IService<ProductAttrNameEntity> 
      * @return
      */
     RestPage<AttrPageVO> findPage(String typeName, Long typeId, String name, Integer page, Integer pageSize);
-
-    // todo  done
     /**
      * 新增
      * @return

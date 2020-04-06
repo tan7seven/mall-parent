@@ -96,7 +96,6 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
         StringBuffer propertySb = new StringBuffer();
         List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                 .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId()));
-        List<ProductAttrValueEntity> valueList = productPropertyValueService.findByProductId(dto.getProductId());
         if(StringUtils.isNotBlank(dto.getProperties())){
             String skuProperties = dto.getProperties();
             String[] properties = skuProperties.split("&");
@@ -107,10 +106,6 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
                 String[] propertyValues = property.split(":");
                 //获取propertyName值
                 for (ProductAttrNameEntity nameEntity: nameList) {
-
-                }
-                //获取propertyValue值
-                for (ProductAttrValueEntity valueEntity: valueList) {
 
                 }
             }

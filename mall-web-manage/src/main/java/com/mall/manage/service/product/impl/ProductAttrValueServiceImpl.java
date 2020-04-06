@@ -11,41 +11,4 @@ import java.util.List;
 import java.util.Optional;
 @Service(value = "productPropertyValueService")
 public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueMapper, ProductAttrValueEntity> implements ProductAttrValueService {
-    @Override
-    public ProductAttrValueEntity add(ProductAttrValueEntity entity) {
-        this.save(entity);
-        return entity;
-    }
-
-    @Override
-    public Optional<ProductAttrValueEntity> getById(Long id) {
-        return this.getById(id);
-    }
-
-    @Override
-    public List<ProductAttrValueEntity> findByProductId(Long productId) {
-        return this.findByProductId(productId);
-    }
-
-    @Override
-    public void delete(ProductAttrValueEntity entity) {
-        this.delete(entity);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        this.deleteById(id);
-    }
-
-    @Override
-    public List<ProductAttrValueEntity> findList(ProductAttrValueEntity entity) {
-        List<ProductAttrValueEntity> result = this.list();
-        return result;
-    }
-
-    @Override
-    public IPage<ProductAttrValueEntity> findPage(ProductAttrValueEntity entity, IPage page) {
-        IPage<ProductAttrValueEntity> result = this.page(page);
-        return result;
-    }
 }

@@ -36,13 +36,6 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         productTypeService.save(entity);
         return entity;
     }
-
-    @Override
-    public List<ProductTypeEntity> findList(ProductTypeEntity entity) {
-        List<ProductTypeEntity> result = productTypeService.list();
-        return result;
-    }
-
     @Override
     public RestPage<ProductTypePageVO> findPage(Long parentId, String typeName, Integer page, Integer pageSize) {
         Page pageParam = new Page(page, pageSize, true);

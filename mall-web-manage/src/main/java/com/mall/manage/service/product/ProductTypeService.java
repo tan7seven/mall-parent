@@ -18,20 +18,11 @@ public interface ProductTypeService extends IService<ProductTypeEntity> {
      * @return
      */
     ProductTypeEntity add(ProductTypeEntity entity);
-
-    /**
-     * 查询
-     * @param entity
-     * @return
-     */
-    List<ProductTypeEntity> findList(ProductTypeEntity entity);
-
     /**
      * 分页查询
      * @return
      */
     RestPage<ProductTypePageVO> findPage(Long parentId, String typeName, Integer page, Integer pageSize);
-
     /**
      * 获取树结构
      * @return
