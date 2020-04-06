@@ -3,7 +3,7 @@ package com.mall.common.manage;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.PutObjectResult;
 import com.mall.common.config.AliyunConfig;
-import com.mall.common.vo.RestResult;
+import com.mall.common.exception.BusinessException;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,8 @@ public class UploadPicManage {
     @Autowired
     private AliyunConfig aliyunConfig;
 
-    public RestResult upload(MultipartFile multipartFile) {
+    public String upload(MultipartFile multipartFile) {
+        PutObjectResult putObjectResult = null;
         // 1. 对上传的图片进行校验: 这里简单校验后缀名
         // 另外可通过ImageIO读取图片的长宽来判断是否是图片,校验图片的大小等。
         boolean isLegal = false;
@@ -41,19 +42,20 @@ public class UploadPicManage {
         }
         // 格式错误, 返回与前端约定的error
         if (!isLegal) {
-            return RestResult.failed();
+            throw new BusinessException("图片格式错误");
         }
         // 2. 准备上传API的参数
         String fileName = multipartFile.getOriginalFilename();
         String filePath = this.getFilePath(fileName);
 
         // 3. 上传至阿里OSS
+
         try {
-            PutObjectResult putObjectResult = ossClient.putObject(aliyunConfig.getBucketName(), filePath, new ByteArrayInputStream(multipartFile.getBytes()));
+            putObjectResult = ossClient.putObject(aliyunConfig.getBucketName(), filePath, new ByteArrayInputStream(multipartFile.getBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return RestResult.success(filePath);
+        return filePath;
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.mall.manage.controller.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.manage.controller.common.GenericController;
 import com.mall.manage.service.product.ProductSkuService;
@@ -31,7 +31,7 @@ public class ProductSkuController extends GenericController {
 
     @ApiOperation("新增")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:CREATE') or hasRole('ADMIN')")
-    @PostMapping(value = "/create.do")
+    @PostMapping(value = "/createProduct.do")
     protected RestResult create (@RequestBody ProductSkuDTO dto){
         if(null == dto.getProductId()){
             return RestResult.validateFailed("商品编号为空！");

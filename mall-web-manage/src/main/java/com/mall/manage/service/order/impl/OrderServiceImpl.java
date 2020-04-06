@@ -15,7 +15,7 @@ import com.mall.dao.mapper.order.OrderOperationLogMapper;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.order.OrderOperationLogService;
 import com.mall.manage.service.order.OrderService;
-import com.mall.manage.service.product.ProductAttValueService;
+import com.mall.manage.service.product.ProductAttrValueService;
 import com.mall.manage.service.product.ProductAttrNameService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import java.util.List;
 @Service(value = "orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> implements OrderService{
     @Autowired
-    private ProductAttValueService productPropertyValueService;
+    private ProductAttrValueService productPropertyValueService;
 
     @Autowired
     private ProductAttrNameService productPropertyNameService;

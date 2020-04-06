@@ -3,7 +3,7 @@ package com.mall.manage.service.product.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.vo.RestPage;
+import com.mall.common.model.vo.RestPage;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.entity.product.ProductTypeEntity;
 import com.mall.dao.mapper.product.ProductTypeMapper;

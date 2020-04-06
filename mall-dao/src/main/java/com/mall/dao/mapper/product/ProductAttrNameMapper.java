@@ -7,7 +7,6 @@ import com.mall.dao.dto.product.ProductAttrValueDTO;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.param.AttrFindPageParam;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -32,19 +31,4 @@ public interface ProductAttrNameMapper extends BaseMapper<ProductAttrNameEntity>
      * 根据商品ID删除商品属性值-删除表信息
      */
     void deleteByProductId(@Param("productId") Integer productId);
-
-    /**
-     * 逻辑删除
-     * @param id
-     * @return
-     */
-    @Update("UPDATE mall_product_property_name a SET a.is_delete = '1' WHERE a.property_name_id = #{id}")
-    int updateIsDelete(@Param("id") Integer id);
-
-    /**
-     * 修改属性名是否销售属性，对应删除商品属性值跟商品库存
-     * @param propertyNameId
-     */
-    void deleteSku(@Param("propertyNameId") Integer propertyNameId);
-    void deleteProperty(@Param("propertyNameId") Integer propertyNameId);
 }

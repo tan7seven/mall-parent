@@ -50,6 +50,9 @@ public class ProductAttrNameEntity extends BaseEntity {
     private Boolean deleted;
     /**
      * 输入类型
+     * 1:手写
+     * 2：单选
+     * 3：多选
      */
     private Integer inputType;
     /**

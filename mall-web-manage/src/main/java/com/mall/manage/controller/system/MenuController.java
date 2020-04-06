@@ -1,7 +1,7 @@
 package com.mall.manage.controller.system;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
 import com.mall.dao.dto.system.MenuDTO;

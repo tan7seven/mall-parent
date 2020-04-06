@@ -1,11 +1,9 @@
 package com.mall.manage.controller.product;
 
-import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.enums.ResultStatus;
-import com.mall.common.vo.RestPage;
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestPage;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.common.CommonCascaderDTO;
-import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
 import com.mall.manage.model.param.product.type.TypeCreateParam;
 import com.mall.manage.model.param.product.type.TypeShowedUpdateParam;
@@ -25,10 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Api(value = "商品类目", tags = "商品类目")
 @Slf4j
@@ -66,7 +61,7 @@ public class ProductTypeController {
 
     @ApiOperation("创建")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:CREATE') or hasRole('ADMIN')")
-    @PostMapping("/create")
+    @PostMapping("/createProduct")
     protected RestResult<Boolean> create(@Validated @RequestBody TypeCreateParam param) {
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(param, entity);
@@ -123,20 +118,4 @@ public class ProductTypeController {
         List<CommonCascaderDTO> result = productTypeService.getCascader();
         return RestResult.success(result);
     }
-    //todo 还没改造
-
-    @ApiOperation("根据类目ID获取商品属性")
-    @GetMapping(value = "/getProductTypeAttr.do/{id}")
-    protected RestResult getProductTypeAttr(@PathVariable Integer id) {
-        List<ProductAttrNameEntity> AttrNameEntities = productAttrNameService.findByTypeId(id);
-        List<ProductAttrNameEntity> isSale = AttrNameEntities.stream().filter(a -> a.getType().equals(ProductAttrNameTypeEnum.SALE.getCode())).collect(Collectors.toList());
-        List<ProductAttrNameEntity> notSale = AttrNameEntities.stream().filter(a -> a.getType().equals(Boolean.FALSE)).collect(Collectors.toList());
-        Map<String, Object> result = new HashMap<>();
-        result.put("productAttrIsSale", isSale);
-        result.put("productAttrNotSale", notSale);
-        return RestResult.success(result);
-    }
-
-
-
 }

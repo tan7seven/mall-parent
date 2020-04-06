@@ -1,7 +1,7 @@
 package com.mall.manage.service.product;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.common.vo.RestPage;
+import com.mall.common.model.vo.RestPage;
 import com.mall.dao.dto.common.CommonCascaderDTO;
 import com.mall.dao.entity.product.ProductTypeEntity;
 import com.mall.manage.model.vo.product.type.ProductTypePageVO;

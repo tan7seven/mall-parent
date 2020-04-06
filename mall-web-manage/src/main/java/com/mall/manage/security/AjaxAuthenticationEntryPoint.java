@@ -2,7 +2,7 @@ package com.mall.manage.security;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.common.enums.ResultStatus;
-import com.mall.common.vo.ResultVO;
+import com.mall.common.model.vo.ResultVO;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

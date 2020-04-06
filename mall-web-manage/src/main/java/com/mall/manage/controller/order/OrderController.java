@@ -2,7 +2,7 @@ package com.mall.manage.controller.order;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.order.OrderDTO;
 import com.mall.manage.controller.common.GenericController;
 import com.mall.manage.service.order.OrderService;

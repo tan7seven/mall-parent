@@ -2,7 +2,7 @@
 
 package com.mall.common.exception;
 
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

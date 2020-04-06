@@ -1,6 +1,6 @@
 package com.mall.manage.controller.order;
 
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.order.OrderSettingDTO;
 import com.mall.dao.entity.order.OrderSettingEntity;
 import com.mall.manage.service.order.OrderSettingService;

@@ -1,18 +1,17 @@
 package com.mall.manage.controller.product;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.manage.UploadPicManage;
-import com.mall.common.vo.RestPage;
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestPage;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
+import com.mall.manage.model.param.product.product.CreateParam;
 import com.mall.manage.model.param.product.product.DeleteParam;
-import com.mall.manage.model.param.product.product.ProductGetPageParam;
 import com.mall.manage.model.param.product.product.UpdateIsPutawayParam;
+import com.mall.manage.model.vo.product.product.ProductDetailVO;
 import com.mall.manage.model.vo.product.product.ProductPageVO;
 import com.mall.manage.service.product.ProductService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -51,11 +49,28 @@ public class ProductController {
 
     @ApiOperation("新建商品信息")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:CREATE') or hasRole('ADMIN')")
-    @PostMapping(value = "/create.do")
-    protected RestResult create(@RequestBody ProductDTO dto){
-        return productService.create(dto);
+    @PostMapping(value = "/create")
+    protected RestResult<Boolean> create(@Validated @RequestBody CreateParam param){
+        Boolean result = productService.createProduct(param);
+        return RestResult.success(result);
     }
 
+    @ApiOperation("修改是否上下架状态")
+    @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
+    @PostMapping(value = "/putaway/update")
+    protected RestResult<Boolean> updateIsPutaway(@Validated @RequestBody UpdateIsPutawayParam param){
+        Boolean result = productService.updateIsPutAway(param);
+        return RestResult.success(result);
+    }
+
+    @ApiOperation("根据ID获取商品信息")
+    @GetMapping(value = "/detail/get/{id}")
+    protected RestResult<ProductDetailVO> getProductDtail(@PathVariable Long id){
+        ProductDetailVO result = productService.getProductDetail(id);
+        return RestResult.success(result);
+    }
+
+//    todo :
 
     @ApiOperation("更新")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:UPDATE') or hasRole('ADMIN')")
@@ -70,14 +85,7 @@ public class ProductController {
         List<ProductDTO> result = productService.findByName(name);
         return RestResult.success(result);
     }
-    @ApiOperation("根据ID获取商品信息")
-    @GetMapping(value = "/getProduct.do/{id}")
-    protected RestResult getProduct(@PathVariable Integer id){
-        if(null == id){
-            return RestResult.validateFailed("id为空！");
-        }
-        return RestResult.success();
-    }
+
 
     @ApiOperation("删除-逻辑删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
@@ -87,16 +95,5 @@ public class ProductController {
         return result;
     }
 
-    @ApiOperation("修改是否上下架状态")
-    @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
-    @PostMapping(value = "/updateIsPutaway.do")
-    protected RestResult updateIsPutaway(@Validated @RequestBody UpdateIsPutawayParam param){
-        RestResult result = productService.updateIsPutAway(param);
-        return result;
-    }
-    @ApiOperation("文件上传")
-    @PostMapping(value = "/upload.do")
-    protected RestResult upload(@RequestParam("picture") MultipartFile picture){
-        return uploadPicManage.upload(picture);
-    }
+
 }

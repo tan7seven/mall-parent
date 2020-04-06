@@ -3,7 +3,7 @@ package com.mall.manage.service.product.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.product.*;
 import com.mall.dao.mapper.product.ProductAttrNameMapper;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, ProductSkuEntity> implements ProductSkuService {
 
     @Autowired
-    private ProductAttValueService productPropertyValueService;
+    private ProductAttrValueService productPropertyValueService;
 
     @Autowired
     private ProductAttrNameService productPropertyNameService;
@@ -123,7 +123,6 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         //获取商品可选属性值
         List<ProductAttrValueEntity> propertyValues= productPropertyValueService.findByProductId(productEntity.getId());
         List<Long> propertiesInt = propertyValues.stream()
-                .filter(productPropertyValueEntity -> Boolean.TRUE.equals(productPropertyValueEntity.getType()))
                 .map(productPropertyValueEntity->productPropertyValueEntity.getNameId())
                 .distinct().collect(Collectors.toList());
        if(null != properties && !propertiesInt.isEmpty() && propertiesInt.size()>=1 ){

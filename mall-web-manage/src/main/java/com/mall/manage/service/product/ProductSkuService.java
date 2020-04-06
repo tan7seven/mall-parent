@@ -2,7 +2,7 @@ package com.mall.manage.service.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.product.ProductSkuEntity;
 

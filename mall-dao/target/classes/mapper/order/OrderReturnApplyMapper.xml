@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.mapper.order.OrderReturnApplyMapper">
+    <resultMap id="BaseResultMap" type="com.mall.dao.dto.order.OrderReturnApplyDTO">
+        <id column="apply_id" jdbcType="VARCHAR" property="applyId" />
+        <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+        <result column="order_items_id" jdbcType="VARCHAR" property="orderItemsId" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="return_price" jdbcType="DECIMAL" property="returnPrice" />
+        <result column="real_return_price" jdbcType="DECIMAL" property="realReturnPrice" />
+        <result column="company_address_id" jdbcType="VARCHAR" property="companyAddressId" />
+        <result column="return_reason" jdbcType="VARCHAR" property="returnReason" />
+        <result column="return_pic" jdbcType="VARCHAR" property="returnPic" />
+        <result column="return_status"  property="returnStatus" />
+        <result column="return_amount" jdbcType="INTEGER" property="returnAmount" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime" />
+        <result column="handle_person" jdbcType="VARCHAR" property="handlePerson" />
+        <result column="handle_person_name" jdbcType="VARCHAR" property="handlePersonName" />
+        <result column="handle_remark" jdbcType="VARCHAR" property="handleRemark" />
+        <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+        <result column="receive_time" jdbcType="TIMESTAMP" property="receiveTime" />
+        <result column="receive_remark" jdbcType="VARCHAR" property="receiveRemark" />
+        <result column="receive_person" jdbcType="VARCHAR" property="receivePerson" />
+        <result column="receive_person_name" jdbcType="VARCHAR" property="receivePersonName" />
+        <result column="login_code" jdbcType="VARCHAR" property="loginCode" />
+        <result column="pic_Url" jdbcType="VARCHAR" property="picUrl" />
+        <result column="product_Name" jdbcType="VARCHAR" property="productName" />
+        <result column="product_Property" jdbcType="VARCHAR" property="productProperty" />
+        <result column="product_Price" jdbcType="DECIMAL" property="productPrice" />
+        <result column="type_id" jdbcType="INTEGER" property="typeId" />
+        <result column="product_id" jdbcType="INTEGER" property="productId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        a.apply_id, a.order_id, a.order_items_id, a.user_id, a.return_price, a.company_address_id,
+        return_reason, a.return_pic, a.return_status, a.return_amount, a.create_time, a.handle_time, a.handle_person, a.handle_remark,
+        delivery_time, a.receive_time, a.receive_remark, a.receive_person, a.real_return_price
+    </sql>
+
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> ,b.login_code  FROM mall_order_return_apply a
+        INNER JOIN system_admin b ON a.user_id = b.user_id
+        WHERE 1=1
+        AND  a.is_delete = '0'
+        <if test="dto.applyId!=null and dto.applyId!=''">
+            AND a.apply_id like '%${dto.applyId}%'
+        </if>
+        <if test="dto.returnStatus!=null and dto.returnStatus!=''">
+            AND a.return_Status =#{dto.returnStatus}
+        </if>
+        <if test="dto.handleTimeQuery!=null">
+            AND a.handle_Time LIKE concat(#{dto.handleTimeQuery},"%")
+        </if>
+        <if test="dto.createTimeQuery!=null">
+            AND a.create_Time LIKE concat(#{dto.createTimeQuery},"%")
+        </if>
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> ,b.login_code, c.pic_Url, c.product_Name, c.product_Price, c.product_Property, c.product_id, d.type_id
+        , e.name handle_Person_Name, f.name receive_person_name
+        FROM mall_order_return_apply a
+        INNER JOIN system_admin b ON a.user_id = b.user_id
+        INNER JOIN mall_order_items c ON  c.items_id = a.order_items_id
+        INNER JOIN mall_product d ON  d.product_id = c.product_id
+        LEFT JOIN system_admin e ON e.user_id = a.handle_person
+        LEFT JOIN system_admin f ON f.user_id = a.receive_person
+        WHERE 1=1
+        AND  a.is_delete = '0'
+        AND a.apply_id = #{id}
+    </select>
+</mapper>

@@ -2,7 +2,7 @@ package com.mall.manage.security;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.common.enums.ResultStatus;
-import com.mall.common.vo.ResultVO;
+import com.mall.common.model.vo.ResultVO;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

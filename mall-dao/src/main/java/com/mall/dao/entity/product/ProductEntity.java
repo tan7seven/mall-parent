@@ -1,5 +1,6 @@
 package com.mall.dao.entity.product;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
@@ -43,13 +44,16 @@ public class ProductEntity extends BaseEntity {
     /**
      * 是否上下架
      */
+    @TableField(value = "is_putaway")
     private Boolean putaway;
     /**
      * 是否可用
      */
+    @TableField(value = "is_usable")
     private Boolean usable;
     /**
      * 是否删除
      */
+    @TableField(value = "is_deleted")
     private Boolean deleted;
 }

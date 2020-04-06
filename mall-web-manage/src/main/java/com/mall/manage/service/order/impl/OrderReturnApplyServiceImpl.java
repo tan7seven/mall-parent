@@ -12,7 +12,7 @@ import com.mall.dao.mapper.order.OrderReturnApplyMapper;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.order.OrderReturnApplyService;
 import com.mall.manage.service.product.ProductAttrNameService;
-import com.mall.manage.service.product.ProductAttValueService;
+import com.mall.manage.service.product.ProductAttrValueService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.List;
 public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMapper, OrderReturnApplyEntity> implements OrderReturnApplyService {
 
     @Autowired
-    private ProductAttValueService productPropertyValueService;
+    private ProductAttrValueService productPropertyValueService;
 
     @Autowired
     private ProductAttrNameService productPropertyNameService;

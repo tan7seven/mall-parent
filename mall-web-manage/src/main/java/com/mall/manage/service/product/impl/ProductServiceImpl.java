@@ -3,98 +3,48 @@ package com.mall.manage.service.product.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.enums.ProductAttrNameTypeEnum;
-import com.mall.common.vo.RestPage;
-import com.mall.common.vo.RestResult;
-import com.mall.dao.dto.product.ProductAttrNameDTO;
+import com.google.common.collect.Lists;
+import com.mall.common.constant.CommonConstant;
+import com.mall.common.enums.ImgTypeEnum;
+import com.mall.common.exception.BusinessException;
+import com.mall.common.model.vo.RestPage;
+import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.dto.product.ProductPropertyDTO;
 import com.mall.dao.entity.product.*;
-import com.mall.dao.mapper.product.ProductAttrNameMapper;
 import com.mall.dao.mapper.product.ProductMapper;
-import com.mall.dao.mapper.product.ProductSkuMapper;
-import com.mall.manage.model.param.product.product.ProductGetPageParam;
+import com.mall.manage.manage.product.ProductManage;
+import com.mall.manage.model.param.product.product.CreateParam;
 import com.mall.manage.model.param.product.product.UpdateIsPutawayParam;
-import com.mall.manage.model.vo.product.attr.AttrPageVO;
+import com.mall.manage.model.vo.product.product.ProductDetailVO;
 import com.mall.manage.model.vo.product.product.ProductPageVO;
 import com.mall.manage.service.product.*;
+import com.mall.manage.service.product.utils.ProductUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service(value = "productService")
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity> implements ProductService {
-    @Value("${pic.path}")
-    private String picPath;
     @Autowired
-    private ProductDetailService productDetailService;
+    private ProductManage productManage;
+    @Autowired
+    private ProductImgService productImgService;
     @Autowired
     private ProductTypeService productTypeService;
     @Autowired
-    private ProductAttValueService productPropertyValueService;
+    private ProductAttrValueService productAttrValueService;
     @Autowired
-    private ProductMapper productMapper;
-    @Autowired
-    private ProductAttrNameMapper productPropertyMapper;
-    @Autowired
-    private ProductSkuMapper productSkuMapper;
-    @Autowired
-    private ProductImgService productImgService;
-
-    @Override
-    public ProductDTO queryById(Long id) {
-        ProductEntity entity = this.getById(id);
-        ProductDTO dto = new ProductDTO();
-        BeanUtils.copyProperties(entity, dto);
-        //获取商品销售属性值
-        List<ProductAttrValueEntity> propertyValues = productPropertyValueService.findByProductId(id);
-        List<Long> properties = propertyValues.stream()
-                .filter(productPropertyValueEntity -> Boolean.TRUE.equals(productPropertyValueEntity.getType()))
-                .map(productPropertyValueEntity -> productPropertyValueEntity.getNameId())
-                .distinct().collect(Collectors.toList());
-
-        ProductEntity result = this.getById(id);
-        ProductTypeEntity typeEntity = productTypeService.getById(result.getTypeId());
-        BeanUtils.copyProperties(result, dto);
-        dto.setTypeName(typeEntity.getTypeName());
-        //获取商品销售属性值
-        ProductDTO isSaleParam = new ProductDTO();
-        List<ProductPropertyDTO> propertyIsSaleList = productMapper.findPropertyIsSale(isSaleParam);
-        //获取商品销售属性值
-        ProductDTO notSaleParam = new ProductDTO();
-        List<String> propertyNotList = productMapper.findPropertyNotSale(notSaleParam);
-
-        //商品图片
-        List<ProductImgEntity> imgEntityList = productImgService.list(Wrappers.<ProductImgEntity>lambdaQuery()
-                .eq(ProductImgEntity::getForeignId, String.valueOf(id))
-                .eq(ProductImgEntity::getTypeCode, ProductImgEntity.TYPE_CODE_PRODUCT));
-        log.info("商品信息：{}", dto);
-        return dto;
-    }
-
-    @Override
-    public RestResult deleteList(List<Integer>  ids) {
-        for (Integer id : ids) {
-            //删除商品库存信息-逻辑删除
-            productSkuMapper.updateIsDeleteByProductId(id);
-            //删除商品明细
-            productDetailService.remove(Wrappers.<ProductDetailEntity>lambdaQuery().eq(ProductDetailEntity::getId, id));
-            //删除商品属性值
-            productPropertyMapper.deleteByProductId(id);
-            //删除商品信息-逻辑删除
-            productMapper.updateIsDelete(id);
-        }
-        return RestResult.success();
-    }
+    private ProductAttrNameService productAttrNameService;
 
     @Override
     public RestPage<ProductPageVO> findPage(Long typeId, String productName, Boolean putaway, Integer pageNum, Integer pageSize) {
@@ -116,6 +66,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
             for (ProductDTO record : dtoPage.getRecords()) {
                 ProductPageVO vo = new ProductPageVO();
                 BeanUtils.copyProperties(record, vo);
+                vo.setPicUrl(CommonConstant.IMG_PRE+vo.getPicUrl());
                 resultList.add(vo);
             }
         }
@@ -124,26 +75,78 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
     }
 
     @Override
-    public RestResult create(ProductDTO dto) {
-        //添加商品信息
-        ProductEntity entity = new ProductEntity();
-        BeanUtils.copyProperties(dto, entity);
-        entity.setPutaway(Boolean.TRUE);
-        entity.setUsable(Boolean.TRUE);
-        entity.setDeleted(Boolean.FALSE);
-        entity.setCreateTime(Calendar.getInstance().getTime());
-        entity.setHits(0);
+    public Boolean createProduct(CreateParam param) {
+        ProductEntity productEntity = ProductUtil.buildCreateProductEntity(param);
+        Boolean saveResult = this.save(productEntity);
+        if (!saveResult) {
+            throw  new BusinessException("新增商品信息失败");
+        }
+        /** 保存商品图片*/
+        if (!CollectionUtils.isEmpty(param.getPicList())) {
+            productImgService.saveOrUpdateImg(param.getPicList(), productEntity.getId(), ImgTypeEnum.PRODUCT);
+        }
+        /** 保存商品属性*/
+        productManage.addAttrValue(param, productEntity.getId());
+        return Boolean.TRUE;
+    }
+    @Override
+    public ProductDetailVO getProductDetail(Long id) {
+        ProductEntity productEntity = this.baseMapper.selectById(id);
+        if (Objects.isNull(productEntity)) {
+            throw new BusinessException("查无数据");
+        }
+        ProductDetailVO result = ProductUtil.buildDetailProductVO(productEntity);
+        /** 上级类目ID*/
+        ProductTypeEntity typeEntity = productTypeService.getById(productEntity.getTypeId());
+        result.setProductTypeParentId(typeEntity.getParentId());
+        // todo: 商品明细暂时先放着
 
-        this.save(entity);
+        /** 商品轮播图*/
+        List<ProductImgEntity> imgEntityList = productImgService.list(Wrappers.<ProductImgEntity>lambdaQuery()
+                .eq(ProductImgEntity::getForeignId, id)
+                .eq(ProductImgEntity::getTypeCode, ImgTypeEnum.PRODUCT.getCode()));
+        result.setPicList(imgEntityList.stream().map(s -> s.getImgUrl()).collect(Collectors.toList()));
 
-        //添加商品明细
-        ProductDetailEntity productDetailEntity = new ProductDetailEntity();
-        productDetailEntity.setProductId(entity.getId());
-        productDetailService.save(productDetailEntity);
-        //添加销售属性值
+        /** 设置属性值*/
+        List<ProductAttrValueEntity> attrValueList = productAttrValueService.list(Wrappers.<ProductAttrValueEntity>lambdaQuery()
+                .eq(ProductAttrValueEntity::getProductId, id));
+        ProductUtil.setDetailAttrValueList(attrValueList, result);
 
+        /** 设置属性名*/
+        List<ProductAttrNameEntity> attrNameList = productAttrNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
+                .eq(ProductAttrNameEntity::getTypeId, result.getProductTypeId()));
+        ProductUtil.setDetailAttrNameList(attrNameList, result);
+
+        return result;
+    }
+    @Override
+    public Boolean updateIsPutAway(UpdateIsPutawayParam param) {
+        List<ProductEntity> updateList = Lists.newArrayList();
+        for (Long id : param.getIds()) {
+            ProductEntity entity = new ProductEntity();
+            entity.setId(id);
+            entity.setPutaway(param.getPutaway());
+            updateList.add(entity);
+        }
+        Boolean result = this.updateBatchById(updateList);
+        return result;
+    }
+//     todo
+    @Autowired
+    private ProductMapper productMapper;
+
+    @Override
+    public RestResult deleteList(List<Integer>  ids) {
+        for (Integer id : ids) {
+            //删除商品信息-逻辑删除
+            productMapper.updateIsDelete(id);
+        }
         return RestResult.success();
     }
+
+
+
+
 
     @Override
     public RestResult update(Long productId, ProductDTO dto) {
@@ -154,13 +157,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
                 .eq(ProductImgEntity::getForeignId, String.valueOf(productId))
                 .eq(ProductImgEntity::getTypeCode, ProductImgEntity.TYPE_CODE_PRODUCT));
 
-        Boolean resultProduct = this.save(entity);
-        //修改商品明细
-        productDetailService.remove(Wrappers.<ProductDetailEntity>lambdaQuery()
-                .eq(ProductDetailEntity::getId, productId));
         ProductDetailEntity productDetailEntity = new ProductDetailEntity();
         productDetailEntity.setProductId(productId);
-        productDetailService.save(productDetailEntity);
         //修改销售属性值
         //获取商品销售属性值
         ProductDTO isSaleParam = new ProductDTO();
@@ -170,15 +168,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
         return RestResult.success();
     }
 
-    @Override
-    public RestResult updateIsPutAway(UpdateIsPutawayParam param) {
-        for (Integer id : param.getIds()) {
-            ProductEntity entity = this.getById(id);
-            entity.setPutaway(param.getIsPutaway());
-            this.save(entity);
-        }
-        return RestResult.success();
-    }
+
+
+
 
     @Override
     public List<ProductDTO> findByName(String name) {

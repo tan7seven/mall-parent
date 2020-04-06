@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.exception.BusinessException;
-import com.mall.common.vo.RestPage;
+import com.mall.common.model.vo.RestPage;
 import com.mall.dao.dto.product.ProductAttrNameDTO;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.mapper.product.ProductAttrNameMapper;
@@ -131,17 +131,5 @@ public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMappe
             throw new BusinessException("同个分类下属性名不能相同！");
         }
     }
-
-    //todo done
-    @Override
-    public List<ProductAttrNameEntity> findByTypeId(Integer typeId) {
-        return this.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
-                .eq(ProductAttrNameEntity::getTypeId, typeId) );
-    }
-
-
-
-
-
 
 }

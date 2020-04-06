@@ -2,7 +2,7 @@ package com.mall.manage.security;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.manage.jwt.JwtTokenUtil;
-import com.mall.common.vo.ResultVO;
+import com.mall.common.model.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

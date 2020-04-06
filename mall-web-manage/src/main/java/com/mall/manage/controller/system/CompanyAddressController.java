@@ -1,6 +1,6 @@
 package com.mall.manage.controller.system;
 
-import com.mall.common.vo.RestResult;
+import com.mall.common.model.vo.RestResult;
 import com.mall.manage.service.system.CompanyAddressService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
