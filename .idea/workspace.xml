@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a69b759-0fdf-45d1-ada9-7699aa31ec57" name="Default Changelist" comment="test">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mall-admin/mall-admin.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mall-wechar/mall-wechar.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9c18b6c5-fbb9-4016-8083-7bd6d12d46aa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9c18b6c5-fbb9-4016-8083-7bd6d12d46aa.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="8a69b759-0fdf-45d1-ada9-7699aa31ec57" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-dao/target/classes/META-INF/mall-dao.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/common/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/common/CommonController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/product/ProductDetailVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/product/ProductDetailVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/ProductUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/ProductUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/mall-common/target/" />
@@ -89,14 +78,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="164" selection-start-line="164" selection-end-line="166" selection-end-column="36" />
+            <state relative-caret-position="352">
+              <caret line="85" column="36" lean-forward="true" selection-start-line="85" selection-start-column="36" selection-end-line="85" selection-end-column="36" />
               <folding>
                 <element signature="e#4855#4879#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductImgService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="362">
+              <caret line="46" column="25" lean-forward="true" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -225,6 +232,7 @@
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/common/CommonController.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/ProductUtil.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -428,7 +436,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1586258022248" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1586260651354" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/mallmodel" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -611,7 +619,7 @@
       <workItem from="1585986169409" duration="43674000" />
       <workItem from="1586223047424" duration="320000" />
       <workItem from="1586223381268" duration="1032000" />
-      <workItem from="1586224533581" duration="11350000" />
+      <workItem from="1586224533581" duration="12038000" />
     </task>
     <task id="LOCAL-00001" summary="模块拆封&#10;整合docker">
       <created>1572789645026</created>
@@ -718,11 +726,18 @@
       <option name="project" value="LOCAL" />
       <updated>1586224646233</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="商品模块">
+      <created>1586258048541</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1586258048541</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11350000" />
+    <option name="totallyTimeSpent" value="12038000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -735,6 +750,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Image Layers" />
@@ -755,7 +771,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.20824295" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.07592191" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -785,9 +801,9 @@
     <MESSAGE value="mybatis-plus" />
     <MESSAGE value="商品分类改造完成" />
     <MESSAGE value="商品分类属性改造完成" />
-    <MESSAGE value="商品模块" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="商品模块" />
+    <option name="LAST_COMMIT_MESSAGE" value="商品模块" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
@@ -957,11 +973,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="164" selection-start-line="164" selection-end-line="166" selection-end-column="36" />
+        <state relative-caret-position="352">
+          <caret line="85" column="36" lean-forward="true" selection-start-line="85" selection-start-column="36" selection-end-line="85" selection-end-column="36" />
           <folding>
             <element signature="e#4855#4879#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductImgService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="46" column="25" lean-forward="true" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
         </state>
       </provider>
     </entry>

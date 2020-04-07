@@ -3,6 +3,7 @@ package com.mall.manage.service.product.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.mall.common.constant.CommonConstant;
 import com.mall.common.enums.ImgTypeEnum;
 import com.mall.dao.entity.product.ProductImgEntity;
 import com.mall.dao.mapper.product.ProductImgMapper;
@@ -47,7 +48,7 @@ public class ProductImgServiceImpl extends ServiceImpl<ProductImgMapper, Product
             }
             ProductImgEntity addImg = new ProductImgEntity();
             addImg.setForeignId(foreignId);
-            addImg.setImgUrl(picUrl);
+            addImg.setImgUrl(picUrl.replaceAll(CommonConstant.IMG_PRE, ""));
             addImg.setTypeCode(imgTypeEnum.getCode());
             addImgEntity.add(addImg);
         }
