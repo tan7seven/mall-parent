@@ -29,7 +29,7 @@ public class ProductDetailVO extends BaseVO {
     @ApiModelProperty(value = "轮播图")
     private List<String> picList;
     @ApiModelProperty(value = "商品属性名")
-    private List<AttrNameVO> attrNameList;
+    private List<AttrNameVO> attrNameVOList;
     @ApiModelProperty(value = "商品属性值")
-    private List<AttrValueVO> attrValueList;
+    private List<AttrValueVO> attrValueVOList;
 }

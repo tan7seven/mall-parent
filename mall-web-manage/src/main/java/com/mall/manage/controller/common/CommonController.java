@@ -1,5 +1,6 @@
 package com.mall.manage.controller.common;
 
+import com.mall.common.constant.CommonConstant;
 import com.mall.common.manage.UploadPicManage;
 import com.mall.common.model.vo.RestResult;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,7 @@ public class CommonController {
         if (null == filePath) {
             return RestResult.failed("图片上传失败");
         }
-        return RestResult.success(filePath);
+        return RestResult.success(CommonConstant.IMG_PRE+filePath);
     }
 
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mall-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mall-dao" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/mall-mbg" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/mall-uni-app" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mall-web-manage" charset="UTF-8" />
   </component>
 </project>

@@ -105,7 +105,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
         List<ProductImgEntity> imgEntityList = productImgService.list(Wrappers.<ProductImgEntity>lambdaQuery()
                 .eq(ProductImgEntity::getForeignId, id)
                 .eq(ProductImgEntity::getTypeCode, ImgTypeEnum.PRODUCT.getCode()));
-        result.setPicList(imgEntityList.stream().map(s -> s.getImgUrl()).collect(Collectors.toList()));
+        result.setPicList(imgEntityList.stream().map(s -> CommonConstant.IMG_PRE+s.getImgUrl()).collect(Collectors.toList()));
 
         /** 设置属性值*/
         List<ProductAttrValueEntity> attrValueList = productAttrValueService.list(Wrappers.<ProductAttrValueEntity>lambdaQuery()
