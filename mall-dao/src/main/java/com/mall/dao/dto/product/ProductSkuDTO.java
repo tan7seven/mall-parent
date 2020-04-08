@@ -2,18 +2,15 @@ package com.mall.dao.dto.product;
 
 import com.mall.dao.dto.common.CommonDTO;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 商品库存表
  */
 @Data
-public class ProductSkuDTO extends CommonDTO implements Serializable {
+public class ProductSkuDTO extends CommonDTO{
     /**
      * 编号
      */
@@ -29,31 +26,23 @@ public class ProductSkuDTO extends CommonDTO implements Serializable {
     /**
      * 属性值
      */
-    private String properties;
+    private String attrJson;
     /**
      * 商品类目ID
      */
     private Integer typeId;
     /**
-     * 商品类目
-     */
-    private String typeName;
-    /**
      * 	商品价格
      */
-    private BigDecimal price;
+    private BigDecimal salePrice;
     /**
      * 	图片地址
      */
     private String picUrl;
     /**
-     * 	商品最低价格
-     */
-    private BigDecimal priceMin;
-    /**
      * 	商品成本
      */
-    private BigDecimal cost;
+    private BigDecimal costPrice;
     /**
      * SKU历史销售总数
      */
@@ -65,29 +54,9 @@ public class ProductSkuDTO extends CommonDTO implements Serializable {
     /**
      * 新增时间
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date createTime;
     /**
      * 更新时间
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modifyTime;
-    /**
-     * SKU属性值
-     */
-    private String propertyValueA;
-    private String propertyValueB;
-    private String propertyValueC;
-    /**
-     * 销售属性值A
-     */
-    private List<ProductAttrValueDTO> propertyValueAOptions;
-    /**
-     * 销售属性值B
-     */
-    private List<ProductAttrValueDTO> propertyValueBOptions;
-    /**
-     * 销售属性值C
-     */
-    private List<ProductAttrValueDTO> propertyValueCOptions;
 }

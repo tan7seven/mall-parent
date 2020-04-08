@@ -1,5 +1,6 @@
 package com.mall.manage.controller.product;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.enums.ResultStatus;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
@@ -11,7 +12,6 @@ import com.mall.manage.model.param.product.type.TypeUpdateParam;
 import com.mall.manage.model.param.product.type.TypeUsableUpdateParam;
 import com.mall.manage.model.vo.product.type.ProductTypeDetailVO;
 import com.mall.manage.model.vo.product.type.ProductTypePageVO;
-import com.mall.manage.service.product.ProductAttrNameService;
 import com.mall.manage.service.product.ProductTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,10 +19,12 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "商品类目", tags = "商品类目")
@@ -34,17 +36,24 @@ public class ProductTypeController {
     @Resource(name = "productTypeService")
     private ProductTypeService productTypeService;
 
-    @Resource(name = "productAttrNameService")
-    private ProductAttrNameService productAttrNameService;
-
-
     @ApiOperation("分页查询")
     @GetMapping("/page/query")
     protected RestResult<RestPage<ProductTypePageVO>> getPage(@ApiParam(value = "类目ID") @RequestParam Long parentId,
                                                               @ApiParam(value = "类目名") @RequestParam(required = false) String typeName,
                                                               @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                                               @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize) {
-        RestPage<ProductTypePageVO> result = productTypeService.findPage(parentId, typeName, pageNum, pageSize);
+        Page<ProductTypeEntity> entityPage = productTypeService.findPage(parentId, typeName, pageNum, pageSize);
+        RestPage<ProductTypePageVO> result = new RestPage(entityPage.getCurrent(), entityPage.getSize(), entityPage.getTotal());
+        List<ProductTypePageVO> resultList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entityPage.getRecords())) {
+            for (ProductTypeEntity record : entityPage.getRecords()) {
+                ProductTypePageVO vo = new ProductTypePageVO();
+                BeanUtils.copyProperties(record, vo);
+                vo.setHasChildren(Boolean.TRUE);
+                resultList.add(vo);
+            }
+        }
+        result.setRecords(resultList);
         return RestResult.success(result);
     }
     @ApiOperation("详情")
@@ -112,6 +121,7 @@ public class ProductTypeController {
         Boolean result = productTypeService.removeById(id);
         return RestResult.success(result);
     }
+
     @ApiOperation("查询所有一级和子级分类")
     @GetMapping(value = "/cascader/get")
     protected RestResult getCascader() {

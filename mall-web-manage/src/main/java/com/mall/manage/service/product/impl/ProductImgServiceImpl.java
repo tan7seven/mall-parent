@@ -23,13 +23,13 @@ public class ProductImgServiceImpl extends ServiceImpl<ProductImgMapper, Product
         }
         List<ProductImgEntity> imgList = this.list(Wrappers.<ProductImgEntity>lambdaQuery()
                 .eq(ProductImgEntity::getForeignId, foreignId)
-                .eq(ProductImgEntity::getTypeCode, imgTypeEnum.getValue()));
+                .eq(ProductImgEntity::getTypeCode, imgTypeEnum.getCode()));
 
         /** 判断需要删除的img*/
         if (!CollectionUtils.isEmpty(imgList)) {
             List<Long> removeImgId = Lists.newArrayList();
             for (ProductImgEntity imgEntity : imgList) {
-                if (picUrlList.contains(imgEntity.getImgUrl())) {
+                if (picUrlList.contains(CommonConstant.IMG_PRE+imgEntity.getImgUrl())) {
                     continue;
                 }
                 removeImgId.add(imgEntity.getId());
@@ -43,7 +43,7 @@ public class ProductImgServiceImpl extends ServiceImpl<ProductImgMapper, Product
         List<ProductImgEntity> addImgEntity = Lists.newArrayList();
         List<String> oldImgList = imgList.stream().map(s -> s.getImgUrl()).collect(Collectors.toList());
         for (String picUrl : picUrlList) {
-            if (oldImgList.contains(picUrl)) {
+            if (oldImgList.contains(picUrl.replaceAll(CommonConstant.IMG_PRE, ""))) {
                 continue;
             }
             ProductImgEntity addImg = new ProductImgEntity();

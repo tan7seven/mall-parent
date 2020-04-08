@@ -7,13 +7,11 @@ import com.mall.dao.dto.order.OrderReturnApplyDTO;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.order.OrderReturnApplyEntity;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
-import com.mall.dao.entity.product.ProductAttrValueEntity;
 import com.mall.dao.mapper.order.OrderReturnApplyMapper;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.order.OrderReturnApplyService;
 import com.mall.manage.service.product.ProductAttrNameService;
 import com.mall.manage.service.product.ProductAttrValueService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +38,6 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
         OrderReturnApplyDTO result = orderReturnApplyMapper.getById(id);
         ProductSkuDTO productSkuDto = new ProductSkuDTO();
         productSkuDto.setTypeId(result.getTypeId());
-        productSkuDto.setProperties(result.getProductProperty());
         result.setProductPropertyLabel(this.makePropertyKeyToValue(productSkuDto));
         return result;
     }
@@ -96,21 +93,6 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyMap
         StringBuffer propertySb = new StringBuffer();
         List<ProductAttrNameEntity> nameList = productPropertyNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                 .eq(ProductAttrNameEntity::getTypeId, dto.getTypeId()));
-        if(StringUtils.isNotBlank(dto.getProperties())){
-            String skuProperties = dto.getProperties();
-            String[] properties = skuProperties.split("&");
-            for (String property: properties) {
-                if(StringUtils.isBlank(property)){
-                    continue;
-                }
-                String[] propertyValues = property.split(":");
-                //获取propertyName值
-                for (ProductAttrNameEntity nameEntity: nameList) {
-
-                }
-            }
-            return propertySb.toString();
-        }
         return"";
     }
 }

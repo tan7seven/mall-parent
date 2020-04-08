@@ -8,13 +8,14 @@ import com.mall.common.enums.AttrNameInputTypeEnum;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.entity.product.ProductAttrValueEntity;
 import com.mall.dao.mapper.product.ProductAttrNameMapper;
-import com.mall.manage.model.param.product.product.CreateParam;
 import com.mall.manage.service.product.ProductAttrValueService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class ProductManage {
@@ -23,43 +24,69 @@ public class ProductManage {
     @Autowired
     private ProductAttrValueService productAttrValueService;
 
-    public void addAttrValue(CreateParam param, Long productId){
+    public void saveOrUpdateAttrValue(String attrValueString, Long typeId, Long productId) {
         List<ProductAttrValueEntity> insertList = Lists.newArrayList();
+        List<ProductAttrValueEntity> updateList = Lists.newArrayList();
+        List<Long> removeList = Lists.newArrayList();
         List<ProductAttrNameEntity> attrNameEntityList = productPropertyMapper.selectList(Wrappers.<ProductAttrNameEntity>lambdaQuery()
-                .eq(ProductAttrNameEntity::getTypeId, param.getProductTypeId()));
-        JSONObject attrValueJSON = JSONObject.parseObject(param.getAttrValueString());
+                .eq(ProductAttrNameEntity::getTypeId, typeId));
+        JSONObject attrValueJSON = JSONObject.parseObject(attrValueString);
         if (CollectionUtils.isEmpty(attrNameEntityList)) {
             return;
         }
         if (null == attrValueJSON) {
             return;
         }
-        for (ProductAttrNameEntity entity : attrNameEntityList) {
+        for (ProductAttrNameEntity attrNameEntity : attrNameEntityList) {
+            JSONObject attrJSONMap = (JSONObject) attrValueJSON.get(String.valueOf(attrNameEntity.getId()));
             /** 值是字符串 输入类型是手写 */
-            if (attrValueJSON.get(String.valueOf(entity.getId())) instanceof String &&
-                    AttrNameInputTypeEnum.isInput(entity.getInputType())) {
-                String attrValue = (String) attrValueJSON.get(String.valueOf(entity.getId()));
+            if (attrJSONMap.get("value") instanceof String &&
+                    AttrNameInputTypeEnum.isString(attrNameEntity.getInputType())) {
+                String attrValue = (String) attrJSONMap.get("value");
                 ProductAttrValueEntity valueEntity = new ProductAttrValueEntity();
-                valueEntity.setNameId(entity.getId());
+                valueEntity.setNameId(attrNameEntity.getId());
                 valueEntity.setValue(attrValue);
                 valueEntity.setProductId(productId);
-                insertList.add(valueEntity);
+                if (Objects.nonNull(attrJSONMap.get("id"))  && StringUtils.isNotBlank(attrValue)) {
+                    String id = (String) attrJSONMap.get("id");
+                    valueEntity.setId(Long.valueOf(id));
+                    updateList.add(valueEntity);
+                }else if(Objects.nonNull(attrJSONMap.get("id")) && StringUtils.isBlank(attrValue)){
+                    String id = (String) attrJSONMap.get("id");
+                    valueEntity.setId(Long.valueOf(id));
+                    removeList.add(Long.valueOf(id));
+                }else{
+                    insertList.add(valueEntity);
+                }
             }
             /** 值是数组 输入类型是选择框（单选 多选） */
-            if (attrValueJSON.get(String.valueOf(entity.getId())) instanceof JSONArray &&
-                    AttrNameInputTypeEnum.isSelect(entity.getInputType())) {
-                List<String> attrValueList = (List<String>) attrValueJSON.get(String.valueOf(entity.getId()));
-                for (String attrValue : attrValueList) {
-                    ProductAttrValueEntity valueEntity = new ProductAttrValueEntity();
-                    valueEntity.setNameId(entity.getId());
-                    valueEntity.setValue(attrValue);
-                    valueEntity.setProductId(productId);
+            if (attrJSONMap.get("value") instanceof JSONArray &&
+                    AttrNameInputTypeEnum.isArray(attrNameEntity.getInputType())) {
+                List<String> attrValueList = (List<String>) attrJSONMap.get("value");
+                ProductAttrValueEntity valueEntity = new ProductAttrValueEntity();
+                valueEntity.setNameId(attrNameEntity.getId());
+                valueEntity.setValue(JSONObject.toJSONString(attrValueList));
+                valueEntity.setProductId(productId);
+                if (Objects.nonNull(attrJSONMap.get("id")) && !CollectionUtils.isEmpty(attrValueList)) {
+                    String id = (String) attrJSONMap.get("id");
+                    valueEntity.setId(Long.valueOf(id));
+                    updateList.add(valueEntity);
+                }else if(Objects.nonNull(attrJSONMap.get("id")) && CollectionUtils.isEmpty(attrValueList)){
+                    String id = (String) attrJSONMap.get("id");
+                    removeList.add(Long.valueOf(id));
+                }else{
                     insertList.add(valueEntity);
                 }
             }
         }
+        if (!CollectionUtils.isEmpty(removeList)) {
+            productAttrValueService.removeByIds(removeList);
+        }
         if (!CollectionUtils.isEmpty(insertList)) {
             productAttrValueService.saveBatch(insertList);
+        }
+        if (!CollectionUtils.isEmpty(updateList)) {
+            productAttrValueService.updateBatchById(updateList);
         }
     }
 }

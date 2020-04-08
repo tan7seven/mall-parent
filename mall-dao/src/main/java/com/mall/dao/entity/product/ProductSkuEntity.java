@@ -1,5 +1,7 @@
 package com.mall.dao.entity.product;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
@@ -43,5 +45,7 @@ public class ProductSkuEntity extends BaseEntity {
      * 0:正常
      * 1：已删除
      */
+    @TableLogic(value="0",delval="1")
+    @TableField(value = "is_deleted")
     private Boolean delete;
 }

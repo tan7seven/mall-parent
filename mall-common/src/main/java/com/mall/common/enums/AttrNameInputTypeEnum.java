@@ -14,17 +14,17 @@ public enum AttrNameInputTypeEnum {
     private Integer code;
     private String value;
 
-    public static Boolean isInput(Integer inputType){
-        if (AttrNameInputTypeEnum.HAND.getCode().equals(inputType)) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
-    }
-
-    public static Boolean isSelect(Integer inputType){
-        if (AttrNameInputTypeEnum.HAND.getCode().equals(inputType)) {
+    public static Boolean isString(Integer inputType){
+        if (AttrNameInputTypeEnum.MULTIPLE.getCode().equals(inputType)) {
             return Boolean.FALSE;
         }
         return Boolean.TRUE;
+    }
+
+    public static Boolean isArray(Integer inputType){
+        if (AttrNameInputTypeEnum.MULTIPLE.getCode().equals(inputType)) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }

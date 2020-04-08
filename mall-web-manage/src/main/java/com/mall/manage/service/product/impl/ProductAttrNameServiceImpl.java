@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.exception.BusinessException;
-import com.mall.common.model.vo.RestPage;
 import com.mall.dao.dto.product.ProductAttrNameDTO;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.mapper.product.ProductAttrNameMapper;
@@ -14,7 +13,6 @@ import com.mall.manage.model.param.product.attr.AttrCreateParam;
 import com.mall.manage.model.param.product.attr.AttrShowedUpdateParam;
 import com.mall.manage.model.param.product.attr.AttrUpdateParam;
 import com.mall.manage.model.param.product.attr.AttrUsableUpdateParam;
-import com.mall.manage.model.vo.product.attr.AttrPageVO;
 import com.mall.manage.service.product.ProductAttrNameService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -22,14 +20,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "productAttrNameService")
 public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMapper, ProductAttrNameEntity> implements ProductAttrNameService {
 
     @Override
-    public RestPage<AttrPageVO> findPage(String typeName, Long typeId, String name, Integer page, Integer pageSize) {
+    public Page<ProductAttrNameDTO> findPage(String typeName, Long typeId, String name, Integer page, Integer pageSize) {
         Page pageParam = new Page<>(page, pageSize);
         AttrFindPageParam param = new AttrFindPageParam();
         if (StringUtils.isNoneBlank(name)) {
@@ -41,17 +38,7 @@ public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMappe
         if (null != typeId) {
             param.setTypeId(typeId);
         }
-        Page<ProductAttrNameDTO> dtoPage = this.baseMapper.findPage(pageParam, param);
-        RestPage<AttrPageVO> result = new RestPage<>(dtoPage.getCurrent(), dtoPage.getSize(), dtoPage.getTotal());
-        List<AttrPageVO> resultList = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(dtoPage.getRecords())) {
-            for (ProductAttrNameDTO record : dtoPage.getRecords()) {
-                AttrPageVO vo = new AttrPageVO();
-                BeanUtils.copyProperties(record, vo);
-                resultList.add(vo);
-            }
-        }
-        result.setRecords(resultList);
+        Page<ProductAttrNameDTO> result = this.baseMapper.findPage(pageParam, param);
         return result;
     }
 

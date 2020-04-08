@@ -6,12 +6,15 @@ import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.product.ProductSkuEntity;
 
-import java.util.List;
-
 /**
  * 商品SKU
  */
 public interface ProductSkuService extends IService<ProductSkuEntity> {
+    /**
+     * 分页查询
+     * @return
+     */
+    Page<ProductSkuDTO> findPage(Integer pageNum, Integer pageSize);
     /**
      * 新增
      * @return
@@ -27,16 +30,5 @@ public interface ProductSkuService extends IService<ProductSkuEntity> {
      * @param id
      */
     void deleteById(Integer id);
-    /**
-     * SpringJPA分页查询
-     * @param entity
-     * @return
-     */
-    Page<ProductSkuEntity> findPage(ProductSkuEntity entity, Page page);
-    /**
-     * mybatis-pagehelper分页查询
-     * @param dto
-     * @return
-     */
-    Page<ProductSkuDTO> findPage(ProductSkuDTO dto);
+
 }

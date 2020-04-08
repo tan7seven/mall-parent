@@ -1,10 +1,12 @@
 package com.mall.manage.controller.product;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.mall.common.enums.ResultStatus;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
+import com.mall.dao.dto.product.ProductAttrNameDTO;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.entity.product.ProductTypeEntity;
 import com.mall.manage.model.param.product.attr.AttrCreateParam;
@@ -21,10 +23,12 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,7 +53,17 @@ public class ProductAttrController {
                                                        @ApiParam(value = "属性名称") @RequestParam(required = false) String name,
                                                        @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                                        @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
-        RestPage<AttrPageVO> result = productAttrNameService.findPage(typeName, typeId, name, pageNum, pageSize);
+        Page<ProductAttrNameDTO> dtoPage = productAttrNameService.findPage(typeName, typeId, name, pageNum, pageSize);
+        RestPage<AttrPageVO> result = new RestPage<>(dtoPage.getCurrent(), dtoPage.getSize(), dtoPage.getTotal());
+        List<AttrPageVO> resultList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(dtoPage.getRecords())) {
+            for (ProductAttrNameDTO record : dtoPage.getRecords()) {
+                AttrPageVO vo = new AttrPageVO();
+                BeanUtils.copyProperties(record, vo);
+                resultList.add(vo);
+            }
+        }
+        result.setRecords(resultList);
         return RestResult.success(result);
     }
 
