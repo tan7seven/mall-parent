@@ -22,4 +22,10 @@ public class ProductAttrValueEntity extends BaseEntity {
      * 商品编号
      */
     private Long productId;
+    /**
+     * 类型
+     * 1：销售属性
+     * 2：显示参数
+     */
+    private Integer type;
 }

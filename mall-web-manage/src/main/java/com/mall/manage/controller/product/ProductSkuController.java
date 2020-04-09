@@ -5,6 +5,9 @@ import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.manage.controller.common.GenericController;
+import com.mall.manage.controller.product.util.SkuUtil;
+import com.mall.manage.model.vo.product.sku.SkuCreateParam;
+import com.mall.manage.model.vo.product.sku.SkuListVO;
 import com.mall.manage.model.vo.product.sku.SkuPageVO;
 import com.mall.manage.service.product.ProductSkuService;
 import io.swagger.annotations.Api;
@@ -14,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -47,17 +51,20 @@ public class ProductSkuController extends GenericController {
         return RestResult.success(result);
     }
 
+    @ApiOperation("获取商品的SKU列表")
+    @PostMapping(value = "/product-id/get")
+    protected RestResult<List<SkuListVO>> getSkuByProductId(@ApiParam(value = "类目ID")@RequestParam Long productId){
+        List<SkuListVO> result = productSkuService.getSkuByProductId(productId);
+        return RestResult.success(result);
+    }
+
     @ApiOperation("新增")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:CREATE') or hasRole('ADMIN')")
-    @PostMapping(value = "/createProduct.do")
-    protected RestResult create (@RequestBody ProductSkuDTO dto){
-        if(null == dto.getProductId()){
-            return RestResult.validateFailed("商品编号为空！");
-        }
-        if(null == dto.getTypeId()){
-            return RestResult.validateFailed("商品类目为空！");
-        }
-        return productSkuService.add(dto);
+    @PostMapping(value = "/create")
+    protected RestResult create (@Validated @RequestBody SkuCreateParam param){
+        SkuUtil.validatedCreateParam(param);
+        productSkuService.createSku(param);
+        return RestResult.success();
     }
 
     @ApiOperation("更新")

@@ -1,6 +1,7 @@
 package com.mall.manage.model.vo.product.attr;
 
 import com.google.common.collect.Lists;
+import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.manage.model.vo.product.BaseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -25,6 +26,8 @@ public class AttrNameVO extends BaseVO {
     private Boolean showed;
     @ApiModelProperty(value = "类型 1：销售属性 2非销售属性")
     private Integer type;
+    @ApiModelProperty(value = "类型 1：销售属性 2非销售属性")
+    private String typeName;
     @ApiModelProperty(value = "输入类型 1手写 2单选 2多选")
     private Integer inputType;
     @ApiModelProperty(value = "可输入数据")
@@ -38,5 +41,12 @@ public class AttrNameVO extends BaseVO {
         return StringUtils.isBlank(this.inputData) ?
                 Lists.newArrayList() :
                 Arrays.asList(this.inputData.replaceAll("，", ",").split(","));
+    }
+
+    public String getTypeName(){
+        if (null == this.type) {
+            return null;
+        }
+        return ProductAttrNameTypeEnum.getName(this.type);
     }
 }

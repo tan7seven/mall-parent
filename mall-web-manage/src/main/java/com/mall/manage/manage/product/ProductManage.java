@@ -56,6 +56,7 @@ public class ProductManage {
                     valueEntity.setId(Long.valueOf(id));
                     removeList.add(Long.valueOf(id));
                 }else{
+                    valueEntity.setType(attrNameEntity.getType());
                     insertList.add(valueEntity);
                 }
             }
@@ -75,6 +76,7 @@ public class ProductManage {
                     String id = (String) attrJSONMap.get("id");
                     removeList.add(Long.valueOf(id));
                 }else{
+                    valueEntity.setType(attrNameEntity.getType());
                     insertList.add(valueEntity);
                 }
             }

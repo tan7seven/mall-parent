@@ -62,8 +62,6 @@ public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMappe
         ProductAttrNameEntity entity = new ProductAttrNameEntity();
         BeanUtils.copyProperties(param, entity);
         Boolean result = this.updateById(entity);
-        /** 验证销售属性数量 */
-        this.validateAttrNum(param.getTypeId(), param.getType());
         /** 验证属性唯一性 */
         this.validateAttrUnique(param.getTypeId(), param.getName());
         return result;

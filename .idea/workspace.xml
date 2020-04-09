@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a69b759-0fdf-45d1-ada9-7699aa31ec57" name="Default Changelist" comment="商品模块">
-      <change afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuPageVO.java" afterDir="false" />
+    <list default="true" id="8a69b759-0fdf-45d1-ada9-7699aa31ec57" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/util/SkuUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuAttrParam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuCreateItemParam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuCreateParam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuListVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/SkuUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/enums/AttrNameInputTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/enums/AttrNameInputTypeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-common/target/classes/com/mall/common/enums/AttrNameInputTypeEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/mall-common/target/classes/com/mall/common/enums/AttrNameInputTypeEnum.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/dto/product/ProductSkuDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/dto/product/ProductSkuDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductSkuEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductSkuEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/mapper/product/ProductSkuMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/mapper/product/ProductSkuMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-dao/src/main/resouce/mapper/product/ProductSkuMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/src/main/resouce/mapper/product/ProductSkuMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductAttrValueEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductAttrValueEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/dto/product/ProductSkuDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/dto/product/ProductSkuDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/entity/product/ProductAttrValueEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/entity/product/ProductAttrValueEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/entity/product/ProductEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/entity/product/ProductEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/entity/product/ProductSkuEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/entity/product/ProductSkuEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/mapper/product/ProductSkuMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/target/classes/com/mall/dao/mapper/product/ProductSkuMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-dao/target/classes/mapper/product/ProductSkuMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mall-dao/target/classes/mapper/product/ProductSkuMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductAttrController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductAttrController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductSkuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductSkuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductTypeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/manage/product/ProductManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/manage/product/ProductManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/param/product/product/UpdateParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/param/product/product/UpdateParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/param/product/attr/AttrUpdateParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/param/product/attr/AttrUpdateParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrNameVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrNameVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrValueVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrValueVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/order/impl/OrderReturnApplyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/order/impl/OrderReturnApplyServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductAttrNameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductAttrNameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuPageVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuPageVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductSkuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductSkuService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductTypeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductAttrNameServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductAttrNameServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductSkuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductSkuServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductTypeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductTypeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/ProductUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/ProductUtil.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/mall-common/target/" />
@@ -68,46 +65,37 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/mapper/product/ProductSkuMapper.java">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductAttrNameServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+            <state relative-caret-position="315">
+              <caret line="63" column="49" selection-start-line="63" selection-start-column="49" selection-end-line="63" selection-end-column="49" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductSkuServiceImpl.java">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductAttrController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="53" column="5" lean-forward="true" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+            <state relative-caret-position="1198">
+              <caret line="151" column="53" selection-start-line="151" selection-start-column="41" selection-end-line="151" selection-end-column="53" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="54" column="61" lean-forward="true" selection-start-line="54" selection-start-column="61" selection-end-line="54" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductSkuController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="43" column="13" lean-forward="true" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+            <state relative-caret-position="322">
+              <caret line="63" column="59" lean-forward="true" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuPageVO.java">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuCreateParam.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
+            <state relative-caret-position="484">
+              <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -116,46 +104,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/order/impl/OrderReturnApplyServiceImpl.java">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuCreateItemParam.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="487">
-              <caret line="95" selection-start-line="95" selection-end-line="95" />
+            <state relative-caret-position="401">
+              <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductTypeController.java">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductSkuService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="55" column="38" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="55" selection-end-column="38" />
+            <state relative-caret-position="215">
+              <caret line="25" column="36" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductSkuServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="858">
+              <caret line="78" column="11" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductAttrController.java">
+        <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuAttrParam.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="64" column="9" lean-forward="true" selection-start-line="64" selection-start-column="9" selection-end-line="64" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-dao/src/main/resouce/mapper/product/ProductSkuMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="4" column="69" lean-forward="true" selection-start-line="4" selection-start-column="69" selection-end-line="4" selection-end-column="69" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/dto/product/ProductSkuDTO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="36" column="32" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
+            <state relative-caret-position="313">
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -258,27 +243,36 @@
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/param/product/product/UpdateParam.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java" />
         <option value="$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/enums/AttrNameInputTypeEnum.java" />
-        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrValueVO.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/ProductUtil.java" />
-        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/manage/product/ProductManage.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductService.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductController.java" />
-        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductAttrNameServiceImpl.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductAttrNameService.java" />
-        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductAttrController.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductTypeService.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductTypeServiceImpl.java" />
         <option value="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductSkuEntity.java" />
         <option value="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductEntity.java" />
         <option value="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/mapper/product/ProductSkuMapper.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductTypeController.java" />
-        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductSkuService.java" />
-        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductSkuController.java" />
-        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuPageVO.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/order/impl/OrderReturnApplyServiceImpl.java" />
         <option value="$PROJECT_DIR$/mall-dao/src/main/resouce/mapper/product/ProductSkuMapper.xml" />
         <option value="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/dto/product/ProductSkuDTO.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrNameVO.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/param/product/attr/AttrUpdateParam.java" />
+        <option value="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductAttrValueEntity.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/manage/product/ProductManage.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductAttrNameServiceImpl.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuPageVO.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrValueVO.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuListVO.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/SkuUtil.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductAttrController.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuAttrParam.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuCreateItemParam.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/util/SkuUtil.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductSkuController.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductSkuService.java" />
+        <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuCreateParam.java" />
         <option value="$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductSkuServiceImpl.java" />
       </list>
     </option>
@@ -303,10 +297,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="377" />
-    <option name="y" value="33" />
-    <option name="width" value="1695" />
-    <option name="height" value="1009" />
+    <option name="x" value="316" />
+    <option name="y" value="37" />
+    <option name="width" value="1583" />
+    <option name="height" value="957" />
   </component>
   <component name="ProjectId" id="1aBxyr5K8xPhpcbHO7pJtABlwep" />
   <component name="ProjectView">
@@ -325,131 +319,6 @@
             <path>
               <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-              <item name="dto" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-              <item name="dto" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resouce" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resouce" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-dao" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resouce" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
               <item name="mall-web-manage" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -511,6 +380,18 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="manage" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="product" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
+              <item name="mall-web-manage" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="manage" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -522,18 +403,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="manage" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="param" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-web-manage" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="manage" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="param" type="462c0819:PsiDirectoryNode" />
               <item name="product" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -546,6 +415,7 @@
               <item name="manage" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
               <item name="product" type="462c0819:PsiDirectoryNode" />
+              <item name="sku" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
@@ -580,14 +450,6 @@
               <item name="product" type="462c0819:PsiDirectoryNode" />
               <item name="impl" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="mall-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="mall-web-manage" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -608,8 +470,9 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1586341942403" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1586427261545" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/mall-dao/src/main/java/com/mall/mallmodel" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -791,7 +654,7 @@
       <workItem from="1585986169409" duration="43674000" />
       <workItem from="1586223047424" duration="320000" />
       <workItem from="1586223381268" duration="1032000" />
-      <workItem from="1586224533581" duration="36586000" />
+      <workItem from="1586224533581" duration="55295000" />
     </task>
     <task id="LOCAL-00001" summary="模块拆封&#10;整合docker">
       <created>1572789645026</created>
@@ -912,11 +775,18 @@
       <option name="project" value="LOCAL" />
       <updated>1586260659742</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="商品模块">
+      <created>1586342631098</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1586342631098</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36586000" />
+    <option name="totallyTimeSpent" value="55295000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -929,19 +799,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Image Layers" />
       <window_info id="UI Designer" />
       <window_info id="Favorites" side_tool="true" />
       <window_info id="Capture Tool" />
-      <window_info id="Web" sideWeight="0.2347973" side_tool="true" weight="0.20255864" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7652027" visible="true" weight="0.20255864" />
+      <window_info id="Web" sideWeight="0.23446327" side_tool="true" weight="0.24950755" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7655367" visible="true" weight="0.24946696" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Spring" />
       <window_info anchor="bottom" id="Terminal" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.3286334" />
+      <window_info anchor="bottom" id="Messages" weight="0.3275488" />
       <window_info anchor="bottom" id="Java Enterprise" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="Version Control" />
@@ -949,7 +820,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.31995663" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.0813449" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -962,8 +833,43 @@
       <window_info anchor="right" id="Bean Validation" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.30794483" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Designer" order="0" />
+      <window_info id="Image Layers" order="1" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info id="Web" order="5" sideWeight="0.23446327" side_tool="true" visible="true" weight="0.24950755" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" sideWeight="0.7655367" visible="true" weight="0.24950755" />
+      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Spring" order="0" />
+      <window_info anchor="bottom" id="Terminal" order="1" weight="0.329718" />
+      <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="4" weight="0.3286334" />
+      <window_info anchor="bottom" id="Java Enterprise" order="5" />
+      <window_info anchor="bottom" id="Database Changes" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Message" order="8" />
+      <window_info anchor="bottom" id="Find" order="9" />
+      <window_info anchor="bottom" id="Run" order="10" />
+      <window_info anchor="bottom" id="Debug" order="11" visible="true" weight="0.14389358" />
+      <window_info anchor="bottom" id="Cvs" order="12" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="13" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="14" />
+      <window_info anchor="right" id="Maven" order="0" />
+      <window_info anchor="right" id="Palette" order="1" />
+      <window_info anchor="right" id="Capture Analysis" order="2" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Bean Validation" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="7" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="9" visible="true" weight="0.30794483" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -1070,87 +976,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/test/TestEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-176">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/common/CommonController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="45" column="53" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/param/product/product/CreateParam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.m2/repository/com/baomidou/mybatis-plus-extension/3.1.1/mybatis-plus-extension-3.1.1.jar!/com/baomidou/mybatisplus/extension/service/IService.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
-          <folding>
-            <element signature="e#1898#1899#0" expanded="true" />
-            <element signature="e#1961#1962#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/product/ProductDetailVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="33" column="22" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/enums/ProductAttrNameTypeEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/ManageApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/ToolsInstall/Java/jdk1.8.0_172_86/src.zip!/java/util/stream/Stream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="497" column="9" selection-start-line="497" selection-start-column="9" selection-end-line="497" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductImgService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-aop/5.0.10.RELEASE/spring-aop-5.0.10.RELEASE.jar!/org/springframework/aop/framework/ReflectiveMethodInvocation.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/enums/ImgTypeEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/constant/CommonConstant.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -1190,37 +1015,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/enums/AttrNameInputTypeEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrValueVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/ProductUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1364">
-          <caret line="78" selection-start-line="78" selection-end-line="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/manage/product/ProductManage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
-          <folding>
-            <element signature="e#1298#1321#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductImgServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -1228,20 +1022,6 @@
           <folding>
             <element signature="e#1036#1054#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductAttrNameServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="28" column="34" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductAttrNameService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="21" column="3" lean-forward="true" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1280,20 +1060,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="46" column="13" lean-forward="true" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="59" column="21" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/mapper/product/ProductMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -1305,13 +1071,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="38" column="74" lean-forward="true" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductAttrValueEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1343,31 +1102,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductSkuEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="37" column="28" lean-forward="true" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/mapper/product/ProductSkuMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductAttrController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="64" column="9" lean-forward="true" selection-start-line="64" selection-start-column="9" selection-end-line="64" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductSkuService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="16" column="68" selection-start-line="16" selection-start-column="68" selection-end-line="16" selection-end-column="68" />
         </state>
       </provider>
     </entry>
@@ -1382,23 +1120,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductTypeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="55" column="38" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="55" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuPageVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1423,24 +1144,220 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductSkuServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductTypeController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="53" column="5" lean-forward="true" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+        <state relative-caret-position="572">
+          <caret line="51" column="48" lean-forward="true" selection-start-line="51" selection-start-column="48" selection-end-line="51" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/system/AdminController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1321">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/system/MenuController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductAttrValueEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrNameVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="54" column="61" lean-forward="true" selection-start-line="54" selection-start-column="61" selection-end-line="54" selection-end-column="61" />
+        <state relative-caret-position="439">
+          <caret line="94" column="55" selection-start-line="94" selection-start-column="55" selection-end-line="94" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/manage/product/ProductManage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1099">
+          <caret line="78" column="66" selection-start-line="78" selection-start-column="66" selection-end-line="78" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="121" column="40" selection-start-line="121" selection-start-column="40" selection-end-line="121" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="46" column="20" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductAttrNameService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="36" column="24" selection-start-line="36" selection-start-column="12" selection-end-line="36" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/enums/ProductAttrNameTypeEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-common/src/main/java/com/mall/common/enums/AttrNameInputTypeEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/param/product/attr/AttrUpdateParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuPageVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-128">
+          <caret line="43" column="12" lean-forward="true" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/ProductUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-dao/src/main/java/com/mall/dao/entity/product/ProductSkuEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/utils/SkuUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="33" column="33" lean-forward="true" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/attr/AttrValueVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-191">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuListVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="601">
+          <caret line="56" column="18" lean-forward="true" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductAttrNameServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="63" column="49" selection-start-line="63" selection-start-column="49" selection-end-line="63" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductAttrController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1198">
+          <caret line="151" column="53" selection-start-line="151" selection-start-column="41" selection-end-line="151" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/util/SkuUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/ProductSkuService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="25" column="36" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuCreateItemParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/controller/product/ProductSkuController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="43" column="13" lean-forward="true" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+        <state relative-caret-position="322">
+          <caret line="63" column="59" lean-forward="true" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuCreateParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/model/vo/product/sku/SkuAttrParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mall-web-manage/src/main/java/com/mall/manage/service/product/impl/ProductSkuServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="78" column="11" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="11" />
         </state>
       </provider>
     </entry>
