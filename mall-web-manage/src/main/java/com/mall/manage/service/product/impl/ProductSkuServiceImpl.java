@@ -1,36 +1,32 @@
 package com.mall.manage.service.product.impl;
 
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.exception.BusinessException;
-import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.dao.entity.product.ProductAttrValueEntity;
 import com.mall.dao.entity.product.ProductEntity;
 import com.mall.dao.entity.product.ProductSkuEntity;
 import com.mall.dao.mapper.product.ProductSkuMapper;
-import com.mall.manage.model.vo.product.sku.SkuAttrParam;
-import com.mall.manage.model.vo.product.sku.SkuCreateItemParam;
-import com.mall.manage.model.vo.product.sku.SkuCreateParam;
+import com.mall.manage.model.param.product.sku.SkuCreateItemParam;
+import com.mall.manage.model.param.product.sku.SkuCreateParam;
 import com.mall.manage.model.vo.product.sku.SkuListVO;
-import com.mall.manage.service.product.ProductAttrNameService;
 import com.mall.manage.service.product.ProductAttrValueService;
 import com.mall.manage.service.product.ProductService;
 import com.mall.manage.service.product.ProductSkuService;
 import com.mall.manage.service.product.utils.SkuUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service(value = "productSkuService")
 public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, ProductSkuEntity> implements ProductSkuService {
@@ -41,9 +37,6 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
     private ProductSkuMapper productSkuMapper;
     @Autowired
     private ProductAttrValueService productAttrValueService;
-    @Autowired
-    private ProductAttrNameService productAttrNameService;
-
     @Override
     public Page<ProductSkuDTO> findPage(Integer pageNum, Integer pageSize) {
         ProductSkuDTO queryParam = new ProductSkuDTO();
@@ -59,37 +52,47 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             throw new BusinessException("无效的商品ID");
         }
         List<ProductSkuEntity> insertList = Lists.newArrayList();
+        List<ProductSkuEntity> updateList = Lists.newArrayList();
+
         for (SkuCreateItemParam itemParam : param.getParam()) {
             ProductSkuEntity entity = new ProductSkuEntity();
             entity.setProductId(param.getProductId());
             entity.setSalePrice(itemParam.getSalePrice());
             entity.setCostPrice(itemParam.getCostPrice());
             entity.setStock(itemParam.getStock());
-            for (SkuAttrParam attrParam : itemParam.getAttrValueList()) {
-                Map<String, String> atrJsonMap = Maps.newHashMap();
+            entity.setAttrJson(JSONObject.toJSONString(itemParam.getAttrValueList()));
+            if (null != itemParam.getId()) {
+                entity.setId(itemParam.getId());
+                updateList.add(entity);
+            }else{
+                insertList.add(entity);
             }
         }
+        BigDecimal minPrice = param.getParam().stream().map(s -> s.getSalePrice()).min(BigDecimal::compareTo).get();
+        product.setMinPrice(minPrice);
+        productService.updateById(product);
+        /** 删除SKU*/
+        List<ProductSkuEntity> oldSku = this.list(Wrappers.<ProductSkuEntity>lambdaQuery().eq(ProductSkuEntity::getProductId, param.getProductId()));
+        if (!CollectionUtils.isEmpty(oldSku)) {
+            List<Long> oldSkuIdList = oldSku.stream().map(s -> s.getId()).collect(Collectors.toList());
+            List<Long> removeList = Lists.newArrayList();
+            List<Long> updateIdList = updateList.stream().map(s -> s.getId()).collect(Collectors.toList());
+            for (Long aLong : oldSkuIdList) {
+                if (!updateIdList.contains(aLong)) {
+                    removeList.add(aLong);
+                }
+            }
+            if (!CollectionUtils.isEmpty(removeList)) {
+                this.removeByIds(removeList);
+            }
+        }
+        if (!CollectionUtils.isEmpty(insertList)) {
+            this.saveBatch(insertList);
+        }
+        if (!CollectionUtils.isEmpty(updateList)) {
+            this.updateBatchById(updateList);
+        }
         return Boolean.TRUE;
-    }
-
-    @Override
-    public RestResult update(Long id, ProductSkuDTO dto) {
-        dto.setCreateTime(new Date());
-        dto.setModifyTime(new Date());
-        dto.setStock(dto.getStock()==null?0:dto.getStock());
-        dto.setSellSum(dto.getSellSum()==null?0:dto.getSellSum());
-        dto.setId(id);
-        ProductSkuEntity skuEntity = this.getById(id);
-        BeanUtils.copyProperties(dto, skuEntity);
-        StringBuffer properties = new StringBuffer();
-        skuEntity.setAttrJson(properties.toString());
-        this.save(skuEntity);
-        return RestResult.success();
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-
     }
 
     @Override

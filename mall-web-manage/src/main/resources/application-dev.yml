@@ -2,9 +2,5 @@ server:
   port: 8083
 logging:
   file: log
-  path: /root/mall/mall_log
-  #mybatis打印SQL
-  level:
-    com.mall.malladmin : debug
 pic:
     path:  E://IDEA-WorkPlace//mall//pic//

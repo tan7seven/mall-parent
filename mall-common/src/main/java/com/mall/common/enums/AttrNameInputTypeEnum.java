@@ -27,4 +27,16 @@ public enum AttrNameInputTypeEnum {
         }
         return Boolean.FALSE;
     }
+
+    public static String getValueByCode(Integer code){
+        if (null ==code) {
+            return "";
+        }
+        for (AttrNameInputTypeEnum typeEnum : AttrNameInputTypeEnum.values()) {
+            if (typeEnum.getCode().equals(code)) {
+                return typeEnum.getValue();
+            }
+        }
+        return "";
+    }
 }

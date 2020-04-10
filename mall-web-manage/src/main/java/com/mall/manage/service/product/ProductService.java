@@ -61,14 +61,6 @@ public interface ProductService extends IService<ProductEntity> {
 
 
     /**
-     * 更新商品信息
-     * @param dto
-     * @return
-     */
-    @Transactional
-    RestResult update(Long id, ProductDTO dto);
-
-    /**
      * 根据商品名称查询
      * @param name
      * @return

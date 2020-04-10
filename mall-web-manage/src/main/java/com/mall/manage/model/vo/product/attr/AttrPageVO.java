@@ -1,5 +1,6 @@
 package com.mall.manage.model.vo.product.attr;
 
+import com.mall.common.enums.AttrNameInputTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -44,15 +45,15 @@ public class AttrPageVO implements Serializable {
      */
     @ApiModelProperty(value = "是否可用")
     private Boolean usable;
-    /**
-     * 商品分类一级编号
-     */
-    @ApiModelProperty(value = "商品分类一级编号")
-    private Long parentId;
+    @ApiModelProperty(value = "输入类型")
+    private Integer inputType;
+    @ApiModelProperty(value = "输入数据")
+    private String inputData;
+    @ApiModelProperty(value = "输入类型")
+    private String inputTypeName;
 
-    /**
-     * 类目名
-     */
-    @ApiModelProperty(value = "类目名")
-    private String typeName;
+    public String getInputTypeName(){
+        return AttrNameInputTypeEnum.getValueByCode(this.inputType);
+    }
+
 }

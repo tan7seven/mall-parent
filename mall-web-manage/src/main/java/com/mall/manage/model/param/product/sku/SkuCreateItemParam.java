@@ -1,4 +1,4 @@
-package com.mall.manage.model.vo.product.sku;
+package com.mall.manage.model.param.product.sku;
 
 import com.mall.manage.model.param.BaseParam;
 import io.swagger.annotations.ApiModel;
@@ -19,6 +19,9 @@ import java.util.List;
 @Data
 @ApiModel
 public class SkuCreateItemParam extends BaseParam {
+
+    @ApiModelProperty(value = "sku主键")
+    private Long id;
 
     @NotNull(message = "库存不能为空")
     @ApiModelProperty(value = "库存")

@@ -22,66 +22,6 @@
         <result column="input_type" property="inputType"/>
         <result column="input_data" property="inputData"/>
     </resultMap>
-    <select id="findPage" resultMap="ResultNameMap">
-        SELECT
-        a.id ,
-        a.type_id ,
-        a.NAME ,
-        a.type type,
-        a.is_usable,
-        a.input_type,
-        a.input_data,
-        a.is_showed ,
-        a.is_deleted ,
-        b.type_name
-        FROM
-        mall_product_attr_name a
-        INNER JOIN mall_product_type b ON a.type_id = b.id and b.is_deleted = 0
-        <where>
-            and a.is_deleted = 0
-            <if test="param.name !=null and param.name !=''">
-                AND a.NAME like concat('%', #{param.name}, '%')
-            </if>
-            <if test="param.typeName !=null and param.typeName !=''">
-                AND b.type_name like concat('%', #{param.typeName}, '%')
-            </if>
-            <if test="param.typeId !=null ">
-                AND a.type_id = #{param.typeId}
-            </if>
-        </where>
-
-    </select>
-
-    <select id="findByPropertyNameIdAndProductId" resultMap="ResultMap">
-        SELECT
-        a.id id,
-        a.product_id productId,
-        a.is_sale isSale,
-        a.id id,
-        a.value value,
-        b.name propertyName
-        FROM mall_product_property_value a
-        inner JOIN mall_product_attr_name b ON a.id = b.id
-        where 1 = 1
-        AND b.is_delete = '0'
-        <if test="id!=null and id!=''">
-            AND a.id = #{id}
-        </if>
-        <if test="productId!=null and productId!=''">
-            AND a.product_id = #{productId}
-        </if>
-    </select>
-
-    <delete id="deleteByProductId">
-        DELETE  FROM mall_product_property_value  WHERE product_id = #{productId}
-    </delete>
-
-    <delete id="deleteSku">
-      delete a from mall_product_sku a where a.properties LIKE CONCAT('%&amp;', #{id},':%');
-    </delete>
-    <delete id="deleteProperty">
-        delete a from mall_product_property_value a where a.id = #{id};
-    </delete>
 </mapper>
         <!--
             <id>：主键字段

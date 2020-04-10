@@ -35,8 +35,6 @@ public class AttrValueVO extends BaseVO {
     private String skuValue;
     @ApiModelProperty(value = "sku属性名")
     private String skuName;
-    @ApiModelProperty(value = "sku属性名ID")
-    private Long skuNameId;
     public List<String> getValueList(){
         if (this.value instanceof String) {
             String valueString = (String) this.value;

@@ -1,30 +1,27 @@
 package com.mall.manage.controller.product;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
-import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.enums.ResultStatus;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
-import com.mall.dao.dto.product.ProductAttrNameDTO;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
-import com.mall.dao.entity.product.ProductAttrValueEntity;
-import com.mall.dao.entity.product.ProductTypeEntity;
-import com.mall.manage.model.param.product.attr.AttrCreateParam;
-import com.mall.manage.model.param.product.attr.AttrShowedUpdateParam;
-import com.mall.manage.model.param.product.attr.AttrUpdateParam;
-import com.mall.manage.model.param.product.attr.AttrUsableUpdateParam;
+import com.mall.dao.entity.product.ProductAttrTypeEntity;
+import com.mall.manage.model.param.product.attr.*;
 import com.mall.manage.model.vo.product.attr.AttrNameVO;
 import com.mall.manage.model.vo.product.attr.AttrPageVO;
+import com.mall.manage.model.vo.product.attr.AttrTypePageVO;
 import com.mall.manage.model.vo.product.attr.AttrValueVO;
 import com.mall.manage.service.product.ProductAttrNameService;
+import com.mall.manage.service.product.ProductAttrTypeService;
 import com.mall.manage.service.product.ProductAttrValueService;
-import com.mall.manage.service.product.ProductTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,24 +45,64 @@ public class ProductAttrController {
     @Resource(name = "productAttrNameService")
     private ProductAttrNameService productAttrNameService;
 
-    @Resource(name = "productTypeService")
-    private ProductTypeService productTypeService;
-
     @Autowired
     private ProductAttrValueService productAttrValueService;
 
+    @Autowired
+    private ProductAttrTypeService productAttrTypeService;
+
+    @ApiOperation("属性类型-分页查询")
+    @GetMapping("/attr-type/page/get")
+    protected RestResult<RestPage<AttrTypePageVO>> getPageAttrType(@ApiParam(value = "属性名称") @RequestParam(required = false) String name,
+                                                                   @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
+                                                                    @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
+        Page pageParam = new Page(pageNum, pageSize);
+        QueryWrapper<ProductAttrTypeEntity> wrapper = new QueryWrapper();
+        if (StringUtils.isNoneBlank(name)) {
+            wrapper.like("name", name);
+        }
+        Page<ProductAttrTypeEntity> attrTypePage = (Page<ProductAttrTypeEntity>) productAttrTypeService.page(pageParam, wrapper);
+        RestPage<AttrTypePageVO> result = new RestPage<>(attrTypePage.getCurrent(), attrTypePage.getSize(), attrTypePage.getTotal());
+        List<AttrTypePageVO> resultList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(attrTypePage.getRecords())) {
+            for (ProductAttrTypeEntity record : attrTypePage.getRecords()) {
+                AttrTypePageVO vo = new AttrTypePageVO();
+                BeanUtils.copyProperties(record, vo);
+                resultList.add(vo);
+            }
+        }
+        result.setRecords(resultList);
+        return RestResult.success(result);
+    }
+    @ApiOperation("属性类型-新增")
+    @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:CREATE') or hasRole('ADMIN')")
+    @PostMapping("/attr-type/create")
+    protected RestResult<Boolean> createAttrType(@Validated @RequestBody AttrTypeCreateParam param){
+        ProductAttrTypeEntity typeEntity = new ProductAttrTypeEntity();
+        typeEntity.setName(param.getName());
+        Boolean result;
+        if (null == param.getId()) {
+            result = productAttrTypeService.save(typeEntity);
+        }else{
+            typeEntity.setId(param.getId());
+            result = productAttrTypeService.updateById(typeEntity);
+        }
+        return RestResult.success(result);
+    }
     @ApiOperation("分页查询")
     @GetMapping("/page/get")
-    protected RestResult<RestPage<AttrPageVO>> getPage(@ApiParam(value = "类目名称") @RequestParam(required = false) String typeName,
-                                                       @ApiParam(value = "类目ID") @RequestParam(required = false) Long typeId,
-                                                       @ApiParam(value = "属性名称") @RequestParam(required = false) String name,
+    protected RestResult<RestPage<AttrPageVO>> getPage(@ApiParam(value = "类目ID") @RequestParam Long typeId,
+                                                       @ApiParam(value = "类型") @RequestParam Integer type,
                                                        @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                                        @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
-        Page<ProductAttrNameDTO> dtoPage = productAttrNameService.findPage(typeName, typeId, name, pageNum, pageSize);
-        RestPage<AttrPageVO> result = new RestPage<>(dtoPage.getCurrent(), dtoPage.getSize(), dtoPage.getTotal());
+        Page pageParam = new Page(pageNum, pageSize);
+        Page<ProductAttrNameEntity> entityPage = (Page<ProductAttrNameEntity>) productAttrNameService.page(pageParam, Wrappers.<ProductAttrNameEntity>lambdaQuery()
+                .eq(ProductAttrNameEntity::getTypeId, typeId)
+                .eq(ProductAttrNameEntity::getType, type));
+        RestPage<AttrPageVO> result = new RestPage<>(entityPage.getCurrent(), entityPage.getSize(), entityPage.getTotal());
         List<AttrPageVO> resultList = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(dtoPage.getRecords())) {
-            for (ProductAttrNameDTO record : dtoPage.getRecords()) {
+        if (!CollectionUtils.isEmpty(entityPage.getRecords())) {
+            for (ProductAttrNameEntity record : entityPage.getRecords()) {
                 AttrPageVO vo = new AttrPageVO();
                 BeanUtils.copyProperties(record, vo);
                 resultList.add(vo);
@@ -77,7 +114,7 @@ public class ProductAttrController {
 
     @ApiOperation("新增")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:CREATE') or hasRole('ADMIN')")
-    @PostMapping("/createProduct")
+    @PostMapping("/create")
     protected RestResult<Boolean> create(@Validated @RequestBody AttrCreateParam param){
         Boolean result = productAttrNameService.createAttrName(param);
         return RestResult.success(result);
@@ -90,9 +127,7 @@ public class ProductAttrController {
             return RestResult.failed(ResultStatus.BUS_MSG_NOT_FOUND);
         }
         AttrNameVO result = new AttrNameVO();
-        ProductTypeEntity typeEntity = productTypeService.getById(entity.getTypeId());
         BeanUtils.copyProperties(entity, result);
-        result.setParentId(typeEntity.getParentId());
         return RestResult.success(result);
     }
 
@@ -146,15 +181,7 @@ public class ProductAttrController {
     @ApiOperation("根据类目ID获取销售属性")
     @GetMapping(value = "/product-id/get")
     protected RestResult<List<AttrValueVO>> getByProductId(@ApiParam(value = "类目ID")@RequestParam Long productId){
-        List<ProductAttrValueEntity> entityList =  productAttrValueService.list(Wrappers.<ProductAttrValueEntity>lambdaQuery()
-                .eq(ProductAttrValueEntity::getProductId, productId)
-                .eq(ProductAttrValueEntity::getType, ProductAttrNameTypeEnum.SALE.getCode()));
-        List<AttrValueVO> result = Lists.newArrayList();
-        for (ProductAttrValueEntity entity : entityList) {
-            AttrValueVO vo = new AttrValueVO();
-            BeanUtils.copyProperties(entity, vo);
-            result.add(vo);
-        }
+        List<AttrValueVO> result = productAttrValueService.getByProductId(productId);
         return RestResult.success(result);
     }
 }

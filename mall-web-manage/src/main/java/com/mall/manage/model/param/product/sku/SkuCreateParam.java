@@ -1,5 +1,6 @@
-package com.mall.manage.model.vo.product.sku;
+package com.mall.manage.model.param.product.sku;
 
+import com.mall.manage.model.param.BaseParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @Data
 @ApiModel
-public class SkuCreateParam {
+public class SkuCreateParam extends BaseParam {
     @Valid
     @NotEmpty(message = "属性列表不能为空")
     private List<SkuCreateItemParam> param;

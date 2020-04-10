@@ -9,7 +9,6 @@ import com.mall.common.enums.ImgTypeEnum;
 import com.mall.common.exception.BusinessException;
 import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
-import com.mall.dao.dto.product.ProductPropertyDTO;
 import com.mall.dao.entity.product.*;
 import com.mall.dao.mapper.product.ProductMapper;
 import com.mall.manage.manage.product.ProductManage;
@@ -21,7 +20,6 @@ import com.mall.manage.service.product.*;
 import com.mall.manage.service.product.utils.ProductUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -148,28 +146,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
         }
         return RestResult.success();
     }
-
-
-    @Override
-    public RestResult update(Long productId, ProductDTO dto) {
-        //修改商品信息
-        ProductEntity entity = this.getById(productId);
-        BeanUtils.copyProperties(dto, entity);
-        productImgService.remove(Wrappers.<ProductImgEntity>lambdaQuery()
-                .eq(ProductImgEntity::getForeignId, String.valueOf(productId))
-                .eq(ProductImgEntity::getTypeCode, ProductImgEntity.TYPE_CODE_PRODUCT));
-
-        ProductDetailEntity productDetailEntity = new ProductDetailEntity();
-        productDetailEntity.setProductId(productId);
-        //修改销售属性值
-        //获取商品销售属性值
-        ProductDTO isSaleParam = new ProductDTO();
-        List<ProductPropertyDTO> propertyIsSaleList = productMapper.findPropertyIsSale(isSaleParam);
-        //判断之前是否存在，存在则不操作，不存在则新增
-        //判断之前的值是否被删除，删除需要删除对应的SKU信息
-        return RestResult.success();
-    }
-
 
     @Override
     public List<ProductDTO> findByName(String name) {

@@ -37,9 +37,9 @@ public class SkuUtil {
                 }
                 List<AttrValueVO> valueOldList = JSONObject.parseArray(productSku.getAttrJson(), AttrValueVO.class);
                 for (AttrValueVO valueVOOld : valueOldList) {
-                    if (valueVOOld.getSkuNameId().equals(attrValueVO.getNameId())) {
+                    if (valueVOOld.getNameId().equals(attrValueVO.getNameId())) {
                         attrValueVO.setSkuName(valueVOOld.getSkuName());
-                        attrValueVO.setSkuNameId(valueVOOld.getSkuNameId());
+                        attrValueVO.setNameId(valueVOOld.getNameId());
                         attrValueVO.setSkuValue(valueVOOld.getSkuValue());
                     }
                 }

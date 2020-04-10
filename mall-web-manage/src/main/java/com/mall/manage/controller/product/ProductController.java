@@ -3,7 +3,6 @@ package com.mall.manage.controller.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.constant.CommonConstant;
-import com.mall.common.manage.UploadPicManage;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
@@ -19,7 +18,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
@@ -38,9 +36,6 @@ public class ProductController {
 
     @Resource(name = "productService")
     private ProductService productService;
-
-    @Autowired
-    private UploadPicManage uploadPicManage;
 
     @ApiOperation("分页查询")
     @GetMapping(value = "/page/get")

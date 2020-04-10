@@ -4,7 +4,8 @@ server:
       timeout: 72000s
 logging:
   level:
-    com.mall.dao.mapper: debug #打印sql
+    org.springframework.web: INFO
+#    com.mall.dao.mapper: debug #打印sql
 spring:
   servlet:
     multipart:

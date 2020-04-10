@@ -6,7 +6,7 @@ import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.manage.controller.common.GenericController;
 import com.mall.manage.controller.product.util.SkuUtil;
-import com.mall.manage.model.vo.product.sku.SkuCreateParam;
+import com.mall.manage.model.param.product.sku.SkuCreateParam;
 import com.mall.manage.model.vo.product.sku.SkuListVO;
 import com.mall.manage.model.vo.product.sku.SkuPageVO;
 import com.mall.manage.service.product.ProductSkuService;
@@ -52,7 +52,7 @@ public class ProductSkuController extends GenericController {
     }
 
     @ApiOperation("获取商品的SKU列表")
-    @PostMapping(value = "/product-id/get")
+    @GetMapping(value = "/product-id/get")
     protected RestResult<List<SkuListVO>> getSkuByProductId(@ApiParam(value = "类目ID")@RequestParam Long productId){
         List<SkuListVO> result = productSkuService.getSkuByProductId(productId);
         return RestResult.success(result);
@@ -63,34 +63,7 @@ public class ProductSkuController extends GenericController {
     @PostMapping(value = "/create")
     protected RestResult create (@Validated @RequestBody SkuCreateParam param){
         SkuUtil.validatedCreateParam(param);
-        productSkuService.createSku(param);
-        return RestResult.success();
-    }
-
-    @ApiOperation("更新")
-    @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:UPDATE') or hasRole('ADMIN')")
-    @PostMapping(value = "/updateType.do/{id}")
-    protected RestResult update(@PathVariable Integer id, @RequestBody ProductSkuDTO dto){
-        if(null == dto.getProductId()){
-            return RestResult.validateFailed("商品编号为空！");
-        }
-        return RestResult.failed();
-    }
-
-    @ApiOperation("根据主键查询")
-    @GetMapping(value = "/foundById.do/{id}")
-    protected RestResult getById(@PathVariable Integer id){
-        if(null == id){
-            return RestResult.validateFailed("SKU编码为空！");
-        }
-        return RestResult.success();
-    }
-
-    @ApiOperation("删除-逻辑删除")
-    @PreAuthorize(" hasAuthority('PMS:PRODUCTSKU:DELETE') or hasRole('ADMIN')")
-    @GetMapping(value = "/delete.do/{id}")
-    protected RestResult delete(@PathVariable Integer id){
-        productSkuService.deleteById(id);
-        return RestResult.success();
+        Boolean result = productSkuService.createSku(param);
+        return RestResult.success(result);
     }
 }

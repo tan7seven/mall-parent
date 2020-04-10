@@ -2,9 +2,9 @@ package com.mall.manage.controller.product.util;
 
 import com.google.common.collect.Lists;
 import com.mall.common.exception.BusinessException;
-import com.mall.manage.model.vo.product.sku.SkuAttrParam;
-import com.mall.manage.model.vo.product.sku.SkuCreateItemParam;
-import com.mall.manage.model.vo.product.sku.SkuCreateParam;
+import com.mall.manage.model.param.product.sku.SkuAttrParam;
+import com.mall.manage.model.param.product.sku.SkuCreateItemParam;
+import com.mall.manage.model.param.product.sku.SkuCreateParam;
 
 import java.util.List;
 

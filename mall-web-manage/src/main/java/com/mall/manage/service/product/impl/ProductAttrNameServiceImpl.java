@@ -12,7 +12,6 @@ import com.mall.dao.param.AttrFindPageParam;
 import com.mall.manage.model.param.product.attr.AttrCreateParam;
 import com.mall.manage.model.param.product.attr.AttrShowedUpdateParam;
 import com.mall.manage.model.param.product.attr.AttrUpdateParam;
-import com.mall.manage.model.param.product.attr.AttrUsableUpdateParam;
 import com.mall.manage.service.product.ProductAttrNameService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -24,23 +23,6 @@ import java.util.List;
 
 @Service(value = "productAttrNameService")
 public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMapper, ProductAttrNameEntity> implements ProductAttrNameService {
-
-    @Override
-    public Page<ProductAttrNameDTO> findPage(String typeName, Long typeId, String name, Integer page, Integer pageSize) {
-        Page pageParam = new Page<>(page, pageSize);
-        AttrFindPageParam param = new AttrFindPageParam();
-        if (StringUtils.isNoneBlank(name)) {
-            param.setName(name);
-        }
-        if (StringUtils.isNoneBlank(typeName)) {
-            param.setTypeName(typeName);
-        }
-        if (null != typeId) {
-            param.setTypeId(typeId);
-        }
-        Page<ProductAttrNameDTO> result = this.baseMapper.findPage(pageParam, param);
-        return result;
-    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -73,17 +55,6 @@ public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMappe
         entity.setId(param.getId());
         entity.setShowed(param.getShowed());
         Boolean result = this.updateById(entity);
-        return result;
-    }
-
-    @Override
-    public Boolean updateIsSale(AttrUsableUpdateParam param) {
-        ProductAttrNameEntity entity =this.baseMapper.selectById(param.getId());
-        entity.setId(param.getId());
-        entity.setUsable(param.getUsable());
-        Boolean result = this.updateById(entity);
-        /** 验证销售属性数量 */
-        this.validateAttrNum(entity.getTypeId(), entity.getType());
         return result;
     }
 
