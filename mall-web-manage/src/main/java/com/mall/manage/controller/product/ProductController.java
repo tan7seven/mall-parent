@@ -106,8 +106,7 @@ public class ProductController {
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
     @DeleteMapping(value = "/delete.do")
     protected RestResult delete(@Validated @RequestBody DeleteParam param){
-        RestResult result = productService.deleteList(param.getIds());
-        return result;
+        return null;
     }
 
 

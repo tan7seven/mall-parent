@@ -139,15 +139,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
     private ProductMapper productMapper;
 
     @Override
-    public RestResult deleteList(List<Integer> ids) {
-        for (Integer id : ids) {
-            //删除商品信息-逻辑删除
-            productMapper.updateIsDelete(id);
-        }
-        return RestResult.success();
-    }
-
-    @Override
     public List<ProductDTO> findByName(String name) {
         ProductDTO dto = new ProductDTO();
         if (StringUtils.isNotBlank(name)) {

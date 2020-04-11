@@ -23,7 +23,6 @@ public interface ProductService extends IService<ProductEntity> {
      */
     @Transactional(rollbackFor = Exception.class)
     Boolean createProduct(CreateParam param);
-
     /**
      * 修改商品信息
      * @return
@@ -37,29 +36,17 @@ public interface ProductService extends IService<ProductEntity> {
      */
     @Transactional(rollbackFor = Exception.class)
     Boolean updateIsPutAway(UpdateIsPutawayParam param);
-
-
     /**
      * 获取商品详情
      * @param id
      * @return
      */
     ProductDetailVO getProductDetail(Long id);
-//    todo
-
-    /**
-     * 批量删除
-     */
-    @Transactional
-    RestResult deleteList(List<Integer>  ids);
-
     /**
      * mybatis分页查询
      * @returndto
      */
     Page<ProductDTO> findPage(Long typeId, String productName, Boolean putaway, Integer pageNum, Integer pageSize);
-
-
     /**
      * 根据商品名称查询
      * @param name
