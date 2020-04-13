@@ -23,10 +23,7 @@ public class AttrUpdateParam extends BaseParam {
     private Boolean usable;
     @ApiModelProperty(value = "是否显示")
     private Boolean showed;
-//    @ApiModelProperty(value = "类型 1：销售属性 2非销售属性")  不允许修改
-//    private Integer type;
-//    @ApiModelProperty(value = "输入类型 1手写 2单选 2多选") 不允许修改
-//    private Integer inputType;
+
     @ApiModelProperty(value = "可输入数据")
     private String inputData;
     public Boolean getUsable(){
@@ -35,12 +32,5 @@ public class AttrUpdateParam extends BaseParam {
     public Boolean getShowed(){
         return null == this.showed ? Boolean.FALSE : this.showed;
     }
-//    public Integer getType(){
-//        return null == this.type ? 1 : this.type;
-//    }
-//    public Integer getInputType(){
-//        return null == this.inputType ? 1 : this.inputType;
-//    }
-
 
 }

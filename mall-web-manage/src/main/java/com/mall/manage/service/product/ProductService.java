@@ -2,7 +2,6 @@ package com.mall.manage.service.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.entity.product.ProductEntity;
 import com.mall.manage.model.param.product.product.CreateParam;
@@ -51,7 +50,7 @@ public interface ProductService extends IService<ProductEntity> {
      * 批量删除
      */
     @Transactional
-    RestResult deleteList(List<Integer>  ids);
+    Boolean deleteList(List<Integer>  ids);
 
     /**
      * mybatis分页查询

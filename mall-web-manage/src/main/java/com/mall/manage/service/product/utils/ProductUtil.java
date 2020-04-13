@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductUtil {
-    public static ProductEntity buildCreateProductEntity(CreateParam param){
+    public static ProductEntity buildCreateProductEntity(CreateParam param) {
         ProductEntity result = new ProductEntity();
         result.setProductName(param.getProductName());
         result.setPicUrl(param.getPicUrl().replaceAll(CommonConstant.IMG_PRE, ""));
@@ -32,7 +32,7 @@ public class ProductUtil {
         return result;
     }
 
-    public static ProductEntity buildUpdateProductEntity(UpdateParam param){
+    public static ProductEntity buildUpdateProductEntity(UpdateParam param) {
         ProductEntity result = new ProductEntity();
         result.setId(param.getId());
         result.setProductName(param.getProductName());
@@ -42,27 +42,35 @@ public class ProductUtil {
         return result;
     }
 
-    public static ProductDetailVO buildDetailProductVO(ProductEntity param){
+    public static ProductDetailVO buildDetailProductVO(ProductEntity param) {
         ProductDetailVO result = new ProductDetailVO();
         result.setPicUrl(CommonConstant.IMG_PRE + param.getPicUrl());
         result.setProductName(param.getProductName());
         result.setSort(param.getSort());
         result.setUnit(param.getUnit());
         result.setProductTypeId(param.getTypeId());
+        result.setAttrTypeId(param.getAttrTypeId());
         return result;
     }
 
-    public static void setDetailAttrValueList(List<ProductAttrValueEntity> param, List<ProductAttrNameEntity> attrNameList, ProductDetailVO result){
+    public static void setDetailAttrValueList(List<ProductAttrValueEntity> param, List<ProductAttrNameEntity> attrNameList, ProductDetailVO result) {
         if (CollectionUtils.isEmpty(param)) {
+            return;
+        }
+        if (CollectionUtils.isEmpty(attrNameList)) {
             return;
         }
         List<AttrValueVO> attrValueList = Lists.newArrayList();
         for (ProductAttrValueEntity valueEntity : param) {
             AttrValueVO attrValueVO = new AttrValueVO();
-            ProductAttrNameEntity nameEntity = attrNameList.stream().filter(s -> s.getId().equals(valueEntity.getNameId())).limit(1).collect(Collectors.toList()).get(0);
+            List<ProductAttrNameEntity> nameEntityList = attrNameList.stream().filter(s -> s.getId().equals(valueEntity.getNameId())).limit(1).collect(Collectors.toList());
+            if (CollectionUtils.isEmpty(nameEntityList)) {
+                continue;
+            }
+            ProductAttrNameEntity nameEntity = nameEntityList.get(0);
             if (AttrNameInputTypeEnum.HAND.getCode().equals(nameEntity.getInputType())) {
                 attrValueVO.setValue(valueEntity.getValue());
-            }else{
+            } else {
                 try {
                     List<String> attrStringList = JSONObject.parseArray(valueEntity.getValue(), String.class);
                     attrValueVO.setValue(attrStringList);
@@ -79,7 +87,7 @@ public class ProductUtil {
         result.setAttrValueVOList(attrValueList);
     }
 
-    public static void setDetailAttrNameList(List<ProductAttrNameEntity> param, ProductDetailVO result){
+    public static void setDetailAttrNameList(List<ProductAttrNameEntity> param, ProductDetailVO result) {
         if (CollectionUtils.isEmpty(param)) {
             return;
         }

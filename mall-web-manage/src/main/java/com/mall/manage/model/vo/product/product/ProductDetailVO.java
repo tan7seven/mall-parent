@@ -22,6 +22,8 @@ public class ProductDetailVO extends BaseVO {
     private Integer sort;
     @ApiModelProperty("类目ID")
     private Long productTypeId;
+    @ApiModelProperty("属性分类编号")
+    private Long attrTypeId;
     @ApiModelProperty("上级类目ID")
     private Long productTypeParentId;
     @ApiModelProperty(value = "主图地址")

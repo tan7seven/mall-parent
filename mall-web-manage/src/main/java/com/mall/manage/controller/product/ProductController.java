@@ -75,7 +75,6 @@ public class ProductController {
         return RestResult.success(result);
     }
 
-
     @ApiOperation("修改是否上下架状态")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/putaway/update")
@@ -91,6 +90,13 @@ public class ProductController {
         return RestResult.success(result);
     }
 
+    @ApiOperation("删除-逻辑删除")
+    @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
+    @DeleteMapping(value = "/delete")
+    protected RestResult delete(@Validated @RequestBody DeleteParam param){
+        Boolean result = productService.deleteList(param.getIds());
+        return RestResult.success(result);
+    }
 //    todo :
 
 
@@ -102,13 +108,7 @@ public class ProductController {
     }
 
 
-    @ApiOperation("删除-逻辑删除")
-    @PreAuthorize(" hasAuthority('PMS:PRODUCT:DELETE') or hasRole('ADMIN')")
-    @DeleteMapping(value = "/delete.do")
-    protected RestResult delete(@Validated @RequestBody DeleteParam param){
-        RestResult result = productService.deleteList(param.getIds());
-        return result;
-    }
+
 
 
 }

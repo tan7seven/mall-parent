@@ -155,13 +155,12 @@ public class ProductAttrController {
         return RestResult.success(result);
     }
 
-    @ApiOperation("是否销售属性")
+    @ApiOperation("是否可用")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:SWITCH') or hasRole('ADMIN')")
     @PostMapping("/usable/update")
     protected RestResult updateIsSale(@Validated @RequestBody AttrUsableUpdateParam param){
-//        不允许修改
-//        Boolean result = productAttrNameService.updateIsSale(param);
-        return RestResult.success();
+        Boolean result = productAttrNameService.updateIsSale(param);
+        return RestResult.success(result);
     }
 
     @ApiOperation("根据类目ID获取属性")

@@ -22,6 +22,7 @@ public class AttrCreateParam extends BaseParam {
     private Boolean showed;
     @ApiModelProperty(value = "类型 1：销售属性 2非销售属性")
     private Integer type;
+    @NotNull(message = "输入类型不能为空")
     @ApiModelProperty(value = "输入类型 1手写 2单选 2多选")
     private Integer inputType;
     @ApiModelProperty(value = "可输入数据")

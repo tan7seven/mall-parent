@@ -41,9 +41,9 @@ public class SkuUtil {
                         attrValueVO.setSkuName(valueVOOld.getSkuName());
                         attrValueVO.setNameId(valueVOOld.getNameId());
                         attrValueVO.setSkuValue(valueVOOld.getSkuValue());
+                        attrList.add(attrValueVO);
                     }
                 }
-                attrList.add(attrValueVO);
             }
             vo.setAttrValueList(attrList);
             result.add(vo);

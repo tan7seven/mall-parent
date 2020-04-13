@@ -1,19 +1,16 @@
 package com.mall.manage.service.product.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.exception.BusinessException;
-import com.mall.dao.dto.product.ProductAttrNameDTO;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.mapper.product.ProductAttrNameMapper;
-import com.mall.dao.param.AttrFindPageParam;
 import com.mall.manage.model.param.product.attr.AttrCreateParam;
 import com.mall.manage.model.param.product.attr.AttrShowedUpdateParam;
 import com.mall.manage.model.param.product.attr.AttrUpdateParam;
+import com.mall.manage.model.param.product.attr.AttrUsableUpdateParam;
 import com.mall.manage.service.product.ProductAttrNameService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +40,8 @@ public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMappe
     public Boolean update(AttrUpdateParam param) {
         ProductAttrNameEntity entity = new ProductAttrNameEntity();
         BeanUtils.copyProperties(param, entity);
+        /** 不允许修改类目 */
+        entity.setTypeId(null);
         Boolean result = this.updateById(entity);
         /** 验证属性唯一性 */
         this.validateAttrUnique(param.getTypeId(), param.getName());
@@ -54,6 +53,15 @@ public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMappe
         ProductAttrNameEntity entity = new ProductAttrNameEntity();
         entity.setId(param.getId());
         entity.setShowed(param.getShowed());
+        Boolean result = this.updateById(entity);
+        return result;
+    }
+
+    @Override
+    public Boolean updateIsSale(AttrUsableUpdateParam param) {
+        ProductAttrNameEntity entity =this.baseMapper.selectById(param.getId());
+        entity.setId(param.getId());
+        entity.setUsable(param.getUsable());
         Boolean result = this.updateById(entity);
         return result;
     }

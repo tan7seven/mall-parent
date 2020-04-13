@@ -19,6 +19,10 @@ public class ProductEntity extends BaseEntity {
      */
     private Long typeId;
     /**
+     * 属性分类编号
+     */
+    private Long attrTypeId;
+    /**
      * 商品名称
      */
     private String productName;

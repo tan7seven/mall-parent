@@ -7,7 +7,6 @@ import com.google.common.collect.Lists;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.enums.ImgTypeEnum;
 import com.mall.common.exception.BusinessException;
-import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.entity.product.*;
 import com.mall.dao.mapper.product.ProductMapper;
@@ -41,6 +40,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
     private ProductAttrValueService productAttrValueService;
     @Autowired
     private ProductAttrNameService productAttrNameService;
+    @Autowired
+    private ProductMapper productMapper;
 
     @Override
     public Page<ProductDTO> findPage(Long typeId, String productName, Boolean putaway, Integer pageNum, Integer pageSize) {
@@ -111,7 +112,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
 
         /** 设置属性名*/
         List<ProductAttrNameEntity> attrNameList = productAttrNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
-                .eq(ProductAttrNameEntity::getTypeId, result.getProductTypeId()));
+                .eq(ProductAttrNameEntity::getTypeId, productEntity.getAttrTypeId()));
         ProductUtil.setDetailAttrNameList(attrNameList, result);
 
         /** 设置属性值*/
@@ -133,18 +134,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
         Boolean result = this.updateBatchById(updateList);
         return result;
     }
-
-    //     todo
-    @Autowired
-    private ProductMapper productMapper;
-
     @Override
-    public RestResult deleteList(List<Integer> ids) {
-        for (Integer id : ids) {
-            //删除商品信息-逻辑删除
-            productMapper.updateIsDelete(id);
-        }
-        return RestResult.success();
+    public Boolean deleteList(List<Integer> ids) {
+        Boolean result = this.removeByIds(ids);
+        return result;
     }
 
     @Override
