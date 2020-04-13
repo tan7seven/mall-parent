@@ -75,6 +75,7 @@ public class ProductController {
         return RestResult.success(result);
     }
 
+
     @ApiOperation("修改是否上下架状态")
     @PreAuthorize(" hasAuthority('PMS:PRODUCT:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "/putaway/update")
