@@ -35,6 +35,9 @@ public class SkuPageVO extends BaseVO {
      */
     @ApiModelProperty(value = "属性值")
     private String attrJson;
+
+    @ApiModelProperty(value = "属性值")
+    private String attrValue;
     /**
      * 商品类目ID
      */

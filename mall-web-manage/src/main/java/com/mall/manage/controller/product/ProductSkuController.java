@@ -1,5 +1,6 @@
 package com.mall.manage.controller.product;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
@@ -7,6 +8,7 @@ import com.mall.dao.dto.product.ProductSkuDTO;
 import com.mall.manage.controller.common.GenericController;
 import com.mall.manage.controller.product.util.SkuUtil;
 import com.mall.manage.model.param.product.sku.SkuCreateParam;
+import com.mall.manage.model.vo.product.attr.AttrValueVO;
 import com.mall.manage.model.vo.product.sku.SkuListVO;
 import com.mall.manage.model.vo.product.sku.SkuPageVO;
 import com.mall.manage.service.product.ProductSkuService;
@@ -44,6 +46,11 @@ public class ProductSkuController extends GenericController {
             for (ProductSkuDTO record : dtoPage.getRecords()) {
                 SkuPageVO vo = new SkuPageVO();
                 BeanUtils.copyProperties(record, vo);
+                List<AttrValueVO> valueOldList = JSONObject.parseArray(vo.getAttrJson(), AttrValueVO.class);
+                for (AttrValueVO attrValueVO : valueOldList) {
+                    String attr = "【"+ attrValueVO.getSkuName() + ":" + attrValueVO.getSkuValue() + "】";
+                    vo.setAttrValue(attr);
+                }
                 resultList.add(vo);
             }
         }
