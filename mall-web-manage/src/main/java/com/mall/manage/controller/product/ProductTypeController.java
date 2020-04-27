@@ -70,7 +70,7 @@ public class ProductTypeController {
 
     @ApiOperation("创建")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:CREATE') or hasRole('ADMIN')")
-    @PostMapping("/createProduct")
+    @PostMapping("/create")
     protected RestResult<Boolean> create(@Validated @RequestBody TypeCreateParam param) {
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(param, entity);
@@ -80,7 +80,7 @@ public class ProductTypeController {
 
     @ApiOperation("修改")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:UPDATE') or hasRole('ADMIN')")
-    @DeleteMapping(value = "/modify")
+    @PostMapping(value = "/modify")
     protected RestResult<Boolean> modify(@Validated @RequestBody TypeUpdateParam param) {
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(param, entity);
@@ -116,7 +116,7 @@ public class ProductTypeController {
 
     @ApiOperation("删除")
     @PreAuthorize(" hasAuthority('PMS:PRODUCTTYPE:DELETE') or hasRole('ADMIN')")
-    @GetMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     protected RestResult<Boolean> detele(@PathVariable Long id) {
         Boolean result = productTypeService.removeById(id);
         return RestResult.success(result);

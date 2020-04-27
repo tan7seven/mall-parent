@@ -22,14 +22,4 @@ public interface ProductMapper extends BaseMapper<ProductEntity> {
      * @return
      */
     Page<ProductDTO> getList(Page pageParam, @Param("param") ProductDTO param);
-
-    /**
-     * 逻辑删除
-     * @param productId
-     * @return
-     */
-    @Update("UPDATE mall_product a SET a.is_delete = '1' WHERE a.product_id = #{productId}")
-    int updateIsDelete(@Param("productId") Integer productId);
-
-
 }

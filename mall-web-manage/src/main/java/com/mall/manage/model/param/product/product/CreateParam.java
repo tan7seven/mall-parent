@@ -26,8 +26,11 @@ public class CreateParam extends CommonParam {
     private String unit;
     @ApiModelProperty(value = "排序")
     private Integer sort;
-    @NotNull(message = "类目ID不能为空")
-    @ApiModelProperty("类目ID")
+    @NotNull(message = "属性类目ID不能为空")
+    @ApiModelProperty("属性类目ID")
+    private Long attrTypeId;
+    @NotNull(message = "商品类目ID不能为空")
+    @ApiModelProperty("商品类目ID")
     private Long productTypeId;
     @NotBlank(message = "商品主图不能为空")
     @ApiModelProperty(value = "主图地址")

@@ -43,6 +43,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
     private ProductAttrNameService productAttrNameService;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private ProductDetailService productDetailService;
 
     @Override
     public Page<ProductDTO> findPage(Long typeId, String productName, Boolean putaway, Integer pageNum, Integer pageSize) {
@@ -73,7 +75,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
             productImgService.saveOrUpdateImg(param.getPicList(), productEntity.getId(), ImgTypeEnum.PRODUCT);
         }
         /** 保存商品属性*/
-        productManage.saveOrUpdateAttrValue(param.getAttrValueString(), productEntity.getTypeId(), productEntity.getId());
+        productManage.saveOrUpdateAttrValue(param.getAttrValueString(), productEntity.getAttrTypeId(), productEntity.getId());
+
+        /** 保持商品详情*/
+        productManage.saveOrUpdateDetail(param.getDetail(), productEntity.getId());
+
         return Boolean.TRUE;
     }
 
@@ -88,8 +94,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
         if (!CollectionUtils.isEmpty(param.getPicList())) {
             productImgService.saveOrUpdateImg(param.getPicList(), productEntity.getId(), ImgTypeEnum.PRODUCT);
         }
+
+        /** 保持商品详情*/
+        productManage.saveOrUpdateDetail(param.getDetail(), productEntity.getId());
+
         /** 保存商品属性*/
-        productManage.saveOrUpdateAttrValue(param.getAttrValueString(), param.getProductTypeId(), productEntity.getId());
+        productManage.saveOrUpdateAttrValue(param.getAttrValueString(), param.getAttrTypeId(), productEntity.getId());
+
         return Boolean.TRUE;
     }
 
@@ -103,7 +114,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
         /** 上级类目ID*/
         ProductTypeEntity typeEntity = productTypeService.getById(productEntity.getTypeId());
         result.setProductTypeParentId(typeEntity.getParentId());
-        // todo: 商品明细暂时先放着
+
+        /** 商品明细 */
+        ProductDetailEntity detailEntity = productDetailService.getOne(Wrappers.<ProductDetailEntity>lambdaQuery().eq(ProductDetailEntity::getProductId, id));
+        result.setDetail(null == detailEntity ?  "" : detailEntity.getDetail());
 
         /** 商品轮播图*/
         List<ProductImgEntity> imgEntityList = productImgService.list(Wrappers.<ProductImgEntity>lambdaQuery()

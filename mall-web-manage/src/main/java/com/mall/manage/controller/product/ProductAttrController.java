@@ -177,9 +177,9 @@ public class ProductAttrController {
         return RestResult.success(result);
     }
 
-    @ApiOperation("根据类目ID获取销售属性")
+    @ApiOperation("根据商品ID获取销售属性")
     @GetMapping(value = "/product-id/get")
-    protected RestResult<List<AttrValueVO>> getByProductId(@ApiParam(value = "类目ID")@RequestParam Long productId){
+    protected RestResult<List<AttrValueVO>> getByProductId(@ApiParam(value = "商品ID")@RequestParam Long productId){
         List<AttrValueVO> result = productAttrValueService.getByProductId(productId);
         return RestResult.success(result);
     }

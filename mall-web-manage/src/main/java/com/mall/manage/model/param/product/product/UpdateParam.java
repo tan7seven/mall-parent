@@ -32,6 +32,9 @@ public class UpdateParam extends CommonParam {
     @NotNull(message = "类目ID不能为空")
     @ApiModelProperty("类目ID")
     private Long productTypeId;
+    @NotNull(message = "属性类目ID不能为空")
+    @ApiModelProperty("属性类目ID")
+    private Long attrTypeId;
     @NotBlank(message = "商品主图不能为空")
     @ApiModelProperty(value = "主图地址")
     private String picUrl;

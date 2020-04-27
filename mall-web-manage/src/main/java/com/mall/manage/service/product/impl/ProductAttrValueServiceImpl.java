@@ -12,6 +12,7 @@ import com.mall.manage.service.product.ProductAttrNameService;
 import com.mall.manage.service.product.ProductAttrValueService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,9 +30,12 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueMap
                 .eq(ProductAttrValueEntity::getProductId, productId)
                 .eq(ProductAttrValueEntity::getType, ProductAttrNameTypeEnum.SALE.getCode()));
         List<Long> nameIdList = entityList.stream().map(s -> s.getNameId()).collect(Collectors.toList());
+        List<AttrValueVO> result = Lists.newArrayList();
+        if (CollectionUtils.isEmpty(nameIdList)) {
+            return result;
+        }
         List<ProductAttrNameEntity> nameList = productAttrNameService.list(Wrappers.<ProductAttrNameEntity>lambdaQuery()
                 .in(ProductAttrNameEntity::getId, nameIdList));
-        List<AttrValueVO> result = Lists.newArrayList();
         for (ProductAttrValueEntity entity : entityList) {
             AttrValueVO vo = new AttrValueVO();
             BeanUtils.copyProperties(entity, vo);

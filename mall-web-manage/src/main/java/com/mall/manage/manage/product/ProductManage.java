@@ -7,8 +7,10 @@ import com.google.common.collect.Lists;
 import com.mall.common.enums.AttrNameInputTypeEnum;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
 import com.mall.dao.entity.product.ProductAttrValueEntity;
+import com.mall.dao.entity.product.ProductDetailEntity;
 import com.mall.dao.mapper.product.ProductAttrNameMapper;
 import com.mall.manage.service.product.ProductAttrValueService;
+import com.mall.manage.service.product.ProductDetailService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,13 +25,15 @@ public class ProductManage {
     private ProductAttrNameMapper productPropertyMapper;
     @Autowired
     private ProductAttrValueService productAttrValueService;
+    @Autowired
+    private ProductDetailService productDetailService;
 
-    public void saveOrUpdateAttrValue(String attrValueString, Long typeId, Long productId) {
+    public void saveOrUpdateAttrValue(String attrValueString, Long attrTypeId, Long productId) {
         List<ProductAttrValueEntity> insertList = Lists.newArrayList();
         List<ProductAttrValueEntity> updateList = Lists.newArrayList();
         List<Long> removeList = Lists.newArrayList();
         List<ProductAttrNameEntity> attrNameEntityList = productPropertyMapper.selectList(Wrappers.<ProductAttrNameEntity>lambdaQuery()
-                .eq(ProductAttrNameEntity::getTypeId, typeId));
+                .eq(ProductAttrNameEntity::getTypeId, attrTypeId));
         JSONObject attrValueJSON = JSONObject.parseObject(attrValueString);
         if (CollectionUtils.isEmpty(attrNameEntityList)) {
             return;
@@ -90,5 +94,12 @@ public class ProductManage {
         if (!CollectionUtils.isEmpty(updateList)) {
             productAttrValueService.updateBatchById(updateList);
         }
+    }
+    public void saveOrUpdateDetail(String detail, Long productId){
+        productDetailService.remove(Wrappers.<ProductDetailEntity>lambdaQuery().eq(ProductDetailEntity::getProductId, productId));
+        ProductDetailEntity detailEntity = new ProductDetailEntity();
+        detailEntity.setDetail(detail);
+        detailEntity.setProductId(productId);
+        productDetailService.save(detailEntity);
     }
 }

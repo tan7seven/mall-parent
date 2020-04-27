@@ -8,30 +8,26 @@ public class Demo {
 
     public static void main(String[] args) {
 
-        List<Person> list = new ArrayList<Person>();
-
-        Person p1 = new Person("a", 11, "aaaaa");
-        Person p2 = new Person("b", 12, "bbbbb");
-        Person p3 = new Person("c", 13, "ccccc");
-        Person p4 = new Person("d", 14, "ddddd");
-        Person p5 = new Person("e", 15, "eeeee");
-
-        list = Arrays.asList(p1, p2, p3, p4, p5);
-        filterTest(list);
-        mapTest(list);
-        flatMapTest(list);
-        reduceTest();
-        collectTest(list);
-        System.out.println(list.indexOf(new Person()));
+        double c = 0.8; double d = 0.7; double e = 0.6;
+        System.out.println(get("123",  null));
+        System.out.println((c-d) == 0.1);
+        System.out.println(1.0 / 0);
+        System.out.println(0.0 / 0.0);
     }
 
+    static <String, T, Alibaba> String get(String string, T t) { return string; }
     private static void println(List<Person> list) {
         for(Person p:list) {
             System.out.println(p.getName()+"-"+p.getAge()+"-"+p.getProvince());
         }
 
     }
-
+    static void f(String s){
+        System.out.println("1");
+    }
+    static void f(Integer s){
+        System.out.println("2");
+    }
     // filter age > 13 and name = d
     private static void filterTest(List<Person> list) {
         List<Person> temp = new ArrayList<Person>();

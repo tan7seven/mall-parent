@@ -29,6 +29,7 @@ public class ProductUtil {
         result.setHits(0);
         result.setPutaway(Boolean.FALSE);
         result.setUsable(Boolean.FALSE);
+        result.setAttrTypeId(param.getAttrTypeId());
         return result;
     }
 
