@@ -37,9 +37,10 @@ public class ProductSkuController extends GenericController {
 
     @ApiOperation("分页查询")
     @GetMapping(value = "/page/get")
-    protected RestResult getPage(@ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
+    protected RestResult getPage(@ApiParam(value = "页码") @RequestParam(required = false) String productName,
+                                 @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                  @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
-        Page<ProductSkuDTO> dtoPage = productSkuService.findPage(pageNum, pageSize);
+        Page<ProductSkuDTO> dtoPage = productSkuService.findPage(productName, pageNum, pageSize);
         RestPage<SkuPageVO> result = new RestPage(dtoPage.getCurrent(), dtoPage.getSize(), dtoPage.getTotal());
         List<SkuPageVO> resultList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(dtoPage.getRecords())) {
@@ -47,10 +48,11 @@ public class ProductSkuController extends GenericController {
                 SkuPageVO vo = new SkuPageVO();
                 BeanUtils.copyProperties(record, vo);
                 List<AttrValueVO> valueOldList = JSONObject.parseArray(vo.getAttrJson(), AttrValueVO.class);
+                StringBuffer attrValue = new StringBuffer();
                 for (AttrValueVO attrValueVO : valueOldList) {
-                    String attr = "【"+ attrValueVO.getSkuName() + ":" + attrValueVO.getSkuValue() + "】";
-                    vo.setAttrValue(attr);
+                    attrValue.append("【"+ attrValueVO.getSkuName() + ":" + attrValueVO.getSkuValue() + "】");
                 }
+                vo.setAttrValue(attrValue.toString());
                 resultList.add(vo);
             }
         }

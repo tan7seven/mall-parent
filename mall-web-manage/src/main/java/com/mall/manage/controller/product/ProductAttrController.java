@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.enums.ResultStatus;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
@@ -116,6 +117,16 @@ public class ProductAttrController {
     @PreAuthorize(" hasAuthority('PMS:PRODUCTPROPERTY:CREATE') or hasRole('ADMIN')")
     @PostMapping("/create")
     protected RestResult<Boolean> create(@Validated @RequestBody AttrCreateParam param){
+        ProductAttrTypeEntity typeEntity = productAttrTypeService.getById(param.getTypeId());
+        if (null != typeEntity) {
+            ProductAttrTypeEntity updateEntity = new ProductAttrTypeEntity();
+            updateEntity.setId(typeEntity.getId());
+            if (ProductAttrNameTypeEnum.SALE.getCode().equals(param.getInputType())) {
+                updateEntity.setAttrNum(typeEntity.getAttrNum()+1);
+            }else if(ProductAttrNameTypeEnum.NOT_SALE.getCode().equals(param.getInputType())){
+                updateEntity.setParamNum(typeEntity.getParamNum()+1);
+            }
+        }
         Boolean result = productAttrNameService.createAttrName(param);
         return RestResult.success(result);
     }

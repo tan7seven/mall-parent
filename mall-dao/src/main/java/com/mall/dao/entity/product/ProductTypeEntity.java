@@ -19,6 +19,10 @@ public class ProductTypeEntity extends BaseEntity {
      */
     private String typeName;
     /**
+     * 分类图片地址
+     */
+    private String typePicUrl;
+    /**
      * 父类目编号
      */
     private Long parentId;
@@ -47,7 +51,7 @@ public class ProductTypeEntity extends BaseEntity {
      * 0:正常
      * 1：已删除
      */
-    @TableLogic(value="0",delval="1") // 最好写上，全局配置了，坑我，他找不到，还乱码 // value 默认未删除，deval 删除了
+    @TableLogic(value="0",delval="1")
     @TableField(value ="is_deleted")
     private Boolean deleted;
 }

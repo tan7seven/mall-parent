@@ -34,9 +34,6 @@
             <if test="param.productName!=null and param.productName!=''">
                 AND b.product_name like concat('%', #{param.productName}, '%')
             </if>
-            <if test="param.productId!=null and param.productId!=''">
-                AND b.product_id = #{param.productId}
-            </if>
             AND a.is_deleted = 0
             AND b.is_deleted = 0
         </where>

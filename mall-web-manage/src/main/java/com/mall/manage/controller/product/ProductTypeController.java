@@ -65,6 +65,7 @@ public class ProductTypeController {
         }
         ProductTypeDetailVO result = new ProductTypeDetailVO();
         BeanUtils.copyProperties(entity, result);
+        result.setPicUrl(entity.getTypePicUrl());
         return RestResult.success(result);
     }
 
@@ -74,6 +75,8 @@ public class ProductTypeController {
     protected RestResult<Boolean> create(@Validated @RequestBody TypeCreateParam param) {
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(param, entity);
+        entity.setLevel(entity.getParentId() == 0 ? 1 : 2);
+        entity.setTypePicUrl(param.getPicUrl());
         Boolean result = productTypeService.save(entity);
         return RestResult.success(result);
     }
@@ -84,6 +87,8 @@ public class ProductTypeController {
     protected RestResult<Boolean> modify(@Validated @RequestBody TypeUpdateParam param) {
         ProductTypeEntity entity = new ProductTypeEntity();
         BeanUtils.copyProperties(param, entity);
+        entity.setLevel(entity.getParentId() == 0 ? 1 : 2);
+        entity.setTypePicUrl(param.getPicUrl());
         Boolean result = productTypeService.updateById(entity);
         return RestResult.success(result);
     }

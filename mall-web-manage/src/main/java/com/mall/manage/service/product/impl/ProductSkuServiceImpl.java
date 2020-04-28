@@ -38,9 +38,10 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
     @Autowired
     private ProductAttrValueService productAttrValueService;
     @Override
-    public Page<ProductSkuDTO> findPage(Integer pageNum, Integer pageSize) {
+    public Page<ProductSkuDTO> findPage(String productName, Integer pageNum, Integer pageSize) {
         ProductSkuDTO queryParam = new ProductSkuDTO();
         Page pageParam = new Page<>(pageNum, pageSize);
+        queryParam.setProductName(productName);
         Page<ProductSkuDTO> result = productSkuMapper.getList(pageParam, queryParam);
         return result;
     }

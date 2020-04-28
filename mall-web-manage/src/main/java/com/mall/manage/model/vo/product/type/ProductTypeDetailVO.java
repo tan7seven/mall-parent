@@ -21,6 +21,9 @@ public class ProductTypeDetailVO implements Serializable {
      */
     @ApiModelProperty(value = "父类编码")
     private Long parentId;
+
+    @ApiModelProperty(value = "图片地址")
+    private String picUrl;
     /**
      * 等级
      */

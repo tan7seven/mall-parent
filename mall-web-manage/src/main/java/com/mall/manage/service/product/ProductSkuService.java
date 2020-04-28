@@ -17,7 +17,7 @@ public interface ProductSkuService extends IService<ProductSkuEntity> {
      * 分页查询
      * @return
      */
-    Page<ProductSkuDTO> findPage(Integer pageNum, Integer pageSize);
+    Page<ProductSkuDTO> findPage(String productName, Integer pageNum, Integer pageSize);
     /**
      * 新增
      * @return

@@ -21,6 +21,9 @@ public class TypeUpdateParam extends BaseParam {
     @NotBlank(message = "分类名称不能为空")
     @ApiModelProperty(value = "分类名称")
     private String typeName;
+
+    @ApiModelProperty(value = "图片地址")
+    private String picUrl;
     /**
      * 父类目编号
      */

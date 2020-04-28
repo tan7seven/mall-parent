@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum  ProductAttrNameTypeEnum {
 
     SALE(1,"销售属性"),
-    NOT_SALE(2,"非销售属性"),
+    NOT_SALE(2,"显示参数"),
     ;
     private Integer code;
     private String name;

@@ -24,6 +24,9 @@ public class TypeCreateParam extends BaseParam {
     @NotNull(message = "上级ID不能为空")
     @ApiModelProperty(value = "上级ID")
     private Long parentId;
+
+    @ApiModelProperty(value = "图片地址")
+    private String picUrl;
     /**
      * 	排序
      */
