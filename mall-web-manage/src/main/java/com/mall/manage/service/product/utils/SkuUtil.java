@@ -2,6 +2,7 @@ package com.mall.manage.service.product.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.mall.common.constant.CommonConstant;
 import com.mall.dao.entity.product.ProductAttrValueEntity;
 import com.mall.dao.entity.product.ProductSkuEntity;
 import com.mall.manage.model.vo.product.attr.AttrValueVO;
@@ -23,6 +24,7 @@ public class SkuUtil {
         for (ProductSkuEntity productSku : skuEntityList) {
             SkuListVO vo = new SkuListVO();
             BeanUtils.copyProperties(productSku, vo);
+            vo.setPicUrl(CommonConstant.IMG_PRE + productSku.getPicUrl());
             if (CollectionUtils.isEmpty(attrValueList)) {
                 continue;
             }

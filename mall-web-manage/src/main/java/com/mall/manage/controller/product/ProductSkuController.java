@@ -2,6 +2,7 @@ package com.mall.manage.controller.product;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mall.common.constant.CommonConstant;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductSkuDTO;
@@ -53,6 +54,7 @@ public class ProductSkuController extends GenericController {
                     attrValue.append("【"+ attrValueVO.getSkuName() + ":" + attrValueVO.getSkuValue() + "】");
                 }
                 vo.setAttrValue(attrValue.toString());
+                vo.setPicUrl(CommonConstant.IMG_PRE + record.getPicUrl());
                 resultList.add(vo);
             }
         }

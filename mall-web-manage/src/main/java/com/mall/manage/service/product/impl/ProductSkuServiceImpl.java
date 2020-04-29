@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.mall.common.constant.CommonConstant;
 import com.mall.common.enums.ProductAttrNameTypeEnum;
 import com.mall.common.exception.BusinessException;
 import com.mall.dao.dto.product.ProductSkuDTO;
@@ -62,6 +63,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
             entity.setCostPrice(itemParam.getCostPrice());
             entity.setStock(itemParam.getStock());
             entity.setAttrJson(JSONObject.toJSONString(itemParam.getAttrValueList()));
+            entity.setPicUrl(itemParam.getPicUrl().replaceAll(CommonConstant.IMG_PRE, ""));
             if (null != itemParam.getId()) {
                 entity.setId(itemParam.getId());
                 updateList.add(entity);

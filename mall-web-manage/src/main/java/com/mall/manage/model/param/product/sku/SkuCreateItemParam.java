@@ -35,6 +35,9 @@ public class SkuCreateItemParam extends BaseParam {
     @ApiModelProperty(value = "成本价")
     private BigDecimal costPrice;
 
+    @ApiModelProperty(value = "图片地址")
+    private String picUrl;
+
     @Valid
     @NotEmpty(message = "属性列表不能为空")
     @ApiModelProperty(value = "属性列表")
