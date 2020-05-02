@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.mapper.order.OrderOperationLogMapper">
+    <resultMap id="BaseResultMap" type="com.mall.dao.dto.order.OrderOperationLogDTO">
+        <id column="operation_id" jdbcType="VARCHAR" property="operationId" />
+        <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+        <result column="operation_person" jdbcType="VARCHAR" property="operationPerson" />
+        <result column="order_status"  property="orderStatus" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="name"  property="name" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    a.operation_id, a.order_id, a.operation_person, a.order_status, a.remark, a.create_time
+    </sql>
+
+    <select id="getOperationLog" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" /> ,b.name
+        FROM mall_order_operation_log a
+        inner JOIN system_admin b on a.operation_person = b.user_id
+        WHERE  1 = 1
+        <if test="dto.orderId!=null and dto.orderId!=''">
+            AND a.order_id =#{dto.orderId}
+        </if>
+    </select>
+
+
+</mapper>

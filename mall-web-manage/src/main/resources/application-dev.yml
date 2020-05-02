@@ -1,0 +1,6 @@
+server:
+  port: 8084
+logging:
+  file: log
+pic:
+    path:  E://IDEA-WorkPlace//mall//pic//

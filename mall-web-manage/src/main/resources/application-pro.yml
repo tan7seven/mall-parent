@@ -1,0 +1,7 @@
+server:
+  port: 8083
+logging:
+  file: log
+  path: /root/mall/mall_log
+pic:
+    path: /root/mall/image

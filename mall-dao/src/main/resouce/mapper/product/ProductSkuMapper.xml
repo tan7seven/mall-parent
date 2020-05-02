@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.mapper.product.ProductSkuMapper">
+
+    <resultMap id="ProductSkuMap" type="com.mall.dao.dto.product.ProductSkuDTO">
+        <result column="id" property="id"/>
+        <result column="product_Id" property="productId"/>
+        <result column="product_name" property="productName"/>
+        <result column="attr_json" property="attrJson"/>
+        <result column="type_Id" property="typeId"/>
+        <result column="cost_price" property="costPrice"/>
+        <result column="sale_price" property="salePrice"/>
+        <result column="sell_sum" property="sellSum"/>
+        <result column="stock" property="stock"/>
+        <result column="pic_url" property="picUrl"/>
+    </resultMap>
+
+    <select id="getList" resultMap="ProductSkuMap">
+        SELECT
+            a.id ,
+            a.cost_price,
+            a.sale_price,
+            a.attr_json,
+            a.sell_sum,
+            a.stock,
+            a.pic_url ,
+            b.product_name ,
+            b.type_Id ,
+            b.id product_Id
+        FROM
+            mall_product_sku a
+        INNER JOIN mall_product b ON a.product_id = b.id
+        <where>
+            <if test="param.productName!=null and param.productName!=''">
+                AND b.product_name like concat('%', #{param.productName}, '%')
+            </if>
+            AND a.is_deleted = 0
+            AND b.is_deleted = 0
+        </where>
+
+    </select>
+</mapper>

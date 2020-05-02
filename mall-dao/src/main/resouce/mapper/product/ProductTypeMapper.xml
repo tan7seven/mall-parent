@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.mapper.product.ProductTypeMapper">
+
+    <!--
+    <id>：主键字段
+
+    <result>：普通字段
+
+    type：整体封装出的类型
+
+    column：字段名（表里定义好的）
+
+    property：关联属性（查询出来的结果封装成Country里的哪个属性）
+
+    ofType：指定属性类型（关联属性是什么类型）
+
+    <collection>：集合封装
+
+     association:用于配置1对1的映射
+		                属性property：company对象在user对象中的属性名
+		                属性javaType：company属性的java对象 类型
+		                属性column：user表中的外键引用company表
+
+    collection ：配置1对多关系映射
+            property：在user里面的List<Account>的属性名
+            ofType:当前account表的java类型
+            column:外键
+
+        -->
+    <resultMap id="ProductTypeMap" type="com.mall.dao.dto.common.CommonCascaderDTO">
+        <result column="value" property="value"/>
+        <result column="label" property="label"/>
+        <collection property="children" ofType="com.mall.dao.dto.common.CommonCascaderDTO">
+            <result column="children_value" property="value"/>
+            <result column="children_label" property="label"/>
+        </collection>
+    </resultMap>
+
+    <select id="getCascader" resultMap="ProductTypeMap">
+        SELECT
+          a.id value,
+          a.type_name label,
+          b.id children_value,
+          b.type_name children_label
+        FROM mall_product_type a
+        LEFT JOIN mall_product_type b
+            ON a.id = b.parent_id
+            AND b.is_usable = 1
+        WHERE a.parent_id = 0
+            AND a.is_usable = 1
+            AND  a.is_deleted = 0
+    </select>
+
+    <update id="updateUsableByParent">
+        UPDATE mall_product_type a
+        INNER JOIN mall_product_type b ON b.type_id = a.parent_id
+        SET a.is_usable = #{isUsable}
+        WHERE
+            a.parent_id = #{parentId}
+
+    </update>
+    
+</mapper>

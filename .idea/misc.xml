@@ -4,14 +4,13 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/mall-admin/pom.xml" />
         <option value="$PROJECT_DIR$/wechat/pom.xml" />
-        <option value="$PROJECT_DIR$/mall-wechar/pom.xml" />
         <option value="$PROJECT_DIR$/mall-model/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/mall-uni-app/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
       </set>
     </option>
