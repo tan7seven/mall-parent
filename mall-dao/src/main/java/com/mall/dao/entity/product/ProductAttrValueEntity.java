@@ -15,6 +15,10 @@ public class ProductAttrValueEntity extends BaseEntity {
      */
     private Long nameId;
     /**
+     * 属性名
+     */
+    private String name;
+    /**
      * 属性值
      */
     private String value;

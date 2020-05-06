@@ -3,27 +3,46 @@ package com.mall.manage.service.product.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.enums.ProductAttrNameTypeEnum;
+import com.mall.common.enums.ResultStatus;
 import com.mall.common.exception.BusinessException;
 import com.mall.dao.entity.product.ProductAttrNameEntity;
+import com.mall.dao.entity.product.ProductAttrTypeEntity;
 import com.mall.dao.mapper.product.ProductAttrNameMapper;
 import com.mall.manage.model.param.product.attr.AttrCreateParam;
 import com.mall.manage.model.param.product.attr.AttrShowedUpdateParam;
 import com.mall.manage.model.param.product.attr.AttrUpdateParam;
 import com.mall.manage.model.param.product.attr.AttrUsableUpdateParam;
 import com.mall.manage.service.product.ProductAttrNameService;
+import com.mall.manage.service.product.ProductAttrTypeService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service(value = "productAttrNameService")
 public class ProductAttrNameServiceImpl extends ServiceImpl<ProductAttrNameMapper, ProductAttrNameEntity> implements ProductAttrNameService {
+    @Autowired
+    private ProductAttrTypeService productAttrTypeService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean createAttrName(AttrCreateParam param) {
+        ProductAttrTypeEntity typeEntity = productAttrTypeService.getById(param.getTypeId());
+        if (Objects.isNull(typeEntity)) {
+            throw new BusinessException(ResultStatus.BUS_MSG_NOT_FOUND);
+        }
+        ProductAttrTypeEntity updateEntity = new ProductAttrTypeEntity();
+        updateEntity.setId(typeEntity.getId());
+        if (ProductAttrNameTypeEnum.SALE.getCode().equals(param.getInputType())) {
+            updateEntity.setAttrNum(typeEntity.getAttrNum()+1);
+        }else if(ProductAttrNameTypeEnum.NOT_SALE.getCode().equals(param.getInputType())){
+            updateEntity.setParamNum(typeEntity.getParamNum()+1);
+        }
+        productAttrTypeService.updateById(updateEntity);
         ProductAttrNameEntity entity = new ProductAttrNameEntity();
         BeanUtils.copyProperties(param, entity);
         Boolean result = this.save(entity);

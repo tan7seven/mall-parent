@@ -32,6 +32,18 @@ spring:
   profiles:
     active: dev
 
+aliyun:
+  accessKeyId: LTAI4FjhAeZusCt8fySLxnwh
+  accessKeySecret: nSuTUrtUK6QuDOZTzrMGafnSO3KMia
+  oss:
+    endpoint: http://oss-cn-beijing.aliyuncs.com
+    bucketName: wjz-mall-image
+    urlPrefix: https://wjz-mall-image.oss-cn-beijing.aliyuncs.com/
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml

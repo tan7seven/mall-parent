@@ -1,6 +1,6 @@
 package com.mall.manage.model.param.product.product;
 
-import com.mall.common.model.param.CommonParam;
+import com.mall.common.model.param.BaseParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @ApiModel
-public class UpdateParam extends CommonParam {
+public class UpdateParam extends BaseParam {
     @ApiModelProperty(value = "主键")
     @NotNull(message = "主键ID不能为空")
     private Long id;

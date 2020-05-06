@@ -1,6 +1,6 @@
 package com.mall.manage.model.param.order;
 
-import com.mall.common.model.param.CommonParam;
+import com.mall.common.model.param.BaseParam;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,5 +11,5 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class OrderDetaiParam extends CommonParam {
+public class OrderDetaiParam extends BaseParam {
 }

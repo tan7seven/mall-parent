@@ -1,7 +1,7 @@
 package com.mall.manage.model.param.order;
 
-import com.mall.common.model.param.CommonParam;
+import com.mall.common.model.param.BaseParam;
 
-public class OrderGetPageParam extends CommonParam {
+public class OrderGetPageParam extends BaseParam {
 
 }

@@ -50,6 +50,7 @@ public class ProductManage {
                 ProductAttrValueEntity valueEntity = new ProductAttrValueEntity();
                 valueEntity.setNameId(attrNameEntity.getId());
                 valueEntity.setValue(attrValue);
+                valueEntity.setName(attrNameEntity.getName());
                 valueEntity.setProductId(productId);
                 if (Objects.nonNull(attrJSONMap.get("id"))  && StringUtils.isNotBlank(attrValue)) {
                     String id = (String) attrJSONMap.get("id");
