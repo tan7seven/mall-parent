@@ -4,3 +4,11 @@ logging:
   file: log
 pic:
     path:  E://IDEA-WorkPlace//mall//pic//
+alibaba:
+  acm:
+    endpoint: acm.aliyun.com
+    namespace: 06026ee6-4b19-4a1b-8c6d-73a04b6631a3
+    accessKey: LTAI4FjhAeZusCt8fySLxnwh
+    secretKey: nSuTUrtUK6QuDOZTzrMGafnSO3KMia
+    group: com.wjz.mall
+    file-extension: properties

@@ -7,6 +7,9 @@ logging:
     org.springframework.web: INFO
     com.mall.dao.mapper: debug #打印sql
 spring:
+  application:
+    name: mall-web-manage
+    group: com.wjz.mall
   servlet:
     multipart:
       max-file-size: 1MB
