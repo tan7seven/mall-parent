@@ -28,9 +28,6 @@ import java.util.Date;
 @RequestMapping(value = "/common")
 public class CommonController {
 
-    @Value("${pic.path:}")
-    private String picPath;
-
     @Autowired
     private UploadPicManage uploadPicManage;
 

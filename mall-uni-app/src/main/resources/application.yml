@@ -1,53 +1,52 @@
 server:
-  servlet:
-    session:
-      timeout: 72000s
+  port: ${server.port}
+logging:
+  file: mall-web-manage-${spring.profiles.active}.log
+  level:
+    org.springframework.web: INFO
+    com.mall.dao.mapper: debug #打印sql
 spring:
-  datasource:
-    url: jdbc:mysql://47.110.47.162:3306/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
-    username: root
-    password: 12345678
-    driver-class-name: com.mysql.jdbc.Driver
-    druid:
-      initial-size: 5 #连接池初始化大小
-      min-idle: 10 #最小空闲连接数
-      max-active: 20 #最大连接数
-      web-stat-filter:
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
-      stat-view-servlet: #访问监控网页的登录用户名和密码
-        login-username: druid
-        login-password: druid
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL57Dialect
-  devtools:
-    restart:
-      enabled: true
-  http:
-    encoding:
-      force: true
-      charset: utf-8
-      enabled: true
+  application:
+    name: mall-web-manage
+    group: com.wjz.mall
   profiles:
     active: dev
-
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 20MB
+  datasource:
+    url: ${datasource.url}
+    username: ${datasource.username}
+    password: ${datasource.password}
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 50
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.mall.dao.entity.*
+  #  驼峰转换
+  configuration:
+    map-underscore-to-camel-case: true
 aliyun:
-  accessKeyId: LTAI4FjhAeZusCt8fySLxnwh
-  accessKeySecret: nSuTUrtUK6QuDOZTzrMGafnSO3KMia
+  accessKeyId: ${aliyun.accessKeyId}
+  accessKeySecret: ${aliyun.accessKeySecret}
   oss:
     endpoint: http://oss-cn-beijing.aliyuncs.com
     bucketName: wjz-mall-image
     urlPrefix: https://wjz-mall-image.oss-cn-beijing.aliyuncs.com/
-
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
 
-mybatis:
-  mapper-locations: classpath:mapper/**/*.xml
-  type-aliases-package: com.mall.mallmodel.entity.*
-#  驼峰转换
-  configuration:
-    map-underscore-to-camel-case: true
+# 配置swagger
+swagger:
+  title: 碧直播APP接口API
+  version: 1.0
+  base-package: com.mall
+  authorization:
+    key-name: Authorization
+
+

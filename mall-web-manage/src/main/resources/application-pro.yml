@@ -1,7 +1,8 @@
-server:
-  port: 8083
-logging:
-  file: log
-  path: /root/mall/mall_log
-pic:
-    path: /root/mall/image
+alibaba:
+  acm:
+    endpoint: acm.aliyun.com
+    namespace: 9d5392c3-c6bf-4daf-8866-da4166314ccb
+    accessKey:
+    secretKey:
+    group: com.wjz.mall
+    file-extension: properties

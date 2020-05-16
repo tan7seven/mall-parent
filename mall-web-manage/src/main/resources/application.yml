@@ -1,8 +1,7 @@
 server:
-  servlet:
-    session:
-      timeout: 72000s
+  port: ${server.port}
 logging:
+  file: mall-web-manage-${spring.profiles.active}.log
   level:
     org.springframework.web: INFO
     com.mall.dao.mapper: debug #打印sql
@@ -10,28 +9,20 @@ spring:
   application:
     name: mall-web-manage
     group: com.wjz.mall
+  profiles:
+    active: dev
   servlet:
     multipart:
       max-file-size: 1MB
       max-request-size: 20MB
-  profiles:
-    active: dev
   datasource:
-    url: jdbc:mysql://47.110.47.162:3306/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
-    username: root
-    password: 12345678
+    url: ${datasource.url}
+    username: ${datasource.username}
+    password: ${datasource.password}
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5
       maximum-pool-size: 50
-  http:
-    encoding:
-      force: true
-      charset: utf-8
-      enabled: true
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: com.mall.dao.entity.*
@@ -39,18 +30,14 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 aliyun:
-  accessKeyId: LTAI4FjhAeZusCt8fySLxnwh
-  accessKeySecret: nSuTUrtUK6QuDOZTzrMGafnSO3KMia
+  accessKeyId: ${aliyun.accessKeyId}
+  accessKeySecret: ${aliyun.accessKeySecret}
   oss:
     endpoint: http://oss-cn-beijing.aliyuncs.com
     bucketName: wjz-mall-image
     urlPrefix: https://wjz-mall-image.oss-cn-beijing.aliyuncs.com/
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
-  global-config:
-    db-config:
-      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
-      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
   configuration:
     map-underscore-to-camel-case: true
 
