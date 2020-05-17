@@ -5,6 +5,7 @@ package com.mall.common.exception;
 import com.mall.common.model.vo.RestResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -18,6 +19,7 @@ import sun.security.validator.ValidatorException;
 
 
 @Slf4j
+@Order(-1000)
 @RestControllerAdvice({"com.mall"})
 public class GlobalExceptionHandler {
 
@@ -76,6 +78,12 @@ public class GlobalExceptionHandler {
     public RestResult httpMediaTypeNotSupportedExceptionHandler(HttpMediaTypeNotSupportedException e) {
         log.warn("MediaType不被支持:{}", e.getMessage());
         return RestResult.failed(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase());
+    }
+
+    @ExceptionHandler({JWTAuthException.class})
+    public RestResult loginExceptionHandler(JWTAuthException e) {
+        log.warn("权限验证异常:{}", e.getMessage());
+        return RestResult.failed(e.getStatus(), e.getMessage());
     }
 
     @ExceptionHandler({Exception.class})

@@ -2,6 +2,7 @@ package com.mall.app.controller.product;
 
 import com.mall.app.model.vo.product.ProductDetailVO;
 import com.mall.app.service.product.ProductService;
+import com.mall.common.exception.BusinessException;
 import com.mall.common.model.vo.RestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,8 +25,9 @@ public class ProductController {
     @GetMapping(value = "/detail/{productId}")
     @ApiOperation(value = "获取商品详情")
     public RestResult<ProductDetailVO> productDetail(@PathVariable Long productId){
-        ProductDetailVO result = productService.getProductDetail(productId);
-        return RestResult.success(result);
+        throw new BusinessException("123");
+   /*     ProductDetailVO result = productService.getProductDetail(productId);
+        return RestResult.success(result);*/
     }
 
 

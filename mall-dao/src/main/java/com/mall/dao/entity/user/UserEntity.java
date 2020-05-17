@@ -1,11 +1,10 @@
 package com.mall.dao.entity.user;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,20 +13,7 @@ import java.util.Date;
 @Data
 @TableName("mall_user")
 public class UserEntity extends BaseEntity {
-    /**
-     * 是否可用：可用
-     */
-    public static final String IS_USABLE = "0";
-    /**
-     * 是否可用：禁用
-     */
-    public static final String NOT_USABLE = "1";
 
-
-    /**
-     * 用户编号
-     */
-    private String userId;
     /**
      * 登录账号
      */
@@ -53,7 +39,7 @@ public class UserEntity extends BaseEntity {
      */
     private String email;
     /**
-     * 邮箱
+     * 积分
      */
     private Integer score;
     /**
@@ -61,13 +47,6 @@ public class UserEntity extends BaseEntity {
      * 0：可用
      * 1：禁用
      */
-    private Boolean isUsable;
-    /**
-     * 新增时间
-     */
-    private Date createTime;
-    /**
-     * 更新时间
-     */
-    private Date modifyTime;
+    @TableField(value ="is_usable")
+    private Boolean usable;
 }
