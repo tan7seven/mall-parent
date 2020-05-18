@@ -49,8 +49,8 @@ public class JwtTokenUtil {
     /**
      * @deprecation: 解析token,获得subject中的信息
      */
-    public static String parseToken(String token) {
-        return (String) getTokenBody(token).get(CLAIM_KEY_USER);
+    public static String parseTokenGetUserId(String token) {
+        return getTokenBody(token).get(CLAIM_KEY_USER).toString();
     }
 
     /**
@@ -60,12 +60,6 @@ public class JwtTokenUtil {
         return getTokenBody(token);
     }
 
-    /**
-     *  是否已过期
-      */
-    public static boolean isExpiration(String token){
-        return getTokenBody(token).getExpiration().before(new Date());
-    }
 
     private static Claims getTokenBody(String token){
         return Jwts.parser()

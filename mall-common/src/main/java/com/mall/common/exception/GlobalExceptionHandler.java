@@ -2,7 +2,9 @@
 
 package com.mall.common.exception;
 
+import com.mall.common.enums.ResultStatus;
 import com.mall.common.model.vo.RestResult;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
@@ -85,7 +87,11 @@ public class GlobalExceptionHandler {
         log.warn("权限验证异常:{}", e.getMessage());
         return RestResult.failed(e.getStatus(), e.getMessage());
     }
-
+    @ExceptionHandler({ExpiredJwtException.class})
+    public RestResult expiredJwtExceptionHandler(ExpiredJwtException e) {
+        log.warn("ExpiredJwtException:{}", e.getMessage());
+        return RestResult.failed(ResultStatus.CLIENT_NEED_APPROVE.getCode(), "登陆过期");
+    }
     @ExceptionHandler({Exception.class})
     public RestResult otherExceptionHandler(Exception e) {
         if (this.enableNotice) {

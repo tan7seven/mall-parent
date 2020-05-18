@@ -25,9 +25,8 @@ public class ProductController {
     @GetMapping(value = "/detail/{productId}")
     @ApiOperation(value = "获取商品详情")
     public RestResult<ProductDetailVO> productDetail(@PathVariable Long productId){
-        throw new BusinessException("123");
-   /*     ProductDetailVO result = productService.getProductDetail(productId);
-        return RestResult.success(result);*/
+        ProductDetailVO result = productService.getProductDetail(productId);
+        return RestResult.success(result);
     }
 
 
