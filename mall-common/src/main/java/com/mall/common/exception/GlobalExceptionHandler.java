@@ -21,7 +21,6 @@ import sun.security.validator.ValidatorException;
 
 
 @Slf4j
-@Order(-1000)
 @RestControllerAdvice({"com.mall"})
 public class GlobalExceptionHandler {
 

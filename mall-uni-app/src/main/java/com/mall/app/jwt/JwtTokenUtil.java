@@ -21,7 +21,7 @@ public class JwtTokenUtil {
 
     private static final String CLAIM_KEY_CREATED = "created";
 
-    private static final Long EXPIRATION_TIME = 1 * 60 * 1000L;
+    private static final Long EXPIRATION_TIME = 24 *60 * 60 * 1000L;
 
 
     /**
