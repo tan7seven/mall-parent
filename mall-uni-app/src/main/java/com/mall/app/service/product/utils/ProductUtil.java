@@ -40,9 +40,10 @@ public class ProductUtil {
             for (ProductSkuEntity skuEntity : skuList) {
                 ProductSkuVO skuVO = new ProductSkuVO();
                 skuVO.setAttrJson(skuEntity.getAttrJson());
-                skuVO.setPicUrl(skuEntity.getPicUrl());
+                skuVO.setPicUrl(CommonConstant.IMG_PRE + skuEntity.getPicUrl());
                 skuVO.setSkuId(skuEntity.getId());
                 skuVO.setStock(skuEntity.getStock());
+                skuVO.setSalePrice(skuEntity.getSalePrice());
                 try{
                     List<ProductAttrValueVO> attrValueVOList = JSONObject.parseArray(skuEntity.getAttrJson(), ProductAttrValueVO.class);
                     skuVO.setAttrValueVO(attrValueVOList);
