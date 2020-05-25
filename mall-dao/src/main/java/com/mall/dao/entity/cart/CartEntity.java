@@ -13,10 +13,6 @@ import lombok.Data;
 @TableName("mall_cart")
 public class CartEntity extends BaseEntity {
     /**
-     * 主键
-     */
-    private Long id;
-    /**
      * 用户ID
      */
     private Long userId;
@@ -32,4 +28,9 @@ public class CartEntity extends BaseEntity {
      * 数量
      */
     private Integer amount;
+
+    /**
+     * 商品名称
+     */
+    private String productName;
 }
