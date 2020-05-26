@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
-public class OrderStateMachineManage {
+public class OrderMachineManage {
 
     @Resource
     private BeanFactory beanFactory;
@@ -29,19 +29,14 @@ public class OrderStateMachineManage {
 
     public synchronized boolean sendEvent(Message message, OrderEntity entity) {
         boolean result = false;
-        StateMachine<OrderStatusEnum, OrderEventEnum> stateMachine = null;
         try {
-            stateMachine = machineBuilder.build(beanFactory);
+            StateMachine<OrderStatusEnum, OrderEventEnum> stateMachine = machineBuilder.build(beanFactory);
+            stateMachine.start();
             orderPersister.restore(stateMachine, entity);
+            result = stateMachine.sendEvent(message);
         } catch (Exception e) {
             log.error("恢复状态机时异常：", e);
         }
-        result = stateMachine.sendEvent(message);
         return result;
-    }
-
-    public synchronized void start(Message message, OrderEntity entity) throws Exception {
-        StateMachine<OrderStatusEnum, OrderEventEnum> stateMachine = machineBuilder.build(beanFactory);
-        stateMachine.start();
     }
 }

@@ -1,8 +1,10 @@
 package com.mall.app.statemachine.order;
 
+import com.mall.app.statemachine.order.action.OrderPayAction;
 import com.mall.common.enums.OrderEventEnum;
 import com.mall.common.enums.OrderStatusEnum;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineBuilder;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,13 @@ import java.util.EnumSet;
  */
 @Component
 public class OrderMachineBuilder {
-    protected final static String MACHINE_ID = "order-machine";
+    public final static String MACHINE_ID = "order-machine";
+
+    public final static String MESSAGE_HEADER = "ORDER_HEADER";
+
+    @Autowired
+    private OrderPayAction orderPayAction;
+
 
     public StateMachine<OrderStatusEnum, OrderEventEnum> build(BeanFactory beanFactory) throws Exception {
         StateMachineBuilder.Builder<OrderStatusEnum, OrderEventEnum> builder = StateMachineBuilder.builder();
@@ -44,7 +52,7 @@ public class OrderMachineBuilder {
                 .source(OrderStatusEnum.UNPAID)
                 .target(OrderStatusEnum.PAID_WAIT_DELIVER)
                 .event(OrderEventEnum.PAY)
-
+                .action(orderPayAction)
 
                 /** 收货 */
                 .and().withExternal()

@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
  * @date 2020/5/8
  */
 @Component
-public class OrderStateMachinePersist implements StateMachinePersist<OrderStatusEnum, OrderEventEnum, OrderEntity> {
+public class OrderMachinePersist implements StateMachinePersist<OrderStatusEnum, OrderEventEnum, OrderEntity> {
     @Override
-    public void write(StateMachineContext<OrderStatusEnum, OrderEventEnum> stateMachineContext, OrderEntity orderDO) throws Exception {
+    public void write(StateMachineContext<OrderStatusEnum, OrderEventEnum> stateMachineContext, OrderEntity orderDO){
         //这里不做任何持久化工作
     }
 
     @Override
     public StateMachineContext<OrderStatusEnum, OrderEventEnum> read(OrderEntity entity){
-        return new DefaultStateMachineContext<OrderStatusEnum, OrderEventEnum>(OrderStatusEnum.getByCode(entity.getOrderStatus()), null, null, null, null, OrderMachineBuilder.MACHINE_ID);
+        return new DefaultStateMachineContext<>(OrderStatusEnum.getByCode(entity.getOrderStatus()), null, null, null, null, OrderMachineBuilder.MACHINE_ID);
     }
 }

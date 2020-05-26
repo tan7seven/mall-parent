@@ -1,6 +1,6 @@
 package com.mall.app.statemachine;
 
-import com.mall.app.statemachine.order.OrderStateMachinePersist;
+import com.mall.app.statemachine.order.OrderMachinePersist;
 import com.mall.common.enums.OrderEventEnum;
 import com.mall.common.enums.OrderStatusEnum;
 import com.mall.dao.entity.order.OrderEntity;
@@ -19,10 +19,10 @@ import javax.annotation.Resource;
 public class PersistConfig {
 
     @Resource
-    private OrderStateMachinePersist orderStateMachinePersist;
+    private OrderMachinePersist orderStateMachinePersist;
 
     @Bean(name = "orderPersister")
     public StateMachinePersister<OrderStatusEnum, OrderEventEnum, OrderEntity> orderPersister() {
-        return new DefaultStateMachinePersister<OrderStatusEnum, OrderEventEnum, OrderEntity>(orderStateMachinePersist);
+        return new DefaultStateMachinePersister<>(orderStateMachinePersist);
     }
 }
