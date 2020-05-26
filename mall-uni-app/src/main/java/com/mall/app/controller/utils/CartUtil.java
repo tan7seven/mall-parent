@@ -40,6 +40,7 @@ public class CartUtil {
                     result.setImage(CommonConstant.IMG_PRE + sku.getPicUrl());
                     result.setPrice(sku.getSalePrice());
                     result.setStock(sku.getStock());
+                    result.setSkuId(sku.getId());
                     try{
                         List<ProductAttrValueVO> attrValueVOList = JSONObject.parseArray(sku.getAttrJson(), ProductAttrValueVO.class);
                         StringBuffer attrVal = new StringBuffer();

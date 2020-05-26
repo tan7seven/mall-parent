@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 public class CartListVO extends BaseModel {
     @ApiModelProperty(value = "主键")
     private Long id;
+    @ApiModelProperty(value = "skuID")
+    private Long skuId;
     @ApiModelProperty(value = "图片")
     private String image;
     @ApiModelProperty(value = "属性值")

@@ -13,15 +13,6 @@ import java.util.Date;
 @Data
 @TableName("mall_order")
 public class OrderEntity extends BaseEntity {
-    //订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
-    public static final Integer ORDER_STATUS_OBLIGATION = 0;
-    public static final Integer ORDER_STATUS_TO_SEND = 1;
-    public static final Integer ORDER_STATUS_SEND = 2;
-    public static final Integer ORDER_STATUS_RECEIVE = 3;
-    public static final Integer ORDER_STATUS_CLOSED = 4;
-    public static final Integer ORDER_STATUS_FINISHED = 5;
-    public static final Integer ORDER_STATUS_INVALID = 6;
-
     /**
      * 订单ID
      */
@@ -86,10 +77,7 @@ public class OrderEntity extends BaseEntity {
      * 物流单号
      */
     private String deliveryCode;
-    /**
-     * 自动确认时间（天）
-     */
-    private Integer autoConfirmDay;
+
     /**
      * 收货人姓名
      */
@@ -98,10 +86,6 @@ public class OrderEntity extends BaseEntity {
      * 收货人电话
      */
     private String receiverPhone;
-    /**
-     * 收货人邮编
-     */
-    private String receiverPostCode;
     /**
      * 省份/直辖市
      */
