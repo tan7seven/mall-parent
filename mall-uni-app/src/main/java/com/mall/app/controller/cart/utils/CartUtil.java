@@ -1,4 +1,4 @@
-package com.mall.app.controller.utils;
+package com.mall.app.controller.cart.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
