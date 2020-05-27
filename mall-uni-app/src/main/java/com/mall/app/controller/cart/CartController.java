@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.mall.app.controller.utils.CartUtil;
 import com.mall.app.model.param.cart.CartAddParam;
+import com.mall.app.model.param.cart.CartAmountModifyParam;
+import com.mall.app.model.param.cart.CartRemoveParam;
 import com.mall.app.model.vo.cart.CartListVO;
 import com.mall.app.service.cart.CartService;
 import com.mall.app.service.product.ProductSkuService;
@@ -46,18 +48,20 @@ public class CartController {
     public RestResult<RestPage<CartListVO>> list(@ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                                  @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
         Long userId = 123L;
-        Page pageParam = new Page(pageNum, pageSize);
+        Page pageParam = new Page(pageNum, pageSize, false);
         QueryWrapper<CartEntity> wrapper = new QueryWrapper();
         if (null != userId) {
             wrapper.eq("user_id", userId);
         }
         Page<CartEntity> attrTypePage = (Page<CartEntity>) cartService.page(pageParam, wrapper);
-        List<Long> skuIdList = Lists.newArrayList();
-        if (!CollectionUtils.isEmpty(attrTypePage.getRecords())) {
-            skuIdList = attrTypePage.getRecords().stream().map(s -> s.getSkuId()).collect(Collectors.toList());
+        RestPage<CartListVO> result = new RestPage<>(attrTypePage.getCurrent(), attrTypePage.getSize(), attrTypePage.getTotal());
+        if (CollectionUtils.isEmpty(attrTypePage.getRecords())) {
+            return RestResult.success(result);
         }
-        List<ProductSkuEntity> skuList = productSkuService.list(Wrappers.<ProductSkuEntity>lambdaQuery().in(ProductSkuEntity::getId, skuIdList));
-        RestPage<CartListVO> result = CartUtil.buildPageVO(attrTypePage, skuList);
+        List<Long> skuIdList = attrTypePage.getRecords().stream().map(s -> s.getSkuId()).collect(Collectors.toList());
+        List<ProductSkuEntity> skuList = productSkuService.list(Wrappers.<ProductSkuEntity>lambdaQuery()
+                .in(ProductSkuEntity::getId, skuIdList));
+        result = CartUtil.buildPageVO(attrTypePage, skuList);
         return RestResult.success(result);
     }
 
@@ -69,11 +73,34 @@ public class CartController {
         return RestResult.success(result);
     }
 
-    @DeleteMapping(value = "/remove")
-    @ApiOperation(value = "移除购物车")
-    public RestResult<Boolean> remove(@RequestBody @Validated CartAddParam param){
+    @DeleteMapping(value = "/clear")
+    @ApiOperation(value = "清空购物车")
+    public RestResult<Boolean> clear(){
         Long userId = 123L;
-        Boolean result  = cartService.addSKU(param, userId);
+        Boolean result  = cartService.remove(Wrappers.<CartEntity>lambdaQuery()
+                .eq(CartEntity :: getUserId, userId));
+        return RestResult.success(result);
+    }
+
+    @DeleteMapping(value = "/remove")
+    @ApiOperation(value = "移除购物车指定SKU")
+    public RestResult<Boolean> remove(@RequestBody @Validated CartRemoveParam param){
+        Long userId = 123L;
+        Boolean result  = cartService.remove(Wrappers.<CartEntity>lambdaQuery()
+                .eq(CartEntity::getUserId, userId)
+                .in(CartEntity::getSkuId, param.getSkuIdList()));
+        return RestResult.success(result);
+    }
+
+    @PostMapping(value = "/amount/modify")
+    @ApiOperation(value = "修改数量")
+    public RestResult<Boolean> amountModify(@RequestBody @Validated CartAmountModifyParam param){
+        Long userId = 123L;
+        CartEntity update = new CartEntity();
+        update.setAmount(param.getAmount());
+        Boolean result  = cartService.update(update, Wrappers.<CartEntity>lambdaQuery()
+                .eq(CartEntity::getUserId, userId)
+                .eq(CartEntity::getSkuId, param.getSkuId()));
         return RestResult.success(result);
     }
 }

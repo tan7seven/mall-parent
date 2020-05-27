@@ -18,5 +18,5 @@ import java.util.List;
 public class CartRemoveParam extends BaseParam {
     @NotEmpty(message = "主键不能为空")
     @ApiModelProperty(value = "主键集合")
-    private List<Long> idList;
+    private List<Long> skuIdList;
 }

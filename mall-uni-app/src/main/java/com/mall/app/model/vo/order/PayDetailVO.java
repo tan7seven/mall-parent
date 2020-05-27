@@ -1,5 +1,6 @@
 package com.mall.app.model.vo.order;
 
+import com.mall.app.model.BasePriceModel;
 import com.mall.common.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,7 +17,7 @@ public class PayDetailVO extends BaseModel {
     private PriceVO priceMsg;
 
     @ApiModelProperty(value = "商品列表")
-    private List<SkuMsgVO> skuList;
+    private List<SkuVO> skuList;
 
     @ApiModelProperty(value = "用户收货信息")
     private ReceiverVO receiverMsg;
@@ -24,38 +25,13 @@ public class PayDetailVO extends BaseModel {
 
     @Data
     @ApiModel
-    public class SkuMsgVO{
-        @ApiModelProperty(value = "商品名称")
-        private Long productName;
-        @ApiModelProperty(value = "SKU ID")
-        private Long skuId;
-        @ApiModelProperty(value = "SKU图片地址")
-        private String picUrl;
-        @ApiModelProperty(value = "SKU属性数据")
-        private String attrJson;
-        @ApiModelProperty(value = "售价")
-        private BigDecimal salePrice;
+    public  class PriceVO extends BasePriceModel {
+
     }
 
     @Data
     @ApiModel
-    public class PriceVO{
-        @ApiModelProperty(value = "商品价格")
-        private BigDecimal productPrice;
-
-        @ApiModelProperty(value = "实付金额")
-        private BigDecimal paidPrice;
-
-        @ApiModelProperty(value = "优惠金额")
-        private BigDecimal couponPrice;
-
-        @ApiModelProperty(value = "运费")
-        private BigDecimal freightPrice;
-    }
-
-    @Data
-    @ApiModel
-    public class ReceiverVO{
+    public  class ReceiverVO extends BaseModel{
         @ApiModelProperty(value = "收货人姓名")
         private String receiverName;
 

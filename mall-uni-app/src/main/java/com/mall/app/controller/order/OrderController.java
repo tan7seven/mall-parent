@@ -1,18 +1,21 @@
 package com.mall.app.controller.order;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mall.app.model.param.order.OrderCreateParam;
+import com.mall.app.model.vo.order.CreateOrderVO;
+import com.mall.app.model.vo.order.PayDetailVO;
 import com.mall.app.service.order.OrderService;
 import com.mall.app.statemachine.order.OrderMachineManage;
 import com.mall.common.model.vo.RestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @description:
@@ -32,9 +35,18 @@ public class OrderController {
 
     @GetMapping(value = "/pay-detail/get")
     @ApiOperation(value = "支付详情")
-    public RestResult<Boolean> payDetail(@RequestBody @Validated OrderCreateParam param){
-        log.info("123：{}", param);
-        return RestResult.success(Boolean.TRUE);
+    public RestResult<PayDetailVO> payDetail(@ApiParam(value = "SKU集合") @RequestParam List<Long> skuIdList){
+        Long userId = 123L;
+        PayDetailVO result = orderService.payDetail(skuIdList, userId);
+        return RestResult.success(result);
 
+    }
+
+    @PutMapping(value = "/create")
+    @ApiOperation(value = "提交订单")
+    public RestResult<CreateOrderVO> create(@RequestBody @Validated OrderCreateParam param){
+        Long userId = 123L;
+        CreateOrderVO result = orderService.createOrder(param, userId);
+        return RestResult.success(result);
     }
 }
