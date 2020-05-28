@@ -15,13 +15,9 @@ import java.util.Date;
 @TableName("mall_user_address")
 public class UserAdressEntity extends BaseEntity {
     /**
-     * 主键
-     */
-    private String userAddressId;
-    /**
      * 用户编号
      */
-    private String userId;
+    private Long userId;
     /**
      * 收货人姓名
      */
@@ -45,22 +41,13 @@ public class UserAdressEntity extends BaseEntity {
     /**
      * 详细地址
      */
-    private String detailAddress;
+    private String address;
     /**
      * 是否可用：0->是；1->否
      */
-    private Boolean isUsable;
+    private Boolean usabled;
     /**
-     * 默认收货地址 ：0->是；1->否
+     * 默认收货地址 ：0->否；1->是
      */
-    private Boolean isReceive;
-    /**
-     * 新增时间
-     */
-    private Date createTime;
-    /**
-     * 更新时间
-     */
-    private Date modifyTime;
-
+    private Boolean defaulted;
 }

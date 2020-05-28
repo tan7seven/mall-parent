@@ -42,8 +42,8 @@ public class CartController {
     @Autowired
     private ProductSkuService productSkuService;
 
-    @GetMapping(value = "/list")
     @ApiOperation(value = "购物车列表")
+    @GetMapping(value = "/list")
     public RestResult<RestPage<CartListVO>> list(@ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                                  @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
         Long userId = 123L;
@@ -64,16 +64,16 @@ public class CartController {
         return RestResult.success(result);
     }
 
-    @PutMapping(value = "/add")
     @ApiOperation(value = "添加购物车")
+    @PutMapping(value = "/add")
     public RestResult<Boolean> add(@RequestBody @Validated CartAddParam param){
         Long userId = 123L;
         Boolean result  = cartService.addSKU(param, userId);
         return RestResult.success(result);
     }
 
-    @DeleteMapping(value = "/clear")
     @ApiOperation(value = "清空购物车")
+    @DeleteMapping(value = "/clear")
     public RestResult<Boolean> clear(){
         Long userId = 123L;
         Boolean result  = cartService.remove(Wrappers.<CartEntity>lambdaQuery()
@@ -81,8 +81,8 @@ public class CartController {
         return RestResult.success(result);
     }
 
-    @DeleteMapping(value = "/remove")
     @ApiOperation(value = "移除购物车指定SKU")
+    @DeleteMapping(value = "/remove")
     public RestResult<Boolean> remove(@RequestBody @Validated CartRemoveParam param){
         Long userId = 123L;
         Boolean result  = cartService.remove(Wrappers.<CartEntity>lambdaQuery()
@@ -91,8 +91,8 @@ public class CartController {
         return RestResult.success(result);
     }
 
-    @PostMapping(value = "/amount/modify")
     @ApiOperation(value = "修改数量")
+    @PostMapping(value = "/amount/modify")
     public RestResult<Boolean> amountModify(@RequestBody @Validated CartAmountModifyParam param){
         Long userId = 123L;
         CartEntity update = new CartEntity();

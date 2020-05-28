@@ -33,7 +33,7 @@ public class OrderUtil {
 
     /** 构建支付详情*/
     public static PayDetailVO buildPayDetailVO(List<ProductSkuEntity> skuList,
-                                               List<CartEntity> cartList,
+                                               List<OrderSkuParam> skuParamList,
                                                List<ProductEntity> productList){
         PayDetailVO result = new PayDetailVO();
         /** SKU信息*/
@@ -48,9 +48,9 @@ public class OrderUtil {
         }
         /** 设置数量*/
         for (SkuVO skuVO : skuVOList) {
-            for (CartEntity cartEntity : cartList) {
-                if (skuVO.getSkuId().equals(cartEntity.getSkuId())) {
-                    skuVO.setAmount(cartEntity.getAmount());
+            for (OrderSkuParam skuParam : skuParamList) {
+                if (skuVO.getSkuId().equals(skuParam.getSkuId())) {
+                    skuVO.setAmount(skuParam.getAmount());
                 }
             }
         }

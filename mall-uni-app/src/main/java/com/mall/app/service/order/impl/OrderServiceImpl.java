@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.app.controller.order.utils.OrderUtil;
+import com.mall.app.model.param.order.BuildPayDetailParam;
 import com.mall.app.model.param.order.OrderCreateParam;
 import com.mall.app.model.vo.order.CreateOrderVO;
 import com.mall.app.model.vo.order.PayDetailVO;
@@ -38,7 +39,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     private OrderItemsService orderItemsService;
 
     @Override
-    public PayDetailVO payDetail(List<Long> skuIdList, Long userId) {
+    public PayDetailVO payDetail(BuildPayDetailParam param, Long userId) {
+        List<Long> skuIdList = param.getSkuList().stream().map(s -> s.getSkuId()).collect(Collectors.toList());
         /** 获取SKU列表*/
         List<ProductSkuEntity> skuList = productSkuService.list(Wrappers.<ProductSkuEntity>lambdaQuery()
                 .in(ProductSkuEntity::getId, skuIdList));
@@ -47,15 +49,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         }
         List<Long> productIdList = skuList.stream().map(s -> s.getProductId()).collect(Collectors.toList());
         List<ProductEntity> productList = productService.list(Wrappers.<ProductEntity>lambdaQuery().in(ProductEntity::getId, productIdList));
-
-        List<CartEntity> cartList = cartService.list(Wrappers.<CartEntity>lambdaQuery()
-                .in(CartEntity::getSkuId, skuIdList)
-                .eq(CartEntity::getUserId, userId));
         // todo
         /** 获取营销列表（未做）*/
         // todo
         /** 获取用户信息 收货地址（未做）*/
-        PayDetailVO result = OrderUtil.buildPayDetailVO(skuList, cartList, productList);
+        PayDetailVO result = OrderUtil.buildPayDetailVO(skuList, param.getSkuList(), productList);
         return result;
     }
 
