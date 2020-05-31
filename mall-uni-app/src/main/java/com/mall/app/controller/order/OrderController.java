@@ -5,7 +5,6 @@ import com.mall.app.model.param.order.OrderCreateParam;
 import com.mall.app.model.vo.order.CreateOrderVO;
 import com.mall.app.model.vo.order.PayDetailVO;
 import com.mall.app.service.order.OrderService;
-import com.mall.app.statemachine.order.OrderMachineManage;
 import com.mall.common.model.vo.RestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,8 +24,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/v1/order")
 public class OrderController {
-    @Autowired
-    private OrderMachineManage orderStateMachineManage;
     @Autowired
     private OrderService orderService;
 

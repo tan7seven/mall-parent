@@ -1,19 +1,16 @@
 package com.mall.dao.entity.user;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 用户收货地址表
  */
 @Data
 @TableName("mall_user_address")
-public class UserAdressEntity extends BaseEntity {
+public class UserAddressEntity extends BaseEntity {
     /**
      * 用户编号
      */
@@ -25,7 +22,7 @@ public class UserAdressEntity extends BaseEntity {
     /**
      * 收货人电话
      */
-    private String phone;
+    private String mobile;
     /**
      * 省、直辖市
      */
@@ -45,9 +42,12 @@ public class UserAdressEntity extends BaseEntity {
     /**
      * 是否可用：0->是；1->否
      */
-    private Boolean usabled;
+    @TableField(value = "is_usable")
+    private Boolean usable;
     /**
      * 默认收货地址 ：0->否；1->是
      */
+
+    @TableField(value = "is_defaulted")
     private Boolean defaulted;
 }

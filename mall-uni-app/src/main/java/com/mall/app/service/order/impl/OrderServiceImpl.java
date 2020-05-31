@@ -13,12 +13,14 @@ import com.mall.app.service.order.OrderItemsService;
 import com.mall.app.service.order.OrderService;
 import com.mall.app.service.product.ProductService;
 import com.mall.app.service.product.ProductSkuService;
+import com.mall.app.service.user.UserAddressService;
 import com.mall.common.exception.BusinessException;
 import com.mall.dao.entity.cart.CartEntity;
 import com.mall.dao.entity.order.OrderEntity;
 import com.mall.dao.entity.order.OrderItemsEntity;
 import com.mall.dao.entity.product.ProductEntity;
 import com.mall.dao.entity.product.ProductSkuEntity;
+import com.mall.dao.entity.user.UserAddressEntity;
 import com.mall.dao.mapper.order.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     private ProductService productService;
     @Autowired
     private OrderItemsService orderItemsService;
+    @Autowired
+    private UserAddressService userAddressService;
 
     @Override
     public PayDetailVO payDetail(BuildPayDetailParam param, Long userId) {
@@ -49,11 +53,17 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         }
         List<Long> productIdList = skuList.stream().map(s -> s.getProductId()).collect(Collectors.toList());
         List<ProductEntity> productList = productService.list(Wrappers.<ProductEntity>lambdaQuery().in(ProductEntity::getId, productIdList));
+        /** 构建SKU，商品信息*/
+        PayDetailVO result = OrderUtil.buildPayDetailVO(skuList, param.getSkuList(), productList);
         // todo
         /** 获取营销列表（未做）*/
-        // todo
-        /** 获取用户信息 收货地址（未做）*/
-        PayDetailVO result = OrderUtil.buildPayDetailVO(skuList, param.getSkuList(), productList);
+        List<UserAddressEntity> addressList = userAddressService.list(Wrappers.<UserAddressEntity>lambdaQuery()
+                .eq(UserAddressEntity::getUserId, userId)
+                .orderByAsc(UserAddressEntity::getDefaulted));
+        if (!CollectionUtils.isEmpty(addressList)) {
+            /** 构建收货地址信息*/
+            OrderUtil.buildPayDetaiAdressVO(result, addressList.get(0));
+        }
         return result;
     }
 

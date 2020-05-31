@@ -14,15 +14,14 @@ import com.mall.common.constant.CommonConstant;
 import com.mall.common.enums.OrderStatusEnum;
 import com.mall.common.enums.PayTypeEnum;
 import com.mall.common.utils.SnowflakeIdWorker;
-import com.mall.dao.entity.cart.CartEntity;
 import com.mall.dao.entity.order.OrderEntity;
 import com.mall.dao.entity.order.OrderItemsEntity;
 import com.mall.dao.entity.product.ProductEntity;
 import com.mall.dao.entity.product.ProductSkuEntity;
+import com.mall.dao.entity.user.UserAddressEntity;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -148,6 +147,22 @@ public class OrderUtil {
          result.setOrderCode(orderEntity.getOrderCode());
          result.setPayPrice(orderEntity.getPayPrice());
          return result;
+     }
+
+    /**
+     * 支付详情-收货地址信息
+     */
+    public static void buildPayDetaiAdressVO(PayDetailVO result, UserAddressEntity param){
+        PayDetailVO.ReceiverVO vo = result.new ReceiverVO();
+        vo.setCity(param.getCity());
+        vo.setAddress(param.getAddress());
+        vo.setName(param.getName());
+        vo.setMobile(param.getMobile());
+        vo.setProvince(param.getProvince());
+        vo.setRegion(param.getRegion());
+        vo.setAddressId(param.getId());
+        vo.setDefaulted(param.getDefaulted());
+        result.setReceiverMsg(vo);
      }
     /** 金额计算 */
     public static  <T extends BaseSkuModel, R extends BasePriceModel>  R buildPrice ( R priceModel, List<T> skuList){

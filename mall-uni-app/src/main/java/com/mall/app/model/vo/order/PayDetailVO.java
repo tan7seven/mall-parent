@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -32,23 +31,29 @@ public class PayDetailVO extends BaseModel {
     @Data
     @ApiModel
     public  class ReceiverVO extends BaseModel{
+
+        @ApiModelProperty(value = "收货信息ID")
+        private Long addressId;
         @ApiModelProperty(value = "收货人姓名")
-        private String receiverName;
+        private String name;
 
         @ApiModelProperty(value = "收货人电话号码")
-        private String receiverPhone;
+        private String mobile;
 
         @ApiModelProperty(value = "省、直辖市")
-        private String receiverProvince;
+        private String province;
 
         @ApiModelProperty(value = "市")
-        private String receiverCity;
+        private String city;
 
         @ApiModelProperty(value = "区")
-        private String receiverRegion;
+        private String region;
 
         @ApiModelProperty(value = "详细地址")
-        private String receiverDetailAddress;
+        private String address;
+
+        @ApiModelProperty(value = "是否默认")
+        private Boolean defaulted;
     }
 
 }
