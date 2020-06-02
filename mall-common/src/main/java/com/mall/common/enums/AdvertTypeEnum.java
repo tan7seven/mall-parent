@@ -2,7 +2,9 @@ package com.mall.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @AllArgsConstructor
 public enum AdvertTypeEnum {
@@ -13,4 +15,18 @@ public enum AdvertTypeEnum {
     ;
     private Integer code;
     private String desc;
+
+    public static AdvertTypeEnum getByCode(Integer code){
+        if (null == code) {
+            log.error("AdvertTypeEnum getByCode error: code is null");
+            return AdvertTypeEnum.home_carousel;
+        }
+        for (AdvertTypeEnum typeEnum : AdvertTypeEnum.values()) {
+            if (typeEnum.code.equals(code)) {
+                return typeEnum;
+            }
+        }
+        log.error("AdvertTypeEnum getByCode error: code is invalid");
+        return AdvertTypeEnum.home_carousel;
+    }
 }

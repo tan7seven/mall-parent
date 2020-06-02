@@ -18,6 +18,10 @@ public class AdvertEntity extends BaseEntity {
      */
     private Integer type;
     /**
+     * 图片地址
+     */
+    private String picUrl;
+    /**
      * 跳转地址
      */
     private String skipUrl;

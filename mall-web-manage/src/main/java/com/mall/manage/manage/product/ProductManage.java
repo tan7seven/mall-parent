@@ -73,6 +73,7 @@ public class ProductManage {
                 valueEntity.setNameId(attrNameEntity.getId());
                 valueEntity.setValue(JSONObject.toJSONString(attrValueList));
                 valueEntity.setProductId(productId);
+                valueEntity.setName(attrNameEntity.getName());
                 if (Objects.nonNull(attrJSONMap.get("id")) && !CollectionUtils.isEmpty(attrValueList)) {
                     String id = (String) attrJSONMap.get("id");
                     valueEntity.setId(Long.valueOf(id));
