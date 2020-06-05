@@ -3,7 +3,6 @@ package com.mall.manage.controller.product;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.constant.CommonConstant;
-import com.mall.common.exception.BusinessException;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
@@ -37,12 +36,6 @@ public class ProductController {
 
     @Resource(name = "productService")
     private ProductService productService;
-
-    @GetMapping(value = "/test")
-    public RestResult<Boolean> test(){
-        throw new BusinessException("ID不能为空");
-
-    }
 
     @ApiOperation("分页查询")
     @GetMapping(value = "/page/get")

@@ -1,25 +1,17 @@
 package com.mall.manage.controller.advert;
 
-import com.alibaba.acm.shaded.com.google.common.collect.Maps;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
 import com.mall.common.constant.CommonConstant;
-import com.mall.common.enums.AdvertTypeEnum;
 import com.mall.common.exception.BusinessException;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
-import com.mall.dao.entity.advert.AdvertEntity;
 import com.mall.dao.entity.advert.AdvertProductEntity;
 import com.mall.manage.controller.advert.utils.AdvertProductUtil;
-import com.mall.manage.controller.advert.utils.AdvertUtil;
 import com.mall.manage.controller.common.GenericController;
-import com.mall.manage.model.param.advert.AdvertParam;
 import com.mall.manage.model.param.advert.AdvertProductParam;
 import com.mall.manage.model.vo.advert.AdvertProductVO;
-import com.mall.manage.model.vo.advert.AdvertVO;
 import com.mall.manage.service.advert.AdvertProductService;
-import com.mall.manage.service.advert.AdvertService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -29,9 +21,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @description:
@@ -49,10 +38,12 @@ public class AdvertProductController extends GenericController {
 
     @ApiOperation("广告列表")
     @GetMapping(value = "/list")
-    public RestResult<RestPage<AdvertProductVO>> list(@ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
+    public RestResult<RestPage<AdvertProductVO>> list(@ApiParam(value = "页码") @RequestParam Long advertId,
+                                                      @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                                       @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
         Page pageParam = new Page(pageNum, pageSize);
         QueryWrapper<AdvertProductEntity> wrapper = new QueryWrapper();
+        wrapper.eq("advert_id", advertId);
         Page<AdvertProductEntity> advertPage = (Page<AdvertProductEntity>) advertProductService.page(pageParam);
         RestPage<AdvertProductVO> result = AdvertProductUtil.buildAdvertProductVOList(advertPage);
         return RestResult.success(result);
@@ -70,15 +61,15 @@ public class AdvertProductController extends GenericController {
 
     @ApiOperation("修改")
     @PostMapping(value = "/modify")
-    public RestResult<Boolean> modify(@RequestBody @Validated AdvertParam param){
+    public RestResult<Boolean> modify(@RequestBody @Validated AdvertProductParam param){
         if (null == param.getId()) {
             throw  new BusinessException("ID不能为空");
         }
-        AdvertEntity advertEntity = new AdvertEntity();
-        BeanUtils.copyProperties(param, advertEntity);
-        advertEntity.setId(param.getId());
-        advertEntity.setPicUrl(advertEntity.getSkipUrl().replaceAll(CommonConstant.IMG_PRE, ""));
-        Boolean result = advertProductService.updateById(advertEntity);
+        AdvertProductEntity entity = new AdvertProductEntity();
+        BeanUtils.copyProperties(param, entity);
+        entity.setId(param.getId());
+        entity.setPicUrl(entity.getPicUrl().replaceAll(CommonConstant.IMG_PRE, ""));
+        Boolean result = advertProductService.updateById(entity);
         return RestResult.success(result);
     }
 
@@ -91,9 +82,9 @@ public class AdvertProductController extends GenericController {
 
     @ApiOperation("详情")
     @GetMapping(value = "/detail/{id}")
-    public RestResult<AdvertVO> detail(@PathVariable Long id){
-        AdvertEntity entity = advertProductService.getById(id);
-        AdvertVO result = new AdvertVO();
+    public RestResult<AdvertProductVO> detail(@PathVariable Long id){
+        AdvertProductEntity entity = advertProductService.getById(id);
+        AdvertProductVO result = new AdvertProductVO();
         BeanUtils.copyProperties(entity, result);
         if (StringUtils.isNotBlank(result.getPicUrl())) {
             result.setPicUrl(CommonConstant.IMG_PRE+result.getPicUrl());
