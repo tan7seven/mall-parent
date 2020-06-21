@@ -44,7 +44,7 @@ public class AdvertProductController extends GenericController {
         Page pageParam = new Page(pageNum, pageSize);
         QueryWrapper<AdvertProductEntity> wrapper = new QueryWrapper();
         wrapper.eq("advert_id", advertId);
-        Page<AdvertProductEntity> advertPage = (Page<AdvertProductEntity>) advertProductService.page(pageParam);
+        Page<AdvertProductEntity> advertPage = (Page<AdvertProductEntity>) advertProductService.page(pageParam, wrapper);
         RestPage<AdvertProductVO> result = AdvertProductUtil.buildAdvertProductVOList(advertPage);
         return RestResult.success(result);
     }
