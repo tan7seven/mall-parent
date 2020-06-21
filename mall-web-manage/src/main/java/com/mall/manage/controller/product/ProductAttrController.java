@@ -44,10 +44,8 @@ public class ProductAttrController {
 
     @Resource(name = "productAttrNameService")
     private ProductAttrNameService productAttrNameService;
-
     @Autowired
     private ProductAttrValueService productAttrValueService;
-
     @Autowired
     private ProductAttrTypeService productAttrTypeService;
 

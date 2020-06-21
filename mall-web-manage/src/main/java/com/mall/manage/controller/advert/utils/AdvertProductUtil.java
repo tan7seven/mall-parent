@@ -31,6 +31,7 @@ public class AdvertProductUtil {
         for (AdvertProductEntity entity : param.getRecords()) {
             AdvertProductVO vo = new AdvertProductVO();
             BeanUtils.copyProperties(entity, vo);
+            vo.setPicUrl(CommonConstant.IMG_PRE+ entity.getPicUrl());
             voList.add(vo);
         }
         result.setRecords(voList);
