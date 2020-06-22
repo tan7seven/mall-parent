@@ -1,5 +1,7 @@
 package com.mall.dao.entity.order;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
@@ -13,23 +15,14 @@ import java.util.Date;
 @Data
 @TableName("mall_order")
 public class OrderEntity extends BaseEntity {
-    //订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
-    public static final Integer ORDER_STATUS_OBLIGATION = 0;
-    public static final Integer ORDER_STATUS_TO_SEND = 1;
-    public static final Integer ORDER_STATUS_SEND = 2;
-    public static final Integer ORDER_STATUS_RECEIVE = 3;
-    public static final Integer ORDER_STATUS_CLOSED = 4;
-    public static final Integer ORDER_STATUS_FINISHED = 5;
-    public static final Integer ORDER_STATUS_INVALID = 6;
-
-    /**
-     * 订单ID
-     */
-    private String orderId;
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
+    /**
+     * 订单号 APP显示单号 交易单号 snowflake生成
+     */
+    private Long orderCode;
     /**
      * 订单总价格
      */
@@ -47,10 +40,6 @@ public class OrderEntity extends BaseEntity {
      */
     private BigDecimal promotionPrice;
     /**
-     *	积分抵扣金额
-     */
-    private BigDecimal scorePrice;
-    /**
      * 优惠券抵扣金额
      */
     private BigDecimal couponPrice;
@@ -59,23 +48,12 @@ public class OrderEntity extends BaseEntity {
      */
     private BigDecimal discountPrice;
     /**
-     * 积分
-     */
-    private Integer score;
-    /**
-     * 成长值
-     */
-    private Integer growth;
-    /**
      * 支付方式：0->未支付；1->支付宝；2->微信
      */
     private Integer payType;
     /**
-     * 订单来源：0->PC订单；1->app订单
-     */
-    private Integer sourceType;
-    /**
-     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭（不能申请退货）；5->完成评价；6->无效订单
+     * @see com.mall.common.enums.OrderStatusEnum
+     * 订单状态
      */
     private Integer orderStatus;
     /**
@@ -86,10 +64,7 @@ public class OrderEntity extends BaseEntity {
      * 物流单号
      */
     private String deliveryCode;
-    /**
-     * 自动确认时间（天）
-     */
-    private Integer autoConfirmDay;
+
     /**
      * 收货人姓名
      */
@@ -98,10 +73,6 @@ public class OrderEntity extends BaseEntity {
      * 收货人电话
      */
     private String receiverPhone;
-    /**
-     * 收货人邮编
-     */
-    private String receiverPostCode;
     /**
      * 省份/直辖市
      */
@@ -123,17 +94,11 @@ public class OrderEntity extends BaseEntity {
      */
     private String orderRemark;
     /**
-     * 确认收货状态：0->未确认；1->已确认
-     */
-    private Boolean isConfirm;
-    /**
      * 删除状态：0->未删除；1->已删除
      */
-    private Boolean isDelete;
-    /**
-     * 下单时使用的积分
-     */
-    private Integer useScore;
+    @TableLogic(value="0",delval="1")
+    @TableField(value ="is_deleted")
+    private Boolean deleted;
     /**
      * 支付时间
      */

@@ -10,7 +10,7 @@ import com.mall.common.enums.ResultStatus;
  */
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 4242575188983511008L;
-    private int status = 0;
+    private int status = ResultStatus.SUCCESS.getCode();
 
     public int getStatus() {
         return this.status;

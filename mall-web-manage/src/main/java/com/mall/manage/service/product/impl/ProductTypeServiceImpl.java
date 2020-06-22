@@ -39,6 +39,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         if (StringUtils.isNoneBlank(typeName)) {
             wrapper.like("type_name", typeName);
         }
+        wrapper.orderByAsc("sort");
         Page<ProductTypeEntity> result = (Page<ProductTypeEntity>) productTypeService.page(pageParam, wrapper);
 
         return result;

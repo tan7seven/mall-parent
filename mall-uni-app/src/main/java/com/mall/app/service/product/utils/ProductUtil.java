@@ -26,13 +26,14 @@ public class ProductUtil {
         result.setMinPrice(product.getMinPrice());
         result.setProductName(product.getProductName());
         result.setPutaway(product.getPutaway());
-        result.setStatus(1);
+        result.setStatus(product.getPutaway()? 1:3);
         result.setUnit(product.getUnit());
         result.setUsable(product.getUsable());
         if (!CollectionUtils.isEmpty(imgList)) {
             result.setPicList(imgList.stream().map(s -> CommonConstant.IMG_PRE+s.getImgUrl()).collect(Collectors.toList()));
         }
         if (CollectionUtils.isEmpty(skuList)) {
+            /** 库存不足*/
             result.setStatus(2);
         }else{
             /** SKU列表*/
@@ -40,9 +41,10 @@ public class ProductUtil {
             for (ProductSkuEntity skuEntity : skuList) {
                 ProductSkuVO skuVO = new ProductSkuVO();
                 skuVO.setAttrJson(skuEntity.getAttrJson());
-                skuVO.setPicUrl(skuEntity.getPicUrl());
+                skuVO.setPicUrl(CommonConstant.IMG_PRE + skuEntity.getPicUrl());
                 skuVO.setSkuId(skuEntity.getId());
                 skuVO.setStock(skuEntity.getStock());
+                skuVO.setSalePrice(skuEntity.getSalePrice());
                 try{
                     List<ProductAttrValueVO> attrValueVOList = JSONObject.parseArray(skuEntity.getAttrJson(), ProductAttrValueVO.class);
                     skuVO.setAttrValueVO(attrValueVOList);

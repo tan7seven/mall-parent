@@ -11,6 +11,11 @@ public class RestPage<T>{
     private Integer total;
     private List<T> records;
 
+    public RestPage(){
+        this.page = 1;
+        this.pageSize = 20;
+        this.total = 0;
+    }
     public RestPage(Integer page, Integer pageSize, Integer total){
         this.page = page;
         this.pageSize = pageSize;

@@ -73,7 +73,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         entity.setReceiverDetailAddress(dto.getReceiverDetailAddress());
         entity.setReceiverName(dto.getReceiverName());
         entity.setReceiverPhone(dto.getReceiverPhone());
-        entity.setReceiverPostCode(dto.getReceiverPostCode());
         entity.setReceiverProvince(dto.getReceiverProvince());
         entity.setReceiverRegion(dto.getReceiverRegion());
         orderService.save(entity);
@@ -91,7 +90,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         OrderEntity entity = orderService.getById(dto.getOrderId());
         entity.setDiscountPrice(dto.getDiscountPrice());
         entity.setPayPrice(entity.getTotalPrice().add(entity.getFreightPrice())
-                .subtract(entity.getPromotionPrice()).subtract(entity.getScorePrice()).subtract(entity.getCouponPrice())
                 .subtract(dto.getDiscountPrice()));
         orderService.save(entity);
         OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
@@ -127,7 +125,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         logEntity.setOrderStatus(entity.getOrderStatus());
         logEntity.setRemark("关闭订单、备注信息："+ dto.getOrderRemark());
         orderOperationLogService.save(logEntity);
-        entity.setOrderStatus(OrderEntity.ORDER_STATUS_INVALID);
         entity.setOrderRemark(dto.getOrderRemark());
         orderService.save(entity);
 
@@ -144,7 +141,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             logEntity.setOrderStatus(entity.getOrderStatus());
             logEntity.setRemark("关闭订单、备注信息："+ remark);
             orderOperationLogService.save(logEntity);
-            entity.setOrderStatus(OrderEntity.ORDER_STATUS_INVALID);
             entity.setOrderRemark(remark);
             orderService.save(entity);
         }
@@ -158,7 +154,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
             logEntity.setCreateTime(new Date());
             logEntity.setOperationPerson(userDetails.getUserId());
-            logEntity.setOrderId(result.getOrderId());
             logEntity.setOrderStatus(result.getOrderStatus());
             logEntity.setRemark("删除订单信息。");
             orderOperationLogService.save(logEntity);
@@ -175,12 +170,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             entity.setDeliveryCode(dto.getDeliveryCode());
             entity.setDeliveryCompany(dto.getDeliveryCompany());
             entity.setDeliveryTime(new Date());
-            entity.setOrderStatus(OrderEntity.ORDER_STATUS_SEND);
             orderService.save(entity);
             OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
             logEntity.setCreateTime(new Date());
             logEntity.setOperationPerson(userDetails.getUserId());
-            logEntity.setOrderId(entity.getOrderId());
             logEntity.setOrderStatus(entity.getOrderStatus());
             logEntity.setRemark("订单发货：物流单号-》"+dto.getDeliveryCode()+"；物流公司-》"+dto.getDeliveryCompany());
             orderOperationLogService.save(logEntity);
