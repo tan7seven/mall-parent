@@ -1,5 +1,7 @@
 package com.mall.dao.entity.order;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
@@ -15,17 +17,13 @@ import java.util.Date;
 @TableName("mall_order_items")
 public class OrderItemsEntity extends BaseEntity {
     /**
-     * 主键
-     */
-    private String itemsId;
-    /**
      * 订单主键
      */
-    private String orderId;
+    private Long orderId;
     /**
      * 商品编号
      */
-    private Integer productId;
+    private Long productId;
     /**
      * 图片地址
      */
@@ -33,11 +31,11 @@ public class OrderItemsEntity extends BaseEntity {
     /**
      * 商品SKU编号
      */
-    private Integer productSkuId;
+    private Long skuId;
     /**
      * 商品数量
      */
-    private Integer productAmount;
+    private Integer skuAmount;
     /**
      * 商品名称
      */
@@ -45,50 +43,23 @@ public class OrderItemsEntity extends BaseEntity {
     /**
      * 商品价格
      */
-    private BigDecimal productPrice;
+    private BigDecimal skuPrice;
     /**
      *	商品属性
      */
-    private String productProperty;
-    /**
-     * 商品促销名称
-     */
-    private String promotionName;
-    /**
-     * 商品促销价格
-     */
-    private BigDecimal promotionPrice;
+    private String skuAttr;
     /**
      * 优惠券优惠分解金额
      */
     private BigDecimal couponPrice;
     /**
-     * 积分优惠分解金额
-     */
-    private BigDecimal scorePrice;
-    /**
      * 商品实际销售金额
      */
     private BigDecimal realPrice;
     /**
-     * 可以获得的积分
+     * 删除状态：0->未删除；1->已删除
      */
-    private Integer score;
-    /**
-     * 可以获得的成长值
-     */
-    private Integer growth;
-    /**
-     * 评价时间
-     */
-    private Date commentTime;
-    /**
-     * 评价内容
-     */
-    private String commentDetail;
-    /**
-     * 评价图片
-     */
-    private String commentPic;
-
+    @TableLogic(value="0",delval="1")
+    @TableField(value ="is_deleted")
+    private Boolean deleted;
 }

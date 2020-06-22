@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -18,6 +19,8 @@ public class ProductSkuVO extends BaseModel {
     private String attrJson;
     @ApiModelProperty(value = "库存")
     private Integer stock;
+    @ApiModelProperty(value = "售价")
+    private BigDecimal salePrice;
     @ApiModelProperty(value = "attr 信息")
     private List<ProductAttrValueVO> attrValueVO;
 }

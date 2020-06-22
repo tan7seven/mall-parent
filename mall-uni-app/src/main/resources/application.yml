@@ -1,13 +1,11 @@
-server:
-  port: ${server.port}
 logging:
-  file: mall-web-manage-${spring.profiles.active}.log
+  file: mall-uni-app-${spring.profiles.active}.log
   level:
     org.springframework.web: INFO
     com.mall.dao.mapper: debug #打印sql
 spring:
   application:
-    name: mall-web-manage
+    name: mall-uni-app
     group: com.wjz.mall
   profiles:
     active: dev
@@ -40,7 +38,6 @@ mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
-
 # 配置swagger
 swagger:
   title: 碧直播APP接口API
