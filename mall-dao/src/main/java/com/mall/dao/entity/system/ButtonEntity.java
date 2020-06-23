@@ -14,11 +14,11 @@ public class ButtonEntity extends BaseEntity {
     /**
      * 主键
      */
-    private String buttonId;
+    private Long buttonId;
     /**
      * 菜单主键
      */
-    private String menuId;
+    private Long menuId;
     /**
      * 按钮编码
      */

@@ -74,12 +74,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     public AdminEntity add(AdminDTO dto) {
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
-        entity.setCreateTime(new Date());
-        entity.setIsUsable(null == entity.getIsUsable()?entity.getIsUsable(): Boolean.FALSE);
-        entity.setModifyTime(new Date());
+        entity.setUsabled(null == entity.getUsabled()?entity.getUsabled(): Boolean.FALSE);
         entity.setRole(AdminEntity.ROLE_USER);
         entity.setPassword(AdminEntity.DEFAULT_PASSWORD);
-        entity.setIsDelete(Boolean.FALSE);
+        entity.setDeleted(Boolean.FALSE);
         this.save(entity);
         return entity;
     }
@@ -91,7 +89,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
         entity.setPicUrl(dto.getPicUrl());
-        entity.setIsUsable(dto.getIsUsable());
+        entity.setUsabled(dto.getIsUsable());
         entity.setModifyTime(new Date());
         this.save(entity);
     }
@@ -107,7 +105,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         Page page = new Page(dto.getPageNum()-1, dto.getPageSize());
         AdminEntity entity = new AdminEntity();
         BeanUtils.copyProperties(dto, entity);
-        entity.setIsDelete(Boolean.FALSE);
+        entity.setDeleted(Boolean.FALSE);
         Page<AdminEntity> result = (Page<AdminEntity>) this.page(page);
         return result;
     }
@@ -121,7 +119,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     public void deleteAdmin(List<String> ids) {
         for (String id : ids) {
             AdminEntity entity = this.getById(id);
-            entity.setIsDelete(Boolean.TRUE);
+            entity.setDeleted(Boolean.TRUE);
             this.save(entity);
         }
     }
@@ -129,7 +127,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     @Override
     public void updateIsUsable(AdminDTO dto) {
         AdminEntity entity = this.getById(dto.getUserId());
-        entity.setIsUsable(null == dto.getIsUsable()?Boolean.TRUE:dto.getIsUsable());
+        entity.setUsabled(null == dto.getIsUsable()?Boolean.TRUE:dto.getIsUsable());
         this.save(entity);
     }
 

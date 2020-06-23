@@ -1,5 +1,7 @@
 package com.mall.dao.entity.system;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
@@ -23,10 +25,6 @@ public class AdminEntity extends BaseEntity {
     public static final String ROLE_ADMIN ="1";
     public static final String DEFAULT_PASSWORD = "123456";
 
-    /**
-     * 用户编号
-     */
-    private String userId;
     /**
      * 登录账号
      */
@@ -58,7 +56,8 @@ public class AdminEntity extends BaseEntity {
      * 0：可用
      * 1：禁用
      */
-    private Boolean isUsable;
+    @TableField(value = "is_usabled")
+    private Boolean usabled;
     /**
      * 新增时间
      */
@@ -68,9 +67,11 @@ public class AdminEntity extends BaseEntity {
      */
     private Date modifyTime;
     /**
-     * 是否被删除
-     * 0-》未删除
-     * 1-》已删除
+     * 状态
+     * 0:正常
+     * 1：已删除
      */
-    private Boolean isDelete;
+    @TableLogic(value="0",delval="1")
+    @TableField(value = "is_deleted")
+    private Boolean deleted;
 }

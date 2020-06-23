@@ -20,14 +20,14 @@ import java.util.List;
 @Api(value="用户controller",tags={"用户操作接口"})
 @Slf4j
 @RestController
-@RequestMapping(value = "/adminController")
+@RequestMapping(value = "/admin")
 public class AdminController extends GenericController {
 
     @Resource(name = "adminService")
     private AdminService adminService;
 
     @ApiOperation("分页查询")
-    @PostMapping(value = "getPage.do")
+    @PostMapping(value = "/page")
     protected RestResult getPage(AdminDTO dto){
         Page<AdminEntity> result = adminService.getPage(dto);
         return RestResult.success(result);

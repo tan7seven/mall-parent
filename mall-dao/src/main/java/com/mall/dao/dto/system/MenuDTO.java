@@ -15,15 +15,15 @@ public class MenuDTO extends CommonDTO {
     /**
      * 用户编号
      */
-    private String userId;
+    private Long userId;
     /**
      * 菜单主键
      */
-    private String menuId;
+    private Long menuId;
     /**
      * 父级菜单主键
      */
-    private String parentId;
+    private Long parentId;
     private String parentTitle;
     /**
      * 菜单编码

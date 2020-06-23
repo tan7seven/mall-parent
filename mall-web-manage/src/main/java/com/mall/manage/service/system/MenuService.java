@@ -27,7 +27,7 @@ public interface MenuService extends IService<MenuEntity> {
      * @return
      */
     @Transactional
-    void update(MenuDTO dto, String id);
+    void update(MenuDTO dto, Long id);
     /**
      * 获取
      * @param dto
@@ -54,12 +54,6 @@ public interface MenuService extends IService<MenuEntity> {
      */
     List<MenuDTO> getListById(String menuId);
     MenuDTO foundById(String id);
-    /**
-     * 删除（逻辑删除）
-     * @param ids
-     */
-    @Transactional
-    void deleteMenu(List<String> ids);
 
     /**
      * 是否隐藏

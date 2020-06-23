@@ -3,7 +3,7 @@
 <mapper namespace="com.mall.dao.mapper.system.AdminMapper">
 
     <sql id="Base_Column_List">
-        user_id, login_Code, password, name, phone, pic_url, role, is_usable, create_time,
+        id, login_Code, password, name, phone, pic_url, role, is_usabled, create_time,
         modify_time
     </sql>
 
@@ -22,14 +22,14 @@
         ) buttonCodeList
     FROM
         system_admin a
-    INNER JOIN system_menu_authority b ON a.user_id = b.user_id
+    INNER JOIN system_menu_authority b ON a.id = b.user_id
     INNER JOIN system_menu c ON b.menu_id = c.menu_id
-    INNER JOIN system_button_authority d ON d.user_id = a.user_id AND d.menu_id = c.menu_id
+    INNER JOIN system_button_authority d ON d.user_id = a.id AND d.menu_id = c.menu_id
     INNER JOIN system_button e ON d.button_id = e.button_id
     WHERE
         c.parent_id != '0'
     <if test="dto.userId != null">
-        AND a.user_id = #{dto.userId}
+        AND a.id = #{dto.userId}
     </if>
     <if test="dto.userId == null">
         AND 1=2
@@ -41,12 +41,12 @@
             c.menu_code
             FROM
             system_admin a
-            INNER JOIN system_menu_authority b ON a.user_id = b.user_id
+            INNER JOIN system_menu_authority b ON a.id = b.user_id
             INNER JOIN system_menu c ON b.menu_id = c.menu_id
             WHERE
             c.parent_id != '0'
         <if test="dto.userId != null">
-            AND a.user_id = #{dto.userId}
+            AND a.id = #{dto.userId}
         </if>
         <if test="dto.userId == null">
             AND 1=2

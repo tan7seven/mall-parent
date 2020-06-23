@@ -60,7 +60,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
                 String buttonCode = ButtonEnum.getKey(s);
                 buttonEntity.setButtonCode(buttonCode);
                 buttonEntity.setButtonName(s);
-                buttonEntity.setMenuId(entity.getMenuId());
+                buttonEntity.setMenuId(entity.getId());
                 buttonService.save(buttonEntity);
             });
         }
@@ -68,9 +68,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     }
 
     @Override
-    public void update(MenuDTO dto, String id) {
+    public void update(MenuDTO dto, Long id) {
         MenuEntity entity = menuService.getById(id);
-        entity.setIsHidden(dto.getIsHidden());
+        entity.setHidden(dto.getIsHidden());
         entity.setMenuCode(dto.getMenuCode());
         entity.setMenuIcon(dto.getMenuIcon());
         entity.setMenuTitle(dto.getMenuTitle());
@@ -113,26 +113,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     }
 
 
-
-    @Override
-    public void deleteMenu(List<String> ids) {
-        for (String id : ids) {
-            menuService.removeById(id);
-            List<MenuEntity> menuList = menuService.list(Wrappers.<MenuEntity>lambdaQuery().eq(MenuEntity::getParentId, id));
-            menuList.forEach(s -> {
-                this.deleteMenu(Arrays.asList(s.getMenuId()));
-            });
-            menuAuthorityService.remove(Wrappers.<MenuAuthorityEntity>lambdaQuery().eq(MenuAuthorityEntity::getMenuId, id));
-            List<ButtonEntity> buttonEntities = buttonService.list(Wrappers.<ButtonEntity>lambdaQuery().eq(ButtonEntity::getMenuId, id));
-            buttonEntities.forEach(s ->this.deleteButton(s));
-        }
-
-    }
-
     @Override
     public void updateIsHidden(MenuDTO dto) {
         MenuEntity entity = menuService.getById(dto.getMenuId());
-        entity.setIsHidden(null == dto.getIsHidden()?Boolean.FALSE:dto.getIsHidden());
+        entity.setHidden(null == dto.getIsHidden()?Boolean.FALSE:dto.getIsHidden());
         menuService.save(entity);
     }
 
@@ -151,7 +135,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
      * 1、验证哪些按钮是新增
      * 2、验证哪些按钮被删除
      */
-    private void checkButton(MenuDTO dto, String id){
+    private void checkButton(MenuDTO dto, Long id){
         List<ButtonEntity> buttonEntityList = buttonService.list(Wrappers.<ButtonEntity>lambdaQuery().eq(ButtonEntity::getMenuId, id));
         List<String> buttonList = dto.getButtonList();
         //1、验证哪些按钮是新增
