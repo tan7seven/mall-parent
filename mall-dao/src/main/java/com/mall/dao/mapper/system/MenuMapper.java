@@ -1,6 +1,7 @@
 package com.mall.dao.mapper.system;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
 import com.mall.dao.dto.system.MenuDTO;
@@ -16,10 +17,9 @@ public interface MenuMapper extends BaseMapper<MenuEntity> {
 
     /**
      * 获取列表
-     * @param dto
      * @return
      */
-    List<MenuDTO> getList(@Param("dto") MenuDTO dto);
+    Page<MenuDTO> getList(Page page);
     /**
      * 根据父节点获取列表
      * @param menuId

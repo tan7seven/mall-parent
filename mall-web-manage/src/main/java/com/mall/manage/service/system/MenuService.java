@@ -36,10 +36,9 @@ public interface MenuService extends IService<MenuEntity> {
     List<MenuEntity> getList(MenuDTO dto);
     /**
      * 获取
-     * @param dto
      * @return
      */
-    Page<MenuDTO> getPage(MenuDTO dto);
+    Page<MenuDTO> getPage(Integer pageNum, Integer pageSize);
 
     /**
      * 获取菜单树

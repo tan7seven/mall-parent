@@ -87,9 +87,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     }
 
     @Override
-    public Page<MenuDTO> getPage(MenuDTO dto) {
-        List<MenuDTO> resultList = menuMapper.getList(dto);
-        return new Page<MenuDTO>();
+    public Page<MenuDTO> getPage(Integer pageNum, Integer pageSize) {
+        Page pageParam = new Page(pageNum, pageSize);
+        Page<MenuDTO> resultList = menuMapper.getList(pageParam);
+        return resultList;
     }
 
     @Override

@@ -39,12 +39,6 @@ public interface AdminService extends IService<AdminEntity> {
      * @param dto
      * @return
      */
-    List<AdminEntity> getList(AdminDTO dto);
-    /**
-     * 获取用户信息
-     * @param dto
-     * @return
-     */
     Page<AdminEntity> getPage(AdminDTO dto);
     /**
      * 根据登录账号获取用户信息

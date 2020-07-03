@@ -94,18 +94,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         this.save(entity);
     }
 
-    @Override
-    public List<AdminEntity> getList(AdminDTO dto) {
-        List<AdminEntity>entities = this.list();
-        return entities;
-    }
 
     @Override
     public Page<AdminEntity> getPage(AdminDTO dto) {
-        Page page = new Page(dto.getPageNum()-1, dto.getPageSize());
-        AdminEntity entity = new AdminEntity();
-        BeanUtils.copyProperties(dto, entity);
-        entity.setDeleted(Boolean.FALSE);
+        Page page = new Page(dto.getPageNum(), dto.getPageSize());
         Page<AdminEntity> result = (Page<AdminEntity>) this.page(page);
         return result;
     }

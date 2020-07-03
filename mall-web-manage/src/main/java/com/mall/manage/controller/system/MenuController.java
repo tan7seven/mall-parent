@@ -7,9 +7,12 @@ import com.mall.dao.dto.system.MenuAuthorityDTO;
 import com.mall.dao.dto.system.MenuDTO;
 import com.mall.dao.entity.system.MenuEntity;
 import com.mall.manage.controller.common.GenericController;
+import com.mall.manage.controller.system.utils.MenuUtil;
+import com.mall.manage.model.vo.system.MenuVO;
 import com.mall.manage.service.system.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,16 +28,19 @@ import java.util.List;
 @Api(value = "菜单", tags = "菜单")
 @Slf4j
 @RestController
-@RequestMapping(value = "/menuController")
+@RequestMapping(value = "/menu")
 public class MenuController extends GenericController {
 
     @Resource(name = "menuService")
     private MenuService menuService;
 
     @ApiOperation("分页查询")
-    @PostMapping(value = "getPage.do")
-    protected RestResult getPage(MenuDTO dto){
-        Page<MenuDTO> result = menuService.getPage(dto);
+    @GetMapping(value = "/page")
+    protected RestResult<Page<MenuVO>> getPage(@ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
+                                               @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
+        Page<MenuDTO> dtoPage = menuService.getPage(pageNum, pageSize);
+        Page<MenuVO> result = new Page<>(dtoPage.getCurrent(), dtoPage.getSize(), dtoPage.getTotal());
+        result.setRecords(MenuUtil.getVOList(dtoPage.getRecords()));
         return RestResult.success(result);
     }
 
@@ -67,7 +73,6 @@ public class MenuController extends GenericController {
         if (StringUtils.isBlank(id)) {
             return RestResult.validateFailed("ID为空！");
         }
-        menuService.update(dto, id);
         return RestResult.success();
     }
 
@@ -78,7 +83,6 @@ public class MenuController extends GenericController {
         if(null == ids || ids.size()==0){
             return RestResult.validateFailed("id为空！");
         }
-        menuService.deleteMenu(ids);
         return RestResult.success();
     }
 
@@ -86,9 +90,6 @@ public class MenuController extends GenericController {
     @PreAuthorize(" hasAuthority('SYSTEM:MENU:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "updateIsHidden.do")
     protected RestResult updateIsHidden(@RequestBody MenuDTO dto){
-        if(StringUtils.isBlank(dto.getMenuId())){
-            return RestResult.validateFailed("用户编码为空！");
-        }
         menuService.updateIsHidden(dto);
         return RestResult.success();
     }
@@ -96,7 +97,6 @@ public class MenuController extends GenericController {
     @ApiOperation("获取父级ID获取菜单列表")
     @PostMapping(value = "getMenuList.do/{id}")
     protected RestResult getMenuList(@PathVariable String id, @RequestBody MenuDTO dto){
-        dto.setParentId(id);
         List<MenuEntity> result = menuService.getList(dto);
         return RestResult.success(result);
     }
