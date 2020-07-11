@@ -1,6 +1,6 @@
 package com.mall.manage.controller.system;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.common.TreeDTO;
 import com.mall.dao.dto.system.MenuAuthorityDTO;
@@ -8,17 +8,19 @@ import com.mall.dao.dto.system.MenuDTO;
 import com.mall.dao.entity.system.MenuEntity;
 import com.mall.manage.controller.common.GenericController;
 import com.mall.manage.controller.system.utils.MenuUtil;
+import com.mall.manage.model.param.system.MenuCreateParam;
 import com.mall.manage.model.vo.system.MenuVO;
 import com.mall.manage.service.system.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 
@@ -34,42 +36,35 @@ public class MenuController extends GenericController {
     @Resource(name = "menuService")
     private MenuService menuService;
 
-    @ApiOperation("分页查询")
-    @GetMapping(value = "/page")
-    protected RestResult<Page<MenuVO>> getPage(@ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
-                                               @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize){
-        Page<MenuDTO> dtoPage = menuService.getPage(pageNum, pageSize);
-        Page<MenuVO> result = new Page<>(dtoPage.getCurrent(), dtoPage.getSize(), dtoPage.getTotal());
-        result.setRecords(MenuUtil.getVOList(dtoPage.getRecords()));
+    @ApiOperation("根据上级ID获取下级列表")
+    @GetMapping(value = "/sub-list/{parentId}")
+    protected RestResult<List<MenuVO>> getSubListByParentId(@PathVariable String parentId) {
+        List<MenuEntity> menuEntityList = menuService.list(Wrappers.<MenuEntity>lambdaQuery().eq(MenuEntity::getParentId, parentId));
+        List<MenuVO> result = MenuUtil.getVOListEntity(menuEntityList);
         return RestResult.success(result);
     }
 
-    @ApiOperation("详情")
-    @PostMapping(value = "getMenuListById.do")
-    protected  RestResult getMenuListById(String menuId){
-       List<MenuDTO> result =  menuService.getListById(menuId);
-        return RestResult.success(result);
-    }
-
-    @ApiOperation("获取信息")
-    @GetMapping(value = "/getMenuInfo.do/{id}")
-    protected  RestResult getMenuInfo(@PathVariable String id){
-        MenuDTO result = menuService.foundById(id);
+    @ApiOperation("菜单详情")
+    @GetMapping(value = "/detail/{id}")
+    protected RestResult<MenuVO> detail(@PathVariable String id) {
+        MenuEntity menuEntity = menuService.getById(id);
+        MenuVO result = new MenuVO();
+        BeanUtils.copyProperties(menuEntity, result);
         return RestResult.success(result);
     }
 
     @ApiOperation("新建")
     @PreAuthorize(" hasAuthority('SYSTEM:MENU:CREATE') or hasRole('ADMIN')")
-    @PostMapping(value = "createMenu.do")
-    protected RestResult createMenu(@RequestBody MenuDTO dto){
-        menuService.add(dto);
-        return RestResult.success();
+    @PutMapping(value = "/menu/create")
+    protected RestResult<MenuEntity> createMenu(@RequestBody MenuCreateParam param) {
+        MenuEntity result = menuService.addMenuAndButton(param);
+        return RestResult.success(result);
     }
 
     @ApiOperation("修改")
     @PreAuthorize(" hasAuthority('SYSTEM:MENU:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "updateMenu.do/{id}")
-    protected RestResult updateMenu(@RequestBody MenuDTO dto, @PathVariable String id){
+    protected RestResult updateMenu(@RequestBody MenuDTO dto, @PathVariable @NotBlank(message = "ID不能为空") String id) {
         if (StringUtils.isBlank(id)) {
             return RestResult.validateFailed("ID为空！");
         }
@@ -79,8 +74,8 @@ public class MenuController extends GenericController {
     @ApiOperation("删除")
     @PreAuthorize(" hasAuthority('SYSTEM:MENU:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteMenu.do")
-    protected RestResult deleteMenu(List<String> ids){
-        if(null == ids || ids.size()==0){
+    protected RestResult deleteMenu(List<String> ids) {
+        if (null == ids || ids.size() == 0) {
             return RestResult.validateFailed("id为空！");
         }
         return RestResult.success();
@@ -89,29 +84,22 @@ public class MenuController extends GenericController {
     @ApiOperation("是否隐藏")
     @PreAuthorize(" hasAuthority('SYSTEM:MENU:SWITCH') or hasRole('ADMIN')")
     @PostMapping(value = "updateIsHidden.do")
-    protected RestResult updateIsHidden(@RequestBody MenuDTO dto){
+    protected RestResult updateIsHidden(@RequestBody MenuDTO dto) {
         menuService.updateIsHidden(dto);
         return RestResult.success();
     }
 
-    @ApiOperation("获取父级ID获取菜单列表")
-    @PostMapping(value = "getMenuList.do/{id}")
-    protected RestResult getMenuList(@PathVariable String id, @RequestBody MenuDTO dto){
-        List<MenuEntity> result = menuService.getList(dto);
-        return RestResult.success(result);
-    }
 
     @ApiOperation("获取菜单树")
     @GetMapping(value = "getMenuTree.do")
-    protected RestResult getMenuTree(MenuAuthorityDTO dto){
+    protected RestResult getMenuTree(MenuAuthorityDTO dto) {
         List<TreeDTO> result = menuService.getMenuTree(dto);
         return RestResult.success(result);
     }
 
     @ApiOperation("获取按钮列表")
     @PostMapping(value = "getButtonList.do")
-    protected RestResult getButtonList(MenuDTO dto){
-        MenuDTO result = menuService.getButtonList(dto);
-        return RestResult.success(result);
+    protected RestResult getButtonList(MenuDTO dto) {
+        return RestResult.success();
     }
 }

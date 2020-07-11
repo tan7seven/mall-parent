@@ -20,24 +20,12 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-        a.menu_id, a.parent_id, a.menu_code, a.menu_title, a.menu_url, a.menu_icon, a.is_hidden
+        a.id menu_id, a.parent_id, a.menu_code, a.menu_title, a.menu_url, a.menu_icon, a.is_hidden
      </sql>
-
-    <select id="getList" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List" /> ,b.menu_title parentTitle
-        FROM system_menu a LEFT JOIN  system_menu b ON  a.parent_id = b.menu_id WHERE a.parent_id = #{dto.parentId}
-    </select>
-
-    <select id="getListById" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List" /> ,b.menu_title parentTitle
-        FROM system_menu a LEFT JOIN  system_menu b ON  a.parent_id = b.menu_id WHERE a.parent_id = #{menuId}
-    </select>
 
     <select id="getMenuTree" resultMap="TreeResultMap">
         SELECT
-        a.menu_id id, a.menu_title label,  b.menu_id children_id, b.menu_title children_label
+        a.id menu_id id, a.menu_title label,  b.menu_id children_id, b.menu_title children_label
         FROM system_menu a LEFT JOIN  system_menu b ON  b.parent_id = a.menu_id
         <if test="dto.userId != null and dto.userId != '' ">
             INNER JOIN system_menu_authority c ON  c.menu_id = b.menu_id AND  c.user_id = #{dto.userId}

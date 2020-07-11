@@ -27,7 +27,7 @@ public class AdminController extends GenericController {
     private AdminService adminService;
 
     @ApiOperation("分页查询")
-    @PostMapping(value = "/page")
+    @GetMapping(value = "/page")
     protected RestResult getPage(AdminDTO dto){
         Page<AdminEntity> result = adminService.getPage(dto);
         return RestResult.success(result);

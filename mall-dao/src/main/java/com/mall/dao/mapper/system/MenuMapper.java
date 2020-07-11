@@ -16,18 +16,6 @@ import java.util.List;
 public interface MenuMapper extends BaseMapper<MenuEntity> {
 
     /**
-     * 获取列表
-     * @return
-     */
-    Page<MenuDTO> getList(Page page);
-    /**
-     * 根据父节点获取列表
-     * @param menuId
-     * @return
-     */
-    List<MenuDTO> getListById(@Param("menuId") String menuId);
-
-    /**
      * 获取菜单树
      * @return
      */
