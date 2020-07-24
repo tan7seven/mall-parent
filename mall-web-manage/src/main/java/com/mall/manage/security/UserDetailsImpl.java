@@ -30,9 +30,9 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorityList = new ArrayList<>();
         //按钮权限列表
-        authorityList.addAll(this.buttonList.stream().map(
+/*        authorityList.addAll(this.buttonList.stream().map(
                 s -> new SimpleGrantedAuthority(s)
-        ).collect(Collectors.toList()));
+        ).collect(Collectors.toList()));*/
         //用户角色
         authorityList.add(new SimpleGrantedAuthority(this.role));
         return authorityList;

@@ -14,7 +14,7 @@ public class ButtonEntity extends BaseEntity {
     /**
      * 主键
      */
-    private Long buttonId;
+    private Long id;
     /**
      * 菜单主键
      */

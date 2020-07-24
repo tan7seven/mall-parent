@@ -10,16 +10,6 @@ import java.util.List;
 @Data
 public class AdminDTO extends CommonDTO implements Serializable{
     /**
-     * 是否可用：可用
-     */
-    public static final String IS_USABLE = "0";
-    /**
-     * 是否可用：禁用
-     */
-    public static final String NOT_USABLE = "1";
-
-
-    /**
      * 用户编号
      */
     private String userId;
@@ -68,11 +58,8 @@ public class AdminDTO extends CommonDTO implements Serializable{
      * 0-》未删除
      * 1-》已删除
      */
-    private Boolean isDelete;
-    /**
-     * 菜单ID列表
-     */
-    private List<String> menuList;
+    private Boolean deleted;
+
     /**
      * 按钮列表
      */
@@ -81,12 +68,5 @@ public class AdminDTO extends CommonDTO implements Serializable{
      * 菜单ID
      */
     private String menuId;
-    /**
-     * 用户拥有的按钮权限编码
-     */
-    private List<String> listButtonCodeAuthority;
-    /**
-     * 用户拥有的菜单权限编码
-     */
-    private List<String> listMenuCodeAuthority;
+
 }

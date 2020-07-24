@@ -4,7 +4,7 @@ logging:
   file: mall-web-manage-${spring.profiles.active}.log
   level:
     org.springframework.web: INFO
-    com.mall.dao.mapper: debug #打印sql
+#    com.mall.dao.mapper: debug #打印sql
 spring:
   application:
     name: mall-web-manage

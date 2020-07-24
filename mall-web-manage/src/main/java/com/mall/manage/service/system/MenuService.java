@@ -31,7 +31,7 @@ public interface MenuService extends IService<MenuEntity> {
      * 获取菜单树
      * @return
      */
-    List<TreeDTO> getMenuTree(MenuAuthorityDTO dto);
+    List<TreeDTO> getMenuTree(Long userId);
 
 
     /**

@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.system.AdminDTO;
 import com.mall.dao.entity.system.AdminEntity;
+import com.mall.manage.model.param.system.MenuAuthConfirmParam;
 import com.mall.manage.security.UserDetailsImpl;
+import io.swagger.annotations.ApiParam;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,30 +19,25 @@ import java.util.Optional;
 public interface AdminService extends IService<AdminEntity> {
 
     /**
+     * 分页查询
+     */
+    Page<AdminEntity> getPage(Integer pageNum, Integer pageSize);
+    /**
+     * 根据登录号码获取账号信息
+     */
+    AdminEntity findByLoginCode(String loginCode);
+    /**
+     * 菜单授权
+     */
+    Boolean menuAuthority(MenuAuthConfirmParam param);
+
+    // todo done
+    /**
      * 重新加载用户信息
      * @return
      */
     UserDetailsImpl adminLogin(String username);
-    /**
-     * 新增
-     * @param dto
-     * @return
-     */
-    AdminEntity add(AdminDTO dto);
-    /**
-     * 修改
-     * @param dto
-     * @return
-     */
 
-
-    void update(AdminDTO dto, String id);
-    /**
-     * 获取用户信息
-     * @param dto
-     * @return
-     */
-    Page<AdminEntity> getPage(AdminDTO dto);
     /**
      * 根据登录账号获取用户信息
      * @param loginCode
@@ -59,12 +57,7 @@ public interface AdminService extends IService<AdminEntity> {
      */
     void updateIsUsable(AdminDTO dto);
 
-    /**
-     * 菜单授权
-     * @param dto
-     */
-    @Transactional
-    void menuAuthority(AdminDTO dto);
+
 
 
     /**
@@ -78,7 +71,6 @@ public interface AdminService extends IService<AdminEntity> {
      * @param userId
      * @return
      */
-    @Transactional
-    List<String> getAdminMenuAuthority(String userId);
+    List<Long> getAdminMenuAuthority(String userId);
 
 }

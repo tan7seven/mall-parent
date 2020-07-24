@@ -53,17 +53,8 @@ public class MenuDTO extends CommonDTO {
      * 是否有子级
      */
     private Boolean hasChildren = true;
-
     /**
      * 按钮列表
      */
     private List<String> buttonList;
-    /**
-     * 按钮列表
-     */
-    private List<ButtonEntity> buttonListEntity;
-    /**
-     * 按钮列表-分配权限的
-     */
-    private List<String> buttonListAuthority;
 }

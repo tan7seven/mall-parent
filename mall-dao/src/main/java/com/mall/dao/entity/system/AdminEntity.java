@@ -14,17 +14,6 @@ import java.util.Date;
 @Data
 @TableName("system_admin")
 public class AdminEntity extends BaseEntity {
-
-    /**
-     * 普通
-     */
-    public static final String ROLE_USER = "0";
-    /**
-     * 管理员
-     */
-    public static final String ROLE_ADMIN ="1";
-    public static final String DEFAULT_PASSWORD = "123456";
-
     /**
      * 登录账号
      */
@@ -50,7 +39,7 @@ public class AdminEntity extends BaseEntity {
      * 0:ROLE_USER
      * 1:ROLE_ADMIN
      */
-    private String role;
+    private Integer role;
     /**
      * 是否可用
      * 0：可用
@@ -58,14 +47,6 @@ public class AdminEntity extends BaseEntity {
      */
     @TableField(value = "is_usabled")
     private Boolean usabled;
-    /**
-     * 新增时间
-     */
-    private Date createTime;
-    /**
-     * 更新时间
-     */
-    private Date modifyTime;
     /**
      * 状态
      * 0:正常

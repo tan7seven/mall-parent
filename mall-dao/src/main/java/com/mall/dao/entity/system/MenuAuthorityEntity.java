@@ -7,18 +7,15 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 @Data
-@TableName("system_menu_Authority")
+@TableName("system_menu_authority")
 public class MenuAuthorityEntity extends BaseEntity {
-    /**
-     * 主键
-     */
-    private String menuAuthorityId;
+
     /**
      * 按钮主键
      */
-    private String menuId;
+    private Long menuId;
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
 }

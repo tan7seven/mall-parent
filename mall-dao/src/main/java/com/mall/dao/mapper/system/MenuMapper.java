@@ -19,5 +19,5 @@ public interface MenuMapper extends BaseMapper<MenuEntity> {
      * 获取菜单树
      * @return
      */
-    List<TreeDTO> getMenuTree(@Param("dto") MenuAuthorityDTO dto);
+    List<TreeDTO> getMenuTree(@Param("userId") Long userId);
 }
