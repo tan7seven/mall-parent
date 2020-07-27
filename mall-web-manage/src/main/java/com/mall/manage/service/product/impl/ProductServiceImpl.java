@@ -7,7 +7,6 @@ import com.google.common.collect.Lists;
 import com.mall.common.constant.CommonConstant;
 import com.mall.common.enums.ImgTypeEnum;
 import com.mall.common.exception.BusinessException;
-import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.product.ProductDTO;
 import com.mall.dao.entity.product.*;
 import com.mall.dao.mapper.product.ProductMapper;

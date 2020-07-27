@@ -1,6 +1,5 @@
 package com.mall.manage.model.vo.system;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.mall.manage.model.vo.product.BaseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

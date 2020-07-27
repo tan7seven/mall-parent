@@ -13,9 +13,9 @@ public class ButtonAuthorityEntity extends BaseEntity {
      */
     private Long userId;
     /**
-     * 按钮主键
+     * 按钮CODE
      */
-    private Long buttonId;
+    private String buttonCode;
     /**
      * 菜单主键
      */

@@ -1,10 +1,7 @@
 package com.mall.dao.mapper.system;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.dao.dto.common.TreeDTO;
-import com.mall.dao.dto.system.MenuAuthorityDTO;
-import com.mall.dao.dto.system.MenuDTO;
 import com.mall.dao.entity.system.MenuEntity;
 import org.apache.ibatis.annotations.Param;
 

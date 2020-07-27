@@ -45,55 +45,6 @@
             AND a.is_putaway = #{param.putaway}
         </if>
     </select>
-
-    <select id="findPropertyIsSale" resultType="com.mall.dao.dto.product.ProductAttrNameDTO">
-      SELECT concat(a.name,':',b.value) as isSalePropertyString, concat(a.property_name_id,':',b.property_value_id) as isSalePropertyId
-        FROM mall_product_property_name a
-      INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
-      WHERE  1= 1
-        AND a.is_deleted ='0'
-        <if test="param.isSale!=null and param.isSale!=''">
-            AND b.is_sale = #{param.isSale}
-        </if>
-        <if test="param.productId!=null and param.productId!=''">
-            AND b.product_id = #{param.productId}
-        </if>
-    </select>
-    <select id="findPropertyNotSale" resultType="java.lang.String">
-        SELECT concat(b.value) as result FROM mall_product_property_name a
-        INNER JOIN mall_product_property_value b ON  a.property_name_id = b.property_name_id
-        WHERE  1= 1
-        AND a.is_deleted = '0'
-        <if test="param.isSale!=null and param.isSale!=''">
-            AND b.is_sale = #{param.isSale}
-        </if>
-        <if test="param.productId!=null and param.productId!=''">
-            AND b.product_id = #{param.productId}
-        </if>
-    </select>
-    
-    <update id="updateProductIsUsable">
-        UPDATE
-            mall_product a
-        SET a.is_usable = #{isUsable}
-        WHERE
-            a.type_id IN (
-                SELECT
-                    b.type_id
-                FROM
-                    mall_product_type b
-                WHERE
-                    b.type_id = #{typeId}
-                UNION ALL
-                    SELECT
-                        c.type_id
-                    FROM
-                        mall_product_type c
-                    INNER JOIN mall_product_type d ON d.type_id = c.parent_id
-                    WHERE
-                        d.type_id = #{typeId}
-            )
-    </update>
 </mapper>
         <!--
             <id>：主键字段

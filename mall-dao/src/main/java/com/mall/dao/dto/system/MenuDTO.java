@@ -1,7 +1,6 @@
 package com.mall.dao.dto.system;
 
 import com.mall.dao.dto.common.CommonDTO;
-import com.mall.dao.entity.system.ButtonEntity;
 import lombok.Data;
 
 import java.util.List;

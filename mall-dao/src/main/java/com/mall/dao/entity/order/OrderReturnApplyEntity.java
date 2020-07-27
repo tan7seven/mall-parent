@@ -81,7 +81,7 @@ public class OrderReturnApplyEntity extends BaseEntity {
     /**
      * 处理人
      */
-    private String handlePerson;
+    private Long handlePerson;
     /**
      * 发货时间
      */
@@ -93,7 +93,7 @@ public class OrderReturnApplyEntity extends BaseEntity {
     /**
      * 确认收货人
      */
-    private String receivePerson;
+    private Long receivePerson;
     /**
      * 确认收货备注
      */

@@ -1,4 +1,4 @@
-package com.mall.manage.model.param.system;
+package com.mall.manage.model.param.system.admin;
 
 import com.mall.manage.model.param.BaseParam;
 import io.swagger.annotations.ApiModel;
@@ -16,15 +16,14 @@ import java.util.Objects;
  */
 @Data
 @ApiModel
-public class AdminCreateParam extends BaseParam {
+public class AdminUpdateParam extends BaseParam {
 
     /**
      * 登录账号
      */
-    @NotBlank(message = "登录账号不能为空")
-    @ApiModelProperty(value = "登录账号")
-    private String loginCode;
-
+    @NotNull(message = "ID不能为空")
+    @ApiModelProperty(value = "主键")
+    private Long id;
     /**
      * 登录密码
      */

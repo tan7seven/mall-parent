@@ -1,7 +1,5 @@
 package com.mall.manage.model.vo.system;
 
-import com.mall.dao.dto.system.MenuDTO;
-import com.mall.dao.entity.system.ButtonEntity;
 import com.mall.manage.model.vo.product.BaseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,7 +14,7 @@ import java.util.List;
  */
 @Data
 @ApiModel
-public class MenuVO extends BaseVO {
+public class MenuListVO extends BaseVO {
 
     /**
      * 菜单主键
@@ -46,11 +44,14 @@ public class MenuVO extends BaseVO {
      */
     @ApiModelProperty(value = "菜单路径")
     private String menuUrl;
+
+    @ApiModelProperty(value = "是否隐藏")
+    private Boolean hidden;
     /**
      * 子级菜单
      */
     @ApiModelProperty(value = "子级菜单")
-    private List<MenuVO> children;
+    private List<MenuListVO> children;
     /**
      * 是否有子级
      */

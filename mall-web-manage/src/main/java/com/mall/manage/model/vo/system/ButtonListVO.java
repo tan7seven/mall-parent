@@ -42,8 +42,8 @@ public class ButtonListVO extends BaseVO {
         /**
          * 主键
          */
-        @ApiModelProperty(value = "主键")
-        private Long id;
+        @ApiModelProperty(value = "按钮code")
+        private String buttonCode;
         /**
          * 按钮名称
          */
