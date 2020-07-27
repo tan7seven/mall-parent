@@ -27,9 +27,6 @@ public class RestPage<T>{
         this.total = total.intValue();
     }
 
-    public void setTotal(Integer total){
-        this.total = total;
-    }
     public void setTotal(Long total){
         this.total = total.intValue();
     }
