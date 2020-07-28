@@ -44,6 +44,7 @@
         <if test="param.putaway!=null and param.putaway!=''">
             AND a.is_putaway = #{param.putaway}
         </if>
+        order  by  a.modify_time desc
     </select>
 </mapper>
         <!--

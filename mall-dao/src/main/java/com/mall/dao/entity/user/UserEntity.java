@@ -34,19 +34,12 @@ public class UserEntity extends BaseEntity {
      * 头像
      */
     private String headPortrait;
-    /**
-     * 邮箱
-     */
-    private String email;
-    /**
-     * 积分
-     */
-    private Integer score;
+
     /**
      * 是否可用
      * 0：可用
      * 1：禁用
      */
     @TableField(value ="is_usable")
-    private Boolean usable;
+    private Boolean usabled;
 }

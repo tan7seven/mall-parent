@@ -95,6 +95,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         cartService.remove(Wrappers.<CartEntity>lambdaQuery()
                 .in(CartEntity::getSkuId, skuIdList)
                 .eq(CartEntity::getUserId, userId));
+        // todo 扣减库存 营销活动 订单变更MQ
         /** 构建返回信息 */
         CreateOrderVO result = OrderUtil.buildCreateOrderVO(orderEntity);
         return result;
