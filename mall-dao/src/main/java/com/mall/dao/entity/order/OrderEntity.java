@@ -27,6 +27,11 @@ public class OrderEntity extends BaseEntity {
      * 订单总价格
      */
     private BigDecimal totalPrice;
+
+    /**
+     * 实际支付金额-第三方支付回调金额
+     */
+    private BigDecimal realTotalPrice;
     /**
      * 应付金额（实际支付金额）
      */
@@ -111,4 +116,9 @@ public class OrderEntity extends BaseEntity {
      * 确认收货时间
      */
     private Date receiveTime;
+
+    /**
+     * 第三方交易号
+     */
+    private String transactionId;
 }

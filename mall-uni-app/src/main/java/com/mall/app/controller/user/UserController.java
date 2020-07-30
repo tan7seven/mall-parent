@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @description:
@@ -27,7 +28,7 @@ import java.util.List;
  * @createDate: 2020/5/28
  */
 @Slf4j
-@Api(value = "用户模块")
+@Api(tags = "用户模块")
 @RestController
 @RequestMapping(value = "/v1/user")
 public class UserController {
@@ -38,9 +39,12 @@ public class UserController {
     @ApiOperation(value = "用户登录")
     @PostMapping(value = "/login")
     public RestResult<UserLoginVO> userLogin(@Validated @RequestBody UserLoginParam param){
-        UserEntity entity = userService.getOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getPhone, param));
-        if (!entity.getPassword().equals(param.getPassword())) {
-            throw new BusinessException("密码或账号错误");
+        UserEntity entity = userService.getOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getMobile, param.getMobile()));
+        if (Objects.isNull(entity)) {
+            throw new BusinessException("账号错误");
+        }
+        if (!entity.getUsabled()) {
+            throw new BusinessException("账号被冻结");
         }
         String token = JwtTokenUtil.generateToken(entity);
         return RestResult.success(UserUtil.buildUserLoginVO(entity, token));

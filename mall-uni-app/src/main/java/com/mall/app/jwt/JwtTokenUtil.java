@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -50,6 +51,9 @@ public class JwtTokenUtil {
      * @deprecation: 解析token,获得subject中的信息
      */
     public static String parseTokenGetUserId(String token) {
+        if (StringUtils.isBlank(token)) {
+            return null;
+        }
         return getTokenBody(token).get(CLAIM_KEY_USER).toString();
     }
 

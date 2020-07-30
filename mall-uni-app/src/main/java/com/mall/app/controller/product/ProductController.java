@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@Api(value = "商品模块")
+@Api(tags = "商品模块")
 @RestController
 @RequestMapping(value = "/v1/product")
 public class ProductController {

@@ -18,9 +18,9 @@ public class UserLoginParam extends BaseModel {
 
     @NotBlank(message = "电话号码不能为空")
     @ApiModelProperty(value = "电话号码")
-    private String phone;
+    private String mobile;
 
-    @NotBlank(message = "密码不能为空")
-    @ApiModelProperty(value = "密码")
-    private String password;
+    @NotBlank(message = "验证码不能为空")
+    @ApiModelProperty(value = "验证码")
+    private String verificationCode;
 }

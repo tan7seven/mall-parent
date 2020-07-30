@@ -14,9 +14,10 @@ public class UserUtil {
      */
     public static UserLoginVO buildUserLoginVO(UserEntity entity, String token){
         UserLoginVO result = new UserLoginVO();
-        result.setHeadPortrait(entity.getHeadPortrait());
-        result.setName(entity.getName());
+        result.setPortrait(entity.getPortrait());
+        result.setNickname(entity.getNickname());
         result.setToken(token);
+        result.setMobile(entity.getMobile());
         return result;
     }
 }

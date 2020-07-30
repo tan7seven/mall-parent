@@ -25,15 +25,15 @@ public class UserEntity extends BaseEntity {
     /**
      * 昵称
      */
-    private String name;
+    private String nickname;
     /**
      * 电话号码
      */
-    private String phone;
+    private String mobile;
     /**
      * 头像
      */
-    private String headPortrait;
+    private String portrait;
 
     /**
      * 是否可用

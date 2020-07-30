@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Api(value = "首页")
+@Api(tags = "首页")
 @RestController
 @RequestMapping(value = "/v1/home")
 public class HomeController {

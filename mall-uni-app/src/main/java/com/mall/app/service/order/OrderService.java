@@ -3,6 +3,7 @@ package com.mall.app.service.order;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.app.model.param.order.BuildPayDetailParam;
 import com.mall.app.model.param.order.OrderCreateParam;
+import com.mall.app.model.param.order.WXOrderPayNoticeParam;
 import com.mall.app.model.vo.order.CreateOrderVO;
 import com.mall.app.model.vo.order.PayDetailVO;
 import com.mall.dao.entity.order.OrderEntity;
@@ -24,4 +25,9 @@ public interface OrderService extends IService<OrderEntity> {
      * @return
      */
     CreateOrderVO createOrder(OrderCreateParam param, Long userId);
+
+    /**
+     * 微信支付通知
+     */
+    Boolean wxOrderPayNotice(WXOrderPayNoticeParam param);
 }

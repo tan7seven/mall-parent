@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @createDate: 2020/5/23
  */
 @Slf4j
-@Api(value = "购物车模块")
+@Api(tags = "购物车模块")
 @RestController
 @RequestMapping(value = "/v1/cart")
 public class CartController {

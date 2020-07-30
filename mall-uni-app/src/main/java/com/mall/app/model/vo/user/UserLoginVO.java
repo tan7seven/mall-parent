@@ -18,8 +18,11 @@ public class UserLoginVO extends BaseModel {
     private String token;
 
     @ApiModelProperty(value = "昵称")
-    private String name;
+    private String nickname;
 
     @ApiModelProperty(value = "头像")
-    private String headPortrait;
+    private String portrait;
+
+    @ApiModelProperty(value = "电话号码")
+    private String mobile;
 }
