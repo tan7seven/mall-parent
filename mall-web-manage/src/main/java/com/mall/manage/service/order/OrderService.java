@@ -1,6 +1,5 @@
 package com.mall.manage.service.order;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.order.OrderDTO;
 import com.mall.dao.entity.order.OrderEntity;
@@ -13,19 +12,11 @@ import java.util.List;
  * 订单信息
  */
 public interface OrderService extends IService<OrderEntity> {
-    /**
-     * 分页查询
-     * @param dto
-     * @return
-     */
-    Page<OrderDTO> getPage(OrderDTO dto);
 
     /**
      * 根据主键获取
-     * @param id
-     * @return
      */
-    OrderDTO getOrderById(String id);
+    OrderDTO getOrderById(Long id);
 
     /**
      * 修改订单收货信息

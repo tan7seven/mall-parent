@@ -9,12 +9,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface OrderMapper extends BaseMapper<OrderEntity> {
-    List<OrderDTO> findList(Page page ,@Param("dto") OrderDTO dto);
 
-    /**
-     * 获取订单跟订单明细
-     * @param id
-     * @return
-     */
-    OrderDTO findOrderAndItems(@Param("id") String id);
 }
