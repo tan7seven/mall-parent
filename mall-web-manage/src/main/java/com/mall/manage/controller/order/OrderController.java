@@ -38,19 +38,19 @@ public class OrderController extends GenericController {
     @ApiOperation("分页查询")
     @GetMapping(value = "/page")
     protected RestResult<RestPage<OrderPageVO>> getPage(@ApiParam(value = "收货人姓名") @RequestParam(required = false) String receiverName,
-                                                    @ApiParam(value = "创建时间") @RequestParam(required = false) String creatTime,
-                                                    @ApiParam(value = "订单状态") @RequestParam(required = false) Integer orderStatus,
-                                                    @ApiParam(value = "支付方式") @RequestParam(required = false) Integer payType,
-                                                    @ApiParam(value = "订单编号") @RequestParam(required = false) String orderCode,
-                                                    @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
-                                                    @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize) {
+                                                        @ApiParam(value = "创建时间") @RequestParam(required = false) String createTime,
+                                                        @ApiParam(value = "订单状态") @RequestParam(required = false) Integer orderStatus,
+                                                        @ApiParam(value = "支付方式") @RequestParam(required = false) Integer payType,
+                                                        @ApiParam(value = "订单编号") @RequestParam(required = false) String orderCode,
+                                                        @ApiParam(value = "页码") @RequestParam(defaultValue = "1") Integer pageNum,
+                                                        @ApiParam(value = "页数") @RequestParam(defaultValue = "20") Integer pageSize) {
         Page pageParam = new Page(pageNum, pageSize);
         LambdaQueryWrapper<OrderEntity> wrapper = new LambdaQueryWrapper();
         wrapper.like(StringUtils.isNoneBlank(receiverName), OrderEntity::getReceiverName, receiverName)
-                .likeLeft(StringUtils.isNoneBlank(creatTime), OrderEntity::getCreateTime, creatTime)
+                .likeRight(StringUtils.isNoneBlank(createTime), OrderEntity::getCreateTime, createTime)
                 .eq(Objects.nonNull(orderStatus), OrderEntity::getOrderStatus, orderStatus)
                 .eq(Objects.nonNull(payType), OrderEntity::getPayType, payType)
-                .eq(Objects.nonNull(orderCode), OrderEntity::getOrderCode, orderCode);
+                .eq(StringUtils.isNoneBlank(orderCode), OrderEntity::getOrderCode, orderCode);
         Page<OrderEntity> orderPage = (Page<OrderEntity>) orderService.page(pageParam, wrapper);
         RestPage<OrderPageVO> result = new RestPage<>(orderPage.getCurrent(), orderPage.getSize(), orderPage.getTotal());
         List<OrderPageVO> voList = OrderUtil.buildPageVO(orderPage.getRecords());
