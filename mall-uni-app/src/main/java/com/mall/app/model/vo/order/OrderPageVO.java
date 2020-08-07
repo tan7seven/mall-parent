@@ -28,7 +28,7 @@ public class OrderPageVO extends BaseModel {
     private Date createTime;
 
     @ApiModelProperty(value = "订单明细")
-    private List<OrderItem> items;
+    private List<OrderItem> item;
 
     @Data
     @ApiModel

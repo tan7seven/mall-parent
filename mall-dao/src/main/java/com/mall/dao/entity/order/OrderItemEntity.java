@@ -14,8 +14,8 @@ import java.util.Date;
  * 订单商品明细表
  */
 @Data
-@TableName("mall_order_items")
-public class OrderItemsEntity extends BaseEntity {
+@TableName("mall_order_item")
+public class OrderItemEntity extends BaseEntity {
     /**
      * 订单主键
      */

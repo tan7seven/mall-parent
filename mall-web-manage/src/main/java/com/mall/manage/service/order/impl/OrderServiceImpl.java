@@ -7,6 +7,7 @@ import com.mall.dao.entity.order.OrderEntity;
 import com.mall.dao.entity.order.OrderOperationLogEntity;
 import com.mall.dao.mapper.order.OrderMapper;
 import com.mall.dao.mapper.order.OrderOperationLogMapper;
+import com.mall.manage.model.vo.order.OrderDetailVO;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.order.OrderOperationLogService;
 import com.mall.manage.service.order.OrderService;
@@ -28,10 +29,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     @Resource(name = "orderOperationLogService")
     private OrderOperationLogService orderOperationLogService;
 
-    @Override
-    public OrderDTO getOrderById(Long id) {
-        List<OrderOperationLogDTO> operationLogDtoList = orderOperationLogMapper.getOperationLog(null);
 
+    @Override
+    public OrderDetailVO getOrderDetail(Long orderId) {
+        OrderEntity orderEntity = this.getById(orderId);
+        List<OrderOperationLogDTO> operationLogDtoList = orderOperationLogMapper.getOperationLog(orderId);
         return null;
     }
 

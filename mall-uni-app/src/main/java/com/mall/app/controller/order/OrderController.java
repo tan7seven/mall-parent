@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mall.app.controller.cart.utils.CartUtil;
 import com.mall.app.controller.order.utils.OrderUtil;
 import com.mall.app.model.param.order.BuildPayDetailParam;
 import com.mall.app.model.param.order.OrderCreateParam;
-import com.mall.app.model.vo.cart.CartListVO;
 import com.mall.app.model.vo.order.CreateOrderVO;
 import com.mall.app.model.vo.order.OrderPageVO;
 import com.mall.app.model.vo.order.PayDetailVO;
@@ -17,10 +15,8 @@ import com.mall.app.service.order.OrderService;
 import com.mall.common.enums.OrderStatusEnum;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
-import com.mall.dao.entity.cart.CartEntity;
 import com.mall.dao.entity.order.OrderEntity;
-import com.mall.dao.entity.order.OrderItemsEntity;
-import com.mall.dao.entity.product.ProductSkuEntity;
+import com.mall.dao.entity.order.OrderItemEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -67,8 +63,8 @@ public class OrderController {
             return RestResult.success(result);
         }
         List<Long> orderIdList = orderPage.getRecords().stream().map(s -> s.getId()).collect(Collectors.toList());
-        List<OrderItemsEntity> itemList = orderItemsService.list(Wrappers.<OrderItemsEntity>lambdaQuery()
-                .in(OrderItemsEntity::getOrderId, orderIdList));
+        List<OrderItemEntity> itemList = orderItemsService.list(Wrappers.<OrderItemEntity>lambdaQuery()
+                .in(OrderItemEntity::getOrderId, orderIdList));
         List<OrderPageVO> voList = OrderUtil.buildPageVO(orderPage.getRecords(), itemList);
         result.setRecords(voList);
         return RestResult.success(result);

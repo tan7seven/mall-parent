@@ -3,6 +3,7 @@ package com.mall.manage.service.order;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.order.OrderDTO;
 import com.mall.dao.entity.order.OrderEntity;
+import com.mall.manage.model.vo.order.OrderDetailVO;
 import com.mall.manage.security.UserDetailsImpl;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +13,12 @@ import java.util.List;
  * 订单信息
  */
 public interface OrderService extends IService<OrderEntity> {
-
     /**
-     * 根据主键获取
+     * 获取订单明细
+     * @param orderId
+     * @return
      */
-    OrderDTO getOrderById(Long id);
-
+    OrderDetailVO getOrderDetail(Long orderId);
     /**
      * 修改订单收货信息
      * @param dto

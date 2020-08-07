@@ -17,7 +17,7 @@ import com.mall.common.enums.OrderStatusEnum;
 import com.mall.common.enums.PayTypeEnum;
 import com.mall.common.utils.SnowflakeIdWorker;
 import com.mall.dao.entity.order.OrderEntity;
-import com.mall.dao.entity.order.OrderItemsEntity;
+import com.mall.dao.entity.order.OrderItemEntity;
 import com.mall.dao.entity.product.ProductEntity;
 import com.mall.dao.entity.product.ProductSkuEntity;
 import com.mall.dao.entity.user.UserAddressEntity;
@@ -38,7 +38,7 @@ public class OrderUtil {
      *
      * @return
      */
-    public static List<OrderPageVO> buildPageVO(List<OrderEntity> orderList, List<OrderItemsEntity> itemList) {
+    public static List<OrderPageVO> buildPageVO(List<OrderEntity> orderList, List<OrderItemEntity> itemList) {
         if (CollectionUtils.isEmpty(orderList)) {
             return null;
         }
@@ -48,34 +48,34 @@ public class OrderUtil {
             vo.setCreateTime(orderEntity.getCreateTime());
             vo.setOrderStatus(orderEntity.getOrderStatus());
             vo.setOrderStatusName(OrderStatusEnum.getByCode(orderEntity.getOrderStatus()).getDesc());
-            List<OrderPageVO.OrderItem> items = Lists.newArrayList();
-            for (OrderItemsEntity itemsEntity : itemList) {
-                if (itemsEntity.getOrderId().equals(orderEntity.getId())) {
-                    items.add(buildOrderPageItemVO(itemsEntity));
+            List<OrderPageVO.OrderItem> item = Lists.newArrayList();
+            for (OrderItemEntity itemEntity : itemList) {
+                if (itemEntity.getOrderId().equals(orderEntity.getId())) {
+                    item.add(buildOrderPageItemVO(itemEntity));
                 }
             }
-            vo.setItems(items);
+            vo.setItem(item);
             result.add(vo);
         }
         return result;
     }
 
-    private static OrderPageVO.OrderItem buildOrderPageItemVO(OrderItemsEntity itemsEntity) {
+    private static OrderPageVO.OrderItem buildOrderPageItemVO(OrderItemEntity itemEntity) {
         OrderPageVO.OrderItem result = new OrderPageVO.OrderItem();
         try {
-            List<ProductAttrValueVO> attList = JSONObject.parseArray(itemsEntity.getSkuAttr(), ProductAttrValueVO.class);
+            List<ProductAttrValueVO> attList = JSONObject.parseArray(itemEntity.getSkuAttr(), ProductAttrValueVO.class);
             if (!CollectionUtils.isEmpty(attList)) {
                 result.setAttr(attList.stream().map(s ->s.getSkuName() + ":" + s.getSkuValue()).collect(Collectors.joining("/n")));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        result.setPicUrl(itemsEntity.getPicUrl());
-        result.setProductId(itemsEntity.getProductId());
-        result.setProductName(itemsEntity.getProductName());
-        result.setSkuAmount(itemsEntity.getSkuAmount());
-        result.setSkuId(itemsEntity.getSkuId());
-        result.setSkuPrice(itemsEntity.getSkuPrice());
+        result.setPicUrl(itemEntity.getPicUrl());
+        result.setProductId(itemEntity.getProductId());
+        result.setProductName(itemEntity.getProductName());
+        result.setSkuAmount(itemEntity.getSkuAmount());
+        result.setSkuId(itemEntity.getSkuId());
+        result.setSkuPrice(itemEntity.getSkuPrice());
         return result;
     }
 
@@ -181,30 +181,30 @@ public class OrderUtil {
     /**
      * 构建订单明细列表
      */
-    public static List<OrderItemsEntity> buildOrderItems(OrderEntity orderEntity, List<ProductSkuEntity> skuList, List<ProductEntity> productList, OrderCreateParam param) {
-        List<OrderItemsEntity> result = Lists.newArrayList();
+    public static List<OrderItemEntity> buildOrderItem(OrderEntity orderEntity, List<ProductSkuEntity> skuList, List<ProductEntity> productList, OrderCreateParam param) {
+        List<OrderItemEntity> result = Lists.newArrayList();
         for (ProductSkuEntity skuEntity : skuList) {
-            OrderItemsEntity items = new OrderItemsEntity();
+            OrderItemEntity item = new OrderItemEntity();
             // todo 金额拆分
-            items.setCouponPrice(BigDecimal.ZERO);
-            items.setRealPrice(skuEntity.getSalePrice());
-            items.setSkuPrice(skuEntity.getSalePrice());
-            items.setOrderId(orderEntity.getId());
-            items.setPicUrl(skuEntity.getPicUrl());
-            items.setProductId(skuEntity.getProductId());
-            items.setSkuAttr(skuEntity.getAttrJson());
-            items.setSkuId(skuEntity.getId());
+            item.setCouponPrice(BigDecimal.ZERO);
+            item.setRealPrice(skuEntity.getSalePrice());
+            item.setSkuPrice(skuEntity.getSalePrice());
+            item.setOrderId(orderEntity.getId());
+            item.setPicUrl(skuEntity.getPicUrl());
+            item.setProductId(skuEntity.getProductId());
+            item.setSkuAttr(skuEntity.getAttrJson());
+            item.setSkuId(skuEntity.getId());
             for (ProductEntity productEntity : productList) {
                 if (productEntity.getId().equals(skuEntity.getProductId())) {
-                    items.setProductName(productEntity.getProductName());
+                    item.setProductName(productEntity.getProductName());
                 }
             }
             for (OrderSkuParam skuParam : param.getSkuList()) {
                 if (skuParam.getSkuId().equals(skuEntity.getId())) {
-                    items.setSkuAmount(skuParam.getAmount());
+                    item.setSkuAmount(skuParam.getAmount());
                 }
             }
-            result.add(items);
+            result.add(item);
         }
         return result;
     }
@@ -223,7 +223,7 @@ public class OrderUtil {
     /**
      * 支付详情-收货地址信息
      */
-    public static void buildPayDetaiAdressVO(PayDetailVO result, UserAddressEntity param) {
+    public static void buildPayDetailAddressVO(PayDetailVO result, UserAddressEntity param) {
         PayDetailVO.ReceiverVO vo = result.new ReceiverVO();
         vo.setCity(param.getCity());
         vo.setAddress(param.getAddress());

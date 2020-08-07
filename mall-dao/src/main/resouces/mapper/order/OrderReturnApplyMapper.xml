@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.mall.dao.dto.order.OrderReturnApplyDTO">
         <id column="apply_id" jdbcType="VARCHAR" property="applyId" />
         <result column="order_id" jdbcType="VARCHAR" property="orderId" />
-        <result column="order_items_id" jdbcType="VARCHAR" property="orderItemsId" />
+        <result column="order_item_id" jdbcType="VARCHAR" property="orderItemId" />
         <result column="user_id" jdbcType="VARCHAR" property="userId" />
         <result column="return_price" jdbcType="DECIMAL" property="returnPrice" />
         <result column="real_return_price" jdbcType="DECIMAL" property="realReturnPrice" />
@@ -32,7 +32,7 @@
         <result column="product_id" jdbcType="INTEGER" property="productId" />
     </resultMap>
     <sql id="Base_Column_List">
-        a.apply_id, a.order_id, a.order_items_id, a.user_id, a.return_price, a.company_address_id,
+        a.apply_id, a.order_id, a.order_item_id, a.user_id, a.return_price, a.company_address_id,
         return_reason, a.return_pic, a.return_status, a.return_amount, a.create_time, a.handle_time, a.handle_person, a.handle_remark,
         delivery_time, a.receive_time, a.receive_remark, a.receive_person, a.real_return_price
     </sql>
@@ -61,7 +61,7 @@
         , e.name handle_Person_Name, f.name receive_person_name
         FROM mall_order_return_apply a
         INNER JOIN system_admin b ON a.user_id = b.user_id
-        INNER JOIN mall_order_items c ON  c.items_id = a.order_items_id
+        INNER JOIN mall_order_item c ON  c.item_id = a.order_item_id
         INNER JOIN mall_product d ON  d.product_id = c.product_id
         LEFT JOIN system_admin e ON e.user_id = a.handle_person
         LEFT JOIN system_admin f ON f.user_id = a.receive_person

@@ -2,7 +2,6 @@ package com.mall.app.service.order.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.app.controller.order.utils.OrderUtil;
 import com.mall.app.model.param.order.BuildPayDetailParam;
@@ -21,7 +20,7 @@ import com.mall.common.exception.BusinessException;
 import com.mall.common.utils.DateUtil;
 import com.mall.dao.entity.cart.CartEntity;
 import com.mall.dao.entity.order.OrderEntity;
-import com.mall.dao.entity.order.OrderItemsEntity;
+import com.mall.dao.entity.order.OrderItemEntity;
 import com.mall.dao.entity.product.ProductEntity;
 import com.mall.dao.entity.product.ProductSkuEntity;
 import com.mall.dao.entity.user.UserAddressEntity;
@@ -69,7 +68,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                 .orderByAsc(UserAddressEntity::getDefaulted));
         if (!CollectionUtils.isEmpty(addressList)) {
             /** 构建收货地址信息*/
-            OrderUtil.buildPayDetaiAdressVO(result, addressList.get(0));
+            OrderUtil.buildPayDetailAddressVO(result, addressList.get(0));
         }
         return result;
     }
@@ -112,8 +111,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         }
 
         /** 构建订单明细 */
-        List<OrderItemsEntity> itemsList = OrderUtil.buildOrderItems(orderEntity, skuList, productList, param);
-        Boolean saveOrderItems = orderItemsService.saveBatch(itemsList);
+        List<OrderItemEntity> itemList = OrderUtil.buildOrderItem(orderEntity, skuList, productList, param);
+        Boolean saveOrderItems = orderItemsService.saveBatch(itemList);
         if (!saveOrderItems) {
             throw new BusinessException("保持订单明细失败");
         }

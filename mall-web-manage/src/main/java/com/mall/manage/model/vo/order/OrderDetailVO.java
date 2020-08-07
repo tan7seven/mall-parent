@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description:
@@ -19,8 +20,10 @@ import java.util.Date;
 public class OrderDetailVO extends BaseVO {
 
     /**
-     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成（已收货）；4->已关闭；5->完成评价；6->无效订单
+     * 订单状态
+     * @see com.mall.common.enums.OrderStatusEnum
      */
+    @ApiModelProperty(value = "订单状态")
     private Integer orderStatus;
 
     @ApiModelProperty(value = "费用信息")
@@ -34,6 +37,12 @@ public class OrderDetailVO extends BaseVO {
 
     @ApiModelProperty(value = "时间信息")
     private TimeMsg timeMsg;
+
+    @ApiModelProperty(value = "商品明细")
+    private List<OrderItemVO> itemList;
+
+    @ApiModelProperty(value = "操作列表")
+    private List<OrderOperationLogVO> operationList;
 
     @Data
     @ApiModel(value = "时间信息")

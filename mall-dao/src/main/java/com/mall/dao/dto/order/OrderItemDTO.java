@@ -7,11 +7,7 @@ import java.util.Date;
  * 订单商品明细表
  */
 @Data
-public class OrderItemsDTO {
-    /**
-     * 主键
-     */
-    private String itemsId;
+public class OrderItemDTO {
     /**
      * 订单主键
      */

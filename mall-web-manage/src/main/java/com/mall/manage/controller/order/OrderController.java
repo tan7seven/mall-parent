@@ -11,6 +11,7 @@ import com.mall.dao.entity.order.OrderEntity;
 import com.mall.dao.entity.product.ProductAttrTypeEntity;
 import com.mall.manage.controller.common.GenericController;
 import com.mall.manage.controller.order.util.OrderUtil;
+import com.mall.manage.model.vo.order.OrderDetailVO;
 import com.mall.manage.model.vo.order.OrderPageVO;
 import com.mall.manage.service.order.OrderService;
 import io.swagger.annotations.Api;
@@ -60,8 +61,8 @@ public class OrderController extends GenericController {
 
     @ApiOperation("订单明细")
     @GetMapping(value = "/detail/{id}")
-    public RestResult detail(@NotNull(message = "订单号不能为空") @PathVariable Long id) {
-        OrderDTO result = orderService.getOrderById(id);
+    public RestResult<OrderDetailVO> detail(@NotNull(message = "订单号不能为空") @PathVariable Long id) {
+        OrderDetailVO result = orderService.getOrderDetail(id);
         return RestResult.success(result);
     }
 

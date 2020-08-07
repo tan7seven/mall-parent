@@ -33,7 +33,7 @@ public class OrderReturnApplyEntity extends BaseEntity {
     /**
      * 订单商品明细编号
      */
-    private String orderItemsId;
+    private String orderItemId;
     /**
      * 用户id
      */
