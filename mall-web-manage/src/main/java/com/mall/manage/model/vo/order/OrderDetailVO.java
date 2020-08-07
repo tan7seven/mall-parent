@@ -1,5 +1,7 @@
 package com.mall.manage.model.vo.order;
 
+import com.mall.common.enums.OrderStatusEnum;
+import com.mall.common.enums.PayTypeEnum;
 import com.mall.common.model.BaseModel;
 import com.mall.manage.model.vo.product.BaseVO;
 import io.swagger.annotations.ApiModel;
@@ -9,6 +11,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @description:
@@ -25,6 +28,7 @@ public class OrderDetailVO extends BaseVO {
      */
     @ApiModelProperty(value = "订单状态")
     private Integer orderStatus;
+    private String orderStatusName;
 
     @ApiModelProperty(value = "费用信息")
     private PriceMsg priceMsg;
@@ -43,6 +47,14 @@ public class OrderDetailVO extends BaseVO {
 
     @ApiModelProperty(value = "操作列表")
     private List<OrderOperationLogVO> operationList;
+
+
+    public String getOrderStatusName(){
+        if (Objects.isNull(orderStatus)) {
+            return OrderStatusEnum.UNPAID.getDesc();
+        }
+        return OrderStatusEnum.getByCode(this.orderStatus).getDesc();
+    }
 
     @Data
     @ApiModel(value = "时间信息")
@@ -76,27 +88,14 @@ public class OrderDetailVO extends BaseVO {
          * 订单ID
          */
         @ApiModelProperty(value = "订单ID")
-        private String orderCode;
-        /**
-         * 积分
-         */
-        @ApiModelProperty(value = "积分")
-        private Integer score;
-        /**
-         * 成长值
-         */
-        @ApiModelProperty(value = "成长值")
-        private Integer growth;
+        private Long orderCode;
         /**
          * 支付方式：0->未支付；1->支付宝；2->微信
          */
         @ApiModelProperty(value = "支付方式")
         private Integer payType;
-        /**
-         * 订单来源：0->PC订单；1->app订单
-         */
-        @ApiModelProperty(value = "订单来源")
-        private Integer sourceType;
+        @ApiModelProperty(value = "支付方式")
+        private String payTypeName;
         /**
          * 物流公司(配送方式)
          */
@@ -108,11 +107,6 @@ public class OrderDetailVO extends BaseVO {
         @ApiModelProperty(value = "物流单号")
         private String deliveryCode;
         /**
-         * 自动确认时间（天）
-         */
-        @ApiModelProperty(value = "自动确认时间")
-        private Integer autoConfirmDay;
-        /**
          * 登录账号
          */
         @ApiModelProperty(value = "登录账号")
@@ -122,6 +116,14 @@ public class OrderDetailVO extends BaseVO {
          */
         @ApiModelProperty(value = "订单备注")
         private String orderRemark;
+
+        public String getPayTypeName(){
+            if (Objects.isNull(payType)) {
+                return PayTypeEnum.UN_PAY.getDesc();
+            }
+            return PayTypeEnum.getByCode(this.payType).getDesc();
+        }
+
     }
 
     @Data
@@ -137,11 +139,6 @@ public class OrderDetailVO extends BaseVO {
          */
         @ApiModelProperty(value = "收货人电话")
         private String receiverPhone;
-        /**
-         * 收货人邮编
-         */
-        @ApiModelProperty(value = "收货人邮编")
-        private String receiverPostCode;
         /**
          * 省份/直辖市
          */
@@ -188,11 +185,7 @@ public class OrderDetailVO extends BaseVO {
          */
         @ApiModelProperty(value = "促销优化金额（促销价、满减、阶梯价），指应扣除金额")
         private BigDecimal promotionPrice;
-        /**
-         * 积分抵扣金额
-         */
-        @ApiModelProperty(value = "积分抵扣金额")
-        private BigDecimal scorePrice;
+
         /**
          * 优惠券抵扣金额
          */

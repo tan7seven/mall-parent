@@ -1,14 +1,18 @@
 package com.mall.manage.service.order.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.exception.BusinessException;
 import com.mall.dao.dto.order.OrderDTO;
 import com.mall.dao.dto.order.OrderOperationLogDTO;
 import com.mall.dao.entity.order.OrderEntity;
+import com.mall.dao.entity.order.OrderItemEntity;
 import com.mall.dao.entity.order.OrderOperationLogEntity;
 import com.mall.dao.mapper.order.OrderMapper;
 import com.mall.dao.mapper.order.OrderOperationLogMapper;
 import com.mall.manage.model.vo.order.OrderDetailVO;
 import com.mall.manage.security.UserDetailsImpl;
+import com.mall.manage.service.order.OrderItemService;
 import com.mall.manage.service.order.OrderOperationLogService;
 import com.mall.manage.service.order.OrderService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service(value = "orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> implements OrderService{
@@ -29,10 +34,17 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     @Resource(name = "orderOperationLogService")
     private OrderOperationLogService orderOperationLogService;
 
+    @Autowired
+    private OrderItemService orderItemService;
 
     @Override
     public OrderDetailVO getOrderDetail(Long orderId) {
         OrderEntity orderEntity = this.getById(orderId);
+        if (Objects.isNull(orderEntity)) {
+            throw new BusinessException("无效的订单号");
+        }
+        List<OrderItemEntity> itemList = orderItemService.list(Wrappers.<OrderItemEntity>lambdaQuery()
+                .eq(OrderItemEntity::getOrderId, orderId));
         List<OrderOperationLogDTO> operationLogDtoList = orderOperationLogMapper.getOperationLog(orderId);
         return null;
     }
