@@ -36,6 +36,9 @@ public class OrderItemVO extends BaseVO {
      */
     @ApiModelProperty(value = "商品价格")
     private BigDecimal productPrice;
+
+    @ApiModelProperty(value = "实付价格")
+    private BigDecimal realPrice;
     /**
      *	商品属性
      */

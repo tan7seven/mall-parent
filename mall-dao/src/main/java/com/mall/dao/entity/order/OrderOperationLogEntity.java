@@ -14,13 +14,9 @@ import java.util.Date;
 @TableName("mall_order_operation_log")
 public class OrderOperationLogEntity extends BaseEntity {
         /**
-         * 主键
-         */
-        private String operationId;
-        /**
          * 订单编号
          */
-        private String orderId;
+        private Long orderId;
         /**
          * 操作人ID
          */
@@ -33,9 +29,4 @@ public class OrderOperationLogEntity extends BaseEntity {
          * 备注
          */
         private String remark;
-        /**
-         * 创建时间
-         */
-        private Date createTime;
-
 }

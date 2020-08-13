@@ -4,21 +4,29 @@ package com.mall.manage.controller.order;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mall.common.exception.BusinessException;
 import com.mall.common.model.vo.RestPage;
 import com.mall.common.model.vo.RestResult;
 import com.mall.dao.dto.order.OrderDTO;
 import com.mall.dao.entity.order.OrderEntity;
+import com.mall.dao.entity.order.OrderOperationLogEntity;
 import com.mall.dao.entity.product.ProductAttrTypeEntity;
 import com.mall.manage.controller.common.GenericController;
+import com.mall.manage.controller.order.util.OrderOperationLogUtil;
 import com.mall.manage.controller.order.util.OrderUtil;
+import com.mall.manage.model.param.order.OrderUpdateReceiverInfoParam;
+import com.mall.manage.model.param.order.OrderUpdateRemarkParam;
 import com.mall.manage.model.vo.order.OrderDetailVO;
 import com.mall.manage.model.vo.order.OrderPageVO;
+import com.mall.manage.service.order.OrderOperationLogService;
 import com.mall.manage.service.order.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,6 +43,9 @@ public class OrderController extends GenericController {
 
     @Resource(name = "orderService")
     private OrderService orderService;
+
+    @Autowired
+    private OrderOperationLogService orderOperationLogService;
 
     @ApiOperation("分页查询")
     @GetMapping(value = "/page")
@@ -66,30 +77,57 @@ public class OrderController extends GenericController {
         return RestResult.success(result);
     }
 
+    @ApiOperation("修改订单备注")
+    @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
+    @PostMapping(value = "/remark-update")
+    protected RestResult<Boolean> updateRemark(@Validated @RequestBody OrderUpdateRemarkParam param) {
+        OrderEntity orderEntity = orderService.getById(param.getOrderId());
+        if (Objects.isNull(orderEntity)) {
+            throw new BusinessException("订单不存在");
+        }
+        OrderEntity updateParam = new OrderEntity();
+        updateParam.setId(orderEntity.getId());
+        updateParam.setOrderRemark(param.getRemark());
+        boolean result = orderService.updateById(updateParam);
+        if (result) {
+            OrderOperationLogEntity logEntity =
+                    OrderOperationLogUtil.buildOrderOperationLog(orderEntity, param.getRemark(), super.getUserDetails().getUserId());
+            orderOperationLogService.save(logEntity);
+        }
+        return RestResult.success(result);
+    }
+
     @ApiOperation("修改订单收货信息")
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
-    @PostMapping(value = "updateReceiverInfo.do")
-    protected RestResult updateReceiverInfo(@RequestBody OrderDTO dto) {
-        orderService.updateReceiverInfo(dto, this.getUserDetails());
-        return RestResult.success();
+    @PostMapping(value = "/receiver-update")
+    protected RestResult updateReceiverInfo(@Validated @RequestBody OrderUpdateReceiverInfoParam param) {
+        OrderEntity orderEntity = orderService.getById(param.getOrderId());
+        if (Objects.isNull(orderEntity)) {
+            throw new BusinessException("订单不存在");
+        }
+        OrderEntity updateParam = new OrderEntity();
+        updateParam.setId(orderEntity.getId());
+        updateParam.setReceiverDetailAddress(param.getReceiverDetailAddress());
+        updateParam.setReceiverRegion(param.getReceiverRegion());
+        updateParam.setReceiverCity(param.getReceiverCity());
+        updateParam.setReceiverProvince(param.getReceiverProvince());
+        updateParam.setReceiverPhone(param.getReceiverPhone());
+        updateParam.setReceiverName(param.getReceiverName());
+        boolean result = orderService.updateById(updateParam);
+        if (result) {
+            OrderOperationLogEntity logEntity =
+                    OrderOperationLogUtil.buildOrderOperationLog(orderEntity, "修改收货信息", super.getUserDetails().getUserId());
+            orderOperationLogService.save(logEntity);
+        }
+        return RestResult.success(result);
     }
+    // todo done
 
     @ApiOperation("修改订单金额")
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "updateMoneyInfo.do")
     protected RestResult updateMoneyInfo(@RequestBody OrderDTO dto) {
-        if (null == dto.getDiscountPrice()) {
-            dto.setDiscountPrice(new BigDecimal(0));
-        }
         orderService.updateMoneyInfo(dto, this.getUserDetails());
-        return RestResult.success();
-    }
-
-    @ApiOperation("修改订单备注")
-    @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
-    @PostMapping(value = "updateRemarkInfo.do")
-    protected RestResult updateRemarkInfo(OrderDTO dto) {
-        orderService.updateRemarkInfo(dto, this.getUserDetails());
         return RestResult.success();
     }
 
@@ -105,9 +143,6 @@ public class OrderController extends GenericController {
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "closeOrderList.do")
     protected RestResult closeOrderList(List<String> ids, String remark) {
-        if (null == ids || StringUtils.isBlank(ids.toString())) {
-            return RestResult.success();
-        }
         orderService.closeOrderList(ids, remark, this.getUserDetails());
         return RestResult.success();
     }
@@ -116,9 +151,6 @@ public class OrderController extends GenericController {
     @PreAuthorize(" hasAuthority('OMS:ORDER:DELETE') or hasRole('ADMIN')")
     @PostMapping(value = "deleteOrder.do")
     protected RestResult deleteOrder(List<String> ids) {
-        if (StringUtils.isBlank(ids.toString())) {
-            return RestResult.validateFailed("参数为空！");
-        }
         orderService.deleteOrder(ids, this.getUserDetails());
         return RestResult.success();
     }
@@ -127,9 +159,6 @@ public class OrderController extends GenericController {
     @PreAuthorize(" hasAuthority('OMS:ORDER:UPDATE') or hasRole('ADMIN')")
     @PostMapping(value = "deliveryOrder.do")
     protected RestResult deliveryOrder(@RequestBody List<OrderDTO> dtoList) {
-        if (null == dtoList || dtoList.isEmpty()) {
-            return RestResult.success();
-        }
         orderService.deliveryOrder(dtoList, this.getUserDetails());
         return RestResult.success();
     }

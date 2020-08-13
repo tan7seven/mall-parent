@@ -20,22 +20,10 @@ public interface OrderService extends IService<OrderEntity> {
      */
     OrderDetailVO getOrderDetail(Long orderId);
     /**
-     * 修改订单收货信息
-     * @param dto
-     */
-    void updateReceiverInfo(OrderDTO dto, UserDetailsImpl userDetails);
-    /**
      * 修改订单价格
      * @param dto
      */
     void updateMoneyInfo(OrderDTO dto, UserDetailsImpl userDetails);
-
-    /**
-     * 修改订单备注
-     * @param dto
-     * @param userDetails
-     */
-    void updateRemarkInfo(OrderDTO dto, UserDetailsImpl userDetails);
 
     /**
      * 关闭订单

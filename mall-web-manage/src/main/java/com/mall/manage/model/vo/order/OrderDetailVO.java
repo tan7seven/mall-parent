@@ -4,6 +4,7 @@ import com.mall.common.enums.OrderStatusEnum;
 import com.mall.common.enums.PayTypeEnum;
 import com.mall.common.model.BaseModel;
 import com.mall.manage.model.vo.product.BaseVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @ApiModel
 public class OrderDetailVO extends BaseVO {
 
+    private Long orderId;
     /**
      * 订单状态
      * @see com.mall.common.enums.OrderStatusEnum
@@ -109,8 +111,8 @@ public class OrderDetailVO extends BaseVO {
         /**
          * 登录账号
          */
-        @ApiModelProperty(value = "登录账号")
-        private String loginCode;
+        @ApiModelProperty(value = "用户ID")
+        private Long userId;
         /**
          * 订单备注
          */

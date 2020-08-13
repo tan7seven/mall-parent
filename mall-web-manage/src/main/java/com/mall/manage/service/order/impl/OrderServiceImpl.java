@@ -10,6 +10,7 @@ import com.mall.dao.entity.order.OrderItemEntity;
 import com.mall.dao.entity.order.OrderOperationLogEntity;
 import com.mall.dao.mapper.order.OrderMapper;
 import com.mall.dao.mapper.order.OrderOperationLogMapper;
+import com.mall.manage.controller.order.util.OrderUtil;
 import com.mall.manage.model.vo.order.OrderDetailVO;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.order.OrderItemService;
@@ -46,28 +47,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         List<OrderItemEntity> itemList = orderItemService.list(Wrappers.<OrderItemEntity>lambdaQuery()
                 .eq(OrderItemEntity::getOrderId, orderId));
         List<OrderOperationLogDTO> operationLogDtoList = orderOperationLogMapper.getOperationLog(orderId);
-        return null;
+        OrderDetailVO result = OrderUtil.buildDetailVO(orderEntity, itemList, operationLogDtoList);
+        return result;
     }
-
-    @Override
-    public void updateReceiverInfo(OrderDTO dto, UserDetailsImpl userDetails) {
-        OrderEntity entity = this.getById(dto.getOrderId());
-        entity.setReceiverCity(dto.getReceiverCity());
-        entity.setReceiverDetailAddress(dto.getReceiverDetailAddress());
-        entity.setReceiverName(dto.getReceiverName());
-        entity.setReceiverPhone(dto.getReceiverPhone());
-        entity.setReceiverProvince(dto.getReceiverProvince());
-        entity.setReceiverRegion(dto.getReceiverRegion());
-        this.save(entity);
-        OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
-        logEntity.setCreateTime(new Date());
-        logEntity.setOperationPerson(userDetails.getUserId());
-        logEntity.setOrderId(dto.getOrderId());
-        logEntity.setOrderStatus(dto.getOrderStatus());
-        logEntity.setRemark("修改收货信息");
-        orderOperationLogService.save(logEntity);
-    }
-
     @Override
     public void updateMoneyInfo(OrderDTO dto, UserDetailsImpl userDetails) {
         OrderEntity entity = this.getById(dto.getOrderId());
@@ -78,23 +60,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
         logEntity.setCreateTime(new Date());
         logEntity.setOperationPerson(userDetails.getUserId());
-        logEntity.setOrderId(dto.getOrderId());
         logEntity.setOrderStatus(dto.getOrderStatus());
         logEntity.setRemark("修改订单价格："+ dto.getDiscountPrice().toString());
-        orderOperationLogService.save(logEntity);
-    }
-
-    @Override
-    public void updateRemarkInfo(OrderDTO dto, UserDetailsImpl userDetails) {
-        OrderEntity entity = this.getById(dto.getOrderId());
-        entity.setOrderRemark(dto.getOrderRemark());
-        this.save(entity);
-        OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
-        logEntity.setCreateTime(new Date());
-        logEntity.setOperationPerson(userDetails.getUserId());
-        logEntity.setOrderId(dto.getOrderId());
-        logEntity.setOrderStatus(dto.getOrderStatus());
-        logEntity.setRemark("修改订单备注："+ dto.getOrderRemark());
         orderOperationLogService.save(logEntity);
     }
 
@@ -104,7 +71,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
         logEntity.setCreateTime(new Date());
         logEntity.setOperationPerson(userDetails.getUserId());
-        logEntity.setOrderId(dto.getOrderId());
         logEntity.setOrderStatus(entity.getOrderStatus());
         logEntity.setRemark("关闭订单、备注信息："+ dto.getOrderRemark());
         orderOperationLogService.save(logEntity);
@@ -120,7 +86,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             OrderOperationLogEntity logEntity = new OrderOperationLogEntity();
             logEntity.setCreateTime(new Date());
             logEntity.setOperationPerson(userDetails.getUserId());
-            logEntity.setOrderId(id);
             logEntity.setOrderStatus(entity.getOrderStatus());
             logEntity.setRemark("关闭订单、备注信息："+ remark);
             orderOperationLogService.save(logEntity);

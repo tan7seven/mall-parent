@@ -1,13 +1,6 @@
 package com.mall.app.jwt;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.mall.app.handler.BaseContextHandler;
-import com.mall.common.enums.ResultStatus;
-import com.mall.common.exception.BusinessException;
-import com.mall.common.model.vo.RestResult;
-import com.mall.common.model.vo.ResultVO;
-import com.mall.common.utils.IPUtil;
 import com.sun.istack.Nullable;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
@@ -15,14 +8,9 @@ import io.github.bucket4j.Bucket4j;
 import io.github.bucket4j.Refill;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -76,6 +63,8 @@ public class JwtAuthenticationTokenFilter implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+
+        BaseContextHandler.setUserID(123L);
         /** 跨域验证不处理 */
         if (request.getMethod().equals("OPTIONS")) {
             return true;
@@ -105,6 +94,7 @@ public class JwtAuthenticationTokenFilter implements HandlerInterceptor {
     }
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) {
+        BaseContextHandler.remove();
     }
 
 
