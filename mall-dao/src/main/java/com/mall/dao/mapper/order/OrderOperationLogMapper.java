@@ -15,8 +15,6 @@ public interface OrderOperationLogMapper extends BaseMapper<OrderOperationLogEnt
 
     /**
      * 获取订单操作记录
-     * @param dto
-     * @return
      */
-    List<OrderOperationLogDTO> getOperationLog(@Param("dto") OrderOperationLogDTO dto);
+    List<OrderOperationLogDTO> getOperationLog(@Param("orderId") Long orderId);
 }

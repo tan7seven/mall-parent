@@ -98,18 +98,4 @@ public class ProductController {
         Boolean result = productService.deleteList(param.getIds());
         return RestResult.success(result);
     }
-//    todo :
-
-
-    @ApiOperation("根据商品名称获取商品列表")
-    @PostMapping(value = "/findProductByName.do")
-    protected RestResult findProductByName(String name){
-        List<ProductDTO> result = productService.findByName(name);
-        return RestResult.success(result);
-    }
-
-
-
-
-
 }

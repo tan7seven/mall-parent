@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.mapper.product.ProductMapper">
+
+    <resultMap id="ProductMap" type="com.mall.dao.dto.product.ProductDTO">
+        <result column="id" property="id"/>
+        <result column="type_id" property="typeId"/>
+        <result column="hits" property="hits"/>
+        <result column="product_name" property="productName"/>
+        <result column="pic_url" property="picUrl"/>
+        <result column="min_price" property="minPrice"/>
+        <result column="unit" property="unit"/>
+        <result column="is_putaway" property="putaway"/>
+        <result column="create_time" property="createTime"/>
+        <result column="detail" property="detail"/>
+        <result column="type_name" property="typeName"/>
+        <result column="is_usable" property="usable" />
+        <result column="is_deletedd"  property="deleted" />
+    </resultMap>
+
+    <select id="getList" resultMap="ProductMap">
+        SELECT
+            a.id ,
+            a.type_Id ,
+            a.product_Name ,
+            a.min_price ,
+            a.unit ,
+            a.pic_Url ,
+            a.is_Putaway ,
+            a.hits,
+            a.create_time ,
+            b.type_Name ,
+            a.is_usable 
+        FROM mall_product a
+        INNER JOIN mall_product_type b ON b.id = a.type_id
+        where 1 = 1
+        AND a.is_deleted = 0
+        <if test="param.productName!=null and param.productName!=''">
+            AND a.product_name like concat('%', #{param.productName}, '%')
+        </if>
+        <if test="param.typeId!=null and param.typeId!=''">
+            AND a.type_Id = #{param.typeId}
+        </if>
+        <if test="param.putaway!=null and param.putaway!=''">
+            AND a.is_putaway = #{param.putaway}
+        </if>
+        order  by  a.modify_time desc
+    </select>
+</mapper>
+        <!--
+            <id>：主键字段
+            <result>：普通字段
+            type：整体封装出的类型
+            column：字段名（表里定义好的）
+            property：关联属性（查询出来的结果封装成Country里的哪个属性）
+            ofType：指定属性类型（关联属性是什么类型）
+            <collection>：集合封装
+             association:用于配置1对1的映射
+                                属性property：company对象在user对象中的属性名
+                                属性javaType：company属性的java对象 类型
+                                属性column：user表中的外键引用company表
+            collection ：配置1对多关系映射
+                    property：在user里面的List<Account>的属性名
+                    ofType:当前account表的java类型
+                    column:外键
+                -->

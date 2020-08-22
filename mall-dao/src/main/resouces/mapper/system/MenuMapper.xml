@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.mapper.system.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.mall.dao.dto.system.MenuDTO">
+        <id column="menu_id" jdbcType="VARCHAR" property="menuId" />
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+        <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
+        <result column="menu_title" jdbcType="VARCHAR" property="menuTitle" />
+        <result column="menu_url" jdbcType="VARCHAR" property="menuUrl" />
+        <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon" />
+        <result column="is_hidden" property="isHidden" />
+        <result column="parentTitle" jdbcType="VARCHAR" property="parentTitle" />
+    </resultMap>
+    <resultMap id="TreeResultMap" type="com.mall.dao.dto.common.TreeDTO">
+        <result column="id" property="id" />
+        <result column="label" property="label" />
+        <collection property="children" ofType="com.mall.dao.dto.common.TreeDTO">
+            <result column="children_id" property="id"/>
+            <result column="children_label" property="label"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        a.id menu_id, a.parent_id, a.menu_code, a.menu_title, a.menu_url, a.menu_icon, a.is_hidden
+     </sql>
+
+    <select id="getMenuTree" resultMap="TreeResultMap">
+        SELECT
+        a.id, a.menu_title label,  b.id children_id, b.menu_title children_label
+        FROM system_menu a LEFT JOIN  system_menu b ON  b.parent_id = a.id
+        <if test="null != userId and userId != '' ">
+            INNER JOIN system_menu_authority c ON  c.menu_id = b.id AND  c.user_id = #{userId}
+        </if>
+        WHERE a.parent_id = '0'
+    </select>
+</mapper>

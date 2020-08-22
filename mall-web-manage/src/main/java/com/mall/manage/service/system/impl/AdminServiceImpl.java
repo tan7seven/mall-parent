@@ -3,27 +3,27 @@ package com.mall.manage.service.system.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.mall.common.enums.AdminRoleEnum;
-import com.mall.dao.dto.system.AdminDTO;
+import com.mall.common.exception.BusinessException;
 import com.mall.dao.entity.system.AdminEntity;
 import com.mall.dao.entity.system.ButtonAuthorityEntity;
 import com.mall.dao.entity.system.MenuAuthorityEntity;
-import com.mall.dao.entity.system.MenuEntity;
 import com.mall.dao.mapper.system.AdminMapper;
-import com.mall.dao.mapper.system.ButtonMapper;
+import com.mall.manage.model.param.system.menu.ButtonAuthConfirmParam;
+import com.mall.manage.model.param.system.menu.MenuAuthConfirmParam;
 import com.mall.manage.security.UserDetailsImpl;
 import com.mall.manage.service.system.AdminService;
 import com.mall.manage.service.system.ButtonAuthorityService;
 import com.mall.manage.service.system.MenuAuthorityService;
 import com.mall.manage.service.system.MenuService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,139 +32,96 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements AdminService {
 
     @Autowired
-    private AdminMapper adminMapper;
-
-    @Autowired
-    private ButtonMapper buttonMapper;
-
-    @Autowired
-    private MenuService menuService;
-
-    @Autowired
     private MenuAuthorityService menuAuthorityService;
 
     @Autowired
     private ButtonAuthorityService buttonAuthorityService;
 
     @Override
+    public AdminEntity findByLoginCode(String loginCode) {
+        return this.baseMapper.selectOne(Wrappers.<AdminEntity>lambdaQuery().eq(AdminEntity::getLoginCode, loginCode));
+    }
+
+    @Override
     public UserDetailsImpl adminLogin(String username) {
         UserDetailsImpl user = new UserDetailsImpl();
-        AdminDTO dto  = this.findByLoginId(username);
+        AdminEntity entity = this.findByLoginCode(username);
+        if (null == entity) {
+            throw new BusinessException("账号错误");
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         // 加密(SpringSecurity默认有加密)
-        String encodedPassword = passwordEncoder.encode(dto.getPassword().trim());
+        String encodedPassword = passwordEncoder.encode(entity.getPassword().trim());
         user.setPassword(encodedPassword);
         user.setUsername(username);
-        user.setUserId(dto.getUserId());
-        user.setIcon(dto.getPicUrl());
+        user.setUserId(entity.getId());
+        user.setIcon(entity.getPicUrl());
         List<String> buttonList = new ArrayList<>();
         //获取用户角色
-        user.setRole(AdminRoleEnum.getValue(dto.getRole()));
+        user.setRole(AdminRoleEnum.getValue(entity.getRole()));
         //获取用户权限-按钮
-        List<String> buttonCodeList = adminMapper.getButtonCodeAuthority(dto);
-        buttonList.addAll(buttonCodeList);
-        user.setButtonList(buttonList);
+//        List<String> buttonCodeList = this.baseMapper.getButtonCodeAuthority(dto);
+//        buttonList.addAll(buttonCodeList);
+//        user.setButtonList(buttonList);
         //获取用户权限-菜单
-        List<String> menuCodeList = adminMapper.getMenuCodeListAuthority(dto);
-        user.setMenuList(menuCodeList);
+//        List<String> menuCodeList = this.baseMapper.getMenuCodeListAuthority(dto);
+//        user.setMenuList(menuCodeList);
         return user;
     }
 
     @Override
-    public AdminEntity add(AdminDTO dto) {
-        AdminEntity entity = new AdminEntity();
-        BeanUtils.copyProperties(dto, entity);
-        entity.setCreateTime(new Date());
-        entity.setIsUsable(null == entity.getIsUsable()?entity.getIsUsable(): Boolean.FALSE);
-        entity.setModifyTime(new Date());
-        entity.setRole(AdminEntity.ROLE_USER);
-        entity.setPassword(AdminEntity.DEFAULT_PASSWORD);
-        entity.setIsDelete(Boolean.FALSE);
-        this.save(entity);
-        return entity;
-    }
-
-    @Override
-    public void update(AdminDTO dto, String id) {
-        AdminEntity entity = this.getById(id);
-        entity.setLoginCode(dto.getLoginCode());
-        entity.setName(dto.getName());
-        entity.setPhone(dto.getPhone());
-        entity.setPicUrl(dto.getPicUrl());
-        entity.setIsUsable(dto.getIsUsable());
-        entity.setModifyTime(new Date());
-        this.save(entity);
-    }
-
-    @Override
-    public List<AdminEntity> getList(AdminDTO dto) {
-        List<AdminEntity>entities = this.list();
-        return entities;
-    }
-
-    @Override
-    public Page<AdminEntity> getPage(AdminDTO dto) {
-        Page page = new Page(dto.getPageNum()-1, dto.getPageSize());
-        AdminEntity entity = new AdminEntity();
-        BeanUtils.copyProperties(dto, entity);
-        entity.setIsDelete(Boolean.FALSE);
+    public Page<AdminEntity> getPage(Integer pageNum, Integer pageSize) {
+        Page page = new Page(pageNum, pageSize);
         Page<AdminEntity> result = (Page<AdminEntity>) this.page(page);
         return result;
     }
 
-    @Override
-    public AdminDTO findByLoginId(String loginCode) {
-        return adminMapper.findByLoginId(loginCode);
-    }
 
     @Override
-    public void deleteAdmin(List<String> ids) {
-        for (String id : ids) {
-            AdminEntity entity = this.getById(id);
-            entity.setIsDelete(Boolean.TRUE);
-            this.save(entity);
+    public Boolean menuAuthority(MenuAuthConfirmParam param) {
+        AdminEntity adminEntity = this.getById(param.getUserId());
+        menuAuthorityService.remove(Wrappers.<MenuAuthorityEntity>lambdaQuery().eq(MenuAuthorityEntity::getUserId, adminEntity.getId()));
+        if (CollectionUtils.isEmpty(param.getMenuList())) {
+            return Boolean.TRUE;
         }
+        List<MenuAuthorityEntity> menuAuthList = Lists.newArrayList();
+        param.getMenuList().forEach(s -> {
+            MenuAuthorityEntity authorityEntity = new MenuAuthorityEntity();
+            authorityEntity.setMenuId(s);
+            authorityEntity.setUserId(adminEntity.getId());
+            menuAuthList.add(authorityEntity);
+        });
+        boolean result = menuAuthorityService.saveBatch(menuAuthList);
+        return result;
     }
 
     @Override
-    public void updateIsUsable(AdminDTO dto) {
-        AdminEntity entity = this.getById(dto.getUserId());
-        entity.setIsUsable(null == dto.getIsUsable()?Boolean.TRUE:dto.getIsUsable());
-        this.save(entity);
-    }
-
-    @Override
-    public void menuAuthority(AdminDTO dto) {
-        menuAuthorityService.remove(Wrappers.<MenuAuthorityEntity>lambdaQuery().eq(MenuAuthorityEntity::getMenuId, dto.getUserId()));
-        if (dto.getMenuList().isEmpty()) {
-            return;
+    public Boolean buttonAuthority(ButtonAuthConfirmParam param) {
+        buttonAuthorityService.remove(Wrappers.<ButtonAuthorityEntity>lambdaQuery()
+                .eq(ButtonAuthorityEntity::getUserId, param.getUserId())
+                .eq(ButtonAuthorityEntity::getMenuId, param.getMenuId()));
+        if (CollectionUtils.isEmpty(param.getButtonList())) {
+            return Boolean.TRUE;
         }
-        dto.getMenuList().forEach(s -> {
-            MenuEntity menuEntity = menuService.getById(s);
-            if(!"0".equals(menuEntity.getParentId())){
-                MenuAuthorityEntity authorityEntity = new MenuAuthorityEntity();
-                authorityEntity.setMenuId(s);
-                authorityEntity.setUserId(dto.getUserId());
-                menuAuthorityService.save(authorityEntity);
-            }
-        });
+        List<ButtonAuthorityEntity> buttonList = Lists.newArrayList();
+        for (String buttonCode : param.getButtonList()) {
+            ButtonAuthorityEntity entity = new ButtonAuthorityEntity();
+            entity.setButtonCode(buttonCode);
+            entity.setMenuId(param.getMenuId());
+            entity.setUserId(param.getUserId());
+            buttonList.add(entity);
+        }
+        boolean result = buttonAuthorityService.saveBatch(buttonList);
+        return result;
     }
 
     @Override
-    public void buttonAuthority(AdminDTO dto) {
-        buttonMapper.deleteByMenuIdAndUserId(dto);
-        dto.getButtonList().forEach(s -> {
-            ButtonAuthorityEntity authorityEntity = new ButtonAuthorityEntity();
-            authorityEntity.setButtonId(s.getButtonId());
-            authorityEntity.setMenuId(dto.getMenuId());
-            authorityEntity.setUserId(dto.getUserId());
-            buttonAuthorityService.save(authorityEntity);
-        });
-    }
-
-    @Override
-    public List<String> getAdminMenuAuthority(String userId) {
-        return menuAuthorityService.list(Wrappers.<MenuAuthorityEntity>lambdaQuery().eq(MenuAuthorityEntity::getUserId, userId)).stream().map(s -> s.getMenuId()).collect(Collectors.toList());
+    public List<Long> getAdminMenuAuthority(String userId) {
+        List<MenuAuthorityEntity> entityList = menuAuthorityService.list(Wrappers.<MenuAuthorityEntity>lambdaQuery().eq(MenuAuthorityEntity::getUserId, userId));
+        if (CollectionUtils.isEmpty(entityList)) {
+            return null;
+        }
+        return entityList.stream().map(s -> s.getMenuId()).collect(Collectors.toList());
     }
 
 }

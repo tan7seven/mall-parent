@@ -55,15 +55,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**","/image/**","/css/**","/druid/**","/webjars/**","/v2/**","/swagger-resources/configuration/ui",
                         "/swagger-resources", "/swagger-resources/configuration/security",
                         "/swagger-ui.html").permitAll()
-                .antMatchers("/adminController/login.do", "/admin/register.do").permitAll()// 对登录注册要允许匿名访问
+                .antMatchers("/admin/login.do", "/admin/register.do").permitAll()// 对登录注册要允许匿名访问
                 .antMatchers(HttpMethod.OPTIONS).permitAll()//跨域请求会先进行一次options请求
 //                .anyRequest().authenticated()// 除上面外的所有请求全部需要鉴权认证
                 //自定义登录界面
-                .and().formLogin().loginProcessingUrl("/adminController/login.do")
+                .and().formLogin().loginProcessingUrl("/admin/login.do")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler).permitAll()
                 .usernameParameter("username").passwordParameter("password")
-                .and().logout().logoutUrl("/adminController/logout.do").logoutSuccessHandler(logoutSuccessHandler)
+                .and().logout().logoutUrl("/admin/logout.do").logoutSuccessHandler(logoutSuccessHandler)
                 .and().csrf().disable()
                 .sessionManagement()// 基于token，所以不需要session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

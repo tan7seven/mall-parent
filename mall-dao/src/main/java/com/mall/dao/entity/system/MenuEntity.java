@@ -1,5 +1,6 @@
 package com.mall.dao.entity.system;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.dao.entity.BaseEntity;
 import lombok.Data;
@@ -14,13 +15,9 @@ import org.springframework.data.annotation.Id;
 public class MenuEntity extends BaseEntity {
 
     /**
-     * 菜单主键
-     */
-    private String menuId;
-    /**
      * 父级菜单主键
      */
-    private String parentId;
+    private Long parentId;
     /**
      * 菜单编码
      */
@@ -40,6 +37,7 @@ public class MenuEntity extends BaseEntity {
     /**
      * 是否隐藏
      */
-    private Boolean isHidden;
+    @TableField(value = "is_hidden")
+    private Boolean hidden;
 
 }

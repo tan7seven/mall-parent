@@ -1,8 +1,8 @@
 alibaba:
   acm:
     endpoint: acm.aliyun.com
-    namespace: 06026ee6-4b19-4a1b-8c6d-73a04b6631a3
-    accessKey:
-    secretKey:
+    namespace: c9816879-f0f8-4501-b8dd-f51715db5210
+    accessKey: LTAI4FjhAeZusCt8fySLxnwh
+    secretKey: nSuTUrtUK6QuDOZTzrMGafnSO3KMia
     group: com.wjz.mall
     file-extension: properties

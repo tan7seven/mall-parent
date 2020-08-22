@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.mapper.order.OrderMapper">
+
+    <sql id="Base_Column_List">
+        a.order_id,  a.user_id, a.total_price, a.pay_price, a.freight_price, a.promotion_price,
+        a.score_price, a.coupon_price, a.discount_price, a.pay_type, a.source_type, a.order_status,
+        a.delivery_company, a.delivery_code, a.auto_confirm_day, a.receiver_name, a.receiver_phone,
+        a.receiver_post_code, a.receiver_province, a.receiver_city, a.receiver_region, a.receiver_detail_address,
+        a.order_remark, a.is_confirm, a.is_delete, a.use_Score, a.create_time, a.payment_time,
+        a.delivery_time, a.receive_time, a.modify_time,  a.score,  a.growth
+     </sql>
+
+</mapper>

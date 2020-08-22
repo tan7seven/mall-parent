@@ -16,10 +16,5 @@ public interface ProductMapper extends BaseMapper<ProductEntity> {
      * 查询
      * @return
      */
-    Page<ProductDTO> getPage(Page pageParam, @Param("param") ProductDTO param);
-    /**
-     * 查询
-     * @return
-     */
     Page<ProductDTO> getList(Page pageParam, @Param("param") ProductDTO param);
 }
