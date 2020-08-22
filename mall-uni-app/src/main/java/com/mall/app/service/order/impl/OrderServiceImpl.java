@@ -104,7 +104,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         /** 构建订单主表 */
         OrderEntity orderEntity = OrderUtil.buildOrder(skuList, param, addressEntity);
         orderEntity.setUserId(userId);
-        orderEntity.setOrderRemark(param.getRemark());
         Boolean saveOrder = this.save(orderEntity);
         if (!saveOrder) {
             throw new BusinessException("保持订单失败");

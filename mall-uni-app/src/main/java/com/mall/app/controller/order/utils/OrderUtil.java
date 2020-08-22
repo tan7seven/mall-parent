@@ -161,6 +161,7 @@ public class OrderUtil {
         result.setFreightPrice(basePriceModel.getFreightPrice());
         result.setPayPrice(basePriceModel.getPaidPrice());
         result.setTotalPrice(basePriceModel.getSkuPrice());
+        result.setOrderRemark(createParam.getRemark());
         /** 收货信息 */
         result.setReceiverName(addressEntity.getName());
         result.setReceiverPhone(addressEntity.getMobile());
