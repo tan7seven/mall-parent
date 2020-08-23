@@ -1,5 +1,7 @@
 server:
   port: ${server.port}
+  servlet:
+    context-path: /web-manage
 logging:
   file: mall-web-manage-${spring.profiles.active}.log
   level:
