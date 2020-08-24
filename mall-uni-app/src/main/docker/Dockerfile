@@ -1,9 +1,10 @@
-# 基于哪个镜像
-FROM java:8
-# 将本地文件夹挂载到当前容器
+FROM openjdk:8-jdk-alpine
 VOLUME /tmp
-# 拷贝文件到容器，handcuffs-reg-0.0.1-SNAPSHOT.jar这里是maven打包后的名字
-ADD mall-uni-app-1.0.0.jar app.jar
-RUN bash -c 'touch /app.jar'
+ADD mall-uni-app-0.0.1-SNAPSHOT.jar app.jar
+RUN sh -c 'touch /app.jar'
+ENV JAVA_OPTS="\
+              -Duser.timezone=Asia/Shanghai \
+              -Dfile.encoding=UTF-8 "
 # 配置容器启动后执行的命令
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+

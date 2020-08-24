@@ -1,7 +1,7 @@
-FROM java:8
+FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 ADD mall-web-manage-1.0.0.jar app.jar
-RUN bash -c 'touch /app.jar'
+RUN sh -c 'touch /app.jar'
 ENV JAVA_OPTS="\
               -Duser.timezone=Asia/Shanghai \
               -Dfile.encoding=UTF-8 "
