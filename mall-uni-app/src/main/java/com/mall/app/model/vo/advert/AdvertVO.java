@@ -30,6 +30,9 @@ public class AdvertVO extends BaseModel {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "图片地址")
+    private String picUrl;
+
     @ApiModelProperty(value = "商品列表")
     private List<AdvertProductVO> productList;
 }

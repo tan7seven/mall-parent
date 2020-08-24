@@ -9,19 +9,15 @@ import org.springframework.data.annotation.Id;
 @TableName("system_button_authority")
 public class ButtonAuthorityEntity extends BaseEntity {
     /**
-     * 主键
-     */
-    private String buttonAuthorityId;
-    /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
     /**
-     * 按钮主键
+     * 按钮CODE
      */
-    private String buttonId;
+    private String buttonCode;
     /**
      * 菜单主键
      */
-    private String menuId;
+    private Long menuId;
 }

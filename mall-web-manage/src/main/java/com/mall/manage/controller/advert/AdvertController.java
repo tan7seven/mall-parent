@@ -71,7 +71,9 @@ public class AdvertController extends GenericController {
     public RestResult<Boolean> create(@RequestBody @Validated AdvertParam param){
         AdvertEntity advertEntity = new AdvertEntity();
         BeanUtils.copyProperties(param, advertEntity);
-        advertEntity.setPicUrl(advertEntity.getPicUrl().replaceAll(CommonConstant.IMG_PRE, ""));
+        if (StringUtils.isNotBlank(advertEntity.getPicUrl())) {
+            advertEntity.setPicUrl(advertEntity.getPicUrl().replaceAll(CommonConstant.IMG_PRE, ""));
+        }
         Boolean result = advertService.save(advertEntity);
         return RestResult.success(result);
     }
@@ -85,7 +87,9 @@ public class AdvertController extends GenericController {
         AdvertEntity advertEntity = new AdvertEntity();
         BeanUtils.copyProperties(param, advertEntity);
         advertEntity.setId(param.getId());
-        advertEntity.setPicUrl(advertEntity.getSkipUrl().replaceAll(CommonConstant.IMG_PRE, ""));
+        if (StringUtils.isNotBlank(advertEntity.getPicUrl())) {
+            advertEntity.setPicUrl(advertEntity.getPicUrl().replaceAll(CommonConstant.IMG_PRE, ""));
+        }
         Boolean result = advertService.updateById(advertEntity);
         return RestResult.success(result);
     }

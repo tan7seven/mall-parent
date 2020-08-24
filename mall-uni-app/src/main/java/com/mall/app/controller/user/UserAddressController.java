@@ -20,7 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Api(value = "用户收货地址模块")
+@Api(tags = "用户收货地址模块")
 @RestController
 @RequestMapping(value = "/v1/user-address")
 public class UserAddressController {

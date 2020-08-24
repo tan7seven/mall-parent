@@ -11,6 +11,7 @@
 	<groupId>com.mall</groupId>
 	<artifactId>mall-uni-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>mall-uni-app</name>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -63,6 +64,10 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
+		</dependency>
 		<!-- acm -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
@@ -77,6 +82,11 @@
 			<groupId>org.springframework.statemachine</groupId>
 			<artifactId>spring-statemachine-starter</artifactId>
 		</dependency>
+		<!-- 限流 -->
+		<dependency>
+			<groupId>com.github.vladimir-bukhtoyarov</groupId>
+			<artifactId>bucket4j-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -84,6 +94,23 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.14</version>
+				<configuration>
+					<imageName>${name}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<dockerHost>http://47.110.47.162:2375</dockerHost>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

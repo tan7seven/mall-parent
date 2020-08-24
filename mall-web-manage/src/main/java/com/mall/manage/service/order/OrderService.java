@@ -1,9 +1,9 @@
 package com.mall.manage.service.order;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.dao.dto.order.OrderDTO;
 import com.mall.dao.entity.order.OrderEntity;
+import com.mall.manage.model.vo.order.OrderDetailVO;
 import com.mall.manage.security.UserDetailsImpl;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,36 +14,16 @@ import java.util.List;
  */
 public interface OrderService extends IService<OrderEntity> {
     /**
-     * 分页查询
-     * @param dto
+     * 获取订单明细
+     * @param orderId
      * @return
      */
-    Page<OrderDTO> getPage(OrderDTO dto);
-
-    /**
-     * 根据主键获取
-     * @param id
-     * @return
-     */
-    OrderDTO getOrderById(String id);
-
-    /**
-     * 修改订单收货信息
-     * @param dto
-     */
-    void updateReceiverInfo(OrderDTO dto, UserDetailsImpl userDetails);
+    OrderDetailVO getOrderDetail(Long orderId);
     /**
      * 修改订单价格
      * @param dto
      */
     void updateMoneyInfo(OrderDTO dto, UserDetailsImpl userDetails);
-
-    /**
-     * 修改订单备注
-     * @param dto
-     * @param userDetails
-     */
-    void updateRemarkInfo(OrderDTO dto, UserDetailsImpl userDetails);
 
     /**
      * 关闭订单

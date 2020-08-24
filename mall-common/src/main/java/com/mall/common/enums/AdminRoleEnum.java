@@ -1,13 +1,18 @@
 package com.mall.common.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum AdminRoleEnum {
-        普通用户("0", "ROLE_USER"),
-        管理员("1", "ROLE_ADMIN"),
+        普通用户(0, "ROLE_USER"),
+        管理员(1, "ROLE_ADMIN"),
         ;
-        private String key;
+        private Integer key;
         private String value;
 
-        public static String getValue(String key) {
+        public static String getValue(Integer key) {
             for (AdminRoleEnum c : AdminRoleEnum.values()) {
                 if (c.getKey().equals(key)) {
                     return c.value;
@@ -15,7 +20,7 @@ public enum AdminRoleEnum {
             }
             return null;
         }
-        public static String getKey(String value) {
+        public static Integer getKey(String value) {
             for (AdminRoleEnum c : AdminRoleEnum.values()) {
                 if (c.getValue() .equals(value)) {
                     return c.key;
@@ -23,15 +28,4 @@ public enum AdminRoleEnum {
             }
             return null;
         }
-        AdminRoleEnum(String key, String value) {
-            this.key = key;
-            this.value = value;
-        }
-        public String getKey() {
-            return key;
-        }
-        public String getValue() {
-            return value;
-        }
-
 }

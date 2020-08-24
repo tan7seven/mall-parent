@@ -154,7 +154,7 @@ public class OrderDTO extends CommonDTO {
     /**
      * 订单商品明细
      */
-    private List<OrderItemsDTO> orderItems;
+    private List<OrderItemDTO> orderItems;
 
     /**
      * 订单操作日志

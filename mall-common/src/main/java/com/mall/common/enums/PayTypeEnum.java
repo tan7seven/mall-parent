@@ -3,6 +3,8 @@ package com.mall.common.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 @AllArgsConstructor
 public enum PayTypeEnum {
@@ -14,4 +16,16 @@ public enum PayTypeEnum {
 
     private Integer code;
     private String desc;
+
+    public static PayTypeEnum getByCode(Integer code){
+        if (Objects.isNull(code)) {
+            return null;
+        }
+        for (PayTypeEnum typeEnum : PayTypeEnum.values()) {
+            if (typeEnum.code.equals(code)) {
+                return typeEnum;
+            }
+        }
+        return null;
+    }
 }

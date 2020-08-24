@@ -26,4 +26,8 @@ public class RestPage<T>{
         this.pageSize = pageSize.intValue();
         this.total = total.intValue();
     }
+
+    public void setTotal(Long total){
+        this.total = total.intValue();
+    }
 }

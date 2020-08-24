@@ -1,7 +1,6 @@
 package com.mall.dao.dto.system;
 
 import com.mall.dao.dto.common.CommonDTO;
-import com.mall.dao.entity.system.ButtonEntity;
 import lombok.Data;
 
 import java.util.List;
@@ -15,15 +14,15 @@ public class MenuDTO extends CommonDTO {
     /**
      * 用户编号
      */
-    private String userId;
+    private Long userId;
     /**
      * 菜单主键
      */
-    private String menuId;
+    private Long menuId;
     /**
      * 父级菜单主键
      */
-    private String parentId;
+    private Long parentId;
     private String parentTitle;
     /**
      * 菜单编码
@@ -53,17 +52,8 @@ public class MenuDTO extends CommonDTO {
      * 是否有子级
      */
     private Boolean hasChildren = true;
-
     /**
      * 按钮列表
      */
     private List<String> buttonList;
-    /**
-     * 按钮列表
-     */
-    private List<ButtonEntity> buttonListEntity;
-    /**
-     * 按钮列表-分配权限的
-     */
-    private List<String> buttonListAuthority;
 }
