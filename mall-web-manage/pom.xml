@@ -75,18 +75,6 @@
 
 
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -97,7 +85,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.14</version>
 				<configuration>
-					<imageName>${name}</imageName>
+					<imageName>${project.name}</imageName>
 					<dockerDirectory>src/main/docker</dockerDirectory>
 					<dockerHost>http://47.110.47.162:2375</dockerHost>
 					<resources>

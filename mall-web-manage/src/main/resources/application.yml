@@ -25,12 +25,6 @@ spring:
     hikari:
       minimum-idle: 5
       maximum-pool-size: 50
-mybatis:
-  mapper-locations: classpath:mapper/**/*.xml
-  type-aliases-package: com.mall.dao.entity.*
-#  驼峰转换
-  configuration:
-    map-underscore-to-camel-case: true
 aliyun:
   accessKeyId: ${aliyun.accessKeyId}
   accessKeySecret: ${aliyun.accessKeySecret}
@@ -39,7 +33,7 @@ aliyun:
     bucketName: wjz-mall-image
     urlPrefix: https://wjz-mall-image.oss-cn-beijing.aliyuncs.com/
 mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
+  mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
 
